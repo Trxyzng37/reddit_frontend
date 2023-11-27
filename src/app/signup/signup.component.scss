@@ -1,0 +1,68 @@
+
+:host {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    --signin_length: 300px;
+}
+
+:host > * {
+    margin: 10px 0px;
+}
+
+#main_logo {
+    width: 70px;
+    width: 70px;
+    margin-bottom: 20px;
+    position: absolute;
+    top: 100px;
+}
+
+form {
+    width: var(--signin_length);
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px blue solid;
+    border-radius: 5px;
+    background-color: aliceblue;
+}
+
+form > * {
+    margin: 10px 0px 0px 0px;
+}
+
+input[type=text] {
+    border: 2px solid black;
+    border-radius: 5px;
+    width: 90%;
+    height: 25px;
+    margin-bottom: 10px;
+}
+
+input[type=text]:focus {
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+label {
+    align-self: flex-start;
+    position: relative;
+    left: 5%;
+}
+
+a{
+    text-decoration: none;
+    color: blue;
+    margin-left: 5px;
+}
+
+#signin {
+    display: flex;
+    justify-content: center;
+}

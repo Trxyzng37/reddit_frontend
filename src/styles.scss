@@ -1,1 +1,23 @@
-/* You can add global styles to this file, and also import other style files */
+
+
+*{
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;    
+}  
+
+app-root {
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    // background-color: aliceblue;
+    width: 100%;
+    height: 100%;
+}
