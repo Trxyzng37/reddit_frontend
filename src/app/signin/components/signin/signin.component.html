@@ -1,0 +1,31 @@
+
+<img id="main_logo" src="assets/icon/logo.png" alt="logo"/>
+<p>Sign in to me</p>
+<form [formGroup]="signInForm" (ngSubmit)="onSubmit()">
+    <label id="lbl_username" for="username">Username</label>
+    <input id="username" name="username" type="text" formControlName="username">
+    <div id="forgot_pass">
+        <label for="password">Password</label>
+        <a routerLink="/change_password">Forgot password?</a>
+    </div>
+    <input id="password" name="password" type="text" formControlName="password">
+    <button type="submit">Send</button>
+</form>
+
+<p>Or</p>
+
+<button id="google_login" type="button" (click)="redirectToUrl()">
+    <img id="google_logo" src="assets/icon/google.png" alt="google logo"/>
+    <p>Signin using Google</p>
+</button>
+<a href="http://localhost:8080/signin/google-authentication">google</a>
+
+<!-- <button id="logout" type="button" (click)="logout()">
+    <p style="background-color: green;">logout</p>
+</button> -->
+
+<div id="create_account">
+    <p>New user?</p>
+    <a routerLink="/signup">Create an account</a>
+</div>
+

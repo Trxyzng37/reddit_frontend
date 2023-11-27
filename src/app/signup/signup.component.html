@@ -1,0 +1,17 @@
+<img id="main_logo" src="assets/icon/logo.png" alt="logo"/>
+<p>Create an account</p>
+<form [formGroup]="signUpForm">
+    <label id="lbl_email" for="email">Email</label>
+    <input id="email" name="email" type="text" formControlName="email">
+    <label id="lbl_username" for="username">Username</label>
+    <input id="username" name="username" type="text" formControlName="username">
+    <label id="lbl_password" for="password">Password</label>
+    <input id="password" name="password" type="text" formControlName="password">
+    <label id="lbl_confirm_password" for="confirm_password">Confirm password</label>
+    <input id="confirm_password" name="confirm_password" type="text" formControlName="confirm_password">
+</form>
+
+<div id="signin">
+    <p>Already have an account?</p>
+    <a routerLink="/signin">Sign in</a>
+</div>
