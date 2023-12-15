@@ -3,7 +3,7 @@
 <p>Sign in to me</p>
 <form [formGroup]="signInForm" (ngSubmit)="onSubmit()">
     <label id="lbl_username" for="username">Username</label>
-    <input id="username" name="username" type="text" formControlName="username">
+    <input id="username" name="username" type="text" formControlName="username" required>
     <div id="forgot_pass">
         <label for="password">Password</label>
         <a routerLink="/change_password">Forgot password?</a>
@@ -11,6 +11,20 @@
     <input id="password" name="password" type="text" formControlName="password">
     <button type="submit">Send</button>
 </form>
+
+<!-- <ng-container *ngIf="is_login == true">
+    <div class="is_login">
+        <p>Login successful</p>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="is_login == false">
+    <div class="is_login">
+        <p>Login fail</p>
+    </div>
+</ng-container> -->
+
+<button (click)="login()">login</button>
 
 <p>Or</p>
 
