@@ -1,3 +1,6 @@
+.ng-valid[required], .ng-valid.required  {
+    border-left: 5px solid #42A948; /* green */
+  }
 
 :host {
     display: flex;
@@ -102,5 +105,22 @@ input[type=text]:focus {
 button {
     background-color: red;
     border: 1px solid black;
+}
+
+#login-success {
+    position: absolute;
+    background-color: #42A948;
+    z-index: 10;
+}
+
+.is_login {
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 200px;
+    background-color: #42A948;
+    position: absolute;
 }
 

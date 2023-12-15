@@ -7,21 +7,17 @@ import { Injectable } from '@angular/core';
 //Store jwt token
 export class JwtService {
   
-  private token: string|null;
+  private token: string;
   
   constructor() { 
-    this.token = '';
+    this.token = "";
   };
 
-  public set_token(token: string|null) {
+  public set_token(token: string) {
     this.token = token;
   }
 
   public get_token(): string{
-    if (this.token != null && this.token != ''){
       return this.token;
-    }
-    else 
-      return "";
   }
 }
