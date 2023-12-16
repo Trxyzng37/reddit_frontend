@@ -14,12 +14,10 @@ export class UsernamePasswordService {
     login(username: string, password: string): Observable<HttpResponse<string>> {
       const body =  `{"user":"${username}","password":"${password}"}`;
       const header: HttpHeaders = new HttpHeaders({
-        'credentials': 'include'
-        // 'Accept': 'application/json',
-        // 'Content-Type': 'application/json'
+        // 'withCredentials': 'include'
       });
       console.log(body)
-      return this.http.post(this.fullUrl, body, { headers: header, observe: 'response', responseType: 'text' });
+      return this.http.post(this.fullUrl, body, { headers: header, observe: 'response', responseType: 'text', withCredentials: true });
     }
 }
 
