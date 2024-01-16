@@ -8,23 +8,9 @@
         <label for="password">Password</label>
         <a routerLink="/change_password">Forgot password?</a>
     </div>
-    <input id="password" name="password" type="text" formControlName="password">
-    <button type="submit">Send</button>
+    <input id="password" name="password" type="password" formControlName="password">
+    <button type="submit" id="btnSignIn">Login</button>
 </form>
-
-<!-- <ng-container *ngIf="is_login == true">
-    <div class="is_login">
-        <p>Login successful</p>
-    </div>
-</ng-container>
-
-<ng-container *ngIf="is_login == false">
-    <div class="is_login">
-        <p>Login fail</p>
-    </div>
-</ng-container> -->
-
-<button (click)="login()">login</button>
 
 <p>Or</p>
 
@@ -32,11 +18,6 @@
     <img id="google_logo" src="assets/icon/google.png" alt="google logo"/>
     <p>Signin using Google</p>
 </button>
-<a href="http://localhost:8080/signin/google-authentication">google</a>
-
-<!-- <button id="logout" type="button" (click)="logout()">
-    <p style="background-color: green;">logout</p>
-</button> -->
 
 <div id="create_account">
     <p>New user?</p>

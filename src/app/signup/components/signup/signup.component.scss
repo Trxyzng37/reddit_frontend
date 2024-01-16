@@ -16,14 +16,11 @@
 #main_logo {
     width: 70px;
     width: 70px;
-    margin-bottom: 20px;
-    position: absolute;
-    top: 100px;
 }
 
 form {
     width: var(--signin_length);
-    height: 300px;
+    height: 350px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -34,7 +31,7 @@ form {
 }
 
 form > * {
-    margin: 10px 0px 0px 0px;
+    margin: 5px 0px 0px 0px;
 }
 
 input[type=text] {
@@ -50,6 +47,18 @@ input[type=text]:focus {
     border-radius: 5px;
 }
 
+// input[type=text].ng-pristine.ng-invalid {
+//     background-color: white;
+// }
+
+// input[type=text].ng-valid {
+//     background-color: #42A948;
+// }
+
+// input[type=text].ng-invalid {
+//     background-color: red;
+// }
+
 label {
     align-self: flex-start;
     position: relative;
@@ -60,6 +69,15 @@ a{
     text-decoration: none;
     color: blue;
     margin-left: 5px;
+}
+
+#btnSignUp {
+    background-color: #92e596;
+    font-size: medium;
+    width: 70px;
+    height: 30px;
+    border: 2px black solid;
+    border-radius: 5px;
 }
 
 #signin {
