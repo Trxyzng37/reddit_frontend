@@ -12,9 +12,8 @@ export class UsernamePasswordService {
     private fullUrl: string = this.serverurl.getUrl() + this.endpoint;
   
     login(username: string, password: string): Observable<HttpResponse<string>> {
-      const body =  `{"user":"${username}","password":"${password}"}`;
+      const body =  `{"username":"${username}","password":"${password}"}`;
       const header: HttpHeaders = new HttpHeaders({
-        // 'withCredentials': 'include'
       });
       console.log(body)
       return this.http.post(this.fullUrl, body, { headers: header, observe: 'response', responseType: 'text', withCredentials: true });
