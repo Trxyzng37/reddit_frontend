@@ -10,13 +10,17 @@ import { HttpClientModule } from '@angular/common/http'
 import { SigninComponent } from './signin/components/signin/signin.component';
 import { HomeComponent } from './home/components/home/home.component';
 import { ButtonModule } from 'primeng/button';
+import { ForgotPasswordComponent } from './forgot-password/components/forgot-password/forgot-password.component';
+import { PassCodeComponent } from './pass-code/components/pass-code/pass-code.component';
 @NgModule({
   declarations: [
     AppComponent,
     SigninComponent,
     SignupComponent,
     ErrorComponent,
-    HomeComponent
+    ForgotPasswordComponent,
+    HomeComponent,
+    PassCodeComponent
   ],
   imports: [
     BrowserModule,
