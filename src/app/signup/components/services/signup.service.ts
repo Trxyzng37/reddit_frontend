@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ServerUrlService } from 'src/app/shared/services/server-url.service';
+import { ServerUrlService } from 'src/app/shared/services/server-url/server-url.service';
 
 @Injectable({
   providedIn: 'root'

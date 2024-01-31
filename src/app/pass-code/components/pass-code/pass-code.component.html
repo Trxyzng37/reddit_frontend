@@ -1,0 +1,7 @@
+
+<form [formGroup]="PasscodeForm" (ngSubmit)="onSubmit()">
+    <p>A pass-code had been send to the email address: {{a}}</p>
+    <label id="lbl_passcode" for="input_passcode">Enter pass-code</label>
+    <input id="input_passcode" name="passcode" type="text" formControlName="passcode" required>
+    <button type="submit" id="btn_submit">Check pass-code</button>
+</form>

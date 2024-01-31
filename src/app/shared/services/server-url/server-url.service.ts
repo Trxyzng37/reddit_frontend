@@ -14,4 +14,8 @@ export class ServerUrlService {
   getUrl(): string {
     return this.url;
   }
+
+  createFullUrl(endpoint: string): string {
+    return this.url + endpoint;
+  }
 }
