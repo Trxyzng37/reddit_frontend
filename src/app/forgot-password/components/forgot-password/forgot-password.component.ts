@@ -15,7 +15,7 @@ export class ForgotPasswordComponent implements OnInit {
   ) {};
 
   public ForgotPasswordForm: any = new FormGroup ({
-    email: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(100), Validators.pattern("^(?=.*[@.])[0-9a-z@.]+$")])
+    email: new FormControl('', [Validators.required, Validators.email])
   })
 
   ngOnInit(): void {}
@@ -26,7 +26,7 @@ export class ForgotPasswordComponent implements OnInit {
       this.checkEmailService.checkEmail(email).subscribe({
         next: (body: any) => {
           if (body.email === "true") {
-            this.checkEmailService.emailAddress = email;
+            this.checkEmailService.setEmail(email);
             this.router.navigate(["/pass-code"]);
           }
           else 
