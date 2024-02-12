@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CheckPasscodeService } from '../../services/check-passcode/check-passcode.service';
 import { CheckEmailService } from 'src/app/forgot-password/services/check-email/check-email.service';
+import { DateTimeService } from 'src/app/shared/services/date-time/date-time.service';
 
 @Component({
   selector: 'app-pass-code',
@@ -16,23 +17,24 @@ export class PassCodeComponent {
 
   public constructor(
     private checkPasscodeService: CheckPasscodeService,
-    private checkEmailService: CheckEmailService
+    private dateTimeService: DateTimeService
   ) {}
 
   onSubmit() {
     if (this.PasscodeForm.status === "VALID") {
       const passcode: number = this.PasscodeForm.value.passcode;
       this.checkPasscodeService.checkPasscode(passcode).subscribe({
-        next: (body) => {
-          alert(body)
+        next: (body: any) => {
+          alert(body.passcode_match);
+          this.PasscodeForm.reset();
         },
-        error: (e) => {
-          alert(e)
+        error: (e: any) => {
+          alert(e.message)
         }
       })
     }
     else {
-      alert("NO")
+      alert("Incorrect passcode format")
     }
   }
 }

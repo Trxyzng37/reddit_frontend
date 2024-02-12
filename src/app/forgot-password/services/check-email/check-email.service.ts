@@ -7,7 +7,7 @@ import { ServerUrlService } from 'src/app/shared/services/server-url/server-url.
   providedIn: 'root'
 })
 export class CheckEmailService {
-  public emailAddress: string = "";
+  private email: string = "";
   private endpoint: string = "/check-email";
   private fullUrl: string = this.serverUrlService.createFullUrl(this.endpoint);
   constructor(
@@ -18,5 +18,13 @@ export class CheckEmailService {
   checkEmail(email: string): Observable<Object> {
     const urlWithParam: string = this.fullUrl + "?email=" + email; 
     return this.http.get(urlWithParam, { observe: 'body', responseType: "json"});
+  }
+
+  setEmail(email: string): void {
+    this.email = email;
+  }
+
+  getEmail(): string {
+    return this.email;
   }
 }
