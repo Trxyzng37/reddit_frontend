@@ -10,6 +10,7 @@ export class CheckEmailService {
   private email: string = "";
   private endpoint: string = "/check-email";
   private fullUrl: string = this.serverUrlService.createFullUrl(this.endpoint);
+  
   constructor(
     private serverUrlService: ServerUrlService, 
     private http: HttpClient
