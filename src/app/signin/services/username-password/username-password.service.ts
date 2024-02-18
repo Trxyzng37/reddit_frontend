@@ -1,22 +1,23 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ServerUrlService } from 'src/app/shared/services/server-url/server-url.service';
+import { Login } from './login';
+import { PostService } from 'src/app/shared/services/post/post.service';
 @Injectable({
   providedIn: 'root'
 })
 export class UsernamePasswordService {
-    constructor(private serverurl: ServerUrlService, private http: HttpClient){}
+    constructor( 
+      private http: HttpClient,
+      private postService: PostService
+    ) {}
 
     private endpoint: string = "/signin/username-password";
-    private fullUrl: string = this.serverurl.getUrl() + this.endpoint;
   
-    login(username: string, password: string): Observable<HttpResponse<string>> {
+    signinByUsernamePassword(username: string, password: string): Observable<Login> {
       const body =  `{"username":"${username}","password":"${password}"}`;
-      const header: HttpHeaders = new HttpHeaders({
-      });
-      console.log(body)
-      return this.http.post(this.fullUrl, body, { headers: header, observe: 'response', responseType: 'text', withCredentials: true });
+      const header: HttpHeaders = new HttpHeaders();
+      return this.postService.post<Login>(this.endpoint, header, body, false);
     }
 }
 
