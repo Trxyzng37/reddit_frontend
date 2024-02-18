@@ -7,6 +7,7 @@ import { HomeComponent } from './home/components/home/home.component';
 import { ForgotPasswordComponent } from './forgot-password/components/forgot-password/forgot-password.component';
 import { PassCodeComponent } from './pass-code/components/pass-code/pass-code.component';
 import { ChangePasswordComponent } from './change-password/components/change-password/change-password.component';
+// import { signinGuard } from './signin/guards/signin.guard';
 
 const routes: Routes = [
   // { path: 'signin', component: SigninComponent, canActivate: mapToCanActivate([signinGuard])},
