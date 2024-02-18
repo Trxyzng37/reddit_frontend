@@ -14,13 +14,12 @@ export class GetService {
 
   private serverUrl: string = this.serverurl.getUrl();
 
-  public get(endpoint: string, header: HttpHeaders, body: string, credential: boolean): Observable<Object> {
+  public get<T>(endpoint: string, header: HttpHeaders, credential: boolean): Observable<T> {
     const fullUrl: string = this.serverUrl + endpoint;
     console.log("Request type: get");
-    console.log("Body: " + body);
     if (credential)
-      return this.http.get(fullUrl, { headers: header, observe: 'body', responseType: 'json', withCredentials: true });
+      return this.http.get<T>(fullUrl, { headers: header, observe: 'body', responseType: 'json', withCredentials: true });
     else 
-      return this.http.get(fullUrl, { headers: header, observe: 'body', responseType: 'json'});
+      return this.http.get<T>(fullUrl, { headers: header, observe: 'body', responseType: 'json'});
   }
 }
