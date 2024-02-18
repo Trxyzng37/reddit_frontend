@@ -4,6 +4,10 @@ import { HttpHeaderResponse, HttpHeaders, HttpResponse, HttpClient, HttpErrorRes
 import { UsernamePasswordService } from '../../services/username-password/username-password.service';
 import { ServerUrlService } from 'src/app/shared/services/server-url/server-url.service';
 import { getCookie } from 'typescript-cookie';
+import { Router } from '@angular/router';
+import { Login } from '../../services/username-password/login';
+import { Observable } from 'rxjs';
+import { GoogleService } from '../../services/google/google.service';
 
 @Component({
   selector: 'app-signin',
@@ -14,7 +18,9 @@ import { getCookie } from 'typescript-cookie';
 export class SigninComponent implements OnInit {
   constructor ( 
     private usernamePasswordService: UsernamePasswordService, 
-    private serverUrlService: ServerUrlService
+    private googleService: GoogleService,
+    private serverUrlService: ServerUrlService,
+    private router: Router,
   ) {}
 
   private serverUrl: string = this.serverUrlService.getUrl();
@@ -24,10 +30,27 @@ export class SigninComponent implements OnInit {
   })
 
   //when component first load
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const cookie: string|undefined = getCookie("login");
+    if (cookie === undefined)  
+      alert("No cookie login")
+    else {
+      try {
+        const isLogin: Login = JSON.parse(cookie);
+        // alert(isLogin.login)
+        if (isLogin.login)
+          alert("Login OK")
+        else
+          alert("Login FAIL")
+      }
+        catch (e) {
+          alert("Error login using goolge. Please try login again")
+        }
+      }
+    }
 
   //google login
-  redirectToUrl() {
+  loginUsingGoogle() {
     let endpoint: string = "/signin/google-authentication";
     window.location.href = `${this.serverUrl}${endpoint}`;
   }
@@ -35,16 +58,24 @@ export class SigninComponent implements OnInit {
   //when username-password form is submitted
   onSubmit() {
     if (this.signInForm.status == "VALID") {
-      this.usernamePasswordService.login(this.signInForm.value.username, this.signInForm.value.password).subscribe({
-        next: (response) => {
-            console.log("login successfully using username-password");
-            this.signInForm.reset();
+      const username: string = this.signInForm.value.username;
+      const password: string = this.signInForm.value.password;
+      const observable: Observable<Login> = this.usernamePasswordService.signinByUsernamePassword(username, password);
+      observable.subscribe({
+        next: (response: Login) => {
+          const isLogin: boolean = response.login;
+          if (isLogin) {
+            console.log("login ok using username-password");
+          }
+          else {
+            console.log("login fail using username-password");
+          }
         },
-        error: (err) => {
-          console.log("Error login using username password")
-          console.log(err);
+        error: (e: HttpErrorResponse) => {
+          console.log("HttpServletResponse: " + e.error.message);
+          console.log("ResponseEntity: " + e.error);
         }
-      });
+      })
     }
   }
 }
