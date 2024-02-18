@@ -56,7 +56,7 @@ export class SigninComponent implements OnInit {
   }
 
   //when username-password form is submitted
-  onSubmit() {
+  SignInFormSubmit() {
     if (this.signInForm.status == "VALID") {
       const username: string = this.signInForm.value.username;
       const password: string = this.signInForm.value.password;
@@ -65,15 +65,14 @@ export class SigninComponent implements OnInit {
         next: (response: Login) => {
           const isLogin: boolean = response.login;
           if (isLogin) {
-            console.log("login ok using username-password");
+            alert("login ok using username-password");
           }
           else {
-            console.log("login fail using username-password");
+            alert("login fail using username-password");
           }
         },
         error: (e: HttpErrorResponse) => {
-          console.log("HttpServletResponse: " + e.error.message);
-          console.log("ResponseEntity: " + e.error);
+          console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
         }
       })
     }
