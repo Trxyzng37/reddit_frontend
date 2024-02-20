@@ -13,6 +13,8 @@ import { ButtonModule } from 'primeng/button';
 import { ForgotPasswordComponent } from './forgot-password/components/forgot-password/forgot-password.component';
 import { PassCodeComponent } from './pass-code/components/pass-code/pass-code.component';
 import { ChangePasswordComponent } from './change-password/components/change-password/change-password.component';
+import { ConfirmEmailComponent } from './signup/components/confirm-email/confirm-email.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +24,8 @@ import { ChangePasswordComponent } from './change-password/components/change-pas
     ForgotPasswordComponent,
     HomeComponent,
     PassCodeComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    ConfirmEmailComponent
   ],
   imports: [
     BrowserModule,

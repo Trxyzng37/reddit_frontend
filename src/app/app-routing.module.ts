@@ -7,6 +7,7 @@ import { HomeComponent } from './home/components/home/home.component';
 import { ForgotPasswordComponent } from './forgot-password/components/forgot-password/forgot-password.component';
 import { PassCodeComponent } from './pass-code/components/pass-code/pass-code.component';
 import { ChangePasswordComponent } from './change-password/components/change-password/change-password.component';
+import { ConfirmEmailComponent } from './signup/components/confirm-email/confirm-email.component';
 // import { signinGuard } from './signin/guards/signin.guard';
 
 const routes: Routes = [
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'forgot-password', title: 'forgot-password', component: ForgotPasswordComponent},
   { path: 'pass-code', title: 'enter-passcode', component: PassCodeComponent},
   { path: 'change-password', title: 'change-password', component: ChangePasswordComponent},
+  { path: 'check-confirm-email-passcode', title: 'check-confirm-email-passcode', component: ConfirmEmailComponent },
   { path: 'home', title: 'home', component: HomeComponent },
   { path: 'error', title:'error', component: ErrorComponent },
   {path: '', redirectTo: 'signin', pathMatch: 'full'}
