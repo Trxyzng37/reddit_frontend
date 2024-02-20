@@ -1,0 +1,13 @@
+
+<form [formGroup]="confirmEmailPasscodeForm" (ngSubmit)="confirmEmailPasscodeFormSubmit()">
+    <p>A pass-code had been send to the email address: <b>{{email}}</b></p>
+    <label id="lbl_passcode" for="input_passcode">Enter pass-code</label>
+    <input id="input_passcode" name="passcode" type="text" formControlName="passcode" required>
+    <button type="submit" id="btn_submit">Check pass-code</button>
+</form>
+
+<div id="div_resend">
+    <p>Can not find passcode ?</p>
+    <button id="btn_resend_passcode" type="button" (click)="reSendPasscode()">Re-send</button>
+</div>
+
