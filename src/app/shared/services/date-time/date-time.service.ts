@@ -7,9 +7,15 @@ export class DateTimeService {
 
   constructor() { }
 
-  getCurrentDateTime(): string {
+  getCurrentDateTime(): Date {
     const dateTime: Date = new Date();
     dateTime.setMilliseconds(0);
-    return dateTime.toISOString();
+    return dateTime;
+  }
+
+  getCurrentDateTimeToString(): string {
+    const dateTime: Date = new Date();
+    dateTime.setMilliseconds(0);
+    return dateTime.toString();
   }
 }
