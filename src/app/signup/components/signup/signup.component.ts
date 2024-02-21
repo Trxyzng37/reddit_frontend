@@ -3,13 +3,12 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {SignupService} from '../../services/username-password-signup/username-password-signup.service'
 import { SamePasswordValidator } from '../../directives/validators/same-password.directive';
 import { ServerUrlService } from 'src/app/shared/services/server-url/server-url.service';
-import { IsSignUp } from '../../services/is-signup';
+import { UsernamePasswordSignUpResponse } from '../../pojo/username-password-signup-response';
 import { Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { getCookie } from 'typescript-cookie';
-import { Login } from 'src/app/signin/services/username-password/login';
-import { SignUp } from '../../services/signup';
+import { GoogleSignUpResponse } from '../../pojo/google-signup-response';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -42,11 +41,11 @@ export class SignupComponent implements OnInit {
       alert("No cookie signup")
     else {
       try {
-        const signup: SignUp = JSON.parse(cookie);
-        if (signup.signUp)
+        const signup: GoogleSignUpResponse = JSON.parse(cookie);
+        if (signup.isSignUp)
           alert("Signup using google OK")
         else
-          alert("Email already exist")
+          alert("A user with this email have already exist")
       }
         catch (e) {
           alert("Error signup using goolge. Please try to signup again")
@@ -59,9 +58,9 @@ export class SignupComponent implements OnInit {
       const username: string = this.signUpForm.value.username;
       const password: string = this.signUpForm.value.password;
       const email: string = this.signUpForm.value.email;
-      const observable: Observable<IsSignUp> = this.signUpService.UsernamePasswordSignUp(username, password, email);
+      const observable: Observable<UsernamePasswordSignUpResponse> = this.signUpService.UsernamePasswordSignUp(username, password, email);
       observable.subscribe({
-        next: (response: IsSignUp) => {
+        next: (response: UsernamePasswordSignUpResponse) => {
           console.log(response)
           console.log("IS SING_UP: " + response.isSignUp)
           if (response.isSignUp) {
