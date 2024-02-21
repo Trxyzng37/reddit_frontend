@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { IsPasscodeMatch } from 'src/app/shared/pojo/is-passcode-match';
 import { ConfirmEmailService } from '../../services/confirm-email/confirm-email.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ResendEmailPasscode } from '../../pojo/resend-email-passcode';
+import { ResendEmailPasscodeResponse } from '../../pojo/resend-email-passcode-response';
 
 @Component({
   selector: 'app-confirm-email',
@@ -54,9 +54,9 @@ export class ConfirmEmailComponent {
   }
 
   public reSendPasscode() {
-    const observable: Observable<ResendEmailPasscode> = this.confirmEmailService.reSendPasscode(this.email);
+    const observable: Observable<ResendEmailPasscodeResponse> = this.confirmEmailService.reSendPasscode(this.email);
     observable.subscribe({
-      next: (response: ResendEmailPasscode) => {
+      next: (response: ResendEmailPasscodeResponse) => {
         if (response.createdNewPasscode) {
           alert("Create new passcode OK");
         }
