@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { HttpHeaderResponse, HttpHeaders, HttpResponse, HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { UsernamePasswordService } from '../../services/username-password/username-password.service';
 import { ServerUrlService } from 'src/app/shared/services/server-url/server-url.service';
 import { getCookie } from 'typescript-cookie';
 import { Router } from '@angular/router';
-import { Login } from '../../services/username-password/login';
 import { Observable } from 'rxjs';
-import { GoogleService } from '../../services/google/google.service';
+import { GoogleSignInResponse } from '../../pojo/google-signin-response';
+import { UsernamePasswordSignInResponse } from '../../pojo/username-password-signin-response';
 
 @Component({
   selector: 'app-signin',
@@ -18,7 +18,6 @@ import { GoogleService } from '../../services/google/google.service';
 export class SigninComponent implements OnInit {
   constructor ( 
     private usernamePasswordService: UsernamePasswordService, 
-    private googleService: GoogleService,
     private serverUrlService: ServerUrlService,
     private router: Router,
   ) {}
@@ -29,29 +28,28 @@ export class SigninComponent implements OnInit {
     password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(20), Validators.pattern("^[0-9a-zA-Z ~`!@#$%^&*()_+={[}]|\\:;\"'<,>.?/-]{8,20}$")])
   })
 
-  //when component first load
+  //when component first init
   ngOnInit(): void {
-    const cookie: string|undefined = getCookie("login");
+    const cookie: string|undefined = getCookie("GoogleSignIn");
     if (cookie === undefined)  
-      alert("No cookie login")
+      alert("No cookie signin")
     else {
       try {
-        const isLogin: Login = JSON.parse(cookie);
-        // alert(isLogin.login)
-        if (isLogin.login)
-          alert("Login OK")
+        const signin: GoogleSignInResponse = JSON.parse(cookie);
+        if (signin.isGoogleSignIn)
+          alert("signin using google OK")
         else
-          alert("Login FAIL")
+          alert("signin using google FAIL")
       }
         catch (e) {
-          alert("Error login using goolge. Please try login again")
+          alert("Error signin using goolge. Please try signin again")
         }
       }
     }
 
   //google login
   SignInUsingGoogle() {
-    let endpoint: string = "/signin/google-authentication";
+    let endpoint: string = "/signin/google";
     window.location.href = `${this.serverUrl}${endpoint}`;
   }
 
@@ -60,15 +58,14 @@ export class SigninComponent implements OnInit {
     if (this.signInForm.status == "VALID") {
       const username: string = this.signInForm.value.username;
       const password: string = this.signInForm.value.password;
-      const observable: Observable<Login> = this.usernamePasswordService.signinByUsernamePassword(username, password);
+      const observable: Observable<UsernamePasswordSignInResponse> = this.usernamePasswordService.signinByUsernamePassword(username, password);
       observable.subscribe({
-        next: (response: Login) => {
-          const isLogin: boolean = response.login;
-          if (isLogin) {
+        next: (response: UsernamePasswordSignInResponse) => {
+          if (response.isSignIn) {
             alert("login ok using username-password");
           }
-          else {
-            alert("login fail using username-password");
+          if (response.passwordError) {
+            alert("Wrong password for user");
           }
         },
         error: (e: HttpErrorResponse) => {

@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DateTimeService } from 'src/app/shared/services/date-time/date-time.service';
 import { Router } from '@angular/router';
@@ -7,7 +6,7 @@ import { Observable } from 'rxjs';
 import { IsPasscodeMatch } from 'src/app/shared/pojo/is-passcode-match';
 import { ConfirmEmailService } from '../../services/confirm-email/confirm-email.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { IsSignUp } from '../../services/is-signup';
+import { ResendEmailPasscode } from '../../pojo/resend-email-passcode';
 
 @Component({
   selector: 'app-confirm-email',
@@ -55,18 +54,15 @@ export class ConfirmEmailComponent {
   }
 
   public reSendPasscode() {
-    const observable: Observable<IsSignUp> = this.confirmEmailService.reSendPasscode(this.email);
+    const observable: Observable<ResendEmailPasscode> = this.confirmEmailService.reSendPasscode(this.email);
     observable.subscribe({
-      next: (response: IsSignUp) => {
-        if (response.isSignUp) {
+      next: (response: ResendEmailPasscode) => {
+        if (response.createdNewPasscode) {
           alert("Create new passcode OK");
         }
         else {
           alert("Can not create new passcode");
         }
-      },
-      error: (e: HttpErrorResponse) => {
-        alert("Make sure all field is follow requirements");
       }
     })
   }
