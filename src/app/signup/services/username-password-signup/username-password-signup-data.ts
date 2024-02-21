@@ -1,4 +1,4 @@
-export class SignupData {
+export class UsernamePasswordSignupData {
     public username: string;
     public password: string;
     public email: string;

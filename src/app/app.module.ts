@@ -4,7 +4,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { SignupComponent } from './signup/components/username-password/signup.component';
+import { SignupComponent } from './signup/components/signup/signup.component';
 import { ErrorComponent } from './error/error.component';
 import { HttpClientModule } from '@angular/common/http'
 import { SigninComponent } from './signin/components/signin/signin.component';
