@@ -1,5 +1,5 @@
 <p>Create an account</p>
-<form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="signUpForm" (ngSubmit)="SignUpFormSubmit()">
     <label id="lbl_email" for="email">Email</label>
     <input id="email" name="email" type="text" formControlName="email" placeholder=" Include email address less than 100 characters">
     <label id="lbl_username" for="username">Username</label>
@@ -10,6 +10,12 @@
     <input id="confirm_password" name="confirm_password" type="text" formControlName="confirm_password" placeholder=" Re-enter password">
     <button type="submit" id="btnSignUp">Sign up</button>
 </form>
+
+<p>Or</p>
+<button id="google_login" type="button" (click)="GoogleSignUp()">
+    <img id="google_logo" src="assets/icon/google.png" alt="google logo"/>
+    <p>Sign up using Google</p>
+</button>
 
 <div id="signin">
     <p>Already have an account?</p>

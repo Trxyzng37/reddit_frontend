@@ -15,7 +15,7 @@
 
 form {
     width: var(--signin_length);
-    height: 350px;
+    height: 320px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -25,8 +25,13 @@ form {
     background-color: aliceblue;
 }
 
-form > * {
+form > input[type=text] {
     margin: 5px 0px 0px 0px;
+    border: 2px solid black;
+    border-radius: 5px;
+    width: 90%;
+    height: 25px;
+    margin-bottom: 10px;
 }
 
 input[type=text] {
@@ -42,25 +47,13 @@ input[type=text]:focus {
     border-radius: 5px;
 }
 
-// input[type=text].ng-pristine.ng-invalid {
-//     background-color: white;
-// }
-
-// input[type=text].ng-valid {
-//     background-color: #42A948;
-// }
-
-// input[type=text].ng-invalid {
-//     background-color: red;
-// }
-
 label {
     align-self: flex-start;
     position: relative;
     left: 5%;
 }
 
-a{
+a {
     text-decoration: none;
     color: blue;
     margin-left: 5px;
@@ -73,6 +66,37 @@ a{
     height: 30px;
     border: 2px black solid;
     border-radius: 5px;
+    position: relative;
+    top: 3px;
+}
+
+p {
+    font-size: medium;
+}
+
+#google_login {
+    display: flex;
+    flex-direction: row;
+    width: var(--signin_length);
+    height: auto;
+    justify-content: center;
+    align-items: center;
+    border: 1px blue solid;
+    border-radius: 5px;
+    background-color: aliceblue;
+}
+
+#google_login > * {
+    padding: 5px 5px;
+}
+
+#google_login:hover {
+    background-color: aqua;
+}
+
+#google_logo {
+    width: 30px;
+    height: 30px;
 }
 
 #signin {
