@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes, mapToCanActivate } from '@angular/router';
 import { SigninComponent } from './signin/components/signin/signin.component';
-import { SignupComponent } from './signup/components/username-password/signup.component';
+import { SignupComponent } from './signup/components/signup/signup.component';
 import { ErrorComponent } from './error/error.component';
 import { HomeComponent } from './home/components/home/home.component';
 import { ForgotPasswordComponent } from './forgot-password/components/forgot-password/forgot-password.component';

@@ -50,7 +50,7 @@ export class SigninComponent implements OnInit {
     }
 
   //google login
-  loginUsingGoogle() {
+  SignInUsingGoogle() {
     let endpoint: string = "/signin/google-authentication";
     window.location.href = `${this.serverUrl}${endpoint}`;
   }
