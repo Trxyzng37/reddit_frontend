@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import {SignupService} from '../../services/signup/signup.service'
+import {SignupService} from '../../services/username-password-signup/username-password-signup.service'
 import { SamePasswordValidator } from '../../directives/validators/same-password.directive';
 import { ServerUrlService } from 'src/app/shared/services/server-url/server-url.service';
 import { IsSignUp } from '../../services/is-signup';
 import { Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { getCookie } from 'typescript-cookie';
+import { Login } from 'src/app/signin/services/username-password/login';
+import { SignUp } from '../../services/signup';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -32,7 +35,24 @@ export class SignupComponent implements OnInit {
 
   private serverUrl: string = this.serverUrlService.getUrl();
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const cookie: string|undefined = getCookie("signup");
+    console.log(cookie)
+    if (cookie === undefined)  
+      alert("No cookie signup")
+    else {
+      try {
+        const signup: SignUp = JSON.parse(cookie);
+        if (signup.signUp)
+          alert("Signup using google OK")
+        else
+          alert("Email already exist")
+      }
+        catch (e) {
+          alert("Error signup using goolge. Please try to signup again")
+        }
+      }
+  }
 
   SignUpFormSubmit() {
     if (this.signUpForm.status == "VALID") {
@@ -68,8 +88,8 @@ export class SignupComponent implements OnInit {
     }
   }
 
-  GoogleSignUp() {
-    let endpoint: string = "/signin/google-authentication";
+  SignUpUsingGoogle() {
+    let endpoint: string = "/signup/google";
     window.location.href = `${this.serverUrl}${endpoint}`;
   }
 }
