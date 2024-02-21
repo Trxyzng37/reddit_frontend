@@ -6,7 +6,7 @@ import { PassCode } from 'src/app/shared/pojo/passcode';
 import { DateTimeService } from 'src/app/shared/services/date-time/date-time.service';
 import { PostService } from 'src/app/shared/services/post/post.service';
 import { ServerUrlService } from 'src/app/shared/services/server-url/server-url.service';
-import { ResendEmailPasscode } from '../../pojo/resend-email-passcode';
+import { ResendEmailPasscodeResponse } from '../../pojo/resend-email-passcode-response';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +32,7 @@ export class ConfirmEmailService {
     return this.postService.post(this.endpoint, header, body, false);
   }
 
-  public reSendPasscode(email: string): Observable<ResendEmailPasscode> {
+  public reSendPasscode(email: string): Observable<ResendEmailPasscodeResponse> {
     const endpoint: string = "/resend-confirm-email-passcode";
     const body: string = `{"email":"${email}"}`
     const header: HttpHeaders = new HttpHeaders();
