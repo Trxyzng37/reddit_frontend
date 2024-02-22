@@ -3,9 +3,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SamePasswordValidator } from 'src/app/signup/directives/validators/same-password.directive';
 import { ChangePasswordService } from '../../services/change-password.service';
-import { CheckEmailService } from 'src/app/forgot-password/services/check-email/check-email.service';
+import { EmailExistService } from 'src/app/forgot-password/services/email-exist/check-email.service';
 import { Observable } from 'rxjs';
-import { ChangePassword } from '../../services/change-password';
+import { ChangePasswordResponse } from '../../pojo/change-password-response';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-change-password',
@@ -16,7 +17,7 @@ export class ChangePasswordComponent implements OnInit{
   public constructor (
     private router: Router,
     private changePasswordService: ChangePasswordService,
-    private checkEmailService: CheckEmailService
+    private checkEmailService: EmailExistService
   ) {};
 
   public ChangePasswordForm: FormGroup = new FormGroup ({
@@ -26,26 +27,25 @@ export class ChangePasswordComponent implements OnInit{
 
   onSubmit(){
     if (this.ChangePasswordForm.status === "VALID") {
-      const email: string = this.checkEmailService.getEmail();
       const password: string = this.ChangePasswordForm.value.newPassword;
-      const observable: Observable<ChangePassword> = this.changePasswordService.changePassword(email, password);
+      const observable: Observable<ChangePasswordResponse> = this.changePasswordService.changePassword(password);
       observable.subscribe({
-        next: (obj: ChangePassword) => {
-          const i: boolean = obj.changePassword; 
-          if (String(i) === "true") {
+        next: (response: ChangePasswordResponse) => {
+          if (response.isPasswordChange) {
             alert("Change password successfully")
+            sessionStorage.removeItem("forgot-password-email");
           }
-          else {
-            alert("Can not change password")
+          if (!response.isPasswordChange) {
+            alert("Old and new password can not be the same");
           }
         },
-        error: (e) => {
-          alert("Error change password: " + e)
+        error: (e: HttpErrorResponse) => {
+          console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
         }
       })
     }
     else {
-      alert("Password is not the same");
+      alert("Field value is not the same");
     }
   }
 

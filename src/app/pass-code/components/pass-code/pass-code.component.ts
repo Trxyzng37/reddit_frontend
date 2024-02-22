@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CheckPasscodeService } from '../../services/check-passcode/check-passcode.service';
-import { CheckEmailService } from 'src/app/forgot-password/services/check-email/check-email.service';
 import { DateTimeService } from 'src/app/shared/services/date-time/date-time.service';
+import { Router, RouterLink } from '@angular/router';
+import { Observable } from 'rxjs';
+import { PasscodeResponse } from 'src/app/shared/pojo/passcode-response';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-pass-code',
@@ -10,26 +13,34 @@ import { DateTimeService } from 'src/app/shared/services/date-time/date-time.ser
   styleUrl: './pass-code.component.scss'
 })
 export class PassCodeComponent {
-  public a: string = "trxyzng";
+  public constructor(
+    private checkPasscodeService: CheckPasscodeService,
+    private router: Router
+  ) {}
+
+  public email: string = sessionStorage.getItem("forgot-password-email") as string || "xxx@xxx";
+
   public PasscodeForm: any = new FormGroup({
     passcode: new FormControl('', [Validators.pattern("^[0-9]{6}$")])
   })
 
-  public constructor(
-    private checkPasscodeService: CheckPasscodeService,
-    private dateTimeService: DateTimeService
-  ) {}
-
   onSubmit() {
     if (this.PasscodeForm.status === "VALID") {
       const passcode: number = this.PasscodeForm.value.passcode;
-      this.checkPasscodeService.checkPasscode(passcode).subscribe({
-        next: (body: any) => {
-          alert(body.passcode_match);
-          this.PasscodeForm.reset();
+      const observable: Observable<PasscodeResponse> = this.checkPasscodeService.checkPasscode(passcode);
+      observable.subscribe({
+        next: (response: PasscodeResponse) => {
+          if (response.isPasscodeMatch) {
+            alert("Passcode OK")
+            this.PasscodeForm.reset();
+            this.router.navigate(["/change-password"]);
+          }
+          else {
+            alert("Passcode FAIL")
+          }
         },
-        error: (e: any) => {
-          alert(e.message)
+        error: (e: HttpErrorResponse) => {
+          console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
         }
       })
     }
