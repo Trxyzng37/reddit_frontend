@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { CheckEmailService } from '../../services/check-email/check-email.service';
+import { EmailExistService } from '../../services/email-exist/check-email.service';
+import { Observable } from 'rxjs';
+import { EmailExistResponse } from '../../pojo/email-exist-response';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-forgot-password',
@@ -11,7 +14,7 @@ import { CheckEmailService } from '../../services/check-email/check-email.servic
 export class ForgotPasswordComponent implements OnInit {
   public constructor (
     private router: Router,
-    private checkEmailService: CheckEmailService
+    private emailExistService: EmailExistService,
   ) {};
 
   public ForgotPasswordForm: any = new FormGroup ({
@@ -20,25 +23,26 @@ export class ForgotPasswordComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onSubmit() {
+  ForgotPasswordFormSubmit() {
     if (this.ForgotPasswordForm.status == "VALID") {
       const email = this.ForgotPasswordForm.value.email;
-      this.checkEmailService.checkEmail(email).subscribe({
-        next: (body: any) => {
-          if (body.email === "true") {
-            this.checkEmailService.setEmail(email);
+      const observable: Observable<EmailExistResponse> = this.emailExistService.isEmailExist(email);
+      observable.subscribe({
+        next: (response: EmailExistResponse) => {
+          if (response.emailExist) {
+            sessionStorage.setItem("forgot-password-email", email)
             this.router.navigate(["/pass-code"]);
           }
           else 
-            alert("Incorrect email address");
+            alert("No user with this email address");
         },
-        error: (e) => {
-          alert("Error checking email");
+        error: (e: HttpErrorResponse) => {
+          console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
         }
       })
     }
     else {
-      alert("Incorrect email address format");
+      alert("Incorrect email address format")
     }
   }
 }

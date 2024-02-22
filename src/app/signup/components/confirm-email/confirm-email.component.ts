@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DateTimeService } from 'src/app/shared/services/date-time/date-time.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { IsPasscodeMatch } from 'src/app/shared/pojo/is-passcode-match';
+import { PasscodeResponse } from 'src/app/shared/pojo/passcode-response';
 import { ConfirmEmailService } from '../../services/confirm-email/confirm-email.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ResendEmailPasscodeResponse } from '../../pojo/resend-email-passcode-response';
@@ -29,9 +29,9 @@ export class ConfirmEmailComponent {
   public confirmEmailPasscodeFormSubmit() {
     if (this.confirmEmailPasscodeForm.status === "VALID") {
       const passcode: number = this.confirmEmailPasscodeForm.value.passcode;
-      const observable: Observable<IsPasscodeMatch> = this.confirmEmailService.checkConfirmEmailPasscode(passcode);
+      const observable: Observable<PasscodeResponse> = this.confirmEmailService.checkConfirmEmailPasscode(passcode);
       observable.subscribe({
-        next: (response: IsPasscodeMatch) => {
+        next: (response: PasscodeResponse) => {
           if (response.isPasscodeExpired) {
             alert("Passcode expired");
           }
@@ -63,6 +63,9 @@ export class ConfirmEmailComponent {
         else {
           alert("Can not create new passcode");
         }
+      },
+      error: (e: HttpErrorResponse) => {
+        console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
       }
     })
   }
