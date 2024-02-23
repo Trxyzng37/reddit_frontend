@@ -5,6 +5,7 @@ import { EmailExistService } from '../../services/email-exist/check-email.servic
 import { Observable } from 'rxjs';
 import { EmailExistResponse } from '../../pojo/email-exist-response';
 import { HttpErrorResponse } from '@angular/common/http';
+import { StorageService } from 'src/app/shared/storage/storage.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -15,6 +16,7 @@ export class ForgotPasswordComponent implements OnInit {
   public constructor (
     private router: Router,
     private emailExistService: EmailExistService,
+    private storageService: StorageService
   ) {};
 
   public ForgotPasswordForm: any = new FormGroup ({
@@ -30,7 +32,7 @@ export class ForgotPasswordComponent implements OnInit {
       observable.subscribe({
         next: (response: EmailExistResponse) => {
           if (response.emailExist) {
-            sessionStorage.setItem("forgot-password-email", email)
+            this.storageService.setItem("forgot-password-email", email)
             this.router.navigate(["/pass-code"]);
           }
           else 
