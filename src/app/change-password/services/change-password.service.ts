@@ -4,6 +4,7 @@ import { PostService } from 'src/app/shared/services/post/post.service';
 import { ChangePasswordResponse } from '../pojo/change-password-response';
 import { Observable } from 'rxjs';
 import { ChangePasswordRequest } from '../pojo/change-password-request';
+import { StorageService } from 'src/app/shared/storage/storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,13 +12,17 @@ import { ChangePasswordRequest } from '../pojo/change-password-request';
 export class ChangePasswordService {
 
   constructor (
-    private postService: PostService
+    private postService: PostService,
+    private storageService: StorageService
+
   ) { }
 
   private endpoint: string = "/change-password"
 
   public changePassword(newPassword: string): Observable<ChangePasswordResponse> {
-    const email: string = sessionStorage.getItem("forgot-password-email") as string || "";
+    const email: string = this.storageService.getItem("forgot-password-email");
+    if (email === "")
+      alert("Empty email for change password");
     const changePasswordRequest: ChangePasswordRequest = new ChangePasswordRequest(email, newPassword);
     const requestBody = JSON.stringify(changePasswordRequest);
     const header: HttpHeaders = new HttpHeaders();

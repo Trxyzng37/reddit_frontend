@@ -7,6 +7,7 @@ import { EmailExistService } from 'src/app/forgot-password/services/email-exist/
 import { Observable } from 'rxjs';
 import { ChangePasswordResponse } from '../../pojo/change-password-response';
 import { HttpErrorResponse } from '@angular/common/http';
+import { StorageService } from 'src/app/shared/storage/storage.service';
 
 @Component({
   selector: 'app-change-password',
@@ -17,7 +18,7 @@ export class ChangePasswordComponent implements OnInit{
   public constructor (
     private router: Router,
     private changePasswordService: ChangePasswordService,
-    private checkEmailService: EmailExistService
+    private storageService: StorageService
   ) {};
 
   public ChangePasswordForm: FormGroup = new FormGroup ({
@@ -33,7 +34,7 @@ export class ChangePasswordComponent implements OnInit{
         next: (response: ChangePasswordResponse) => {
           if (response.isPasswordChange) {
             alert("Change password successfully")
-            sessionStorage.removeItem("forgot-password-email");
+            this.storageService.removeItem("forgot-password-email");
           }
           if (!response.isPasswordChange) {
             alert("Old and new password can not be the same");

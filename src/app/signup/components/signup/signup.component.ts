@@ -9,6 +9,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { getCookie } from 'typescript-cookie';
 import { GoogleSignUpResponse } from '../../pojo/google-signup-response';
+import { StorageService } from 'src/app/shared/storage/storage.service';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -29,15 +30,16 @@ export class SignupComponent implements OnInit {
   constructor (
     private signUpService: SignupService,
     private serverUrlService: ServerUrlService,
-    private router: Router
+    private router: Router,
+    private storageService: StorageService
   ) {}
 
   private serverUrl: string = this.serverUrlService.getUrl();
 
   ngOnInit(): void {
-    const cookie: string|undefined = getCookie("signup");
+    const cookie: string = getCookie("signup") as string || "";
     console.log(cookie)
-    if (cookie === undefined)  
+    if (cookie === "")  
       alert("No cookie signup")
     else {
       try {
@@ -62,10 +64,10 @@ export class SignupComponent implements OnInit {
       observable.subscribe({
         next: (response: UsernamePasswordSignUpResponse) => {
           console.log(response)
-          console.log("IS SING_UP: " + response.isSignUp)
+          console.log("IS SIGN_UP: " + response.isSignUp)
           if (response.isSignUp) {
             alert("Sign-up OK");
-            localStorage.setItem("confirm_email", email);
+            this.storageService.setItem("confirm_email", email);
             this.router.navigate(["/check-confirm-email-passcode"])
           }
           else {

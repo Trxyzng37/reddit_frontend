@@ -7,6 +7,7 @@ import { PasscodeResponse } from 'src/app/shared/pojo/passcode-response';
 import { DateTimeService } from 'src/app/shared/services/date-time/date-time.service';
 import { PostService } from 'src/app/shared/services/post/post.service';
 import { ServerUrlService } from 'src/app/shared/services/server-url/server-url.service';
+import { StorageService } from 'src/app/shared/storage/storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,13 +15,16 @@ import { ServerUrlService } from 'src/app/shared/services/server-url/server-url.
 export class CheckPasscodeService {
   constructor(
     private postService: PostService,
-    private dateTimeService: DateTimeService
+    private dateTimeService: DateTimeService,
+    private storageService: StorageService
   ) {}
 
   private endpoint: string = "/check-passcode";
 
   checkPasscode(passcode: number): Observable<PasscodeResponse> {
-    const email: string = sessionStorage.getItem("forgot-password-email") as string || "";
+    const email: string = this.storageService.getItem("forgot-password-email");
+    if (email === "")
+      alert("Empty email for check passcode")
     const sendAt: Date = this.dateTimeService.getCurrentDateTime();
     const passcodeRequest: PassCodeRequest = new PassCodeRequest(email, passcode, sendAt);
     const requestBody: string = JSON.stringify(passcodeRequest);

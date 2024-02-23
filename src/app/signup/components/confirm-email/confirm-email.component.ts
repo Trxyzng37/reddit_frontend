@@ -7,6 +7,7 @@ import { PasscodeResponse } from 'src/app/shared/pojo/passcode-response';
 import { ConfirmEmailService } from '../../services/confirm-email/confirm-email.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ResendEmailPasscodeResponse } from '../../pojo/resend-email-passcode-response';
+import { StorageService } from 'src/app/shared/storage/storage.service';
 
 @Component({
   selector: 'app-confirm-email',
@@ -14,17 +15,18 @@ import { ResendEmailPasscodeResponse } from '../../pojo/resend-email-passcode-re
   styleUrl: './confirm-email.component.scss'
 })
 export class ConfirmEmailComponent {
-  public email: string = localStorage.getItem("confirm_email") as string | "";
+  public constructor(
+    private dateTimeService: DateTimeService,
+    private router: Router,
+    private confirmEmailService: ConfirmEmailService,
+    private storageService: StorageService
+  ) {}
 
   public confirmEmailPasscodeForm: any = new FormGroup({
     passcode: new FormControl('', [Validators.pattern("^[0-9]{6}$")])
   })
 
-  public constructor(
-    private dateTimeService: DateTimeService,
-    private router: Router,
-    private confirmEmailService: ConfirmEmailService
-  ) {}
+  public email: string = this.storageService.getItem("email") as string || "xxx@xxx";
 
   public confirmEmailPasscodeFormSubmit() {
     if (this.confirmEmailPasscodeForm.status === "VALID") {
@@ -38,6 +40,7 @@ export class ConfirmEmailComponent {
           else {
             if (response.isPasscodeMatch) {
               alert("Passcode CORRECT");
+              this.storageService.removeItem("confirm_email");
             }
             else 
               alert("Passcode FAIL");

@@ -30,8 +30,8 @@ export class SigninComponent implements OnInit {
 
   //when component first init
   ngOnInit(): void {
-    const cookie: string|undefined = getCookie("GoogleSignIn");
-    if (cookie === undefined)  
+    const cookie: string = getCookie("GoogleSignIn") as string || "";
+    if (cookie === "")  
       alert("No cookie signin")
     else {
       try {
