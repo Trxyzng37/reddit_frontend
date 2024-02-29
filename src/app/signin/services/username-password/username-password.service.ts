@@ -19,6 +19,7 @@ export class UsernamePasswordService {
       const user: UsernamePasswordSignInRequest = new UsernamePasswordSignInRequest(username, password);
       const body: string = JSON.stringify(user);
       const header: HttpHeaders = new HttpHeaders();
+      header.append("Content-Type", "application/json");
       return this.postService.post<UsernamePasswordSignInResponse>(this.endpoint, header, body, false);
     }
 }
