@@ -40,7 +40,8 @@ export class ConfirmEmailComponent {
           else {
             if (response.isPasscodeMatch) {
               alert("Passcode CORRECT");
-              this.storageService.removeItem("confirm_email");
+              this.storageService.removeItem("signup-email");
+              this.router.navigate(["/signup"])
             }
             else 
               alert("Passcode FAIL");
