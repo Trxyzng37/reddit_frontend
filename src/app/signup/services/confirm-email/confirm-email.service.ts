@@ -26,7 +26,7 @@ export class ConfirmEmailService {
   private fullUrl: string = this.serverurl.getUrl() + this.endpoint;
 
   public checkConfirmEmailPasscode(passcode: number): Observable<PasscodeResponse> {
-    const email: string = this.storageService.getItem("confirm_email");
+    const email: string = this.storageService.getItem("signup-email");
     if (email === "")
       alert("Empty email for confirm email");
     const pascode: number = passcode;

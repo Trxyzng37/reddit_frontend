@@ -67,7 +67,7 @@ export class SignupComponent implements OnInit {
           console.log("IS SIGN_UP: " + response.isSignUp)
           if (response.isSignUp) {
             alert("Sign-up OK");
-            this.storageService.setItem("confirm_email", email);
+            this.storageService.setItem("signup-email", email);
             this.router.navigate(["/check-confirm-email-passcode"])
           }
           else {
