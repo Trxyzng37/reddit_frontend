@@ -1,7 +1,9 @@
 
+<img id="main_logo" src="assets/icon/logo.png" alt="logo"/>
+
 <form [formGroup]="PasscodeForm" (ngSubmit)="onSubmit()">
     <p>A pass-code had been send to the email address: {{email}}</p>
     <label id="lbl_passcode" for="input_passcode">Enter pass-code</label>
-    <input id="input_passcode" name="passcode" type="text" formControlName="passcode" required>
+    <input id="input_passcode" name="passcode" type="text" formControlName="passcode" maxlength="6" required>
     <button type="submit" id="btn_submit">Check pass-code</button>
 </form>

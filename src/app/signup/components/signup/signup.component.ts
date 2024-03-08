@@ -35,12 +35,37 @@ export class SignupComponent implements OnInit {
   ) {}
 
   private serverUrl: string = this.serverUrlService.getUrl();
+  public email_status: string = 'INVALID';
+  public username_status: string = 'INVALID';
+  public password_status: string = 'INVALID';
+  public confirm_password_status: string = 'INVALID';
 
   ngOnInit(): void {
+    this.signUpForm.get('email').valueChanges.subscribe( () => {
+      this.email_status = this.signUpForm.get('email').status;
+      console.log("email: ", this.email_status);
+    });
+
+    this.signUpForm.get('username').valueChanges.subscribe( () => {
+      this.username_status = this.signUpForm.get('username').status;
+      console.log("username: ", this.username_status);
+    });
+
+    this.signUpForm.get('password').valueChanges.subscribe( () => {
+      this.password_status = this.signUpForm.get('password').status;
+      console.log("password: ", this.password_status);
+    });
+
+    this.signUpForm.get('confirm_password').valueChanges.subscribe( () => {
+      this.confirm_password_status = this.signUpForm.get('confirm_password').status;
+      console.log("confirm_password: ", this.confirm_password_status);
+    });
+
     const cookie: string = getCookie("signup") as string || "";
     console.log(cookie)
-    if (cookie === "")  
+    if (cookie === "") {
       alert("No cookie signup")
+    }
     else {
       try {
         const signup: GoogleSignUpResponse = JSON.parse(cookie);
