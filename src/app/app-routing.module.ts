@@ -20,7 +20,8 @@ const routes: Routes = [
   { path: 'check-confirm-email-passcode', title: 'check-confirm-email-passcode', component: ConfirmEmailComponent },
   { path: 'home', title: 'home', component: HomeComponent },
   { path: 'error', title:'error', component: ErrorComponent },
-  {path: '', redirectTo: 'signin', pathMatch: 'full'}
+  {path: '', redirectTo: 'signin', pathMatch: 'full'},
+  { path: '**', component: ErrorComponent }
 ];
 
 @NgModule({

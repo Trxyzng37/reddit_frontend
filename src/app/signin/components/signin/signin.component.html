@@ -1,4 +1,5 @@
-<p>Sign in to me</p>
+<img id="main_logo" src="assets/icon/logo.png" alt="logo"/>
+<p class="p">Sign in to me</p>
 <form [formGroup]="signInForm" (ngSubmit)="SignInFormSubmit()">
     <label id="lbl_username" for="username">Username</label>
     <input id="username" name="username" type="text" formControlName="username" required>
@@ -6,11 +7,11 @@
         <label for="password">Password</label>
         <a routerLink="/forgot-password">Forgot password?</a>
     </div>
-    <input id="password" name="password" type="password" formControlName="password">
+    <input id="password" name="password" type="password" formControlName="password" required>
     <button type="submit" id="btnSignIn">Login</button>
 </form>
 
-<p>Or</p>
+<p class="p">Or</p>
 
 <button id="google_login" type="button" (click)="SignInUsingGoogle()">
     <img id="google_logo" src="assets/icon/google.png" alt="google logo"/>

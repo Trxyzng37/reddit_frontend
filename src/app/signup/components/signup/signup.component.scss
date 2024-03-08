@@ -4,18 +4,25 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    // width: 100%;
-    // height: 100%;
-    --signin_length: 300px;
 }
 
 :host > * {
     margin: 10px 0px;
 }
 
+#main_logo {
+    width: 70px;
+    height: 70px;
+}
+
+.p {
+    font-size: large;
+    font-weight: 400;
+}
+
 form {
-    width: var(--signin_length);
-    height: 320px;
+    width: var(--form_length);
+    height: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -25,17 +32,17 @@ form {
     background-color: aliceblue;
 }
 
-form > input[type=text] {
-    margin: 5px 0px 0px 0px;
-    border: 2px solid black;
-    border-radius: 5px;
-    width: 90%;
-    height: 25px;
-    margin-bottom: 10px;
+form > p {
+    align-self: flex-start;
+    position: relative;
+    left: 5%;
+    bottom: 7px;
+    font-size: 13px;
 }
 
-input[type=text] {
-    border: 2px solid black;
+form > input[type=text] {
+    margin: 5px 0px 0px 0px;
+    border: 1px solid black;
     border-radius: 5px;
     width: 90%;
     height: 25px;
@@ -44,7 +51,6 @@ input[type=text] {
 
 input[type=text]:focus {
     border: 2px solid black;
-    border-radius: 5px;
 }
 
 label {
@@ -66,18 +72,19 @@ a {
     height: 30px;
     border: 2px black solid;
     border-radius: 5px;
-    position: relative;
-    top: 3px;
+    // position: relative;
+    margin-top: 5px;
+    margin-bottom: 10px;
 }
 
-p {
+#txt_GoogleSignUp {
     font-size: medium;
 }
 
 #google_login {
     display: flex;
     flex-direction: row;
-    width: var(--signin_length);
+    width: var(--form_length);
     height: auto;
     justify-content: center;
     align-items: center;
@@ -102,4 +109,18 @@ p {
 #signin {
     display: flex;
     justify-content: center;
+}
+
+#lbl_email {
+    margin-top: 10px;
+}
+
+.email_ok, .username_ok, .password_ok, .confirm_password_ok {
+    display: block;
+    color: green;
+}
+
+.email_not_ok, .username_not_ok, .password_not_ok, .confirm_password_not_ok {
+    display: block;
+    color: red;
 }

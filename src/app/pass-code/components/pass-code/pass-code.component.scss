@@ -10,6 +10,11 @@
     margin: 10px 0px;
 }
 
+#main_logo {
+    width: 70px;
+    height: 70px;
+}
+
 form {
     width: var(--signin_length);
     display: flex;
@@ -27,11 +32,18 @@ form > * {
 }
 
 input {
-    border: 2px solid black;
+    border: 1px solid black;
     border-radius: 5px;
-    width: 90%;
-    height: 25px;
+    width: 40%;
+    height: 40px;
     margin-bottom: 10px;
+    text-align: center;
+    font-size: 25px;
+    font-weight: 600;
+}
+
+input:focus {
+    border: 2px solid black;;
 }
 
 #btn_submit {
