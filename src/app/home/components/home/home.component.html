@@ -1,2 +1,40 @@
 
-<button (click)="send()">Send request to server</button>
+<header id="header">
+    <div id="home" img>
+        <a href="/home"><img id="main_logo" src="assets/icon/logo.png" alt="logo"/></a>
+        <a href="/home">TRXYZNG</a>
+    </div>
+
+    <input id="search_box" type="text" placeholder="search"/>
+
+    <div id="signin_signup">
+        <a routerLink="/signin">login</a>
+        <a routerLink="/signup">register</a>
+    </div>
+</header>
+<div id="body">
+    <nav id="side_bar">
+        <nav id="main_navigation" class="flex flex-column">
+            <a href="/home">Home</a>
+            <a href="/home">Popular</a>
+            <a href="/home">All</a>
+        </nav>
+        <nav id="recent_visited_communities">
+            <p-inputSwitch ></p-inputSwitch>       
+            <p-inputMask mask="99-999999" placeholder="99-999999"></p-inputMask>
+            <p-iconField iconPosition="left">
+                <p-inputIcon styleClass="pi pi-search" />
+                <input type="text" pInputText placeholder="Search" />
+            </p-iconField>
+        </nav>
+        <nav id="subscribed_communities"> 
+
+        </nav>
+    </nav>
+    <section id="main_content">
+        2
+    </section>
+    <nav id="recent_activities">
+        3
+    </nav>
+</div>

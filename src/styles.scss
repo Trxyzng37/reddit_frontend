@@ -1,9 +1,19 @@
 
+// @import "primeicons/primeicons.css";
+// @import "primeng/resources/themes/lara-light-blue/theme.css";
+// @import "primeng/resources/primeng.css";
 
-*{
+:root {
+    --header_size: 50px;
+    --form_length: 300px;
+}
+
+* {
     margin: 0px;
     padding: 0px;
     border: 0px;
+    box-sizing: content-box;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
@@ -12,14 +22,19 @@ body {
 }  
 
 app-root {
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    // width: 100%;
-    // height: 100%;
+    display: block;
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: rgb(184, 241, 186);
 }
 
 button:hover {
     cursor: pointer;
+}
+
+a {
+    text-decoration: none;
 }
