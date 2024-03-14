@@ -10,9 +10,21 @@ import { AccessTokenService } from 'src/app/shared/services/access-token/access-
 
 export class HomeComponent implements OnInit {
   private access_token: string;
+  public recent_status: string = 'down';
+  public favorite_status: string = 'down';
 
   constructor(private accessTokenService: AccessTokenService, private http: HttpClient) {
     this.access_token = "";
+  }
+
+  change_recent_status() {
+    this.recent_status = this.recent_status === 'up' ? 'down':'up';
+    console.log(this.recent_status)
+  }
+
+  change_favorite_status() {
+    this.favorite_status = this.favorite_status === 'up' ? 'down':'up';
+    console.log(this.favorite_status)
   }
 
   ngOnInit(): void {

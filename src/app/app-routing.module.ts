@@ -10,6 +10,8 @@ import { ChangePasswordComponent } from './change-password/components/change-pas
 import { ConfirmEmailComponent } from './signup/components/confirm-email/confirm-email.component';
 // import { signinGuard } from './signin/guards/signin.guard';
 import { TestComponent } from './test/test.component';
+import { PostLinkComponent } from './post-link/component/post-link/post-link.component';
+import { PostMainComponent } from './post-main/component/post-main/post-main.component';
 
 const routes: Routes = [
   // { path: 'signin', component: SigninComponent, canActivate: mapToCanActivate([signinGuard])},
@@ -19,7 +21,11 @@ const routes: Routes = [
   { path: 'pass-code', title: 'enter-passcode', component: PassCodeComponent},
   { path: 'change-password', title: 'change-password', component: ChangePasswordComponent},
   { path: 'check-confirm-email-passcode', title: 'check-confirm-email-passcode', component: ConfirmEmailComponent },
-  { path: 'home', title: 'home', component: HomeComponent, children: [{path: 'test', component: TestComponent}] },
+  { path: 'home', title: 'home', component: HomeComponent, 
+    children: [{path: 'test', component: TestComponent}, 
+               {path: 'main-post', component: PostMainComponent, 
+          
+  }]},
   { path: 'test', title: 'test', component: TestComponent },
   { path: 'error', title:'error', component: ErrorComponent },
   {path: '', redirectTo: 'signin', pathMatch: 'full'},
