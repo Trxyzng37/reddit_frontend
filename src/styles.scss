@@ -1,7 +1,7 @@
 
-// @import "primeicons/primeicons.css";
-// @import "primeng/resources/themes/lara-light-blue/theme.css";
-// @import "primeng/resources/primeng.css";
+@import "primeicons/primeicons.css";
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
 
 :root {
     --header_size: 50px;
@@ -35,6 +35,8 @@ button:hover {
     cursor: pointer;
 }
 
-a {
+a, a:visited {
     text-decoration: none;
+    color: black
 }
+
