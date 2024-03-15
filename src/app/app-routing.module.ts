@@ -23,7 +23,7 @@ const routes: Routes = [
   { path: 'check-confirm-email-passcode', title: 'check-confirm-email-passcode', component: ConfirmEmailComponent },
   { path: 'home', title: 'home', component: HomeComponent, 
     children: [{path: 'test', component: TestComponent}, 
-               {path: 'main-post', component: PostMainComponent, 
+               {path: '', component: PostMainComponent, 
           
   }]},
   { path: 'test', title: 'test', component: TestComponent },

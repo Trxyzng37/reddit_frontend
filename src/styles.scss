@@ -6,9 +6,13 @@
 :root {
     --header_size: 50px;
     --form_length: 300px;
+    --scrollbar_size: 10px;
+    --primary_background_color: rgb(240, 247, 180);
+    --margin_home: 2vw;
+    // overflow: hidden;
 }
 
-* {
+html, body, * {
     margin: 0px;
     padding: 0px;
     border: 0px;
@@ -28,7 +32,7 @@ app-root {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(184, 241, 186);
+    background-color: var(--primary_background_color);
 }
 
 button:hover {
@@ -40,3 +44,24 @@ a, a:visited {
     color: black
 }
 
+
+
+
+::-webkit-scrollbar {
+    width: var(--scrollbar_size);
+  }
+  
+  /* background */
+  ::-webkit-scrollbar-track {
+    background: var(--primary_background_color); 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #909090; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #b3b1b1; 
+  }

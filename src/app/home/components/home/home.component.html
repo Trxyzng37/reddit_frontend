@@ -1,4 +1,6 @@
+<!-- <div id="home">
 
+</div> -->
 <header id="header">
     <div id="home" img>
         <a href="/home"><img id="main_logo" src="assets/icon/logo.png" alt="logo"/></a>
@@ -11,51 +13,11 @@
         <a routerLink="/signin">login</a>
         <a routerLink="/signup">register</a>
     </div>
-</header>
-<div id="body">
-    <nav id="navigation_bar">
-        <nav id="main_navigation" class="flex flex-column">
-            <a routerLink="/home"><span class="icon pi pi-home"></span><span>Home</span></a>
-            <a href="/home/test"><span class="icon pi pi-chart-line"></span><span>Popular</span></a>
-            <a href="/home/main-post"><span class="icon pi pi-align-justify"></span><span>All</span></a>
-        </nav>
-        <nav id="recent_visited_communities">
-            <button class="btn_change_status" type="button" (click)="change_recent_status()">
-                <span>Recent</span>
-                <span class="pi btn_icon" [ngClass]="recent_status === 'up' ? 'pi-chevron-up':'pi-chevron-down'"></span>
-            </button>
-            <div [ngStyle]="{'display': recent_status === 'up' ? 'none':'block'}">
-                <a href="/home"><span>Recent visit 1</span></a>
-                <a href="/home"><span>Recent visit 1</span></a>
-                <a href="/home"><span>Recent visit 1</span></a>
-                <a href="/home"><span>Recent visit 1</span></a>
-                <a href="/home"><span>Recent visit 1</span></a>
-            </div>
+</header> 
 
-        </nav>
-        <nav id="subscribed_communities"> 
-            <button class="btn_change_status" type="button" (click)="change_favorite_status()">
-                <span>Favorite</span>
-                <span class="pi btn_icon" [ngClass]="favorite_status === 'up' ? 'pi-chevron-up':'pi-chevron-down'"></span>
-            </button>
-            <div [ngStyle]="{'display': favorite_status === 'up' ? 'none':'block'}">
-                <a href="/home"><span>Favorite 2</span></a>
-                <a href="/home"><span>Favorite 2</span></a>
-                <a href="/home"><span>Favorite 2</span></a>
-                <a href="/home"><span>Favorite 2</span></a>
-                <a href="/home"><span>Favorite 2</span></a>
-                <a href="/home"><span>Favorite 2</span></a>
-                <a href="/home"><span>Favorite 2</span></a>
-                <a href="/home"><span>Favorite 2</span></a>
-                <a href="/home"><span>Favorite 2</span></a>
-                <a href="/home"><span>Favorite 2</span></a>
-                <a href="/home"><span>Favorite 2</span></a>
-            </div>
-        </nav>
-    </nav>
-    <div id="outlet">
-        <router-outlet>
-        </router-outlet>
-    </div>
-
-</div>
+<app-navigation-bar></app-navigation-bar>
+<div id="outlet">
+    <router-outlet>
+    </router-outlet>
+</div> 
+<app-recent-visited-post></app-recent-visited-post>
