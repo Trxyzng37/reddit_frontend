@@ -7,7 +7,7 @@ import { EmailExistService } from 'src/app/forgot-password/services/email-exist/
 import { Observable } from 'rxjs';
 import { ChangePasswordResponse } from '../../pojo/change-password-response';
 import { HttpErrorResponse } from '@angular/common/http';
-import { StorageService } from 'src/app/shared/storage/storage.service';
+import { StorageService } from '../../../shared/storage/storage.service';
 
 @Component({
   selector: 'app-change-password',

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { PostService } from 'src/app/shared/services/post/post.service';
+import { PostService } from '../../../shared/services/post/post.service';
 import { UsernamePasswordSignInRequest } from '../../pojo/username-password-signin-request';
 import { UsernamePasswordSignInResponse } from '../../pojo/username-password-signin-response';
 @Injectable({

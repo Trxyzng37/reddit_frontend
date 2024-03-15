@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { DateTimeService } from 'src/app/shared/services/date-time/date-time.service';
+import { DateTimeService } from '../../../shared/services/date-time/date-time.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { PasscodeResponse } from 'src/app/shared/pojo/passcode-response';
+import { PasscodeResponse } from '../../../shared/pojo/passcode-response';
 import { ConfirmEmailService } from '../../services/confirm-email/confirm-email.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ResendEmailPasscodeResponse } from '../../pojo/resend-email-passcode-response';
-import { StorageService } from 'src/app/shared/storage/storage.service';
+import { StorageService } from '../../../shared/storage/storage.service';
 
 @Component({
   selector: 'app-confirm-email',

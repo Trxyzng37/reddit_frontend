@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Constant } from 'src/app/shared/constants';
+import { Constant } from '../../../shared/constants';
 
 @Injectable({
   providedIn: 'root'

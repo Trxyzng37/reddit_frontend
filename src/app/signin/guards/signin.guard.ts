@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } from '@angular/router';
-import { AccessTokenService } from 'src/app/shared/services/access-token/access-token.service';
+import { AccessTokenService } from '../../../shared/services/access-token/access-token.service';
 
 @Injectable({
   providedIn: 'root'

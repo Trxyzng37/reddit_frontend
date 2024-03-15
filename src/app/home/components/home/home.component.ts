@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, ElementRef, OnInit } from '@angular/core';
-import { AccessTokenService } from 'src/app/shared/services/access-token/access-token.service';
+import { AccessTokenService } from '../../../shared/services/access-token/access-token.service';
 
 @Component({
   selector: 'app-home',

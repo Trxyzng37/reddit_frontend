@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CheckPasscodeService } from '../../services/check-passcode/check-passcode.service';
-import { DateTimeService } from 'src/app/shared/services/date-time/date-time.service';
+import { DateTimeService } from '../../../shared/services/date-time/date-time.service';
 import { Router, RouterLink } from '@angular/router';
 import { Observable } from 'rxjs';
-import { PasscodeResponse } from 'src/app/shared/pojo/passcode-response';
+import { PasscodeResponse } from '../../../shared/pojo/passcode-response';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
