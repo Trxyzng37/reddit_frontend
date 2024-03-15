@@ -1,8 +1,8 @@
 :host {
     height: 100%;
     width: 100%;
-    display: flex;
-    flex-direction: column;
+    // display: flex;
+    // flex-direction: column;
     // overflow: hidden;
 }
 
@@ -97,7 +97,6 @@ app-recent-visited-post {
     right: 0;
     width: 21vw;
     top: var(--header_size);
-    // left: calc(75vw + var(--margin_home)/2);
     right: var(--margin_home);
 }
 

@@ -1,19 +1,20 @@
-:host {
+#wrapper {
     width: 100%;
     height: 100%;
     display: block;
     background-color: rgb(243, 172, 230);
     overflow: hidden;
     scrollbar-gutter: stable;
-    padding-right: var(--scrollbar_size);
-    background-clip: content-box;
+    // padding-right: var(--scrollbar_size);
+    // background-clip: content-box;
     // box-sizing: content-box;
 }
 
-:host:hover {
+#wrapper:hover {
     overflow-y: auto;
 }
 
 a {
     display: block;
+    padding: 10px 0;
 }
