@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {SignupService} from '../../services/username-password-signup/username-password-signup.service'
 import { SamePasswordValidator } from '../../directives/validators/same-password.directive';
-import { ServerUrlService } from 'src/app/shared/services/server-url/server-url.service';
+import { ServerUrlService } from '../../../shared/services/server-url/server-url.service';
 import { UsernamePasswordSignUpResponse } from '../../pojo/username-password-signup-response';
 import { Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { getCookie } from 'typescript-cookie';
 import { GoogleSignUpResponse } from '../../pojo/google-signup-response';
-import { StorageService } from 'src/app/shared/storage/storage.service';
+import { StorageService } from '../../../shared/storage/storage.service';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',

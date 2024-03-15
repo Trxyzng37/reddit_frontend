@@ -1,9 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ServerUrlService } from 'src/app/shared/services/server-url/server-url.service';
+import { ServerUrlService } from '../../../shared/services/server-url/server-url.service';
 import { EmailExistResponse } from '../../pojo/email-exist-response';
-import { GetService } from 'src/app/shared/services/get/get.service';
+import { GetService } from '../../../shared/services/get/get.service';
 
 @Injectable({
   providedIn: 'root'

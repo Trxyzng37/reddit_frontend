@@ -9,10 +9,15 @@
     --scrollbar_size: 10px;
     --primary_background_color: rgb(240, 247, 180);
     --margin_home: 2vw;
-    // overflow: hidden;
+    overflow: hidden;
+    background-color: rgb(103, 19, 193);
+    width: 100%;
+    height: 100%;
 }
 
-html, body, * {
+body { height: 100vh;}
+
+* {
     margin: 0px;
     padding: 0px;
     border: 0px;
@@ -22,13 +27,13 @@ html, body, * {
 
 body {
     width: 100vw;
-    height: 100vh;    
+    height: 100vh;   
 }  
 
 app-root {
     display: block;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;

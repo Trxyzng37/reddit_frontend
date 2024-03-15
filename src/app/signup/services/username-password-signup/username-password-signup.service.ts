@@ -1,10 +1,10 @@
 import {HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ServerUrlService } from 'src/app/shared/services/server-url/server-url.service';
+import { ServerUrlService } from '../../../shared/services/server-url/server-url.service';
 import { UsernamePasswordSignupRequest } from '../../pojo/username-password-signup-request';
 import { UsernamePasswordSignUpResponse } from '../../pojo/username-password-signup-response';
-import { PostService } from 'src/app/shared/services/post/post.service';
+import { PostService } from '../../../shared/services/post/post.service';
 
 @Injectable({
   providedIn: 'root'

@@ -1,10 +1,10 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { PostService } from 'src/app/shared/services/post/post.service';
+import { PostService } from '../../../app/shared/services/post/post.service';
 import { ChangePasswordResponse } from '../pojo/change-password-response';
 import { Observable } from 'rxjs';
 import { ChangePasswordRequest } from '../pojo/change-password-request';
-import { StorageService } from 'src/app/shared/storage/storage.service';
+import { StorageService } from '../../../app/shared/storage/storage.service';
 
 @Injectable({
   providedIn: 'root'

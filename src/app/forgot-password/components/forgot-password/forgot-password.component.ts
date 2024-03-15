@@ -5,7 +5,7 @@ import { EmailExistService } from '../../services/email-exist/check-email.servic
 import { Observable } from 'rxjs';
 import { EmailExistResponse } from '../../pojo/email-exist-response';
 import { HttpErrorResponse } from '@angular/common/http';
-import { StorageService } from 'src/app/shared/storage/storage.service';
+import { StorageService } from '../../../shared/storage/storage.service';
 
 @Component({
   selector: 'app-forgot-password',

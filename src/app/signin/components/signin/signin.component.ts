@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UsernamePasswordService } from '../../services/username-password/username-password.service';
-import { ServerUrlService } from 'src/app/shared/services/server-url/server-url.service';
+import { ServerUrlService } from '../../../shared/services/server-url/server-url.service';
 import { getCookie } from 'typescript-cookie';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';

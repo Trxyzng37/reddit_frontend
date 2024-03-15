@@ -1,14 +1,14 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PassCodeRequest } from 'src/app/shared/pojo/passcode-request';
-import { DateTimeService } from 'src/app/shared/services/date-time/date-time.service';
-import { PostService } from 'src/app/shared/services/post/post.service';
-import { ServerUrlService } from 'src/app/shared/services/server-url/server-url.service';
+import { PassCodeRequest } from '../../../shared/pojo/passcode-request';
+import { DateTimeService } from '../../../shared/services/date-time/date-time.service';
+import { PostService } from '../../../shared/services/post/post.service';
+import { ServerUrlService } from '../../../shared/services/server-url/server-url.service';
 import { ResendEmailPasscodeResponse } from '../../pojo/resend-email-passcode-response';
-import { PasscodeResponse } from 'src/app/shared/pojo/passcode-response';
+import { PasscodeResponse } from '../../../shared/pojo/passcode-response';
 import { ResendEmailPasscodeRequest } from '../../pojo/resend-email-passcode-request';
-import { StorageService } from 'src/app/shared/storage/storage.service';
+import { StorageService } from '../../../shared/storage/storage.service';
 
 @Injectable({
   providedIn: 'root'
