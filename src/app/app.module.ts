@@ -25,7 +25,7 @@ import { PasswordModule } from 'primeng/password';
 import { PostLinkComponent } from './post-link/component/post-link/post-link.component';
 import { PostMainComponent } from './post-main/component/post-main/post-main.component';
 import { RecentVisitedPostComponent } from './recent-visited-post/component/recent-visited-post/recent-visited-post.component';
-
+import { NavigationBarComponent } from './navigation_bar/component/navigation-bar/navigation-bar.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,7 +40,8 @@ import { RecentVisitedPostComponent } from './recent-visited-post/component/rece
     TestComponent,
     PostLinkComponent,
     PostMainComponent,
-    RecentVisitedPostComponent
+    RecentVisitedPostComponent,
+    NavigationBarComponent
   ],
   imports: [
     BrowserModule,

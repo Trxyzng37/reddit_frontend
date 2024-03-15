@@ -1,0 +1,49 @@
+<nav id="navigation_bar">
+    <nav id="main_navigation">
+        <a routerLink="/home"><span class="icon pi pi-home"></span><span>Home</span></a>
+        <a href="/home/test"><span class="icon pi pi-chart-line"></span><span>Popular</span></a>
+        <a href="/home/main-post"><span class="icon pi pi-align-justify"></span><span>All</span></a>
+    </nav>
+    <nav id="recent_visited_communities">
+        <button class="btn_change_status" type="button" (click)="change_recent_status()">
+            <span>Recent</span>
+            <span class="pi btn_icon" [ngClass]="recent_status === 'up' ? 'pi-chevron-down':'pi-chevron-up'"></span>
+        </button>
+        <div [ngStyle]="{'display': recent_status === 'up' ? 'none':'block'}">
+            <a href="/home"><span>Recent visit 1</span></a>
+            <a href="/home"><span>Recent visit 1</span></a>
+            <a href="/home"><span>Recent visit 1</span></a>
+            <a href="/home"><span>Recent visit 1</span></a>
+            <a href="/home"><span>Recent visit 1</span></a>
+            <a href="/home"><span>Recent visit 1</span></a>
+            <a href="/home"><span>Recent visit 1</span></a>
+            <a href="/home"><span>Recent visit 1</span></a>
+            <a href="/home"><span>Recent visit 1</span></a>
+            <a href="/home"><span>Recent visit 1</span></a>
+        </div>
+
+    </nav>
+    <nav id="subscribed_communities"> 
+        <button class="btn_change_status" type="button" (click)="change_favorite_status()">
+            <span>Favorite</span>
+            <span class="pi btn_icon" [ngClass]="favorite_status === 'up' ? 'pi-chevron-down':'pi-chevron-up'"></span>
+        </button>
+        <div [ngStyle]="{'display': favorite_status === 'up' ? 'none':'block'}">
+            <a href="/home"><span>Favorite 2</span></a>
+            <a href="/home"><span>Favorite 2</span></a>
+            <a href="/home"><span>Favorite 2</span></a>
+            <a href="/home"><span>Favorite 2</span></a>
+            <a href="/home"><span>Favorite 2</span></a>
+            <a href="/home"><span>Favorite 2</span></a>
+            <a href="/home"><span>Favorite 2</span></a>
+            <a href="/home"><span>Favorite 2</span></a>
+            <a href="/home"><span>Favorite 2</span></a>
+            <a href="/home"><span>Favorite 2</span></a>
+            <a href="/home"><span>Favorite 2</span></a>
+        </div>
+    </nav>
+    <nav>
+        <a href="/home"><span>All communities</span></a>
+    </nav>
+    <p id="trademark">TRXYZNG 2024</p>
+</nav>
