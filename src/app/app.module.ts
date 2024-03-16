@@ -14,18 +14,12 @@ import { PassCodeComponent } from './pass-code/components/pass-code/pass-code.co
 import { ChangePasswordComponent } from './change-password/components/change-password/change-password.component';
 import { ConfirmEmailComponent } from './signup/components/confirm-email/confirm-email.component';
 import { TestComponent } from './test/test.component';
-import { IconFieldModule } from 'primeng/iconfield';
-import { InputIconModule } from 'primeng/inputicon';
-import { FloatLabelModule } from 'primeng/floatlabel';
-import { InputSwitchModule } from 'primeng/inputswitch';
-import { InputMaskModule } from 'primeng/inputmask';
-import { SplitButtonModule } from 'primeng/splitbutton';
-import { AccordionModule } from 'primeng/accordion';
-import { PasswordModule } from 'primeng/password';
 import { PostLinkComponent } from './post-link/component/post-link/post-link.component';
 import { PostMainComponent } from './post-main/component/post-main/post-main.component';
 import { RecentVisitedPostComponent } from './recent-visited-post/component/recent-visited-post/recent-visited-post.component';
 import { NavigationBarComponent } from './navigation_bar/component/navigation-bar/navigation-bar.component';
+import { QuillModule } from 'ngx-quill';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,13 +42,7 @@ import { NavigationBarComponent } from './navigation_bar/component/navigation-ba
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    IconFieldModule,
-    InputIconModule,
-    InputSwitchModule,
-    InputMaskModule,
-    SplitButtonModule,
-    AccordionModule,
-    PasswordModule
+    QuillModule
   ],
   providers: [],
   bootstrap: [AppComponent]

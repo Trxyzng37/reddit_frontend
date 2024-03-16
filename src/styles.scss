@@ -2,14 +2,17 @@
 @import "primeicons/primeicons.css";
 @import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeng/resources/primeng.css";
+@import '~quill/dist/quill.bubble.css';
 
 :root {
     --header_size: 50px;
     --form_length: 300px;
     --scrollbar_size: 10px;
-    --primary_background_color: rgb(240, 247, 180);
+    --primary_background_color: rgb(157, 243, 185);
+    --primary_background_color_hover: rgb(68, 216, 117);
     --margin_home: 2vw;
     --post_width: 50vw;
+    --post-header-height: 40px;
     // overflow: hidden;
 }
 
