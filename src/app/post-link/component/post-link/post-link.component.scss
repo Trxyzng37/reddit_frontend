@@ -1,15 +1,48 @@
+//control post width and height
 :host {
     width: 70%;
-    height: 300px;
+    height: auto;
     display: block;
-    --bar-height: 40px
+    box-sizing: border-box;
 }
 
 #post_block {
     width: 100%;
     height: 100%;
-    background-color: rgb(161, 239, 239);
+    background-color: var(--primary_background_color);
+    padding: 5px 10px;
+    margin: 5px 0;
+    border-radius: 10px;
+}
+
+#post_block:hover {
+    background-color: var(--primary_background_color_hover);
+}
+
+#post_block > *:not(:last-child)  {
+    margin-bottom: 10px;
+    padding: 0 10px;
+}
+
+hr {
     border-top: 1px solid black;
+    width: calc(100% + 20px);
+}
+
+#main_content {
+    margin-top: 5px;
+}
+
+#main_content > * {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical; 
+}
+
+#main_content > p {
+    -webkit-line-clamp: 3;
 }
 
 #post_block:hover {
@@ -17,8 +50,8 @@
 }
 
 img {
-    width: var(--bar-height);
-    height: var(--bar-height);
+    width: var(--post-header-height);
+    height: var(--post-header-height);
     border-radius: 50%;
 }
 
@@ -32,15 +65,7 @@ a:hover {
     justify-content: space-between;
     align-items: center;
     width: auto;
-    height: var(--bar-height);
-}
-
-#community_bar:first-child {
-    padding-left: 10px;
-}
-
-#community_bar:last-child {
-    padding-right: 10px;
+    height: var(--post-header-height);
 }
 
 #community_block {
@@ -57,6 +82,50 @@ a:hover {
     align-items: center;
 }
 
-#community_block span {
-    padding-left: 5px;
+
+
+#footer {
+    width: 100%;
+    height: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
 }
+
+#footer > * {
+    width: auto;
+    height: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: var(--primary_background_color);
+    margin-right: 10px;
+    border-radius: 20px;
+}
+
+#btn_comment, #btn_share {
+    padding: 0px 5px;
+}
+
+#btn_upvote, #btn_downvote {
+    padding: 5px 5px;
+    border-radius: 20px;
+
+}
+
+#btn_comment > p, #btn_share > p {
+    padding: 0px 5px;
+}
+
+button {
+    background-color: var(--primary_background_color);
+}
+
+#footer > button:hover, button:hover {
+    background-color: rgb(99, 122, 239);
+}
+
+
+
