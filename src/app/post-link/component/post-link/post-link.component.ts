@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,7 +11,10 @@ export class PostLinkComponent {
     private router: Router
   ) {}
 
+  @Input() test_string: number = 0;
+
+
   on_click() {
-    this.router.navigate(["/home"]);
+    this.router.navigate(["id/" + this.test_string]);
   }
 }

@@ -24,9 +24,9 @@ const routes: Routes = [
   { path: 'home', title: 'home', component: HomeComponent, 
     children: [{path: 'test', component: TestComponent}, 
                {path: '', component: PostMainComponent, 
-          
   }]},
   { path: 'test', title: 'test', component: TestComponent },
+  { path: 'id/:id', title: 'test', component: PostLinkComponent },
   { path: 'error', title:'error', component: ErrorComponent },
   {path: '', redirectTo: 'signin', pathMatch: 'full'},
   { path: '**', component: ErrorComponent }
