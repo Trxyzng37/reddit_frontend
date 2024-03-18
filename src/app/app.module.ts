@@ -19,6 +19,7 @@ import { PostLinkComponent } from './post-link/component/post-link/post-link.com
 import { PostMainComponent } from './post-main/component/post-main/post-main.component';
 import { RecentVisitedPostComponent } from './recent-visited-post/component/recent-visited-post/recent-visited-post.component';
 import { NavigationBarComponent } from './navigation_bar/component/navigation-bar/navigation-bar.component';
+import { HeaderBarComponent } from './header_bar/component/header-bar/header-bar.component';
 import { QuillModule } from 'ngx-quill';
 
 @NgModule({
@@ -36,7 +37,8 @@ import { QuillModule } from 'ngx-quill';
     PostLinkComponent,
     PostMainComponent,
     RecentVisitedPostComponent,
-    NavigationBarComponent
+    NavigationBarComponent,
+    HeaderBarComponent
   ],
   imports: [
     BrowserModule,

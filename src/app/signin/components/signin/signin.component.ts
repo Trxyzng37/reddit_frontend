@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { GoogleSignInResponse } from '../../pojo/google-signin-response';
 import { UsernamePasswordSignInResponse } from '../../pojo/username-password-signin-response';
+import { StorageService } from 'src/app/shared/storage/storage.service';
 
 @Component({
   selector: 'app-signin',
@@ -20,6 +21,7 @@ export class SigninComponent implements OnInit {
     private usernamePasswordService: UsernamePasswordService, 
     private serverUrlService: ServerUrlService,
     private router: Router,
+    private storageService: StorageService
   ) {}
 
   private serverUrl: string = this.serverUrlService.getUrl();
@@ -63,6 +65,7 @@ export class SigninComponent implements OnInit {
         next: (response: UsernamePasswordSignInResponse) => {
           if (response.isSignIn) {
             alert("login ok using username-password");
+            this.storageService.setItem("isSignIn", "true");
           }
           if (response.passwordError) {
             alert("Wrong password for user");

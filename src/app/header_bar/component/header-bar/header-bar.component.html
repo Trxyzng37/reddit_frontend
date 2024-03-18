@@ -5,7 +5,7 @@
         <a href="/home">TRXYZNG</a>
     </div>
 
-    <input id="search_box" type="text" placeholder="search"/>
+    <input id="search_box" type="text" placeholder="search" #input (change)="onChange(input.value)" (input)="onChange(input.value)"/>
 
     <div id="signin_signup_block" [ngStyle]="{'display': isSignIn === true ? 'none':'flex'}">
         <a routerLink="/signin" title="login">login</a>
