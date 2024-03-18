@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { SignupComponent } from './signup/components/signup/signup.component';
 import { ErrorComponent } from './error/error.component';
@@ -42,7 +43,8 @@ import { QuillModule } from 'ngx-quill';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    QuillModule
+    QuillModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
