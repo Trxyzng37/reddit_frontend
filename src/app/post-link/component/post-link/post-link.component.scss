@@ -1,18 +1,14 @@
-//control post width and height
-:host {
-    width: 70%;
-    height: auto;
-    display: block;
-    box-sizing: border-box;
-}
+
 
 #post_block {
     width: 100%;
-    height: 100%;
+    height: auto;
     background-color: var(--primary_background_color);
     padding: 5px 10px;
     margin: 5px 0;
     border-radius: 10px;
+    display: block;
+    box-sizing: border-box;
 }
 
 #post_block:hover {
@@ -26,7 +22,7 @@
 
 hr {
     border-top: 1px solid black;
-    width: calc(100% + 20px);
+    width: 100%;
 }
 
 #main_content {
