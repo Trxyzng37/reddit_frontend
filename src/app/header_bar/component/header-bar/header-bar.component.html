@@ -1,0 +1,18 @@
+
+<header id="header">
+    <div id="main_logo_block" img>
+        <a href="/home"><img id="main_logo" src="assets/icon/logo.png" alt="logo"/></a>
+        <a href="/home">TRXYZNG</a>
+    </div>
+
+    <input id="search_box" type="text" placeholder="search"/>
+
+    <div id="signin_signup_block" [ngStyle]="{'display': isSignIn === true ? 'none':'flex'}">
+        <a routerLink="/signin" title="login">login</a>
+        <a routerLink="/signup" title="register">register</a>
+    </div>
+
+    <div id="logged_in_block" [ngStyle]="{'display': isSignIn === true ? 'flex':'none'}">
+        <button type="button"><img id="user_logo" src="../../../../assets/icon/helldiver.jpg" title="open profile menu" (click)="onClick()"/></button>
+    </div>
+</header> 
