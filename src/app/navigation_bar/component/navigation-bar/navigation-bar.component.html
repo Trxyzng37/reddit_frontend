@@ -10,7 +10,7 @@
             <span class="pi btn_icon" [ngClass]="recent_status === 'up' ? 'pi-chevron-down':'pi-chevron-up'"></span>
         </button>
         <div [ngStyle]="{'display': recent_status === 'up' ? 'none':'block'}">
-            <a *ngFor="let recent_community of recent_visited_communities_list" href="/{{recent_community.name}}"><img id="img_community_icon" src="{{recent_community.icon}}" alt="test"/><pre>r/{{recent_community.name}}</pre></a>
+            <a *ngFor="let recent_community of recent_visited_communities_list" routerLink="/r/{{recent_community.name}}"><img id="img_community_icon" src="{{recent_community.icon}}" alt="test"/><pre>r/{{recent_community.name}}</pre></a>
         </div>
 
     </nav>

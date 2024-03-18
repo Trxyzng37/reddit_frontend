@@ -12,8 +12,9 @@
 
 #post_list {
     width: var(--post_width);
-    margin-left: calc(var(--margin_home) + 2vw);
+    margin-left: calc(var(--margin_home) + 3vw);
     margin-top: 50px;
+    box-sizing: border-box;
 }
 
 app-post-link {

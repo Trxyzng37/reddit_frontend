@@ -12,6 +12,8 @@ export class HeaderBarComponent {
   ) {}
 
   public isSignIn: boolean = false;
+  public search_value: string = 'search_value';
+  private arr: string[] = ["aaa", "Abc", "bcd", "def", "jil", "ghi abc"];
 
   ngOnInit() {
     this.storageService.setItem("isSignIn", "true");
@@ -22,5 +24,25 @@ export class HeaderBarComponent {
   onClick() {
     this.isSignIn = !this.isSignIn;
     console.log(this.storageService.getItem("isSignIn"))
+  }
+
+
+
+  // Filter(value: string): string[] {
+  //   const result: string[] = [];
+  //   for (let i=0; i<value.length; i++) {
+  //     const search_char = value[i];
+  //     if (this.arr[i].toLowerCase() == search_char) {
+  //       result.push(this.arr[i]);
+  //     }
+  //   }
+  //   return result;
+  // }
+
+  onChange(value: string) {
+    this.search_value = value;
+    console.log(this.search_value);
+    alert(this.arr.filter(a => a.toLowerCase().includes(value)));
+    // console.log(this.arr.filter(this.Filter))
   }
 }

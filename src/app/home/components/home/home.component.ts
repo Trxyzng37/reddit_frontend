@@ -31,16 +31,7 @@ export class HomeComponent implements OnInit {
     console.log(this.favorite_status)
   }
 
-  isOverflown() {
-    const element: any = document.getElementById("home");
-    console.log(element.scrollHeight > element.clientHeight && element.scrollWidth > element.clientWidth);
-    console.log(element.scrollHeight)
-    console.log(element.clientHeight)
-
-  }
-
   ngOnInit(): void {
-    this.isOverflown();
     // this.accessTokenService.get_access_token_from_server().subscribe({
     //   next: (response) => {
     //     this.accessTokenService.set_access_token(response);
