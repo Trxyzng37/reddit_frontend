@@ -10,14 +10,9 @@
     box-sizing: border-box;
 }
 
-#main_block {
-    width: 100%;
-    display: block;
-}
-
 #post_list {
     width: var(--post_width);
-    margin-left: calc(var(--margin_home));
+    margin-left: calc(var(--margin_home) + 2vw);
     margin-top: 50px;
 }
 
