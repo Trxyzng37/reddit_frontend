@@ -5,7 +5,12 @@
         <a href="/home">TRXYZNG</a>
     </div>
 
-    <input id="search_box" type="text" placeholder="search" #input (change)="onChange(input.value)" (input)="onChange(input.value)"/>
+    <div id="search_block">
+        <input id="search_box" type="text" placeholder="search" #input (change)="onChange(input.value)" (input)="onChange(input.value)" (focus)="onFocus()"/>
+        <div id="search_result_list" [ngStyle]="{'display': isFocus === true ? 'block':'none'}">
+            <a class="search_result_link" routerLink="/{{i}}" *ngFor="let i of search_result"><img class="seach_result_icon" src="../../../../assets/icon/technology.png"/>{{i}}</a>
+        </div>
+    </div>
 
     <div id="signin_signup_block" [ngStyle]="{'display': isSignIn === true ? 'none':'flex'}">
         <a routerLink="/signin" title="login">login</a>
@@ -13,6 +18,7 @@
     </div>
 
     <div id="logged_in_block" [ngStyle]="{'display': isSignIn === true ? 'flex':'none'}">
+        <button type="button"><img id="user_logo" src="../../../../assets/icon/helldiver.jpg" title="open profile menu" (click)="onClick()"/></button>
         <button type="button"><img id="user_logo" src="../../../../assets/icon/helldiver.jpg" title="open profile menu" (click)="onClick()"/></button>
     </div>
 </header> 

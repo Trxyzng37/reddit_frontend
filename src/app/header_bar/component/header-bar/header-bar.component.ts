@@ -13,7 +13,8 @@ export class HeaderBarComponent {
 
   public isSignIn: boolean = false;
   public search_value: string = 'search_value';
-  private arr: string[] = ["aaa", "Abc", "bcd", "def", "jil", "ghi abc"];
+  public search_result: string[] = [];
+  private arr: string[] = ["aaa", "Abc", "bcd", "def", "art", "avail", "aeo", "jil", "ghi abc", "valve", "ass", "anomoly", "dawn", "browser", "ack", "saw", "Ask", "Aww", "Ass"];
 
   ngOnInit() {
     this.storageService.setItem("isSignIn", "true");
@@ -26,23 +27,17 @@ export class HeaderBarComponent {
     console.log(this.storageService.getItem("isSignIn"))
   }
 
-
-
-  // Filter(value: string): string[] {
-  //   const result: string[] = [];
-  //   for (let i=0; i<value.length; i++) {
-  //     const search_char = value[i];
-  //     if (this.arr[i].toLowerCase() == search_char) {
-  //       result.push(this.arr[i]);
-  //     }
-  //   }
-  //   return result;
-  // }
-
   onChange(value: string) {
     this.search_value = value;
-    console.log(this.search_value);
-    alert(this.arr.filter(a => a.toLowerCase().includes(value)));
-    // console.log(this.arr.filter(this.Filter))
+    if (value === '')
+      this.search_result = [];
+    else
+      this.search_result = this.arr.filter(a => a.startsWith(value));
+    this.search_result = this.search_result.slice(0, 5);
+  }
+
+  isFocus:boolean = false; 
+  onFocus() {
+    this.isFocus = true;
   }
 }
