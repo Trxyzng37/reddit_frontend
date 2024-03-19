@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Constant } from '../../../shared/constants';
-
+import { environment } from '../../../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
@@ -8,7 +7,7 @@ export class ServerUrlService {
   private url: string;
   
   constructor() { 
-    this.url = `${Constant.PROTOCOL}://${Constant.IP_ADDRESS}:${Constant.PORT}`;
+    this.url = `${environment.PROTOCOL}://${environment.IP_ADDRESS}:${environment.PORT}`;
   }
 
   getUrl(): string {
