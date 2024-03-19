@@ -6,8 +6,8 @@
     </div>
 
     <div id="search_block">
-        <input id="search_box" type="text" placeholder="search" #input (change)="onChange(input.value)" (input)="onChange(input.value)" (focus)="onFocus()"/>
-        <div id="search_result_list" [ngStyle]="{'display': isFocus === true ? 'block':'none'}">
+        <input id="search_box" type="text" placeholder="search" #input (input)="onChange(input.value)"/>
+        <div id="search_result_list">
             <a class="search_result_link" routerLink="/{{i}}" *ngFor="let i of search_result"><img class="seach_result_icon" src="../../../../assets/icon/technology.png"/>{{i}}</a>
         </div>
     </div>
