@@ -28,7 +28,7 @@ const routes: Routes = [
   { path: 'test', title: 'test', component: TestComponent },
   { path: 'id/:id', title: 'test', component: PostLinkComponent },
   { path: 'error', title:'error', component: ErrorComponent },
-  {path: '', redirectTo: 'signin', pathMatch: 'full'},
+  {path: '', redirectTo: 'home', pathMatch: 'full'},
   { path: '**', component: ErrorComponent }
 ];
 
