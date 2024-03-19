@@ -67,6 +67,10 @@
     padding: 12px 20px 12px 30px;
 }
 
+#search_block:not(:focus-within) #search_result_list {
+    display: none;
+}
+
 #search_result_list {
     display: block;
     width: 100%;

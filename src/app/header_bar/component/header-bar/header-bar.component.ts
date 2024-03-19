@@ -35,9 +35,4 @@ export class HeaderBarComponent {
       this.search_result = this.arr.filter(a => a.startsWith(value));
     this.search_result = this.search_result.slice(0, 5);
   }
-
-  isFocus:boolean = false; 
-  onFocus() {
-    this.isFocus = true;
-  }
 }
