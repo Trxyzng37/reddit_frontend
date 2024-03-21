@@ -4,6 +4,8 @@ import { StorageService } from 'src/app/shared/storage/storage.service';
 import { Communities } from '../../service/pojo/communities';
 import { SearchCommunitiesService } from '../../service/search-communites/search-communities.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { UserProfile } from '../../service/pojo/user-profile';
+import { SearchUserProfileService } from '../../service/search-user-profile/search-user-profile.service';
 
 @Component({
   selector: 'app-header-bar',
@@ -13,12 +15,13 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class HeaderBarComponent {
   public constructor(
     private storageService: StorageService,
-    private searchCommunitiesService: SearchCommunitiesService
+    private searchCommunitiesService: SearchCommunitiesService,
+    private searchUserProfileService: SearchUserProfileService
   ) {}
 
   public isSignIn: boolean = false;
-  public search_result: Communities[] = [];
-  private arr: string[] = ["aaa", "Abc", "bcd", "def", "art", "avail", "aeo", "jil", "ghi abc", "valve", "ass", "anomoly", "dawn", "browser", "ack", "saw", "Ask", "Aww", "Ass"];
+  public communities_result: Communities[] = [];
+  public user_profile_result: UserProfile[] = [];
 
   ngOnInit() {
     this.storageService.setItem("isSignIn", "true");
@@ -33,12 +36,19 @@ export class HeaderBarComponent {
 
   onChange(value: string) {
     if (value !== " " && value !== "") {
-      const observable: Observable<Communities[]> = this.searchCommunitiesService.searchCommunities(value);
-      observable.subscribe({
+      this.searchCommunitiesService.searchCommunities(value).subscribe({
         next: (response: Communities[]) => {
-          console.log(value.toUpperCase())
           console.log(response)
-          this.search_result = response;
+          this.communities_result = response;
+        },
+        error: (e: HttpErrorResponse) => {
+          console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
+        }
+      })
+      this.searchUserProfileService.searchUserProfile(value).subscribe({
+        next: (response: UserProfile[]) => {
+          console.log(response)
+          this.user_profile_result = response;
         },
         error: (e: HttpErrorResponse) => {
           console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
@@ -46,7 +56,8 @@ export class HeaderBarComponent {
       })
     }
     else {
-      this.search_result = [];
+      this.communities_result = [];
+      this.user_profile_result = [];
     }
   }
 
