@@ -8,8 +8,17 @@
     <div id="search_block">
         <input id="search_box" type="text" placeholder="search" #input (input)="onChange(input.value)"/>
         <div id="search_result_list">
+            <p class="communities_id" [ngStyle]="{'display': search_result.length > 0 ? 'block':'none'}">Communities</p>
             <a class="search_result_link" routerLink="/{{i.name}}" *ngFor="let i of search_result">
-                <img class="seach_result_icon" src="../../../../assets/icon/technology.png"/>
+                <img class="seach_result_icon" src={{i.icon_base64}}/>
+                <div>
+                    <p id="community_name">r/{{i.name}}</p>
+                    <p id="member_count">{{i.subscriber_count}} members</p>
+                </div>
+            </a>
+            <p class="communities_id" [ngStyle]="{'display': search_result.length > 0 ? 'block':'none'}">People</p>
+            <a class="search_result_link" routerLink="/{{i.name}}" *ngFor="let i of search_result">
+                <img class="seach_result_icon" src={{i.icon_base64}}/>
                 <div>
                     <p id="community_name">r/{{i.name}}</p>
                     <p id="member_count">{{i.subscriber_count}} members</p>
