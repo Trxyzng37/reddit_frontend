@@ -1,12 +1,10 @@
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { EmailExistService } from 'src/app/forgot-password/services/email-exist/check-email.service';
 import { PassCodeRequest } from '../../../shared/pojo/passcode-request';
 import { PasscodeResponse } from '../../../shared/pojo/passcode-response';
 import { DateTimeService } from '../../../shared/services/date-time/date-time.service';
 import { PostService } from '../../../shared/services/post/post.service';
-import { ServerUrlService } from '../../../shared/services/server-url/server-url.service';
 import { StorageService } from '../../../shared/storage/storage.service';
 
 @Injectable({
