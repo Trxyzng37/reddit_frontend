@@ -8,20 +8,20 @@
     <div id="search_block">
         <input id="search_box" type="text" placeholder="search" #input (input)="onChange(input.value)"/>
         <div id="search_result_list">
-            <p class="communities_id" [ngStyle]="{'display': search_result.length > 0 ? 'block':'none'}">Communities</p>
-            <a class="search_result_link" routerLink="/{{i.name}}" *ngFor="let i of search_result">
+            <p class="communities_id" [ngStyle]="{'display': communities_result.length > 0 ? 'block':'none'}">Communities</p>
+            <a class="search_result_link" routerLink="/{{i.name}}" *ngFor="let i of communities_result">
                 <img class="seach_result_icon" src={{i.icon_base64}}/>
                 <div>
                     <p id="community_name">r/{{i.name}}</p>
                     <p id="member_count">{{i.subscriber_count}} members</p>
                 </div>
             </a>
-            <p class="communities_id" [ngStyle]="{'display': search_result.length > 0 ? 'block':'none'}">People</p>
-            <a class="search_result_link" routerLink="/{{i.name}}" *ngFor="let i of search_result">
+            <p class="communities_id" [ngStyle]="{'display': user_profile_result.length > 0 ? 'block':'none'}">People</p>
+            <a class="search_result_link" routerLink="/{{i.name}}" *ngFor="let i of user_profile_result">
                 <img class="seach_result_icon" src={{i.icon_base64}}/>
                 <div>
                     <p id="community_name">r/{{i.name}}</p>
-                    <p id="member_count">{{i.subscriber_count}} members</p>
+                    <p id="member_count">{{i.karma}} members</p>
                 </div>
             </a>
         </div>
