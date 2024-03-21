@@ -1,7 +1,6 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ServerUrlService } from '../../../shared/services/server-url/server-url.service';
 import { EmailExistResponse } from '../../pojo/email-exist-response';
 import { GetService } from '../../../shared/services/get/get.service';
 
