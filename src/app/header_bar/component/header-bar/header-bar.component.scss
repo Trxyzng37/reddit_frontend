@@ -140,7 +140,7 @@
     align-items: center;
 }
 
-#logged_in_block > *, #user_logo, .seach_result_icon {
+#logged_in_block > button, #user_logo, .seach_result_icon {
     width: 30px;
     height: 30px;
     border-radius: 50%;
@@ -153,4 +153,13 @@
 .seach_result_icon {
     margin-left: 20px;
     margin-right: 10px;
+}
+
+#menu {
+    height: 200px;
+    width: 200px;
+    background-color: aquamarine;
+    position: absolute;
+    top: 50px;
+    right: 20px;
 }
