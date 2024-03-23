@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { StorageService } from 'src/app/shared/storage/storage.service';
 import { Communities } from '../../service/pojo/communities';
@@ -11,20 +11,24 @@ import { SearchUserProfileService } from '../../service/search-user-profile/sear
   selector: 'app-header-bar',
   templateUrl: './header-bar.component.html',
   styleUrl: './header-bar.component.scss'
+  // ,host: {
+  //   '(document:click)': 'closeProfileMenu($event)',
+  // }
 })
 export class HeaderBarComponent {
   public constructor(
     private storageService: StorageService,
     private searchCommunitiesService: SearchCommunitiesService,
-    private searchUserProfileService: SearchUserProfileService
+    private searchUserProfileService: SearchUserProfileService,
+    private element: ElementRef,
   ) {}
 
   public isSignIn: boolean = false;
+  public isProfileMenuOpen: boolean = false;
   public communities_result: Communities[] = [];
   public user_profile_result: UserProfile[] = [];
 
   ngOnInit() {
-    this.storageService.setItem("isSignIn", "true");
     this.isSignIn = this.storageService.getItem("isSignIn") === "true" ? true:false;
     console.log(this.storageService.getItem("isSignIn"))
   }
@@ -61,5 +65,20 @@ export class HeaderBarComponent {
     }
   }
 
+  openProfileMenu(event: Event) {
+    this.isProfileMenuOpen = !this.isProfileMenuOpen;
+    console.log(this.isProfileMenuOpen)
+    event.stopPropagation();
+  }
 
+  // @ViewChild('menu') menu:any;
+  @HostListener('document:click', ['$event'])
+  closeProfileMenu(event: Event) {
+    if (!this.element.nativeElement.contains(event.target)) {
+      this.isProfileMenuOpen = false;
+      console.log(this.isProfileMenuOpen)
+    }
+    else 
+      this.isProfileMenuOpen = false;
+  }
 }
