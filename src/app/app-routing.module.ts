@@ -12,6 +12,7 @@ import { ConfirmEmailComponent } from './signup/components/confirm-email/confirm
 import { TestComponent } from './test/test.component';
 import { PostLinkComponent } from './post-link/component/post-link/post-link.component';
 import { PostMainComponent } from './post-main/component/post-main/post-main.component';
+import { PostLinkListComponent } from './post-link-list/component/post-link-list/post-link-list.component';
 
 const routes: Routes = [
   // { path: 'signin', component: SigninComponent, canActivate: mapToCanActivate([signinGuard])},
@@ -21,14 +22,20 @@ const routes: Routes = [
   { path: 'pass-code', title: 'enter-passcode', component: PassCodeComponent},
   { path: 'change-password', title: 'change-password', component: ChangePasswordComponent},
   { path: 'check-confirm-email-passcode', title: 'check-confirm-email-passcode', component: ConfirmEmailComponent },
-  { path: 'home', title: 'home', component: HomeComponent, 
-    children: [{path: 'test', component: TestComponent}, 
-               {path: '', component: PostMainComponent, 
-  }]},
+  { path: '', title: 'home', component: HomeComponent, 
+    children: [
+      {path: 'test', component: TestComponent}, 
+      {path: '', component: PostMainComponent,
+      children: [
+        {path: '', title: 'trxyzng', component: PostLinkListComponent},
+        {path: 'id/:post_id', title: 'post-id', component: PostLinkComponent}
+      ]
+      },
+    ]
+  },
   { path: 'test', title: 'test', component: TestComponent },
-  { path: 'id/:id', title: 'test', component: PostLinkComponent },
   { path: 'error', title:'error', component: ErrorComponent },
-  {path: '', redirectTo: 'home', pathMatch: 'full'},
+  // {path: '', redirectTo: 'home', pathMatch: 'full'},
   { path: '**', component: ErrorComponent }
 ];
 
