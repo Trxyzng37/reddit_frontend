@@ -16,6 +16,7 @@ import { ChangePasswordComponent } from './change-password/components/change-pas
 import { ConfirmEmailComponent } from './signup/components/confirm-email/confirm-email.component';
 import { TestComponent } from './test/test.component';
 import { PostLinkComponent } from './post-link/component/post-link/post-link.component';
+import { PostLinkListComponent } from './post-link-list/component/post-link-list/post-link-list.component';
 import { PostMainComponent } from './post-main/component/post-main/post-main.component';
 import { RecentVisitedPostComponent } from './recent-visited-post/component/recent-visited-post/recent-visited-post.component';
 import { NavigationBarComponent } from './navigation_bar/component/navigation-bar/navigation-bar.component';
@@ -38,7 +39,8 @@ import { QuillModule } from 'ngx-quill';
     PostMainComponent,
     RecentVisitedPostComponent,
     NavigationBarComponent,
-    HeaderBarComponent
+    HeaderBarComponent,
+    PostLinkListComponent
   ],
   imports: [
     BrowserModule,

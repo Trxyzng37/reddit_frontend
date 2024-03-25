@@ -1,0 +1,9 @@
+
+<app-post-link *ngFor="let post of post_result;" 
+                    [post_id]="post.post_id"
+                    [community_id]="post.community_id"
+                    [uid]="post.uid"
+                    [created_at]="post.created_at"
+                    [vote]="post.vote"
+>
+</app-post-link>
