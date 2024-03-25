@@ -11,10 +11,14 @@ export class PostLinkComponent {
     private router: Router
   ) {}
 
-  @Input() test_string: number = 0;
+  @Input() post_id: number = 0;
+  @Input() community_id: number = 0;
+  @Input() uid: number = 0;
+  @Input() created_at: string = "";
+  @Input() vote: number = 1;
 
 
   on_click() {
-    this.router.navigate(["id/" + this.test_string]);
+    this.router.navigate(["/id/" + this.post_id]);
   }
 }
