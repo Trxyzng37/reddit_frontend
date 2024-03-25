@@ -6,6 +6,7 @@ import { SearchCommunitiesService } from '../../service/search-communites/search
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserProfile } from '../../service/pojo/user-profile';
 import { SearchUserProfileService } from '../../service/search-user-profile/search-user-profile.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header-bar',
@@ -21,6 +22,7 @@ export class HeaderBarComponent {
     private searchCommunitiesService: SearchCommunitiesService,
     private searchUserProfileService: SearchUserProfileService,
     private element: ElementRef,
+    private router: Router
   ) {}
 
   public isSignIn: boolean = false;
@@ -31,6 +33,7 @@ export class HeaderBarComponent {
   ngOnInit() {
     this.isSignIn = this.storageService.getItem("isSignIn") === "true" ? true:false;
     console.log(this.storageService.getItem("isSignIn"))
+    this.storageService.setItem("isSignIn", "true");
   }
 
   onClick() {
@@ -67,18 +70,18 @@ export class HeaderBarComponent {
 
   openProfileMenu(event: Event) {
     this.isProfileMenuOpen = !this.isProfileMenuOpen;
-    console.log(this.isProfileMenuOpen)
+    console.log("profile meneu open")
     event.stopPropagation();
   }
 
-  // @ViewChild('menu') menu:any;
   @HostListener('document:click', ['$event'])
   closeProfileMenu(event: Event) {
-    if (!this.element.nativeElement.contains(event.target)) {
       this.isProfileMenuOpen = false;
-      console.log(this.isProfileMenuOpen)
-    }
-    else 
-      this.isProfileMenuOpen = false;
+      console.log("profile meneu close")
+  }
+
+  logOut() {
+    this.router.navigate(["/signin"])
+    this.storageService.setItem("isSignIn", "false");
   }
 }
