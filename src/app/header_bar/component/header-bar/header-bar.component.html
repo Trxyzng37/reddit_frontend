@@ -34,6 +34,9 @@
 
     <div id="logged_in_block" [ngStyle]="{'display': isSignIn === true ? 'flex':'none'}">
         <button type="button"><img id="user_logo" src="../../../../assets/icon/helldiver.jpg" title="open profile menu" (click)="openProfileMenu($event)"/></button>
-        <div id="menu" [ngStyle]="{'display': isProfileMenuOpen === true ? 'block':'none'}" #menu></div>
+        <div id="menu" [ngStyle]="{'display': isProfileMenuOpen === true ? 'block':'none'}">
+            <button class="btn_profile_menu" type="button">View Profile</button>
+            <button class="btn_profile_menu" type="button" (click)="logOut()">Log Out</button>
+        </div>
     </div>
 </header> 
