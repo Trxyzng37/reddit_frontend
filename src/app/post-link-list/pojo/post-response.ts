@@ -1,15 +1,17 @@
 export class PostResponse {
     public post_id: number;
-    public community_id: number;
-    public uid: number;
+    public communityName: string;
+    public userName: string;
     public created_at: string;
     public vote: number;
+    public communityIcon: string;
 
-    public constructor(post_id: number, community_id: number, uid: number, created_at: string, vote: number) {
+    public constructor(post_id: number, communityName: string, userName: string, created_at: string, vote: number, communityIcon: string) {
         this.post_id = post_id;
-        this.community_id = community_id;
-        this.uid = uid;
+        this.communityName = communityName;
+        this.userName = userName;
         this.created_at = created_at;
         this.vote = vote;
+        this.communityIcon = communityIcon;
     }
 }
