@@ -12,10 +12,11 @@ export class PostLinkComponent {
   ) {}
 
   @Input() post_id: number = 0;
-  @Input() community_id: number = 0;
-  @Input() uid: number = 0;
+  @Input() communityName: string = "";
+  @Input() userName: string = "";
   @Input() created_at: string = "";
   @Input() vote: number = 1;
+  @Input() communityIcon: string = "";
 
 
   on_click() {
