@@ -23,6 +23,7 @@ import { NavigationBarComponent } from './navigation_bar/component/navigation-ba
 import { HeaderBarComponent } from './header_bar/component/header-bar/header-bar.component';
 import { QuillModule } from 'ngx-quill';
 import { InViewportModule } from 'ng-in-viewport';
+import { SafeHtmlPipe } from './shared/pipe/safe-html';
 
 
 @NgModule({
@@ -51,7 +52,8 @@ import { InViewportModule } from 'ng-in-viewport';
     HttpClientModule,
     QuillModule,
     BrowserAnimationsModule,
-    InViewportModule
+    InViewportModule,
+    SafeHtmlPipe
   ],
   providers: [],
   bootstrap: [AppComponent]
