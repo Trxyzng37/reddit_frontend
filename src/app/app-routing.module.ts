@@ -24,16 +24,15 @@ const routes: Routes = [
   { path: 'check-confirm-email-passcode', title: 'check-confirm-email-passcode', component: ConfirmEmailComponent },
   { path: '', title: 'home', component: HomeComponent, 
     children: [
-      {path: 'test', component: TestComponent}, 
       {path: '', component: PostMainComponent,
       children: [
         {path: '', title: 'trxyzng', component: PostLinkListComponent},
-        {path: 'id/:post_id', title: 'post-id', component: PostLinkComponent}
+        {path: 'id/:post_id', title: 'post-id', component: PostLinkComponent},
+        {path: 'create-post', component: TestComponent}
       ]
       },
     ]
   },
-  { path: 'test', title: 'test', component: TestComponent },
   { path: 'error', title:'error', component: ErrorComponent },
   // {path: '', redirectTo: 'home', pathMatch: 'full'},
   { path: '**', component: ErrorComponent }
