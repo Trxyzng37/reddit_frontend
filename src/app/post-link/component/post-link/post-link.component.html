@@ -1,5 +1,10 @@
 <hr>
-<div id="post_block" (click)="on_click()">
+<div id="post_block" 
+    (click)="on_click()"                     
+    inViewport
+    [inViewportOptions]="{ threshold: [0] }"
+    (inViewportAction)="onIntersection($event)"
+>
     <nav id="community_bar">
         <div id="community_block">
             <a id="community_link" href="">

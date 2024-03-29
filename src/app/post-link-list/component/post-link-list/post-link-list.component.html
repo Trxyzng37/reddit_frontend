@@ -1,10 +1,14 @@
+<div [innerHTML]="trustedHtml"></div>
 
-<app-post-link *ngFor="let post of post_result;" 
+<app-post-link *ngFor="let post of post_result; let index = index;" 
                     [post_id]="post.post_id"
                     [communityName]="post.communityName"
                     [userName]="post.userName"
                     [created_at]="post.created_at"
                     [vote]="post.vote"
                     [communityIcon]="post.communityIcon"
+                    [index]="index"
+                    [arr_length]="post_result.length"
+                    (event)="addPost($event)"
 >
 </app-post-link>
