@@ -9,6 +9,7 @@
     border-radius: 10px;
     display: block;
     box-sizing: border-box;
+    // transition: background-color .25s ease-in-out, color .25s ease-in-out;
 }
 
 #post_block:hover {
@@ -133,6 +134,8 @@ button {
 #footer > button:hover, button:hover {
     background-color: rgb(99, 122, 239);
 }
+
+
 
 
 
