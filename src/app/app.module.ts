@@ -22,6 +22,8 @@ import { RecentVisitedPostComponent } from './recent-visited-post/component/rece
 import { NavigationBarComponent } from './navigation_bar/component/navigation-bar/navigation-bar.component';
 import { HeaderBarComponent } from './header_bar/component/header-bar/header-bar.component';
 import { QuillModule } from 'ngx-quill';
+import { InViewportModule } from 'ng-in-viewport';
+
 
 @NgModule({
   declarations: [
@@ -48,7 +50,8 @@ import { QuillModule } from 'ngx-quill';
     ReactiveFormsModule,
     HttpClientModule,
     QuillModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    InViewportModule
   ],
   providers: [],
   bootstrap: [AppComponent]
