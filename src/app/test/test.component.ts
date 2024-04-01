@@ -14,10 +14,30 @@ export class TestComponent {
   //   let a = document.querySelector('button.ql-bold')!.setAttribute('title', 'Bold') as any;
     
   // }
+  public isPostOpen: boolean = false;
+
+  public imgSrc: string = "";
+  onImageUpload(event: any) {
+    const files:File[] = event.target.files;
+    // console.log(file.name)
+    // const image:HTMLImageElement = document.getElementById("img")! as HTMLImageElement;
+    const btn = document.getElementById("post_img_block");
+    for(let file of files) {
+      const image = document.createElement("img");
+      image.src = URL.createObjectURL(file);
+      image.style.width = "100px";
+      image.style.height = "100px";
+      image.style.marginRight = "10px";
+      image.style.border = "1px solid black";
+      image.style.order = "0";
+      btn?.append(image);
+    }
+  }
 
   public CreatePostForm: any = new FormGroup({
     title: new FormControl(''),
-    content: new FormControl('')
+    content: new FormControl(''),
+    imgContent: new FormControl('')
   })
 
   public isCommunitySearchDropdownOpen: boolean = false;
@@ -37,7 +57,7 @@ export class TestComponent {
     if (event.target !== document.getElementById("input_search_community"))
       this.isCommunitySearchDropdownOpen = false;
       // this.isCommunitySearchDropdownOpen = false;
-      console.log("pcommunity search meneu close")
+      console.log("community search meneu close")
   }
 
   SignInFormSubmit() {
