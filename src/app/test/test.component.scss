@@ -123,7 +123,7 @@ hr {
     font-weight: 400;
 }
 
-.post_content {
+.post_content_block {
     width: 95%;
     height: 20vh;
     background-color: aqua;
@@ -141,39 +141,39 @@ quill-editor {
 #post_img_block {
     height: 20vh;
     width: 100%;
-    background-color: rgb(234, 182, 246);
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    flex-wrap: nowrap;
-    overflow-x: scroll;
+    background-color: rgb(221, 35, 218);
+    border: 1px solid black;
+}
+
+#img_uploaded_result {
+    width: auto;
+    // height: 100%;
+    background-color: rgb(234, 182, 246);
+    white-space: nowrap;
+    overflow-x: auto;
 }
 
 #input_upload_img {
+    width: 0px;
+    height: 0px;
     display: none;
 }
 
 #btn_upload_img {
     width: 100px;
     height: 100px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    display: inline-block;
     background-color: rgb(168, 136, 244);
-    order: 100;
+    border: 2px solid black;
+    border-radius: 5px;
+    vertical-align: top;
+    // margin: 10px 0;
+    // margin-right: 10px;
 }
-
-// #img_uploaded_block {
-//     width: 100%;
-//     height: 100px;
-//     overflow-x: auto;
-// }
-
-// #img_uploaded_block > * {
-//     // display: inline-block;
-// }
 
 #btn_create_post_block {
     width: 100%;
