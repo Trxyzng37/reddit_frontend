@@ -10,27 +10,70 @@ export class TestComponent {
   constructor (
   ) {}
 
-  // ngAfterViewChecked() {
-  //   let a = document.querySelector('button.ql-bold')!.setAttribute('title', 'Bold') as any;
-    
-  // }
-  public isPostOpen: boolean = false;
-
-  public imgSrc: string = "";
-  onImageUpload(event: any) {
-    const files:File[] = event.target.files;
-    // console.log(file.name)
-    // const image:HTMLImageElement = document.getElementById("img")! as HTMLImageElement;
-    const btn = document.getElementById("post_img_block");
+  onDrop(event: any) {
+    event.preventDefault();      
+    console.log("image drop");
+    const dt = event.dataTransfer;
+    const files:File[] = dt.files;
+    console.log(files)
+    const parent: any = document.getElementById("img_uploaded_result");
+    const btn: any = document.getElementById("btn_upload_img");
     for(let file of files) {
+      console.log(file.name)
       const image = document.createElement("img");
       image.src = URL.createObjectURL(file);
       image.style.width = "100px";
       image.style.height = "100px";
       image.style.marginRight = "10px";
+      image.style.display = "inline-block";
       image.style.border = "1px solid black";
-      image.style.order = "0";
-      btn?.append(image);
+      image.style.margin = "10px 0px";
+      parent.insertBefore(image, btn);
+    }
+    btn.style.margin = "10px 0px";
+    if (parent.getElementsByTagName("*")) {
+      const txt: any = document.getElementById("txt_drag_and_drop");
+      txt.style.display = "none";
+    }
+  }
+
+    onDragEnter(event: Event) {
+      console.log("drag")
+      event.preventDefault();
+      event.stopPropagation()
+      const parent: any = document.getElementById("post_img_block");
+      parent.style.border = "2px solid red";
+    }
+
+    onDragLeave(event: Event) {
+      event.preventDefault();
+      event.stopPropagation()
+      const parent: any = document.getElementById("post_img_block");
+      parent.style.border = "none";
+    }
+
+  public isPostOpen: boolean = false;
+
+  onImageUpload(event: any) {
+    const files:File[] = event.target.files;
+    const parent: any = document.getElementById("img_uploaded_result");
+    const btn: any = document.getElementById("btn_upload_img");
+    for(let file of files) {
+      console.log(file.name)
+      const image = document.createElement("img");
+      image.src = URL.createObjectURL(file);
+      image.style.width = "100px";
+      image.style.height = "100px";
+      image.style.marginRight = "10px";
+      image.style.display = "inline-block";
+      image.style.border = "1px solid black";
+      image.style.margin = "10px 0px";
+      parent.insertBefore(image, btn);
+    }
+    btn.style.margin = "10px 0px";
+    if (parent.getElementsByTagName("*")) {
+      const txt: any = document.getElementById("txt_drag_and_drop");
+      txt.style.display = "none";
     }
   }
 

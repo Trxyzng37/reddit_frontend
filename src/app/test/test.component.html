@@ -20,11 +20,14 @@
         <textarea id="input_post_title" maxlength="300" required placeholder="title" formControlName="title" (input)="onTextAreaInput()"></textarea>
         <span id="character_count">{{characterCount}}/300</span>
     </div>
-    <div class="post_content">
+    <div class="post_content_block">
         <quill-editor [ngStyle]="{'display': isPostOpen ? 'block':'none'}" [styles]="{height: '20vh'}" theme="snow" [modules]="quillConfig"  placeholder="Text (optional)" formControlName="content" (onContentChanged)="onContentChanged($event)"></quill-editor>
-        <div id="post_img_block">
-            <input id="input_upload_img" type="file" accept="image/*" (change)="onImageUpload($event)" formControlName="imgContent" multiple #input_img>
-            <button id="btn_upload_img" type="button" (click)="input_img.click()"><i class="pi pi-upload"></i><p>Upload image</p></button>
+        <div id="post_img_block" (dragover)="onDragEnter($event)" (drop)="onDrop($event)" (dragenter)="onDragEnter($event)" (dragleave)="onDragLeave($event)">
+            <pre id="txt_drag_and_drop">Drag and drop images to upload or click the button </pre>
+            <div id="img_uploaded_result">
+                <input id="input_upload_img" type="file" accept="image/*" (change)="onImageUpload($event)" formControlName="imgContent" multiple #input_img>
+                <button id="btn_upload_img" type="button" (click)="input_img.click()"><img style="width: 50px; height: 50px" src="../../assets/icon/upload.png"/></button>
+            </div>
         </div>
         <div id="post_link"></div>
         <div id="post_poll"></div>
