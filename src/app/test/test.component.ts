@@ -10,12 +10,7 @@ export class TestComponent {
   constructor (
   ) {}
 
-  onDrop(event: any) {
-    event.preventDefault();      
-    console.log("image drop");
-    const dt = event.dataTransfer;
-    const files:File[] = dt.files;
-    console.log(files)
+  uploadImg(files: File[]) {
     const parent: any = document.getElementById("img_uploaded_result");
     const btn: any = document.getElementById("btn_upload_img");
     for(let file of files) {
@@ -37,6 +32,14 @@ export class TestComponent {
     }
   }
 
+  onDrop(event: any) {
+    event.preventDefault();      
+    console.log("image drop");
+    const dt = event.dataTransfer;
+    const files:File[] = dt.files;
+    this.uploadImg(files);
+  }
+
     onDragEnter(event: Event) {
       console.log("drag")
       event.preventDefault();
@@ -56,25 +59,7 @@ export class TestComponent {
 
   onImageUpload(event: any) {
     const files:File[] = event.target.files;
-    const parent: any = document.getElementById("img_uploaded_result");
-    const btn: any = document.getElementById("btn_upload_img");
-    for(let file of files) {
-      console.log(file.name)
-      const image = document.createElement("img");
-      image.src = URL.createObjectURL(file);
-      image.style.width = "100px";
-      image.style.height = "100px";
-      image.style.marginRight = "10px";
-      image.style.display = "inline-block";
-      image.style.border = "1px solid black";
-      image.style.margin = "10px 0px";
-      parent.insertBefore(image, btn);
-    }
-    btn.style.margin = "10px 0px";
-    if (parent.getElementsByTagName("*")) {
-      const txt: any = document.getElementById("txt_drag_and_drop");
-      txt.style.display = "none";
-    }
+    this.uploadImg(files);
   }
 
   public CreatePostForm: any = new FormGroup({
