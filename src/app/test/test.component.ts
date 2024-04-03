@@ -15,15 +15,55 @@ export class TestComponent {
     const btn: any = document.getElementById("btn_upload_img");
     for(let file of files) {
       console.log(file.name)
+      const container = document.createElement("div");
+      container.style.display = "inline-block"; 
+      container.style.border = "1px solid black";
+      container.style.margin = "10px 0px";
+      container.style.marginRight = "10px";
+      container.style.width = "100px";
+      container.style.height = "100px";
+      container.style.position = "relative";
+
+      const delete_btn = document.createElement("button");
+      delete_btn.setAttribute("type", "button");
+      delete_btn.addEventListener("click", () => {
+        console.log("close image click");
+        const parent_div: any = delete_btn.parentElement;
+        parent_div.remove();
+      })
+      container.addEventListener("mouseenter", () => {
+        const child_btn: HTMLCollectionOf<HTMLButtonElement> = container.getElementsByTagName("button");
+        child_btn[0].style.display = "flex";
+        child_btn[0].style.justifyContent = "center";
+        child_btn[0].style.alignItems = "center";
+      });
+      container.addEventListener("mouseleave", () => {
+        const child_btn: HTMLCollectionOf<HTMLButtonElement> = container.getElementsByTagName("button");
+        child_btn[0].style.display = "none";
+      })
+
+      delete_btn.style.position = "absolute";
+      delete_btn.style.top = "3px";
+      delete_btn.style.right = "3px";
+      delete_btn.style.width = "20px";
+      delete_btn.style.height = "20px";
+      delete_btn.style.borderRadius = "50%";
+      delete_btn.style.display = "none";
+
+      const icon = document.createElement("img");
+      icon.src = "../../assets/icon/close.png";
+      icon.style.width = "100%";
+      icon.style.height = "100%";
+
       const image = document.createElement("img");
       image.src = URL.createObjectURL(file);
-      image.style.width = "100px";
-      image.style.height = "100px";
-      image.style.marginRight = "10px";
-      image.style.display = "inline-block";
-      image.style.border = "1px solid black";
-      image.style.margin = "10px 0px";
-      parent.insertBefore(image, btn);
+      image.style.width = "100%";
+      image.style.height = "100%";
+
+      delete_btn.appendChild(icon);
+      container.appendChild(delete_btn);
+      container.appendChild(image);
+      parent.insertBefore(container, btn);
     }
     btn.style.margin = "10px 0px";
     if (parent.getElementsByTagName("*")) {
