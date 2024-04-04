@@ -17,12 +17,13 @@ export class TestComponent {
     const btn: any = document.getElementById("btn_upload_img");
     btn.style.margin = "10px 0px";
     btn.style.marginRight = "20px";
+    btn.style.marginLeft = "10px";
     for(let file of files) {
       console.log(file.name)
       const container = document.createElement("div");
       container.style.display = "inline-block"; 
       container.style.margin = "10px 0px";
-      container.style.marginRight = "10px";
+      container.style.marginLeft = "10px";
       container.style.width = "100px";
       container.style.height = "100px";
       container.style.position = "relative";
