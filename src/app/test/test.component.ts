@@ -11,13 +11,16 @@ export class TestComponent {
   ) {}
 
   uploadImg(files: File[]) {
-    const parent: any = document.getElementById("img_uploaded_result");
+    const post_img_block: any = document.getElementById("post_img_block");
+    const upload_img_block: any = document.getElementById("upload_img_block");
+    const img_lists: any = document.getElementById("img_uploaded_result");
     const btn: any = document.getElementById("btn_upload_img");
+    btn.style.margin = "10px 0px";
+    btn.style.marginRight = "20px";
     for(let file of files) {
       console.log(file.name)
       const container = document.createElement("div");
       container.style.display = "inline-block"; 
-      container.style.border = "1px solid black";
       container.style.margin = "10px 0px";
       container.style.marginRight = "10px";
       container.style.width = "100px";
@@ -30,13 +33,22 @@ export class TestComponent {
         console.log("close image click");
         const parent_div: any = delete_btn.parentElement;
         parent_div.remove();
+        if (img_lists.children.length <= 2) {
+          const txt: any = document.getElementById("txt_drag_and_drop");
+          txt.style.display = "block";
+          btn.style.margin = "0 0";
+          post_img_block.style.justifyContent = "center";
+          post_img_block.style.alignItems = "center";
+        }
       })
+
       container.addEventListener("mouseenter", () => {
         const child_btn: HTMLCollectionOf<HTMLButtonElement> = container.getElementsByTagName("button");
         child_btn[0].style.display = "flex";
         child_btn[0].style.justifyContent = "center";
         child_btn[0].style.alignItems = "center";
       });
+
       container.addEventListener("mouseleave", () => {
         const child_btn: HTMLCollectionOf<HTMLButtonElement> = container.getElementsByTagName("button");
         child_btn[0].style.display = "none";
@@ -62,15 +74,38 @@ export class TestComponent {
 
       delete_btn.appendChild(icon);
       container.appendChild(delete_btn);
+      // alert(parent.children.length)
+      if (img_lists.children.length <= 2) {
+        container.style.marginLeft = "10px";
+      }
       container.appendChild(image);
-      parent.insertBefore(container, btn);
+      img_lists.insertBefore(container, btn);
     }
-    btn.style.margin = "10px 0px";
-    if (parent.getElementsByTagName("*")) {
+    if (img_lists.getElementsByTagName("*")) {
       const txt: any = document.getElementById("txt_drag_and_drop");
       txt.style.display = "none";
     }
+    post_img_block.style.justifyContent = "flex-start";
+    post_img_block.style.alignItems = "flex-start";
   }
+
+  // addImageCaption() {
+  //   const img_uploaded_result = document.getElementById("img_uploaded_result");
+  //   const div = img_uploaded_result?.getElementsByTagName("div");
+  //   const divLength: number = div?.length !== undefined ? div.length : 0;
+  //   for(let i=0; i<divLength; i++) {
+  //     if (div !== undefined) {
+  //       div[i].addEventListener("click", () =>{
+  //         const post_img_block = document.getElementById("post_img_block");
+  //         const post_img_description_block = document.createElement("div");
+  //         const img_view = document.createElement("div");
+  //         const img_caption_block = document.createElement("div");
+
+  //       })
+  //     }
+  //   }
+  // }
+
 
   onDrop(event: any) {
     event.preventDefault();      
@@ -96,6 +131,7 @@ export class TestComponent {
     }
 
   public isPostOpen: boolean = false;
+  public isPostImageOpen: boolean = true;
 
   onImageUpload(event: any) {
     const files:File[] = event.target.files;
@@ -135,13 +171,12 @@ export class TestComponent {
 
   public characterCount: number = 0;
 
-  onTextAreaInput() {
-    const textareaEle: any = document.getElementById('input_post_title');
+  onTextAreaInput(event: any) {
+    const textareaEle: any = event.target;
       textareaEle.value = textareaEle.value.replace(/(\r\n|\n|\r)/gm, "");
       textareaEle.style.height = 'auto';
       textareaEle.style.height = `${textareaEle.scrollHeight}px`;
       this.characterCount = textareaEle.value.length;
-      // console.log(textareaEle.value.length)
       if (textareaEle.value === "") {
         textareaEle.style.height = '30px';
         this.characterCount = 0;
