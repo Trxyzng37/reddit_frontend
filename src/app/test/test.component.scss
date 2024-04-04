@@ -8,13 +8,14 @@
 }
 
 form {
-    background-color: rgb(238, 238, 155);
+    background-color: rgb(251, 251, 176);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
     padding-top: 10px;
     padding-bottom: 50px;
+    height: auto;
 }
 
 form > * {
@@ -125,7 +126,10 @@ hr {
 
 .post_content_block {
     width: 95%;
-    height: 20vh;
+    height: auto;
+    min-height: 20vh;
+    position: relative;
+    bottom: 15px;
     background-color: aqua;
     align-self: center;
     box-sizing: border-box;
@@ -133,26 +137,32 @@ hr {
 
 quill-editor {
     position: relative;
-    bottom: 15px;
+    // bottom: 15px;
     width: 100%;
     background-color: rgb(186, 241, 158);
 }
 
 #post_img_block {
-    height: 20vh;
+    height: auto;
+    min-height: 20vh;
     width: 100%;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(235, 181, 234);
+    border: 1px solid black;
+}
+
+#upload_img_block {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    background-color: rgb(221, 35, 218);
-    border: 1px solid black;
 }
 
 #img_uploaded_result {
     width: auto;
-    // height: 100%;
-    background-color: rgb(234, 182, 246);
     white-space: nowrap;
     overflow-x: auto;
 }
@@ -171,8 +181,53 @@ quill-editor {
     border: 2px solid black;
     border-radius: 5px;
     vertical-align: top;
-    // margin: 10px 0;
-    // margin-right: 10px;
+}
+
+#post_img_description_block {
+    height: auto;
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+}
+
+#img_view {
+    aspect-ratio : 1 / 1;
+    width: 50%;
+    margin-left: 10px;
+}
+
+#img_view > img {
+    width: 100%;
+    height: 100%;
+}
+
+#img_caption_block {
+    width: calc(50% - 30px);
+    height: 100%;
+    display: flex;
+    position: absolute;
+    top: 0;
+    right: 0;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-left: 10px;
+    box-sizing: border-box;
+    margin-right: 10px;
+}
+
+#txt_link, #txt_caption {
+    width: 100%;
+    height: 30px;
+    text-align: left;
+    border: 2px solid black;
+    padding: 0 10px;
+    margin-bottom: 10px;
+    resize: none;
 }
 
 #btn_create_post_block {
