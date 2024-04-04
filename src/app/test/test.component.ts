@@ -39,6 +39,7 @@ export class TestComponent {
           btn.style.margin = "0 0";
           post_img_block.style.justifyContent = "center";
           post_img_block.style.alignItems = "center";
+          upload_img_block.style.justifyContent = "center";
         }
       })
 
@@ -84,6 +85,7 @@ export class TestComponent {
     if (img_lists.getElementsByTagName("*")) {
       const txt: any = document.getElementById("txt_drag_and_drop");
       txt.style.display = "none";
+      upload_img_block.style.justifyContent = "flex-start";
     }
     post_img_block.style.justifyContent = "flex-start";
     post_img_block.style.alignItems = "flex-start";
@@ -113,14 +115,16 @@ export class TestComponent {
     const dt = event.dataTransfer;
     const files:File[] = dt.files;
     this.uploadImg(files);
+    const post_img_block: any = document.getElementById("post_img_block");
+    post_img_block.style.border = "none";
   }
 
     onDragEnter(event: Event) {
       console.log("drag")
       event.preventDefault();
       event.stopPropagation()
-      const parent: any = document.getElementById("post_img_block");
-      parent.style.border = "2px solid red";
+      const post_img_block: any = document.getElementById("post_img_block");
+      post_img_block.style.border = "2px solid red";
     }
 
     onDragLeave(event: Event) {
