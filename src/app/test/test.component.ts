@@ -13,7 +13,7 @@ export class TestComponent {
   uploadImg(files: File[]) {
     const post_img_block: any = document.getElementById("post_img_block");
     const upload_img_block: any = document.getElementById("upload_img_block");
-    const img_lists: any = document.getElementById("img_uploaded_result");
+    const img_uploaded_result: any = document.getElementById("img_uploaded_result");
     const btn: any = document.getElementById("btn_upload_img");
     btn.style.margin = "10px 0px";
     btn.style.marginRight = "20px";
@@ -21,20 +21,47 @@ export class TestComponent {
     for(let file of files) {
       console.log(file.name)
       const container = document.createElement("div");
+      container.addEventListener("click", (event: any) => {
+        // event.stopPropagation();
+        // alert("div click")
+        const post_img_description_block = document.createElement("div");
+        const img_view = document.createElement("div");
+        const img = document.createElement("img");
+        const img_caption_block = document.createElement("div");
+        const txt_caption = document.createElement("textarea");
+        const txt_link = document.createElement("input");
+        const clicked_btn_container = event.currentTarget.lastChild;
+        console.log(clicked_btn_container);
+        img.src = clicked_btn_container.getAttribute("src");
+        post_img_block.appendChild(post_img_description_block);
+        post_img_description_block.classList.add("post_img_description_block");
+        img_view.classList.add("img_view");
+        // img.classList.add("img");
+        img_caption_block.classList.add("img_caption_block");
+        txt_caption.classList.add("txt_caption");
+        txt_link.classList.add("txt_link");
+        post_img_description_block.appendChild(img_view);
+        img_view.appendChild(img);
+        post_img_description_block.appendChild(img_caption_block);
+        img_caption_block.appendChild(txt_caption);
+        img_caption_block.appendChild(txt_link);
+      })
       container.style.display = "inline-block"; 
       container.style.margin = "10px 0px";
       container.style.marginLeft = "10px";
       container.style.width = "100px";
       container.style.height = "100px";
       container.style.position = "relative";
+      container.style.cursor = "pointer";
 
       const delete_btn = document.createElement("button");
       delete_btn.setAttribute("type", "button");
-      delete_btn.addEventListener("click", () => {
+      delete_btn.addEventListener("click", (event) => {
+        event.stopPropagation();
         console.log("close image click");
         const parent_div: any = delete_btn.parentElement;
         parent_div.remove();
-        if (img_lists.children.length <= 2) {
+        if (img_uploaded_result.children.length <= 2) {
           const txt: any = document.getElementById("txt_drag_and_drop");
           txt.style.display = "block";
           btn.style.margin = "0 0";
@@ -77,13 +104,13 @@ export class TestComponent {
       delete_btn.appendChild(icon);
       container.appendChild(delete_btn);
       // alert(parent.children.length)
-      if (img_lists.children.length <= 2) {
+      if (img_uploaded_result.children.length <= 2) {
         container.style.marginLeft = "10px";
       }
       container.appendChild(image);
-      img_lists.insertBefore(container, btn);
+      img_uploaded_result.insertBefore(container, btn);
     }
-    if (img_lists.getElementsByTagName("*")) {
+    if (img_uploaded_result.getElementsByTagName("*")) {
       const txt: any = document.getElementById("txt_drag_and_drop");
       txt.style.display = "none";
       upload_img_block.style.justifyContent = "flex-start";
@@ -92,22 +119,23 @@ export class TestComponent {
     post_img_block.style.alignItems = "flex-start";
   }
 
-  // addImageCaption() {
-  //   const img_uploaded_result = document.getElementById("img_uploaded_result");
-  //   const div = img_uploaded_result?.getElementsByTagName("div");
-  //   const divLength: number = div?.length !== undefined ? div.length : 0;
-  //   for(let i=0; i<divLength; i++) {
-  //     if (div !== undefined) {
-  //       div[i].addEventListener("click", () =>{
-  //         const post_img_block = document.getElementById("post_img_block");
-  //         const post_img_description_block = document.createElement("div");
-  //         const img_view = document.createElement("div");
-  //         const img_caption_block = document.createElement("div");
-
-  //       })
-  //     }
-  //   }
-  // }
+  addImageCaption(event: any) {
+    const post_img_block = document.getElementById("post_img_block");
+    const img_uploaded_result = document.getElementById("img_uploaded_result");
+    const div = img_uploaded_result?.getElementsByTagName("div");
+    const divLength: number = div?.length !== undefined ? div.length : 0;
+    for(let i=0; i<divLength; i++) {
+      if (div !== undefined) {
+        div[i].addEventListener("click", () => {
+          const post_img_description_block = document.createElement("div");
+          const img_view = document.createElement("div");
+          const img_caption_block = document.createElement("div");
+          const img = document.createElement("img");
+          const click_id = event.target.getElementsByTagName("img");
+        })
+      }
+    }
+  }
 
 
   onDrop(event: any) {
@@ -141,6 +169,8 @@ export class TestComponent {
   onImageUpload(event: any) {
     const files:File[] = event.target.files;
     this.uploadImg(files);
+    // const t = document.getElementById("img_uploaded_result")?.getElementsByTagName("div") as any;
+    // alert(t.length)
   }
 
   public CreatePostForm: any = new FormGroup({
