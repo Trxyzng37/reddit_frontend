@@ -184,7 +184,7 @@ quill-editor {
     vertical-align: top;
 }
 
-#post_img_description_block {
+:ng-deep .post_img_description_block {
     height: auto;
     width: 100%;
     position: relative;
@@ -193,21 +193,21 @@ quill-editor {
     justify-content: space-between;
     align-items: center;
     margin: 10px 0;
-    display: none;
+    // display: none;
 }
 
-#img_view {
+:ng-deep .img_view {
     aspect-ratio : 1 / 1;
     width: 50%;
     margin-left: 10px;
 }
 
-#img_view > img {
+:ng-deep .img_view > img {
     width: 100%;
     height: 100%;
 }
 
-#img_caption_block {
+:ng-deep .img_caption_block {
     width: calc(50% - 30px);
     height: 100%;
     display: flex;
@@ -222,7 +222,7 @@ quill-editor {
     margin-right: 10px;
 }
 
-#txt_link, #txt_caption {
+:ng-deep .txt_link, :ng-deep .txt_caption {
     width: 100%;
     height: 30px;
     text-align: left;
