@@ -24,6 +24,7 @@ import { HeaderBarComponent } from './header_bar/component/header-bar/header-bar
 import { QuillModule } from 'ngx-quill';
 import { InViewportModule } from 'ng-in-viewport';
 import { SafeHtmlPipe } from './shared/pipe/safe-html';
+import { ImgUploadedComponent } from './test/components/img_uploaded/component/img-uploaded/img-uploaded.component';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { SafeHtmlPipe } from './shared/pipe/safe-html';
     RecentVisitedPostComponent,
     NavigationBarComponent,
     HeaderBarComponent,
-    PostLinkListComponent
+    PostLinkListComponent,
+    ImgUploadedComponent
   ],
   imports: [
     BrowserModule,
