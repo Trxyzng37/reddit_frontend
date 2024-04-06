@@ -166,6 +166,7 @@ quill-editor {
     // width: 100%;
     white-space: nowrap;
     overflow-x: auto;
+    // vertical-align: t;
 }
 
 #input_upload_img {
@@ -181,10 +182,13 @@ quill-editor {
     background-color: rgb(168, 136, 244);
     border: 2px solid black;
     border-radius: 5px;
-    vertical-align: top;
+    vertical-align: bottom;
+    margin-left: 10px;
+    margin-right: 20px;
+    margin-bottom: 10px;
 }
 
-:ng-deep .post_img_description_block {
+.post_img_description_block {
     height: auto;
     width: 100%;
     position: relative;
@@ -196,18 +200,18 @@ quill-editor {
     // display: none;
 }
 
-:ng-deep .img_view {
+.img_view {
     aspect-ratio : 1 / 1;
     width: 50%;
     margin-left: 10px;
 }
 
-:ng-deep .img_view > img {
+.img_view > img {
     width: 100%;
     height: 100%;
 }
 
-:ng-deep .img_caption_block {
+.img_caption_block {
     width: calc(50% - 30px);
     height: 100%;
     display: flex;
@@ -222,7 +226,7 @@ quill-editor {
     margin-right: 10px;
 }
 
-:ng-deep .txt_link, :ng-deep .txt_caption {
+.txt_link, .txt_caption {
     width: 100%;
     height: 30px;
     text-align: left;

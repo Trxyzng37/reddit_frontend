@@ -1,0 +1,8 @@
+<div id="container">
+    <button id="btn_img_selected" type="button" [ngClass]="{'btn_img_clicked': isImageClicked == true}" (click)="clickImage()">
+        <div id="img_block">
+            <img src="{{img}}"/>
+        </div>
+        <button id="btn_img_delete" type="button"></button>
+    </button>
+</div>
