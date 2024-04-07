@@ -21,7 +21,6 @@ export class TestComponent {
 
   onDrop(event: any) {
     event.preventDefault();      
-    console.log("image drop");
     const dt = event.dataTransfer;
     const files:File[] = dt.files;
     for(let i=0; i< files.length; i++) {
@@ -74,13 +73,14 @@ export class TestComponent {
 
   deleteImg(id: number) {
     this.imgArr.splice(id, 1);
+
     if (id === 0 && this.imgArr.length === 0) {
       this.img = new Img("");
       this.selected_id = -1;
       this.imgArr = [];
       this.isImgUpload = false;
     }
-    else if (id === 0 && this.imgArr.length === 1) {
+    else if (id <= 1 && this.imgArr.length === 1) {
       this.img = new Img("");
       this.selected_id = -1;
       this.isImgUpload = false;
