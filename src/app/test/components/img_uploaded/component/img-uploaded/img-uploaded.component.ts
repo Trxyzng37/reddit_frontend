@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Img } from 'src/app/test/img';
 
 @Component({
   selector: 'app-img-uploaded',
@@ -12,24 +13,18 @@ export class ImgUploadedComponent {
 
   @Input() img: string = "";
   @Input() id: number = 0;
-  @Input() selected_id: number = 0;
+  @Input() selected_id: number = -1;
+  @Input() arr: Img[] = [];
 
   @Output() selectImgOutput = new EventEmitter<number>;
   @Output() deleteImgOutput = new EventEmitter<number>;
 
-  ngOnInit() {
-
-  }
-
-
   selectImg() {
     this.selectImgOutput.emit(this.id);
-    this.selected_id = this.id;
-    console.log("selected id in parent: " + this.selected_id);
+    this.selected_id = this.arr.length === 1 ? -1 : this.id;
   }
 
   deleteImage() {
-    console.log("Delete index: " + this.id);
     this.deleteImgOutput.emit(this.id);
   }
 }
