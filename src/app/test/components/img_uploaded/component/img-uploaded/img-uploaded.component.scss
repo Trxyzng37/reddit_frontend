@@ -8,14 +8,14 @@
     vertical-align: bottom;
 }
 
-#btn_img_selected {
+.btn_img_selected {
     width: 100%;
     height: 100%;
     position: relative;
     opacity: 0.8;
 }
 
-#btn_img_selected:hover {
+.btn_img_selected:hover {
     opacity: 1;
 }
 
@@ -30,6 +30,10 @@
 img {
     width: 100%;
     height: 100%;
+}
+
+.btn_img_clicked {
+    opacity: 1;
 }
 
 .btn_img_clicked #img_block {
@@ -55,7 +59,7 @@ img {
     border-radius: 50%;
 }
 
-#btn_img_selected:hover #btn_img_delete {
+.btn_img_selected:hover #btn_img_delete {
     visibility: visible;
 }
 
