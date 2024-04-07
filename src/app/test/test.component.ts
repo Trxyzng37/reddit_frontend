@@ -14,7 +14,7 @@ export class TestComponent {
   @Input() img: Img = new Img("");
   @Input() selected_id: number = 0;
 
-  public imgArr: Img[] = [];
+  imgArr: Img[] = [];
   public isPostOpen: boolean = false;
   public isPostImageOpen: boolean = true;
   public isImgUpload: boolean = false;
@@ -74,17 +74,31 @@ export class TestComponent {
 
   deleteImg(id: number) {
     this.imgArr.splice(id, 1);
-    console.log(this.imgArr);
-    if (this.imgArr.length <= 1) {
+    if (id === 0 && this.imgArr.length === 0) {
+      this.img = new Img("");
+      this.selected_id = -1;
+      this.imgArr = [];
       this.isImgUpload = false;
+    }
+    else if (id === 0 && this.imgArr.length === 1) {
+      this.img = new Img("");
+      this.selected_id = -1;
+      this.isImgUpload = false;
+    }
+    else if (id === 0 && this.imgArr.length > 1) {
+      this.img = this.imgArr[id];
+      this.selected_id = id;
+    }
+    else {
+      this.img = this.imgArr[id-1];
+      this.selected_id = id-1;
     }
   }
 
   selectImg(id: number) {
     this.img = this.imgArr[id];
     this.selected_id = id;
-    console.log("selected id in parent: " + this.selected_id);
-    console.log("caption: " + this.img.caption);
+
   }
 
   onInputChange(img: Img) {

@@ -1,7 +1,7 @@
 <div id="container" draggable="false">
     <button class="btn_img_selected" type="button"  
         [ngClass]="{'btn_img_clicked': selected_id === id}"
-        (click)="selectImg()">
+        (click)="selected_id === -1 && arr.length === 1 ? false : selectImg()">
         <div id="img_block" draggable="false">
             <img src="{{img}}" draggable="false"/>
         </div>
