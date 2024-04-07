@@ -11,8 +11,8 @@
         </div>
     </div>
     <div id="post_type_block">
-        <button class="btn_post_type" type="button" >Post</button>
-        <button class="btn_post_type" type="button" >Image and video</button>
+        <button class="btn_post_type" type="button" (click)="isPostOpen=true;isPostImageOpen=false">Post</button>
+        <button class="btn_post_type" type="button" (click)="isPostImageOpen=true;isPostOpen=false">Image and video</button>
         <button class="btn_post_type" type="button" >Link</button>
         <button class="btn_post_type" type="button" >Poll</button>
     </div>
@@ -22,24 +22,29 @@
     </div>
     <div class="post_content_block">
         <quill-editor [ngStyle]="{'display': isPostOpen ? 'block':'none'}" [styles]="{height: '20vh'}" theme="snow" [modules]="quillConfig"  placeholder="Text (optional)" formControlName="content" (onContentChanged)="onContentChanged($event)"></quill-editor>
-        <div id="post_img_block" [ngStyle]="{'display': isPostImageOpen ? 'flex':'none'}" (dragover)="onDragEnter($event)" (drop)="onDrop($event)" (dragenter)="onDragEnter($event)" (dragleave)="onDragLeave($event)">
-            <div id="upload_img_block">
-                <pre id="txt_drag_and_drop" [ngStyle]="{'display': isImgExit ? 'none': 'block'}">Drag and drop images to upload or click the button </pre>
+        <div id="post_img_block" 
+            [ngStyle]="{'display': isPostImageOpen ? 'flex':'none'}"
+            (dragover)="onDragEnter($event)" 
+            (drop)="onDrop($event)" 
+            (dragenter)="onDragEnter($event)" 
+            (dragleave)="onDragLeave($event)"
+            >
+            <div id="upload_img_block" [ngStyle]="{'justify-content': imgArr.length > 0 ? 'flex-start' : 'center'}">
+                <pre id="txt_drag_and_drop" [ngStyle]="{'display': imgArr.length > 0 ? 'none': 'block'}">  Drag and drop image or click the button </pre>
                 <div id="img_uploaded_result">
-                    <app-img-uploaded *ngFor="let i of imgArr" [img]="i.data"></app-img-uploaded>
+                    <app-img-uploaded *ngFor="let i of imgArr; index as index" 
+                        [img]="i.data" 
+                        [id]="index" 
+                        [selected_id]="selected_id"
+                        (deleteImgOutput)="deleteImg($event)" 
+                        (selectImgOutput)="selectImg($event)"
+                    >
+                    </app-img-uploaded>
                     <input id="input_upload_img" type="file" accept="image/*" (change)="upLoadImg($event)" formControlName="imgContent" #input_img>
                     <button id="btn_upload_img" type="button" (click)="input_img.click()"><img style="width: 50px; height: 50px" src="../../assets/icon/upload.png"/></button>
                 </div>
             </div>
-            <!-- <div class="post_img_description_block">
-                <div class="img_view">
-                    <img class="img" src="../../assets/icon/movie.jpg" />
-                </div>
-                <div class="img_caption_block">
-                    <textarea class="txt_caption" maxlength="180" placeholder="Add a caption" (input)="onTextAreaInput($event)"></textarea>
-                    <input class="txt_link" type="text" placeholder="Add a link">
-                </div>
-            </div> -->
+            <app-img-caption [img]="img" [ngStyle]="{'display': isImgUpload ? 'block' : 'none'}" (imgOutput)="onInputChange($event)"></app-img-caption>
         </div>
         <div id="post_link"></div>
         <div id="post_poll"></div>

@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Img } from './img';
 
@@ -11,7 +11,13 @@ export class TestComponent {
   constructor (
   ) {}
 
+  @Input() img: Img = new Img("");
+  @Input() selected_id: number = 0;
+
   public imgArr: Img[] = [];
+  public isPostOpen: boolean = false;
+  public isPostImageOpen: boolean = true;
+  public isImgUpload: boolean = false;
 
   onDrop(event: any) {
     event.preventDefault();      
@@ -40,18 +46,14 @@ export class TestComponent {
       parent.style.border = "none";
     }
 
-  public isPostOpen: boolean = false;
-  public isPostImageOpen: boolean = true;
-  public isImgExit: boolean = false;
-
   upLoadImg(event: any) {
     const files: FileList = event.target.files;
     const file = files[0];
+    this.selected_id = 0;
     this.onImageUpload(file);
   }
 
   onImageUpload(file: File) {
-    this.isImgExit = true;
     // const files: FileList = event.target.files;
     // const file = files[0];
     // console.log(URL.createObjectURL(file))
@@ -60,11 +62,34 @@ export class TestComponent {
     reader.addEventListener("loadend", () => {
       const data = reader.result as string;
       const path = (window.URL || window.webkitURL).createObjectURL(file);
-      // console.log(data)
       const img = new Img(path);
       console.log(img)
       this.imgArr.push(img);
+      this.isImgUpload = this.imgArr.length <= 1 ? false : true;
+      this.img = img;
+      const arr_length = this.imgArr.length;
+      this.selected_id = this.imgArr.length === 1 ? -1 : arr_length - 1;
     })
+  }
+
+  deleteImg(id: number) {
+    this.imgArr.splice(id, 1);
+    console.log(this.imgArr);
+    if (this.imgArr.length <= 1) {
+      this.isImgUpload = false;
+    }
+  }
+
+  selectImg(id: number) {
+    this.img = this.imgArr[id];
+    this.selected_id = id;
+    console.log("selected id in parent: " + this.selected_id);
+    console.log("caption: " + this.img.caption);
+  }
+
+  onInputChange(img: Img) {
+    this.imgArr[this.selected_id] = img;
+    // console.log(img.caption)
   }
 
   public CreatePostForm: any = new FormGroup({
@@ -89,8 +114,7 @@ export class TestComponent {
   closeProfileMenu(event: Event) {
     if (event.target !== document.getElementById("input_search_community"))
       this.isCommunitySearchDropdownOpen = false;
-      // this.isCommunitySearchDropdownOpen = false;
-      console.log("community search meneu close")
+      // console.log("community search meneu close")
   }
 
   SignInFormSubmit() {

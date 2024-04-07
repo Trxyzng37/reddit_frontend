@@ -31,14 +31,18 @@ export class ImgCaptionComponent {
       textareaEle.style.height = '30px';
       this.characterCount = 0;
     }
-    this.onInputChange();
+    this.changeCaption();
   }
 
-  onInputChange() {
+  changeCaption() {
     this.img.caption = this.form.value.caption;
-    this.img.link = this.form.value.link;
     console.log("on input change child value: ");
-    console.log(this.img)
+    console.log(this.img);
+    this.imgOutput.emit(this.img);
+  }
+
+  changeLink() {
+    this.img.link = this.form.value.link;
     this.imgOutput.emit(this.img);
   }
 

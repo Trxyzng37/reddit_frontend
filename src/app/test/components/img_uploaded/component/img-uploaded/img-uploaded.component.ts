@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-img-uploaded',
@@ -11,14 +11,25 @@ export class ImgUploadedComponent {
   ) {}
 
   @Input() img: string = "";
+  @Input() id: number = 0;
+  @Input() selected_id: number = 0;
+
+  @Output() selectImgOutput = new EventEmitter<number>;
+  @Output() deleteImgOutput = new EventEmitter<number>;
 
   ngOnInit() {
 
   }
 
-  public isImageClicked: boolean = false;
 
-  clickImage() {
-    this.isImageClicked = !this.isImageClicked;
+  selectImg() {
+    this.selectImgOutput.emit(this.id);
+    this.selected_id = this.id;
+    console.log("selected id in parent: " + this.selected_id);
+  }
+
+  deleteImage() {
+    console.log("Delete index: " + this.id);
+    this.deleteImgOutput.emit(this.id);
   }
 }

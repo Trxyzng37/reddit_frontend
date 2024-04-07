@@ -1,7 +1,7 @@
     
 <div class="post_img_description_block">
     <div class="img_view">
-        <img class="img" src="{{img.data}}" />
+        <img class="img" src="{{img.data}}" draggable="false"/>
     </div>
     <div class="img_caption_block" [formGroup]="form">
         <textarea class="txt_caption" maxlength="180" placeholder="Add a caption" 
@@ -11,6 +11,6 @@
         >
         </textarea>
         <span id="character_count">{{characterCount}}/180</span>
-            <input class="txt_link" type="text" placeholder="Add a link"  value="{{img.link}}" formControlName="link" (input)="onInputChange()">
+            <input class="txt_link" type="text" placeholder="Add a link"  value="{{img.link}}" formControlName="link" (input)="changeLink()">
     </div>
 </div>

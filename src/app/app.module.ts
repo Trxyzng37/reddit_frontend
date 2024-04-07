@@ -25,6 +25,7 @@ import { QuillModule } from 'ngx-quill';
 import { InViewportModule } from 'ng-in-viewport';
 import { SafeHtmlPipe } from './shared/pipe/safe-html';
 import { ImgUploadedComponent } from './test/components/img_uploaded/component/img-uploaded/img-uploaded.component';
+import { ImgCaptionComponent } from './test/components/img-caption/img-caption/img-caption.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { ImgUploadedComponent } from './test/components/img_uploaded/component/i
     NavigationBarComponent,
     HeaderBarComponent,
     PostLinkListComponent,
-    ImgUploadedComponent
+    ImgUploadedComponent,
+    ImgCaptionComponent
   ],
   imports: [
     BrowserModule,
