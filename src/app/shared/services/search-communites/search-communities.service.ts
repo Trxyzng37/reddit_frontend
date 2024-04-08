@@ -2,7 +2,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GetService } from 'src/app/shared/services/get/get.service';
-import { Communities } from '../pojo/communities';
+import { Communities } from '../../pojo/pojo/communities';
 
 @Injectable({
   providedIn: 'root'
