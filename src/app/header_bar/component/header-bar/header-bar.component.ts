@@ -1,20 +1,18 @@
 import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { StorageService } from 'src/app/shared/storage/storage.service';
-import { Communities } from '../../service/pojo/communities';
-import { SearchCommunitiesService } from '../../service/search-communites/search-communities.service';
+import { Communities } from '../../../shared/pojo/pojo/communities';
+import { SearchCommunitiesService } from '../../../shared/services/search-communites/search-communities.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { UserProfile } from '../../service/pojo/user-profile';
-import { SearchUserProfileService } from '../../service/search-user-profile/search-user-profile.service';
+import { UserProfile } from '../../../shared/pojo/pojo/user-profile';
+import { SearchUserProfileService } from '../../../shared/services/search-user-profile/search-user-profile.service';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header-bar',
   templateUrl: './header-bar.component.html',
   styleUrl: './header-bar.component.scss'
-  // ,host: {
-  //   '(document:click)': 'closeProfileMenu($event)',
-  // }
+
 })
 export class HeaderBarComponent {
   public constructor(
