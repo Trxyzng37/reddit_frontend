@@ -5,12 +5,12 @@
 <div id="container">
 <h2>Create a post</h2>
 <hr>
-<form [formGroup]="CreatePostForm" (ngSubmit)="CreatePostForm()">
+<form>
     <div id="search_community_block">
         <div id="search_community_icon">
             <img src="{{selected_community_icon}}" />
         </div>
-        <input id="input_search_community" type="text" placeholder="Search communities" (focus)="onInputSearchComunityFocus($event)" (input)="searchCommunities(CreatePostForm.value.community)" formControlName="community" [value]="CreatePostForm.value.community"/>
+        <input id="input_search_community" type="text" placeholder="Search communities" (focus)="onInputSearchComunityFocus($event)" #input_community (input)="searchCommunities(input_community.value)" [value]="this.community"/>
         <button id="btn_search_community_dropdown" type="button"><span class="pi pi-chevron-down" (click)="onDropDownSearchClick($event)"></span></button>
         <div id="search_community_result_block" [ngStyle]="{'display': isCommunitySearchDropdownOpen ? 'flex':'none'}">
             <button type="button" *ngFor="let community of communities" (click)="selectCommunity(community)">
@@ -28,13 +28,13 @@
         <button class="btn_post_type" type="button" (click)="isPostOpen=false;isPostImageOpen=false;isPostLinkOpen=true" [ngClass]="{'btn_post_type_selected': isPostLinkOpen}">Link</button>
     </div>
     <div id="post_title_block">
-        <textarea id="input_post_title" maxlength="300" required placeholder="Title" formControlName="title" (input)="inputTitle($event)"></textarea>
+        <textarea id="input_post_title" maxlength="300" required placeholder="Title" (input)="inputTitle($event)"></textarea>
         <span id="character_count">{{characterCount}}/300</span>
     </div>
     <div id="post_content_block">
         <div id="post_post_block" [ngStyle]="{'display': isPostOpen ? 'block':'none'}">
-            <quill-editor [styles]="{height: '20vh'}" theme="snow" [modules]="quillConfig"  placeholder="Text (optional)" formControlName="content" (onContentChanged)="onContentChanged($event)"></quill-editor>
-            <button class="btn_create_post" type="submit">Post</button>
+            <quill-editor [styles]="{height: '20vh'}" theme="snow" [modules]="quillConfig"  placeholder="Text (optional)" (onContentChanged)="onContentChanged($event)"></quill-editor>
+            <button class="btn_create_post" type="button" (click)="createPost('editor', this.editorContent)" [disabled]="editorAllowed">Post</button>
         </div>
         <div id="post_img_block" 
             [ngStyle]="{'display': isPostImageOpen ? 'flex':'none'}"
@@ -60,11 +60,11 @@
                 </div>
             </div>
             <app-img-caption [img]="img" [ngStyle]="{'display': isImgUpload ? 'block' : 'none'}" (imgOutput)="onInputChange($event)"></app-img-caption>
-            <button class="btn_create_post" id="btn_create_post_img" type="submit">Post</button>
+            <button class="btn_create_post" id="btn_create_post_img" type="button" (click)="createImgPost('img', this.imgArr)" [disabled]="imgAllowed">Post</button>
         </div>
         <div id="post_link_block" [ngStyle]="{'display': isPostLinkOpen ? 'block' : 'none'}">
-            <textarea (input)="inputLink($event)" placeholder="(Optional)"></textarea>
-            <button id="btn_create_post_link" type="submit">Post</button>
+            <textarea (input)="inputLink($event)" placeholder="Enter a full link start with http or https"></textarea>
+            <button id="btn_create_post_link" type="button" (click)="createPost('link', this.linkContent)" [disabled]="linkAllowed">Post</button>
         </div>
     </div>
 
