@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TestComponent } from './test.component';
+import { TestComponent } from './create-post.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('TestComponent', () => {

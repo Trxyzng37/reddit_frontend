@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { Img } from 'src/app/test/img';
+import { Img } from 'src/app/create-post/img';
 
 @Component({
   selector: 'app-img-caption',

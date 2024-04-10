@@ -28,6 +28,10 @@ body {
     height: 100vh;    
 }  
 
+textarea {
+  resize: none;
+}
+
 app-root {
     display: block;
     width: 100%;

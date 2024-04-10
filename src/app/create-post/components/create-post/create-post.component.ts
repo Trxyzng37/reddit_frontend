@@ -1,26 +1,44 @@
 import { Component, HostListener, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Img } from './img';
+import { Img } from '../../img';
+import { SearchCommunitiesService } from '../../../shared/services/search-communites/search-communities.service';
+import { Communities } from '../../../shared/pojo/pojo/communities';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-test',
-  templateUrl: './test.component.html',
-  styleUrl: './test.component.scss'
+  templateUrl: './create-post.component.html',
+  styleUrl: './create-post.component.scss'
 })
 export class TestComponent {
   constructor (
+    private searchCommunitiesService: SearchCommunitiesService
   ) {}
 
   @Input() img: Img = new Img("");
   @Input() selected_id: number = 0;
 
   imgArr: Img[] = [];
-  public isPostOpen: boolean = false;
-  public isPostImageOpen: boolean = true;
+  communities: Communities[] = [new Communities(1, "a", "aaa", "aaa", 1, "../../assets/icon/technology.png"), new Communities(2, "b", "bbb", "bbb", 2, "../../assets/icon/technology.png")];
+  public selected_community_icon: string = "../../assets/icon/dashed_circle.png";
+  public isPostOpen: boolean = true;
+  public isPostImageOpen: boolean = false;
+  public isPostLinkOpen: boolean = false;
   public isImgUpload: boolean = false;
+  public isCommunitySearchDropdownOpen: boolean = false;
+  public characterCount: number = 0;
+  public editorContent ="";
+
+  public CreatePostForm: any = new FormGroup({
+    community: new FormControl(''),
+    type: new FormControl(''),
+    title: new FormControl(''),
+    content: new FormControl(''),
+  })
 
   onDrop(event: any) {
-    event.preventDefault();      
+    event.preventDefault();   
+    event.stopPropagation();
     const dt = event.dataTransfer;
     const files:File[] = dt.files;
     for(let i=0; i< files.length; i++) {
@@ -33,9 +51,9 @@ export class TestComponent {
     onDragEnter(event: Event) {
       console.log("drag")
       event.preventDefault();
-      event.stopPropagation()
+      event.stopPropagation();
       const post_img_block: any = document.getElementById("post_img_block");
-      post_img_block.style.border = "2px solid red";
+      post_img_block.style.border = "2px dashed black";
     }
 
     onDragLeave(event: Event) {
@@ -106,14 +124,6 @@ export class TestComponent {
     // console.log(img.caption)
   }
 
-  public CreatePostForm: any = new FormGroup({
-    title: new FormControl(''),
-    content: new FormControl(''),
-    imgContent: new FormControl('')
-  })
-
-  public isCommunitySearchDropdownOpen: boolean = false;
-
   onInputSearchComunityFocus(event: Event) {
     this.isCommunitySearchDropdownOpen = true;
     event.stopPropagation();
@@ -124,6 +134,31 @@ export class TestComponent {
     event.stopPropagation();
   }
 
+  searchCommunities(value: string) {
+    if (value !== " " && value !== "") {
+      this.searchCommunitiesService.searchCommunities(value).subscribe({
+        next: (response: Communities[]) => {
+          console.log(response)
+          this.communities = response;
+        },
+        error: (e: HttpErrorResponse) => {
+          console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
+        }
+      })
+    }
+    else {
+      this.communities = [];
+    }
+  }
+
+  selectCommunity(community: Communities) {
+    this.isCommunitySearchDropdownOpen = false;
+    console.log("select community: " + community);
+    this.CreatePostForm.value.community = community.name;
+    this.selected_community_icon = community.icon_base64;
+    console.log("select img: " + community.icon_base64);
+  }
+
   @HostListener('document:click', ['$event'])
   closeProfileMenu(event: Event) {
     if (event.target !== document.getElementById("input_search_community"))
@@ -131,14 +166,7 @@ export class TestComponent {
       // console.log("community search meneu close")
   }
 
-  SignInFormSubmit() {
-    console.log("title: " + this.CreatePostForm.value.title)
-    console.log("content: " + this.CreatePostForm.value.content)
-  }
-
-  public characterCount: number = 0;
-
-  onTextAreaInput(event: any) {
+  inputTitle(event: any) {
     const textareaEle: any = event.target;
       textareaEle.value = textareaEle.value.replace(/(\r\n|\n|\r)/gm, "");
       textareaEle.style.height = 'auto';
@@ -150,7 +178,15 @@ export class TestComponent {
       }
   }
 
-  public editorContent ="";
+  inputLink(event: any) {
+    const textareaEle: any = event.target;
+      textareaEle.value = textareaEle.value.replace(/(\r\n|\n|\r)/gm, "");
+      textareaEle.style.height = 'auto';
+      textareaEle.style.height = `${textareaEle.scrollHeight}px`;
+      if (textareaEle.value === "") {
+        textareaEle.style.height = '30px';
+      }
+  }
 
   onContentChanged = (event: any) =>{
     this.editorContent = event.html;
