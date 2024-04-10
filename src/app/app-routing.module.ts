@@ -9,7 +9,7 @@ import { PassCodeComponent } from './pass-code/components/pass-code/pass-code.co
 import { ChangePasswordComponent } from './change-password/components/change-password/change-password.component';
 import { ConfirmEmailComponent } from './signup/components/confirm-email/confirm-email.component';
 // import { signinGuard } from './signin/guards/signin.guard';
-import { TestComponent } from './create-post/components/create-post/create-post.component';
+import { TestComponent } from './create-post/create-post/component/create-post.component';
 import { PostLinkComponent } from './post-link/component/post-link/post-link.component';
 import { PostMainComponent } from './post-main/component/post-main/post-main.component';
 import { PostLinkListComponent } from './post-link-list/component/post-link-list/post-link-list.component';

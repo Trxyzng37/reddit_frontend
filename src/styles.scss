@@ -43,6 +43,10 @@ button:hover {
     cursor: pointer;
 }
 
+button:disabled {
+  cursor: not-allowed;
+}
+
 a, a:visited {
     text-decoration: none;
     color: black

@@ -1,9 +1,11 @@
 import { Component, HostListener, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Img } from '../../img';
+import { Img } from '../../pojo/img';
 import { SearchCommunitiesService } from '../../../shared/services/search-communites/search-communities.service';
 import { Communities } from '../../../shared/pojo/pojo/communities';
 import { HttpErrorResponse } from '@angular/common/http';
+import { PostRequest } from '../../pojo/post';
+import { SendPostService } from '../service/send-post/send-post.service';
 
 @Component({
   selector: 'app-test',
@@ -12,13 +14,13 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class TestComponent {
   constructor (
-    private searchCommunitiesService: SearchCommunitiesService
+    private searchCommunitiesService: SearchCommunitiesService,
+    private sendPostService: SendPostService
   ) {}
 
   @Input() img: Img = new Img("");
   @Input() selected_id: number = 0;
 
-  imgArr: Img[] = [];
   communities: Communities[] = [new Communities(1, "a", "aaa", "aaa", 1, "../../assets/icon/technology.png"), new Communities(2, "b", "bbb", "bbb", 2, "../../assets/icon/technology.png")];
   public selected_community_icon: string = "../../assets/icon/dashed_circle.png";
   public isPostOpen: boolean = true;
@@ -27,14 +29,23 @@ export class TestComponent {
   public isImgUpload: boolean = false;
   public isCommunitySearchDropdownOpen: boolean = false;
   public characterCount: number = 0;
-  public editorContent ="";
 
-  public CreatePostForm: any = new FormGroup({
-    community: new FormControl(''),
-    type: new FormControl(''),
-    title: new FormControl(''),
-    content: new FormControl(''),
-  })
+  public title: string = "";
+  public community: string = "";
+  public editorContent: string = "";
+  public imgArr: Img[] = [];
+  public linkContent: string = "";
+
+  public editorAllowed: boolean = true;
+  public imgAllowed: boolean = true;
+  public linkAllowed: boolean = true;
+
+  AllowSubmit() {
+    // console.log(this.community !== "" && this.title !== "" ? false : true)
+    this.editorAllowed = this.community !== "" && this.title !== "" ? false : true;
+    this.imgAllowed = this.community !== "" && this.title !== "" && this.imgArr.length > 0 ? false : true;
+    this.linkAllowed = this.community !== "" && this.title !== "" && this.linkContent !=="" ? false : true;
+  }
 
   onDrop(event: any) {
     event.preventDefault();   
@@ -46,6 +57,7 @@ export class TestComponent {
     }
     const post_img_block: any = document.getElementById("post_img_block");
     post_img_block.style.border = "none";
+    this.AllowSubmit();
   }
 
     onDragEnter(event: Event) {
@@ -68,6 +80,7 @@ export class TestComponent {
     const file = files[0];
     this.selected_id = 0;
     this.onImageUpload(file);
+    this.AllowSubmit();
   }
 
   onImageUpload(file: File) {
@@ -79,19 +92,20 @@ export class TestComponent {
     reader.addEventListener("loadend", () => {
       const data = reader.result as string;
       const path = (window.URL || window.webkitURL).createObjectURL(file);
-      const img = new Img(path);
+      const img = new Img(data);
       console.log(img)
       this.imgArr.push(img);
       this.isImgUpload = this.imgArr.length <= 1 ? false : true;
       this.img = img;
       const arr_length = this.imgArr.length;
       this.selected_id = this.imgArr.length === 1 ? -1 : arr_length - 1;
+      this.AllowSubmit();
     })
+    this.AllowSubmit();
   }
 
   deleteImg(id: number) {
     this.imgArr.splice(id, 1);
-
     if (id === 0 && this.imgArr.length === 0) {
       this.img = new Img("");
       this.selected_id = -1;
@@ -111,12 +125,12 @@ export class TestComponent {
       this.img = this.imgArr[id-1];
       this.selected_id = id-1;
     }
+    this.AllowSubmit();
   }
 
   selectImg(id: number) {
     this.img = this.imgArr[id];
     this.selected_id = id;
-
   }
 
   onInputChange(img: Img) {
@@ -135,7 +149,10 @@ export class TestComponent {
   }
 
   searchCommunities(value: string) {
+    this.AllowSubmit();
     if (value !== " " && value !== "") {
+      this.community = value;
+      console.log("community: " + value);
       this.searchCommunitiesService.searchCommunities(value).subscribe({
         next: (response: Communities[]) => {
           console.log(response)
@@ -153,39 +170,57 @@ export class TestComponent {
 
   selectCommunity(community: Communities) {
     this.isCommunitySearchDropdownOpen = false;
-    console.log("select community: " + community);
-    this.CreatePostForm.value.community = community.name;
+    this.community = community.name;
     this.selected_community_icon = community.icon_base64;
-    console.log("select img: " + community.icon_base64);
+    this.community = community.name;
+    this.AllowSubmit();
+    console.log("select community: " + this.community);
   }
 
   @HostListener('document:click', ['$event'])
   closeProfileMenu(event: Event) {
     if (event.target !== document.getElementById("input_search_community"))
       this.isCommunitySearchDropdownOpen = false;
-      // console.log("community search meneu close")
   }
 
   inputTitle(event: any) {
     const textareaEle: any = event.target;
-      textareaEle.value = textareaEle.value.replace(/(\r\n|\n|\r)/gm, "");
-      textareaEle.style.height = 'auto';
-      textareaEle.style.height = `${textareaEle.scrollHeight}px`;
-      this.characterCount = textareaEle.value.length;
-      if (textareaEle.value === "") {
-        textareaEle.style.height = '30px';
-        this.characterCount = 0;
-      }
+    textareaEle.value = textareaEle.value.replace(/(\r\n|\n|\r)/gm, "");
+    textareaEle.style.height = 'auto';
+    textareaEle.style.height = `${textareaEle.scrollHeight}px`;
+    this.characterCount = textareaEle.value.length;
+    if (textareaEle.value === "") {
+      textareaEle.style.height = '30px';
+      this.characterCount = 0;
+    }
+    this.title = textareaEle.value;
+    this.AllowSubmit();
   }
 
   inputLink(event: any) {
     const textareaEle: any = event.target;
-      textareaEle.value = textareaEle.value.replace(/(\r\n|\n|\r)/gm, "");
-      textareaEle.style.height = 'auto';
-      textareaEle.style.height = `${textareaEle.scrollHeight}px`;
-      if (textareaEle.value === "") {
-        textareaEle.style.height = '30px';
-      }
+    textareaEle.value = textareaEle.value.replace(/(\r\n|\n|\r)/gm, "");
+    textareaEle.value = textareaEle.value.replace(" ", "");
+    textareaEle.style.height = 'auto';
+    textareaEle.style.height = `${textareaEle.scrollHeight}px`;
+    if (textareaEle.value === "") {
+      textareaEle.style.height = '40px';
+    }
+    this.linkContent = textareaEle.value;
+    console.log(this.linkContent);
+    this.AllowSubmit();
+    this.isValidHttpUrl(textareaEle.value);
+  }
+
+  isValidHttpUrl(url: string) {
+    try {
+      const obj = new URL(url);
+      this.linkAllowed = obj.protocol === "http:" || obj.protocol === "https:" ? false: true;
+      console.log(obj.protocol)
+    } 
+    catch (_) {
+      this.linkAllowed = true;  
+    }
   }
 
   onContentChanged = (event: any) =>{
@@ -216,5 +251,34 @@ export class TestComponent {
         ]                         
       ],
     },
+  }
+
+  createPost(type: string, content: string) {
+    const community: string = this.community;
+    const title: string = this.title;
+    console.log("Post type: " + type);
+    this.sendPostService.createPost(type, community, title, content).subscribe({
+      next: (ok: boolean) => {
+        alert("Create new post successfully")
+      },
+      error: (e: HttpErrorResponse) => {
+        console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
+      }
+    })
+  }
+
+  createImgPost(type: string, content: Img[]) {
+    const community: string = this.community;
+    const title: string = this.title;
+    const contentStr = JSON.stringify(content);
+    console.log("Post type: " + type);
+    this.sendPostService.createPost(type, community, title, contentStr).subscribe({
+      next: (ok: boolean) => {
+        alert("Create new post successfully")
+      },
+      error: (e: HttpErrorResponse) => {
+        console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
+      }
+    })
   }
 }
