@@ -66,6 +66,7 @@ export class SigninComponent implements OnInit {
           if (response.isSignIn) {
             alert("login ok using username-password");
             this.storageService.setItem("isSignIn", "true");
+            this.storageService.setItem("username", this.signInForm.value.username);
           }
           if (response.passwordError) {
             alert("Wrong password for user");

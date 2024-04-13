@@ -14,7 +14,7 @@
         <button id="btn_search_community_dropdown" type="button"><span class="pi pi-chevron-down" (click)="onDropDownSearchClick($event)"></span></button>
         <div id="search_community_result_block" [ngStyle]="{'display': isCommunitySearchDropdownOpen ? 'flex':'none'}">
             <button type="button" *ngFor="let community of communities" (click)="selectCommunity(community)">
-                <img src="../../assets/icon/technology.png"/>
+                <img src="{{community.icon_base64}}"/>
                 <div>
                     <p id="community_name">r/{{community.name}}</p>
                     <p id="member_count">{{community.subscriber_count}} members</p>

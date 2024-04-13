@@ -13,9 +13,9 @@ export class DateTimeService {
     return dateTime;
   }
 
-  getCurrentDateTimeToString(): string {
-    const dateTime: Date = new Date();
-    dateTime.setMilliseconds(0);
-    return dateTime.toString();
-  }
+  // getCurrentDateTimeToString(): string {
+  //   const dateTime: Date = new Date();
+  //   dateTime.setMilliseconds(0);
+  //   return dateTime.toString();
+  // }
 }
