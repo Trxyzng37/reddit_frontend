@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { PostResponse } from 'src/app/post-link-list/pojo/post-response';
+import { GetPostResponse } from 'src/app/post-link-list/pojo/get-post-response';
 
 @Component({
   selector: 'app-post-link',
@@ -22,7 +22,7 @@ export class PostLinkComponent {
   @Input() index: number = 0;
   @Input() arr_length: number = 0;
 
-  @Output() event = new EventEmitter<PostResponse>();
+  @Output() event = new EventEmitter<GetPostResponse>();
     
   on_click() {
     this.router.navigate(["/id/" + this.post_id]);
@@ -35,9 +35,9 @@ export class PostLinkComponent {
       console.log(this.index===this.arr_length-1)
       if(this.index == (this.arr_length-1)) {
         if(confirm("END OF PAGE. Want to add new post")) {
-          const o: PostResponse = new PostResponse(this.post_id+1, "new page"+1, "test"+1, this.created_at, this.vote+1, this.communityIcon);
-          console.log("Add new post: "+o.post_id)
-          this.addNewPost(o);
+          // const o: GetPostResponse = new GetPostResponse(this.post_id+1, "new page"+1, "test"+1, this.created_at, this.vote+1, this.communityIcon);
+          console.log("Add new post: ");
+          // this.addNewPost(o);
         }
         else {
           console.log("No add post")
@@ -46,7 +46,7 @@ export class PostLinkComponent {
     }
   }
 
-  addNewPost(o: PostResponse) {
+  addNewPost(o: GetPostResponse) {
     this.event.emit(o);
   }
 }

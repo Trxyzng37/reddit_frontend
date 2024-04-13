@@ -4,8 +4,11 @@ import { Img } from '../../pojo/img';
 import { SearchCommunitiesService } from '../../../shared/services/search-communites/search-communities.service';
 import { Communities } from '../../../shared/pojo/pojo/communities';
 import { HttpErrorResponse } from '@angular/common/http';
-import { PostRequest } from '../../pojo/post';
+import { PostRequest } from '../../pojo/create-post-request';
 import { SendPostService } from '../service/send-post/send-post.service';
+import { StorageService } from 'src/app/shared/storage/storage.service';
+import { DateTimeService } from 'src/app/shared/services/date-time/date-time.service';
+import { CreatePostResponse } from '../../pojo/create-post-response';
 
 @Component({
   selector: 'app-test',
@@ -15,7 +18,9 @@ import { SendPostService } from '../service/send-post/send-post.service';
 export class TestComponent {
   constructor (
     private searchCommunitiesService: SearchCommunitiesService,
-    private sendPostService: SendPostService
+    private sendPostService: SendPostService,
+    private storageService: StorageService,
+    private dateTimeService: DateTimeService
   ) {}
 
   @Input() img: Img = new Img("");
@@ -254,12 +259,17 @@ export class TestComponent {
   }
 
   createPost(type: string, content: string) {
+    const username: string = this.storageService.getItem("username");
     const community: string = this.community;
     const title: string = this.title;
+    const created_at: Date = this.dateTimeService.getCurrentDateTime();
     console.log("Post type: " + type);
-    this.sendPostService.createPost(type, community, title, content).subscribe({
-      next: (ok: boolean) => {
-        alert("Create new post successfully")
+    this.sendPostService.createPost(type, username, community, title, content, created_at).subscribe({
+      next: (response: CreatePostResponse) => {
+        if(response.CREATED === true)
+          alert("Create new post successfully")
+        else 
+          alert("Error create new post")
       },
       error: (e: HttpErrorResponse) => {
         console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
@@ -268,13 +278,18 @@ export class TestComponent {
   }
 
   createImgPost(type: string, content: Img[]) {
+    const username: string = this.storageService.getItem("username");
     const community: string = this.community;
     const title: string = this.title;
     const contentStr = JSON.stringify(content);
+    const created_at: Date = this.dateTimeService.getCurrentDateTime();
     console.log("Post type: " + type);
-    this.sendPostService.createPost(type, community, title, contentStr).subscribe({
-      next: (ok: boolean) => {
-        alert("Create new post successfully")
+    this.sendPostService.createPost(type, username, community, title, contentStr, created_at).subscribe({
+      next: (response: CreatePostResponse) => {
+        if(response.CREATED === true)
+          alert("Create new post successfully")
+        else 
+          alert("Error create new post")
       },
       error: (e: HttpErrorResponse) => {
         console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
