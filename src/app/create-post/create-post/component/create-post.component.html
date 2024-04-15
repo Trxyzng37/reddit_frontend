@@ -5,7 +5,7 @@
 <div id="container">
 <h2>Create a post</h2>
 <hr>
-<form>
+<div id="form">
     <div id="search_community_block">
         <div id="search_community_icon">
             <img src="{{selected_community_icon}}" />
@@ -33,7 +33,13 @@
     </div>
     <div id="post_content_block">
         <div id="post_post_block" [ngStyle]="{'display': isPostOpen ? 'block':'none'}">
-            <quill-editor [styles]="{height: '20vh'}" theme="snow" [modules]="quillConfig"  placeholder="Text (optional)" (onContentChanged)="onContentChanged($event)"></quill-editor>
+            <editor 
+                [init]="setting"
+                (onSelectionChange)="onContentChanged($event)"
+            >  
+            <!-- initialValue="Once upon a time..."     -->
+            </editor>
+            <!-- <quill-editor [styles]="{height: '20vh'}" theme="snow" [modules]="quillConfig"  placeholder="Text (optional)" (onContentChanged)="onContentChanged($event)"></quill-editor> -->
             <button class="btn_create_post" type="button" (click)="createPost('editor', this.editorContent)" [disabled]="editorAllowed">Post</button>
         </div>
         <div id="post_img_block" 
@@ -68,7 +74,7 @@
         </div>
     </div>
 
-</form>
+</div>
 
 <!-- <quill-view [content]="editorContent" format="html" theme="snow"></quill-view> -->
 </div>

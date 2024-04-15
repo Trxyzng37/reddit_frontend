@@ -1,5 +1,4 @@
 import { Component, HostListener, Input } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
 import { Img } from '../../pojo/img';
 import { SearchCommunitiesService } from '../../../shared/services/search-communites/search-communities.service';
 import { Communities } from '../../../shared/pojo/pojo/communities';
@@ -9,6 +8,7 @@ import { SendPostService } from '../service/send-post/send-post.service';
 import { StorageService } from 'src/app/shared/storage/storage.service';
 import { DateTimeService } from 'src/app/shared/services/date-time/date-time.service';
 import { CreatePostResponse } from '../../pojo/create-post-response';
+import tinymce from 'tinymce';
 
 @Component({
   selector: 'app-test',
@@ -21,7 +21,8 @@ export class TestComponent {
     private sendPostService: SendPostService,
     private storageService: StorageService,
     private dateTimeService: DateTimeService
-  ) {}
+  ) {
+  }
 
   @Input() img: Img = new Img("");
   @Input() selected_id: number = 0;
@@ -228,9 +229,54 @@ export class TestComponent {
     }
   }
 
+  //editor settings
+  public setting = {
+    base_url: '/tinymce',
+    suffix: '.min',
+    automatic_uploads: true,
+    file_picker_types: 'image',
+    toolbar: "bold italic strike | code image",
+    images_file_types: 'jpg,svg,webp,png,jpeg',
+    images_reuse_filename: true,
+    plugins: 'code image', 
+    statusbar: true,
+    elementpath: false,
+    branding: false,
+    resize: true,
+    height: '40vh', 
+    menubar: false, 
+    draggable_modal: false,
+    object_resizing: false,
+    inline_boundaries: false,
+    // skin: 'oxide-dark', 
+    content_css: 'tinymce-5',
+    content_style: 'body img { display: block;margin: 0 auto; }',
+    file_picker_callback: (cb: any, value:any, meta:any) => {
+      const input = document.createElement('input');
+      input.setAttribute('type', 'file');
+      input.setAttribute('accept', 'image/*');
+      input.addEventListener('change', (e:any) => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.addEventListener('load', () => {
+          const id = 'blobid' + (new Date()).getTime();
+          const blobCache =  tinymce.activeEditor!.editorUpload.blobCache;
+          const base64 = (<string>reader.result).split(',')[1];
+          const blobInfo = blobCache.create(id, file, base64);
+          blobCache.add(blobInfo);
+          cb(blobInfo.blobUri(), { title: file.name });
+        });
+        reader.readAsDataURL(file);
+      })
+      input.click();
+    },
+
+  }
+
   onContentChanged = (event: any) =>{
-    this.editorContent = event.html;
+    this.editorContent = event.editor.getContent({ format: 'html' });
     console.log(this.editorContent)
+    // this.editorContent = event.editor.setContent({ format: 'text' });
   }
 
   public quillConfig = {
