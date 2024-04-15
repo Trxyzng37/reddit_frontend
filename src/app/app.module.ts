@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { SignupComponent } from './signup/components/signup/signup.component';
@@ -26,7 +26,7 @@ import { InViewportModule } from 'ng-in-viewport';
 import { SafeHtmlPipe } from './shared/pipe/safe-html';
 import { ImgUploadedComponent } from './create-post/img_uploaded/component/img-uploaded/img-uploaded.component';
 import { ImgCaptionComponent } from './create-post/img-caption/img-caption/img-caption.component';
-
+import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 
 @NgModule({
   declarations: [
@@ -57,9 +57,11 @@ import { ImgCaptionComponent } from './create-post/img-caption/img-caption/img-c
     QuillModule,
     BrowserAnimationsModule,
     InViewportModule,
-    SafeHtmlPipe
+    SafeHtmlPipe,
+    EditorModule,
+    FormsModule
   ],
-  providers: [],
+  providers: [{ provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
