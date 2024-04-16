@@ -230,27 +230,34 @@ export class TestComponent {
   }
 
   //editor settings
-  public setting = {
+  public editorSettings = {
     base_url: '/tinymce',
     suffix: '.min',
+    plugins: 'link lists codesample image', 
+    toolbar: "bold italic underline strikethrough forecolor subscript superscript removeformat numlist bullist link blockquote codesample image",
+    toolbar_mode: 'wrap',
+    placeholder: '(Optional)',
     automatic_uploads: true,
     file_picker_types: 'image',
-    toolbar: "bold italic strike | code image",
     images_file_types: 'jpg,svg,webp,png,jpeg',
     images_reuse_filename: true,
-    plugins: 'code image', 
     statusbar: true,
     elementpath: false,
     branding: false,
     resize: true,
+    width: '100%',
     height: '40vh', 
     menubar: false, 
     draggable_modal: false,
     object_resizing: false,
     inline_boundaries: false,
+    contenteditable: false,
+    paste_data_images: false,
+    paste_block_drop: false,
+    // theme: 'silver',
     // skin: 'oxide-dark', 
     content_css: 'tinymce-5',
-    content_style: 'body img { display: block;margin: 0 auto; }',
+    content_style: 'body img { display: block;margin: 0 auto;} ',
     file_picker_callback: (cb: any, value:any, meta:any) => {
       const input = document.createElement('input');
       input.setAttribute('type', 'file');
@@ -270,13 +277,28 @@ export class TestComponent {
       })
       input.click();
     },
-
   }
 
   onContentChanged = (event: any) =>{
     this.editorContent = event.editor.getContent({ format: 'html' });
     console.log(this.editorContent)
-    // this.editorContent = event.editor.setContent({ format: 'text' });
+  }
+
+  public viewSettings = {
+    base_url: '/tinymce',
+    suffix: '.min',
+    placeholder: 'VIEW',
+    contenteditable: false,
+    toolbar: false,
+    menubar: false,
+    statusbar: false,
+    width: '100%',
+    height: '20vh',
+    content_style: 'body img { display: block;margin: 0 auto;} ',
+    init_instance_callback: (editor:any)=>{
+      console.log(editor.id)
+      editor.mode.set('readonly', false);
+    }
   }
 
   public quillConfig = {
