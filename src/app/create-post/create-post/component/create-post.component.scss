@@ -224,7 +224,7 @@ hr {
 #post_content_block {
     width: 95%;
     height: auto;
-    min-height: 20vh;
+    // min-height: 20vh;
     position: relative;
     bottom: 15px;
     // background-color: aqua;
@@ -233,16 +233,20 @@ hr {
 }
 
 #post_post_block {
-    height: calc(20vh + 30px);
+    height: auto;
     width: 100%;
 }
 
-quill-editor {
-    position: relative;
-    // bottom: 15px;
-    width: 100%;
-    background-color: rgb(186, 241, 158);
-}
+// editor {
+//     height: 40vh;
+// }
+
+// quill-editor {
+//     position: relative;
+//     // bottom: 15px;
+//     width: 100%;
+//     background-color: rgb(186, 241, 158);
+// }
 
 #post_img_block {
     height: auto;

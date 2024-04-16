@@ -34,12 +34,17 @@
     <div id="post_content_block">
         <div id="post_post_block" [ngStyle]="{'display': isPostOpen ? 'block':'none'}">
             <editor 
-                [init]="setting"
+                id="editor"
+                [init]="editorSettings"
                 (onSelectionChange)="onContentChanged($event)"
             >  
-            <!-- initialValue="Once upon a time..."     -->
             </editor>
-            <!-- <quill-editor [styles]="{height: '20vh'}" theme="snow" [modules]="quillConfig"  placeholder="Text (optional)" (onContentChanged)="onContentChanged($event)"></quill-editor> -->
+            <!-- <editor
+                id="view"
+                [init]="viewSettings"
+                [(ngModel)]="editorContent"
+            >
+            </editor> -->
             <button class="btn_create_post" type="button" (click)="createPost('editor', this.editorContent)" [disabled]="editorAllowed">Post</button>
         </div>
         <div id="post_img_block" 
