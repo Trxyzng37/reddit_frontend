@@ -16,18 +16,12 @@
         </div>
         <span class="pi pi-ellipsis-h"></span>
     </nav>
-    <h4 id="content_header">
-        This is a place holder for header of the post. It should show all the contents using h4 header so the content is bold, and all the conent of the header should be shown no matter how long it is. No overflow should be used.
-    </h4>
+
     <nav id="main_content">
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut odio temporibus voluptas error distinctio hic quae corrupti vero doloribus optio! Inventore ex quaerat modi blanditiis soluta maiores illum, ab velit.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut odio temporibus voluptas error distinctio hic quae corrupti vero doloribus optio! Inventore ex quaerat modi blanditiis soluta maiores illum, ab velit. 
-        </p>
-        <div id="ddd">
-            <img src="https://res.cloudinary.com/trxyzng-photo-storage/image/upload/v1711289964/test/test.jpg"/>
-        </div>
+        <h3>{{title}}</h3>
+        <app-editor-view [content]="content"></app-editor-view>
     </nav>
+
     <nav id="footer">
         <div id="block_vote">
             <button id="btn_upvote" type="button"><i class="pi pi-thumbs-up"></i></button>

@@ -1,9 +1,12 @@
-<div [innerHTML]="trustedHtml"></div>
+<!-- <div [innerHTML]="trustedHtml"></div> -->
 
 <app-post-link *ngFor="let post of post_result; let index = index;" 
                     [post_id]="post.post_id"
+                    [type]="type"
                     [communityName]="post.community_name"
                     [userName]="post.username"
+                    [title]="post.title"
+                    [content]="post.content"
                     [created_at]="post.created_at"
                     [vote]="post.vote"
                     [communityIcon]="post.community_icon"

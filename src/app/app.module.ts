@@ -27,6 +27,7 @@ import { SafeHtmlPipe } from './shared/pipe/safe-html';
 import { ImgUploadedComponent } from './create-post/img_uploaded/component/img-uploaded/img-uploaded.component';
 import { ImgCaptionComponent } from './create-post/img-caption/img-caption/img-caption.component';
 import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
+import { EditorViewComponent } from './post-link/editor/component/editor-view/editor-view.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
     HeaderBarComponent,
     PostLinkListComponent,
     ImgUploadedComponent,
-    ImgCaptionComponent
+    ImgCaptionComponent,
+    EditorViewComponent
   ],
   imports: [
     BrowserModule,
