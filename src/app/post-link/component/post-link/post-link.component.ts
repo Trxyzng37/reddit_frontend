@@ -36,21 +36,21 @@ export class PostLinkComponent {
   }
 
   onIntersection({ target, visible }: { target: Element; visible: boolean }) {
-    if (visible) {
-      console.log("Post index: "+this.index);
-      console.log("LENGTH: "+this.arr_length);
-      console.log(this.index===this.arr_length-1)
-      if(this.index == (this.arr_length-1)) {
-        if(confirm("END OF PAGE. Want to add new post")) {
-          // const o: GetPostResponse = new GetPostResponse(this.post_id+1, "new page"+1, "test"+1, this.created_at, this.vote+1, this.communityIcon);
-          console.log("Add new post: ");
-          // this.addNewPost(o);
-        }
-        else {
-          console.log("No add post")
-        }
-      }
-    }
+    // if (visible) {
+    //   console.log("Post index: "+this.index);
+    //   console.log("LENGTH: "+this.arr_length);
+    //   console.log(this.index===this.arr_length-1)
+    //   if(this.index == (this.arr_length-1)) {
+    //     if(confirm("END OF PAGE. Want to add new post")) {
+    //       // const o: GetPostResponse = new GetPostResponse(this.post_id+1, "new page"+1, "test"+1, this.created_at, this.vote+1, this.communityIcon);
+    //       console.log("Add new post: ");
+    //       // this.addNewPost(o);
+    //     }
+    //     else {
+    //       console.log("No add post")
+    //     }
+    //   }
+    // }
   }
 
   addNewPost(o: GetPostResponse) {
