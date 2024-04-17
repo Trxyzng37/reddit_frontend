@@ -234,13 +234,17 @@ export class TestComponent {
     base_url: '/tinymce',
     suffix: '.min',
     plugins: 'link lists codesample image', 
-    toolbar: "bold italic underline strikethrough forecolor subscript superscript removeformat numlist bullist link blockquote codesample image",
+    toolbar: "bold italic underline strikethrough forecolor subscript superscript removeformat numlist bullist alignleft aligncenter alignright alignjustify link blockquote codesample image",
     toolbar_mode: 'wrap',
     placeholder: '(Optional)',
     automatic_uploads: true,
     file_picker_types: 'image',
     images_file_types: 'jpg,svg,webp,png,jpeg',
     images_reuse_filename: true,
+    image_dimensions: false,
+    image_caption: true,
+    // image_title: false,
+    image_description: false,
     statusbar: true,
     elementpath: false,
     branding: false,
@@ -254,10 +258,19 @@ export class TestComponent {
     contenteditable: false,
     paste_data_images: false,
     paste_block_drop: false,
-    // theme: 'silver',
-    // skin: 'oxide-dark', 
+    color_default_foreground: '#E03E2D',
+    color_default_background: '#000000',
+    color_map_background: [
+      '000000', 'Black'
+    ],
+    textcolor_map: ['#E03E2D', 'Red'],
+    custom_colors: false,
     content_css: 'tinymce-5',
-    content_style: 'body img { display: block;margin: 0 auto;} ',
+    content_style: 
+      'p { margin: 0; } ' + 
+      'img { display: block; margin: 0 auto; out-line: 0; max-width: 100%; max-height: 100%}' +
+      'body {line-height: normal}' +
+      'pre[class*=language-] {font-family: Consolas}',
     file_picker_callback: (cb: any, value:any, meta:any) => {
       const input = document.createElement('input');
       input.setAttribute('type', 'file');
@@ -266,7 +279,7 @@ export class TestComponent {
         const file = e.target.files[0];
         const reader = new FileReader();
         reader.addEventListener('load', () => {
-          const id = 'blobid' + (new Date()).getTime();
+          const id = file.name;
           const blobCache =  tinymce.activeEditor!.editorUpload.blobCache;
           const base64 = (<string>reader.result).split(',')[1];
           const blobInfo = blobCache.create(id, file, base64);

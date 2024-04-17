@@ -13,6 +13,7 @@ import { TestComponent } from './create-post/create-post/component/create-post.c
 import { PostLinkComponent } from './post-link/component/post-link/post-link.component';
 import { PostMainComponent } from './post-main/component/post-main/post-main.component';
 import { PostLinkListComponent } from './post-link-list/component/post-link-list/post-link-list.component';
+import { EditorViewComponent } from './post-link/editor/component/editor-view/editor-view.component';
 
 const routes: Routes = [
   // { path: 'signin', component: SigninComponent, canActivate: mapToCanActivate([signinGuard])},
@@ -27,6 +28,7 @@ const routes: Routes = [
       {path: '', component: PostMainComponent,
       children: [
         {path: '', title: 'trxyzng', component: PostLinkListComponent},
+        {path: 'editor-view', component: EditorViewComponent},
         {path: 'id/:post_id', title: 'post-id', component: PostLinkComponent},
       ]
       }

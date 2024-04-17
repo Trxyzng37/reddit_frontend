@@ -14,8 +14,11 @@ export class PostLinkComponent {
   ) {}
 
   @Input() post_id: number = 0;
+  @Input() type: string = "";
   @Input() communityName: string = "";
   @Input() userName: string = "";
+  @Input() title: string = "";
+  @Input() content: string = "";
   @Input() created_at: string = "";
   @Input() vote: number = 1;
   @Input() communityIcon: string = "";
@@ -24,6 +27,10 @@ export class PostLinkComponent {
 
   @Output() event = new EventEmitter<GetPostResponse>();
     
+  ngOnInit() {
+    // this.content = this.content.replace('<img', '<img class="img" ')
+  }
+
   on_click() {
     this.router.navigate(["/id/" + this.post_id]);
   }
