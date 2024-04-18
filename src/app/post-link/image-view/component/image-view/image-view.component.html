@@ -1,8 +1,13 @@
 
-<gallery imageSize="contain" [items]="images" thumbPosition="bottom" [thumb]="false" [dots]="true" [loop]="false" [dotsSize]="10" (indexChange)="changeIndex($event)" >
-    <ng-container *galleryImageDef="let item; let active = active">
-        <div *ngIf="active" class="item-text">
-          {{ arr[index].caption }}
-        </div>
-      </ng-container>
-</gallery>
+<div id="container">
+  <button id="btn_right" type="button" (click)="right($event)" [ngStyle]="{'display':rightAllowed && arr.length != 1 ? 'block':'none'}"><i class="pi pi-angle-right"></i></button>
+  <button id="btn_left" type="button" (click)="left($event)" [ngStyle]="{'display':leftAllowed && arr.length != 1 ? 'block':'none'}"><i class="pi pi-angle-left"></i></button>
+    <img src="{{arr[index].data}}" />
+    <div id="caption_link" [ngStyle]="{'display': isReviewed ? 'none': 'block'}" >
+      <p id="caption">{{arr[index].caption}}</p>
+      <a id="link" href="{{arr[index].link}}">{{arr[index].link}}</a>
+    </div>
+    <!-- <div id="btn_dot" [ngStyle]="{'display': arr.length == 1 ? 'none':'flex'}">
+        <button type="button" *ngFor="let a of arr; let i=index" [ngStyle]="{'background-color': i == index ? 'black':'rgb(241, 201, 152)'}" (click)="btnDotClick($event, i)"></button>
+    </div> -->
+</div>

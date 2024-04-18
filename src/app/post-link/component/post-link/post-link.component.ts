@@ -43,6 +43,10 @@ export class PostLinkComponent {
     // console.log(this.content)
   }
 
+  preventClick(event: Event) {
+    event.stopPropagation();
+  }
+
   onIntersection({ target, visible }: { target: Element; visible: boolean }) {
     // if (visible) {
     //   console.log("Post index: "+this.index);

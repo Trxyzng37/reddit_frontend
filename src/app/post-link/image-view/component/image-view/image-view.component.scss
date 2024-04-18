@@ -8,3 +8,82 @@ gallery {
     position: absolute;
     bottom: 50px;
 }
+
+#container {
+    width: 100%;
+    height: 50vh;
+    background-color: black;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+#caption_link {
+    height: auto;
+    text-align: center;
+    position: absolute;
+    bottom: 30px;
+}
+
+#container > button {
+    width: 30px;
+    height: 30px;
+    background-color: rgb(241, 201, 152);
+    border-radius: 50%;
+    position: absolute;
+    opacity: 0.6;
+    // font-size: 1rem;
+}
+
+#container > button:hover {
+    opacity: 1;
+}
+
+#btn_left {
+    left: 10px;
+}
+
+#btn_right {
+    right: 10px;
+}
+
+// #btn_dot {
+//     width: auto;
+//     height: 30px;
+//     // background-color: aqua;
+//     position: absolute;
+//     bottom: 0;
+//     display: flex;
+//     flex-direction: row;
+//     justify-content: space-evenly;
+//     align-items: center;
+// }
+
+// #btn_dot > button {
+//     width: 10px;
+//     height: 10px;
+//     border-radius: 50%;
+//     display: block;
+//     background-color: white;
+// }
+
+// #btn_dot > button:first-child {
+//     margin-left: 10px;
+// }
+
+// #btn_dot > button:last-child {
+//     margin-right: 10px;
+// }
+
+// #btn_dot > button:not(:first-child):not(:last-child) {
+//     margin: 0 10px;
+// }
+
