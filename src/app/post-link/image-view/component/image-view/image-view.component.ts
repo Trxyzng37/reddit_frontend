@@ -15,14 +15,18 @@ export class ImageViewComponent {
 
   ngOnInit() {
     this.arr = JSON.parse(this.content);
-    console.log(this.arr)
       for(let img of this.arr) {
         // console.log("img: " + img.data)
         let imageItem: ImageItem = new ImageItem({src: img.data, thumb: img.data});
         // console.log("imageItem: "+imageItem.data.src);
-          console.log(typeof imageItem)
-        // this.images.push(imageItem);
+        this.images.push(imageItem);
       }
     console.log(this.images)
+  }
+
+  index: number = 0;
+  changeIndex(event:any) {
+    this.index = event.currIndex;
+    console.log("Index: "+this.index)
   }
 }

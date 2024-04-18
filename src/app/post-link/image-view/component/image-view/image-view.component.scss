@@ -1,0 +1,10 @@
+gallery {
+    position: relative;
+}
+
+.item-text {
+    z-index: 99999;
+    background-color: green;
+    position: absolute;
+    bottom: 50px;
+}
