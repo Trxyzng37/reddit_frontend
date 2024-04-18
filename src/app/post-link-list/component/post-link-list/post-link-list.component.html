@@ -2,7 +2,7 @@
 
 <app-post-link *ngFor="let post of post_result; let index = index;" 
                     [post_id]="post.post_id"
-                    [type]="type"
+                    [type]="post.type"
                     [communityName]="post.community_name"
                     [userName]="post.username"
                     [title]="post.title"

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { GalleryItem } from 'ng-gallery';
 import { GetPostResponse } from 'src/app/post-link-list/pojo/get-post-response';
 
 @Component({
@@ -27,12 +28,19 @@ export class PostLinkComponent {
 
   @Output() event = new EventEmitter<GetPostResponse>();
     
+  public images!: GalleryItem[];
   ngOnInit() {
-    // this.content = this.content.replace('<img', '<img class="img" ')
-  }
+    // if(this.images) {
+    //   for(let img of this.content) {
+    //     console.log("img: " + img.data)
+    //     let imageItem: ImageItem = new ImageItem({src: img.data, thumb: img.data});
+    //     this.images.push(imageItem);
+    //   }
+    }  
 
   on_click() {
     this.router.navigate(["/id/" + this.post_id]);
+    console.log(this.content)
   }
 
   onIntersection({ target, visible }: { target: Element; visible: boolean }) {

@@ -28,6 +28,8 @@ import { ImgUploadedComponent } from './create-post/img_uploaded/component/img-u
 import { ImgCaptionComponent } from './create-post/img-caption/img-caption/img-caption.component';
 import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 import { EditorViewComponent } from './post-link/editor/component/editor-view/editor-view.component';
+import { GalleryModule } from 'ng-gallery';
+import { ImageViewComponent } from './post-link/image-view/component/image-view/image-view.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,8 @@ import { EditorViewComponent } from './post-link/editor/component/editor-view/ed
     PostLinkListComponent,
     ImgUploadedComponent,
     ImgCaptionComponent,
-    EditorViewComponent
+    EditorViewComponent,
+    ImageViewComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +64,8 @@ import { EditorViewComponent } from './post-link/editor/component/editor-view/ed
     InViewportModule,
     SafeHtmlPipe,
     EditorModule,
-    FormsModule
+    FormsModule,
+    GalleryModule
   ],
   providers: [{ provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' }],
   bootstrap: [AppComponent]
