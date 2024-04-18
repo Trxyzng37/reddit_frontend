@@ -20,7 +20,8 @@
 
     <nav id="main_content">
         <h3>{{title}}</h3>
-        <app-editor-view [content]="content"></app-editor-view>
+        <app-editor-view [ngStyle]="{'display': type=='editor'?'block':'none'}" [content]="content"></app-editor-view>
+        <app-image-view [ngStyle]="{'display': type=='img'?'block':'none'}" [content]="content"></app-image-view>
     </nav>
 
     <nav id="footer">
