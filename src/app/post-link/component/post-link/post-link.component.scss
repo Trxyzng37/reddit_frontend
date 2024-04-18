@@ -50,6 +50,7 @@ app-editor-view {
     height: auto;
     max-height: 50vh;
     overflow-y: hidden;
+    z-index: 9999;
 }
 
 img {
@@ -59,7 +60,7 @@ img {
 }
 
 #post_block:hover {
-    cursor: pointer;
+    // cursor: pointer;
 }
 
 a:hover {

@@ -40,7 +40,7 @@ export class PostLinkComponent {
 
   on_click() {
     this.router.navigate(["/id/" + this.post_id]);
-    console.log(this.content)
+    // console.log(this.content)
   }
 
   onIntersection({ target, visible }: { target: Element; visible: boolean }) {
