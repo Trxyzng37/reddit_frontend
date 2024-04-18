@@ -47,8 +47,8 @@ export class TestComponent {
   public linkAllowed: boolean = true;
 
   AllowSubmit() {
-    // console.log(this.community !== "" && this.title !== "" ? false : true)
-    this.editorAllowed = this.community !== "" && this.title !== "" ? false : true;
+    console.log(this.community.length === 0 && this.title.length === 0)
+    this.editorAllowed = this.community.length != 0 && this.title.length != 0 ? false : true;
     this.imgAllowed = this.community !== "" && this.title !== "" && this.imgArr.length > 0 ? false : true;
     this.linkAllowed = this.community !== "" && this.title !== "" && this.linkContent !=="" ? false : true;
   }
@@ -155,7 +155,6 @@ export class TestComponent {
   }
 
   searchCommunities(value: string) {
-    this.AllowSubmit();
     if (value !== " " && value !== "") {
       this.community = value;
       console.log("community: " + value);
@@ -171,7 +170,9 @@ export class TestComponent {
     }
     else {
       this.communities = [];
+      this.community = "";
     }
+    this.AllowSubmit();
   }
 
   selectCommunity(community: Communities) {
