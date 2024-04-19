@@ -30,6 +30,7 @@ import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 import { EditorViewComponent } from './post-link/editor/component/editor-view/editor-view.component';
 import { GalleryModule } from 'ng-gallery';
 import { ImageViewComponent } from './post-link/image-view/component/image-view/image-view.component';
+import { LinkViewComponent } from './post-link/link-review/component/link-view/link-view.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { ImageViewComponent } from './post-link/image-view/component/image-view/
     ImgUploadedComponent,
     ImgCaptionComponent,
     EditorViewComponent,
-    ImageViewComponent
+    ImageViewComponent,
+    LinkViewComponent
   ],
   imports: [
     BrowserModule,

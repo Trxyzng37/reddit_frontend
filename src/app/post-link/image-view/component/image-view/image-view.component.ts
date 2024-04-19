@@ -10,7 +10,7 @@ import { Img } from 'src/app/create-post/pojo/img';
 })
 export class ImageViewComponent {
   public images: GalleryItem[] = [];
-  @Input({ required: true }) content!: string;
+  @Input() content: string = "";
   public isReviewed: boolean = true;
   public arr!: Img[];
 

@@ -214,7 +214,7 @@ export class TestComponent {
       textareaEle.style.height = '40px';
     }
     this.linkContent = textareaEle.value;
-    console.log(this.linkContent);
+    console.log("link content: " + this.linkContent);
     this.AllowSubmit();
     this.isValidHttpUrl(textareaEle.value);
   }
@@ -367,6 +367,26 @@ export class TestComponent {
     const created_at: Date = this.dateTimeService.getCurrentDateTime();
     console.log("Post type: " + type);
     this.sendPostService.createPost(type, username, community, title, contentStr, created_at).subscribe({
+      next: (response: CreatePostResponse) => {
+        if(response.CREATED === true)
+          alert("Create new post successfully")
+        else 
+          alert("Error create new post")
+      },
+      error: (e: HttpErrorResponse) => {
+        console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
+      }
+    })
+  }
+
+  createLinkPost(type: string, content: string) {
+    const username: string = this.storageService.getItem("username");
+    const community: string = this.community;
+    const title: string = this.title;
+    const created_at: Date = this.dateTimeService.getCurrentDateTime();
+    console.log("Post type: " + type);
+    
+    this.sendPostService.createPost(type, username, community, title, content, created_at).subscribe({
       next: (response: CreatePostResponse) => {
         if(response.CREATED === true)
           alert("Create new post successfully")

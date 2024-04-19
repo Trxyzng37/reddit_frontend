@@ -74,7 +74,7 @@
         </div>
         <div id="post_link_block" [ngStyle]="{'display': isPostLinkOpen ? 'block' : 'none'}">
             <textarea (input)="inputLink($event)" placeholder="Enter a full link start with http or https"></textarea>
-            <button id="btn_create_post_link" type="button" (click)="createPost('link', this.linkContent)" [disabled]="linkAllowed">Post</button>
+            <button id="btn_create_post_link" type="button" (click)="createLinkPost('link', this.linkContent)" [disabled]="linkAllowed">Post</button>
         </div>
     </div>
 
