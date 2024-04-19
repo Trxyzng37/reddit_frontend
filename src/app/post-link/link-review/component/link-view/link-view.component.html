@@ -1,0 +1,15 @@
+
+
+<div id="video_container" [ngStyle]="{'display': isYoutubeLink ? 'block' : 'none'}">
+    <h3>{{title}}</h3>
+    <iframe [src]="sanitizer.bypassSecurityTrustResourceUrl(data.link)">
+    </iframe>
+</div>
+
+<div id="link_container" [ngStyle]="{'display': !isYoutubeLink ? 'flex' : 'none'}">
+    <div>
+        <h3>{{title}}</h3>
+        <a [href]="data.link" target="_blank">{{data.link}}</a>
+    </div>
+    <img [src]="data.image">
+</div>
