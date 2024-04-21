@@ -2,7 +2,7 @@
 
 <div id="video_container" [ngStyle]="{'display': isYoutubeLink ? 'block' : 'none'}">
     <h3>{{title}}</h3>
-    <iframe [src]="sanitizer.bypassSecurityTrustResourceUrl(data.link)">
+    <iframe [src]="sanitizer.bypassSecurityTrustResourceUrl(data.link)" allow="autoplay">
     </iframe>
 </div>
 
@@ -11,5 +11,8 @@
         <h3>{{title}}</h3>
         <a [href]="data.link" target="_blank">{{data.link}}</a>
     </div>
-    <img [src]="data.image">
+    <a [href]="data.link" target="_blank">
+        <img [src]="data.image">
+        <i class="pi pi-external-link"></i>
+    </a>
 </div>

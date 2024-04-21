@@ -8,7 +8,7 @@
     margin-bottom: 10px;
 }
 
-iframe {
+iframe, video {
     width: 100%;
     height: calc(100%);
 }
@@ -44,9 +44,29 @@ iframe {
     text-decoration: underline;
 }
 
-#link_container img {
+#link_container > a {
     width: 150px;
     height: 100%;
     margin-left: 10px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background-color: rgba($color: #000000, $alpha: 0.5);
+}
+
+#link_container > a > i {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    // background-color: rgba($color: #000000, $alpha: 0.5);;
+}
+
+#link_container > a > img {
+    width: 100%;
+    height: 100%;
     object-fit: contain;
 }

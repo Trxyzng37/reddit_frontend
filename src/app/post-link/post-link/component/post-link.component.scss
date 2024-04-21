@@ -1,4 +1,7 @@
 
+:host {
+    --community_icon: 30px;
+}
 
 #post_block {
     width: 100%;
@@ -61,6 +64,7 @@ img {
     width: 100%;
     height: 50px;
     margin-top: 5px;
+    background-color: black;
 }
 
 #post_block:hover {
@@ -89,6 +93,9 @@ a:hover {
 
 #community_block > *, #community_link > * {
     margin-right: 5px;
+}
+
+#link_date_block {
 
 }
 
@@ -100,8 +107,8 @@ a:hover {
 }
 
 #community_icon {
-    width: var(--post-header-height);
-    height: var(--post-header-height);
+    width: var(--community_icon);
+    height: var(--community_icon);
     border-radius: 50%;
 }
 
@@ -138,17 +145,50 @@ a:hover {
 
 }
 
+#footer > div.upvote {
+    background-color: orange;
+}
+
+#footer > div.downvote {
+    background-color: rgb(99, 122, 239);
+}
+
+#block_vote > button.upvote {
+    background-color: orange;
+}
+
+#block_vote > button.downvote {
+    background-color: rgb(99, 122, 239);
+}
+
+#btn_upvote:hover {
+    background-color: orange;
+}
+
+#btn_downvote:hover {
+    background-color: rgb(99, 122, 239);
+}
+
 #btn_comment > p, #btn_share > p {
     padding: 0px 5px;
 }
+
+#block_vote > #btn_upvote.upvote:hover,
+#block_vote > #btn_upvote.downvote:hover,
+#block_vote > #btn_downvote.downvote:hover,
+#block_vote > #btn_downvote.upvote:hover
+{
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
 
 button {
     background-color: var(--primary_background_color);
 }
 
-#footer > button:hover, button:hover {
-    background-color: rgb(99, 122, 239);
-}
+// #footer > button:hover, button:hover {
+//     background-color: rgb(99, 122, 239);
+// }
 
 
 

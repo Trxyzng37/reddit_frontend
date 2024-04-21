@@ -15,7 +15,7 @@ import { PassCodeComponent } from './pass-code/components/pass-code/pass-code.co
 import { ChangePasswordComponent } from './change-password/components/change-password/change-password.component';
 import { ConfirmEmailComponent } from './signup/components/confirm-email/confirm-email.component';
 import { TestComponent } from './create-post/create-post/component/create-post.component';
-import { PostLinkComponent } from './post-link/component/post-link/post-link.component';
+import { PostLinkComponent } from './post-link/post-link/component/post-link.component';
 import { PostLinkListComponent } from './post-link-list/component/post-link-list/post-link-list.component';
 import { PostMainComponent } from './post-main/component/post-main/post-main.component';
 import { RecentVisitedPostComponent } from './recent-visited-post/component/recent-visited-post/recent-visited-post.component';
@@ -31,6 +31,7 @@ import { EditorViewComponent } from './post-link/editor/component/editor-view/ed
 import { GalleryModule } from 'ng-gallery';
 import { ImageViewComponent } from './post-link/image-view/component/image-view/image-view.component';
 import { LinkViewComponent } from './post-link/link-review/component/link-view/link-view.component';
+import { ViewDetailPostComponent } from './view-detail-post/view-detail-post/component/view-detail-post.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { LinkViewComponent } from './post-link/link-review/component/link-view/l
     ImgCaptionComponent,
     EditorViewComponent,
     ImageViewComponent,
-    LinkViewComponent
+    LinkViewComponent,
+    ViewDetailPostComponent
   ],
   imports: [
     BrowserModule,
