@@ -8,12 +8,15 @@
 (inViewportAction)="onIntersection($event)" -->
     <nav id="community_bar">
         <div id="community_block">
-            <a id="community_link" href="">
+            <a id="community_link" href="/{{communityName}}">
                 <img id="community_icon" src="{{communityIcon}}" alt="community_icon"/>
-                <span>{{post_id}}</span>
             </a>
-            <span>-</span>
-            <span>{{created_at}}</span>
+            <div id="link_date_block"> 
+                <span style="font-weight: bold;">r/{{communityName}}  </span>
+                <!-- <i class="pi pi-circle-fill" style="font-size: 0.3rem;"></i> -->
+                <i style="font-weight: bold;">·</i>
+                <span style="font-size: 13px;"> {{shownDate}}</span>
+            </div>
         </div>
         <span class="pi pi-ellipsis-h"></span>
     </nav>
@@ -26,10 +29,10 @@
     </nav>
 
     <nav id="footer">
-        <div id="block_vote">
-            <button id="btn_upvote" type="button"><i class="pi pi-thumbs-up"></i></button>
+        <div id="block_vote" [ngClass]="{'upvote': voteType === 'upvote', 'downvote': voteType === 'downvote'}">
+            <button id="btn_upvote" type="button" (click)="votePost($event, 'upvote')" [ngClass]="{'upvote': voteType === 'upvote', 'downvote': voteType === 'downvote'}"><i class="pi pi-thumbs-up"></i></button>
             <p id="vote_count">{{vote}}</p>
-            <button id="btn_downvote" type="button"><i class="pi pi-thumbs-down"></i></button>
+            <button id="btn_downvote" type="button" (click)="votePost($event, 'downvote')" [ngClass]="{'upvote': voteType === 'upvote', 'downvote': voteType === 'downvote'}"><i class="pi pi-thumbs-down"></i></button>
         </div>
         <button id="btn_comment" type="button">
             <i class="pi pi-comment"></i>
