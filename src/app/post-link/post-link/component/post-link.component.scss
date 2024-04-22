@@ -53,11 +53,11 @@ app-editor-view {
     max-height: 50vh;
     overflow-y: hidden;
     z-index: 9999;
-    cursor: pointer;
+    // cursor: pointer;
 }
 
 app-editor-view {
-    cursor: pointer;
+    // cursor: pointer;
 }
 
 img {
@@ -82,6 +82,7 @@ a:hover {
     align-items: center;
     width: auto;
     height: var(--post-header-height);
+    position: relative;
 }
 
 #community_block {
@@ -112,6 +113,50 @@ a:hover {
     border-radius: 50%;
 }
 
+#btn_option {
+    height: 100%;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    background-color: var(--primary_background_color);
+}
+
+#post_block:hover #btn_option {
+    background-color: var(--primary_background_color_hover);
+}
+
+#post_block:hover #btn_option:hover {
+    background-color: var(--primary_background_color);
+}
+
+#dropdown_option_block {
+    background-color: bisque;
+    position: absolute;
+    right: 10px;
+    top: calc(var(--community_icon) + 10px);
+}
+
+#dropdown_option_block > * {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+#dropdown_option_block i {
+    margin-left: 15px;
+    margin-right: 10px;
+}
+
+#dropdown_option_block p {
+    margin-right: 20px;
+}
+
+#dropdown_option_block > *:hover {
+    opacity: 0.7;
+}
+
 #footer {
     width: 100%;
     height: 30px;
@@ -130,13 +175,45 @@ a:hover {
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
-    background-color: var(--primary_background_color);
+    background-color: var(--primary_background_color_hover);
     margin-right: 10px;
     border-radius: 20px;
 }
 
+#post_block #footer #block_vote.normal, #btn_upvote.normal, #btn_downvote.normal {
+    background-color: var(--primary_background_color_hover);
+}
+
+#post_block #footer #btn_upvote.normal {
+    background-color: var(--primary_background_color_hover);
+}
+
+#post_block #footer #btn_downvote.normal {
+    background-color: var(--primary_background_color_hover);
+}
+
+#post_block:hover #footer > *:not(.block_vote) {
+    background-color: var(--primary_background_color);
+}
+
+#post_block:hover #footer #block_vote.normal {
+    background-color: var(--primary_background_color);
+}
+
+#post_block:hover #footer #btn_upvote.normal {
+    background-color: var(--primary_background_color);
+}
+
+#post_block:hover #footer #btn_downvote.normal {
+    background-color: var(--primary_background_color);
+}
+
 #btn_comment, #btn_share {
     padding: 0px 5px;
+}
+
+#btn_comment:hover, #btn_share:hover {
+    background-color: rgba($color: #dcffcb, $alpha: 1.0);
 }
 
 #btn_upvote, #btn_downvote {
@@ -161,11 +238,11 @@ a:hover {
     background-color: rgb(99, 122, 239);
 }
 
-#btn_upvote:hover {
+#post_block #footer #block_vote #btn_upvote:hover {
     background-color: orange;
 }
 
-#btn_downvote:hover {
+#post_block #footer #block_vote #btn_downvote:hover {
     background-color: rgb(99, 122, 239);
 }
 
@@ -173,10 +250,10 @@ a:hover {
     padding: 0px 5px;
 }
 
-#block_vote > #btn_upvote.upvote:hover,
-#block_vote > #btn_upvote.downvote:hover,
-#block_vote > #btn_downvote.downvote:hover,
-#block_vote > #btn_downvote.upvote:hover
+#post_block #footer #block_vote > #btn_upvote.upvote:hover,
+#post_block #footer #block_vote > #btn_upvote.downvote:hover,
+#post_block #footer #block_vote > #btn_downvote.downvote:hover,
+#post_block #footer #block_vote > #btn_downvote.upvote:hover
 {
     background-color: rgba(0, 0, 0, 0.4);
 }

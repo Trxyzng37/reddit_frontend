@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { GalleryItem } from 'ng-gallery';
 import { GetPostResponse } from 'src/app/post-link-list/pojo/get-post-response';
@@ -62,6 +62,20 @@ export class PostLinkComponent {
 
   preventClick(event: Event) {
     event.stopPropagation();
+  }
+
+  public isOptionMenuOpen: boolean = false;
+
+  openOptionMenu(event: Event) {
+    this.isOptionMenuOpen = !this.isOptionMenuOpen;
+    console.log("Option menu open")
+    event.stopPropagation();
+  }
+
+  @HostListener('document:click', ['$event'])
+  closeProfileMenu(event: Event) {
+      this.isOptionMenuOpen = false;
+      console.log("profile meneu close")
   }
 
   onIntersection({ target, visible }: { target: Element; visible: boolean }) {
