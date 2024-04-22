@@ -13,12 +13,15 @@
             </a>
             <div id="link_date_block"> 
                 <span style="font-weight: bold;">r/{{communityName}}  </span>
-                <!-- <i class="pi pi-circle-fill" style="font-size: 0.3rem;"></i> -->
                 <i style="font-weight: bold;">·</i>
                 <span style="font-size: 13px;"> {{shownDate}}</span>
             </div>
         </div>
-        <span class="pi pi-ellipsis-h"></span>
+        <button id="btn_option" type="button" (click)="openOptionMenu($event)"><i class="pi pi-ellipsis-h"></i></button>
+        <div id="dropdown_option_block" [ngStyle]="{'display': isOptionMenuOpen ? 'block':'none'}">
+            <button><i class="pi pi-bookmark"></i><p>Save</p></button>
+            <button><i class="pi pi-eye-slash"></i><p>Hide</p></button>
+        </div>
     </nav>
 
     <nav id="main_content">
@@ -29,12 +32,12 @@
     </nav>
 
     <nav id="footer">
-        <div id="block_vote" [ngClass]="{'upvote': voteType === 'upvote', 'downvote': voteType === 'downvote'}">
-            <button id="btn_upvote" type="button" (click)="votePost($event, 'upvote')" [ngClass]="{'upvote': voteType === 'upvote', 'downvote': voteType === 'downvote'}"><i class="pi pi-thumbs-up"></i></button>
+        <div id="block_vote" class="block_vote" [ngClass]="{'upvote': voteType === 'upvote', 'downvote': voteType === 'downvote', 'normal': voteType === 'none'}">
+            <button id="btn_upvote" type="button" (click)="votePost($event, 'upvote')" [ngClass]="{'upvote': voteType === 'upvote', 'downvote': voteType === 'downvote', 'normal': voteType === 'none'}"><i class="pi pi-thumbs-up"></i></button>
             <p id="vote_count">{{vote}}</p>
-            <button id="btn_downvote" type="button" (click)="votePost($event, 'downvote')" [ngClass]="{'upvote': voteType === 'upvote', 'downvote': voteType === 'downvote'}"><i class="pi pi-thumbs-down"></i></button>
+            <button id="btn_downvote" type="button" (click)="votePost($event, 'downvote')" [ngClass]="{'upvote': voteType === 'upvote', 'downvote': voteType === 'downvote', 'normal': voteType === 'none'}"><i class="pi pi-thumbs-down"></i></button>
         </div>
-        <button id="btn_comment" type="button">
+        <button id="btn_comment" type="button" (click)="on_click()">
             <i class="pi pi-comment"></i>
             <p id="comment_count">317</p>
         </button> 
