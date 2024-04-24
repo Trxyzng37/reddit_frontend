@@ -1,5 +1,5 @@
 
-<app-post-link
+<app-post
     [post_id]="post.post_id"
     [type]="post.type"
     [communityName]="post.community_name"
@@ -10,4 +10,13 @@
     [vote]="post.vote"
     [communityIcon]="post.community_icon"
 >
-</app-post-link>
+</app-post>
+
+<editor
+    [init]="editorSettings"
+    (onSelectionChange)="onContentChanged($event)"
+    style="width: calc(100% - 40px);"
+>
+</editor>
+
+<div id="comment_block"></div>

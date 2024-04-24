@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { GetPostService } from '../service/get-post/get-post.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { DateTimeService } from 'src/app/shared/services/date-time/date-time.service';
+import tinymce from 'tinymce';
 
 @Component({
   selector: 'app-view-detail-post',
@@ -36,5 +37,74 @@ export class ViewDetailPostComponent {
      })
   }
 
+  public editorSettings = {
+    base_url: '/tinymce',
+    suffix: '.min',
+    plugins: 'link lists codesample image autoresize', 
+    toolbar: "bold italic underline strikethrough forecolor subscript superscript removeformat numlist bullist link blockquote codesample image",
+    toolbar_mode: 'wrap',
+    placeholder: '(Optional)',
+    automatic_uploads: true,
+    file_picker_types: 'image',
+    images_file_types: 'jpg,svg,webp,png,jpeg',
+    images_reuse_filename: true,
+    image_dimensions: false,
+    // image_caption: true,
+    image_description: false,
+    statusbar: true,
+    elementpath: false,
+    branding: false,
+    resize: true,
+    width: '100%',
+    min_height: 150,
+    // max_height:1000,
+    autoresize_min_height: 200,
+    // autoresize_max_height: 300,
+    // height: '100px', 
+    menubar: false, 
+    draggable_modal: false,
+    object_resizing: false,
+    inline_boundaries: false,
+    contenteditable: false,
+    paste_data_images: false,
+    paste_block_drop: false,
+    color_default_foreground: '#E03E2D',
+    color_default_background: '#000000',
+    color_map_background: [
+      '000000', 'Black'
+    ],
+    textcolor_map: ['#E03E2D', 'Red'],
+    custom_colors: false,
+    content_css: 'tinymce-5',
+    content_style: 
+      'p { margin: 0; } ' + 
+      'img { display: block; margin: 0 auto; out-line: 0; max-width: 100%; max-height: 100%}' +
+      'body {line-height: normal}' +
+      'pre[class*=language-] {font-family: Consolas}',
+    file_picker_callback: (cb: any, value:any, meta:any) => {
+      const input = document.createElement('input');
+      input.setAttribute('type', 'file');
+      input.setAttribute('accept', 'image/*');
+      input.addEventListener('change', (e:any) => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.addEventListener('load', () => {
+          const id = file.name;
+          const blobCache =  tinymce.activeEditor!.editorUpload.blobCache;
+          const base64 = (<string>reader.result).split(',')[1];
+          const blobInfo = blobCache.create(id, file, base64);
+          blobCache.add(blobInfo);
+          cb(blobInfo.blobUri(), { title: file.name });
+        });
+        reader.readAsDataURL(file);
+      })
+      input.click();
+    },
+  }
+
+  onContentChanged = (event: any) =>{
+    // this.editorContent = event.editor.getContent({ format: 'html' });
+    // console.log(this.editorContent)
+  }
 
 }

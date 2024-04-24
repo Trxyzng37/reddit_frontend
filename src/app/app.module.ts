@@ -32,6 +32,7 @@ import { GalleryModule } from 'ng-gallery';
 import { ImageViewComponent } from './post-link/image-view/component/image-view/image-view.component';
 import { LinkViewComponent } from './post-link/link-review/component/link-view/link-view.component';
 import { ViewDetailPostComponent } from './view-detail-post/view-detail-post/component/view-detail-post.component';
+import { PostComponent } from './view-detail-post/view-post/component/view-post/view-post.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { ViewDetailPostComponent } from './view-detail-post/view-detail-post/com
     EditorViewComponent,
     ImageViewComponent,
     LinkViewComponent,
-    ViewDetailPostComponent
+    ViewDetailPostComponent,
+    PostComponent
   ],
   imports: [
     BrowserModule,
