@@ -14,9 +14,9 @@
     box-sizing: border-box;
 }
 
-#post_block:hover {
-    background-color: var(--primary_background_color_hover);
-}
+// #post_block:hover {
+//     background-color: var(--primary_background_color_hover);
+// }
 
 #post_block > *:not(:last-child)  {
     margin-bottom: 10px;
@@ -67,9 +67,9 @@ img {
     background-color: black;
 }
 
-#post_block:hover {
-    cursor: pointer;
-}
+// #post_block:hover {
+//     cursor: pointer;
+// }
 
 a:hover {
     color: blue;
@@ -120,16 +120,11 @@ a:hover {
     background-color: var(--primary_background_color);
 }
 
-#post_block:hover #btn_option {
+#btn_option:hover {
     background-color: var(--primary_background_color_hover);
 }
 
-#post_block:hover #btn_option:hover {
-    background-color: var(--primary_background_color);
-}
-
 #dropdown_option_block {
-    background-color: bisque;
     position: absolute;
     right: 10px;
     top: calc(var(--community_icon) + 10px);
@@ -138,11 +133,17 @@ a:hover {
 #dropdown_option_block > * {
     width: 100%;
     height: 40px;
+    background-color: var(--primary_background_color_hover);
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
 }
+
+// #dropdown_option_block:first-child {
+//     border-top-left-radius: 10px;
+//     border-top-right-radius: 10px;
+// }
 
 #dropdown_option_block i {
     margin-left: 15px;
@@ -154,7 +155,7 @@ a:hover {
 }
 
 #dropdown_option_block > *:hover {
-    opacity: 0.7;
+    opacity: 0.8;
 }
 
 #footer {
@@ -180,32 +181,16 @@ a:hover {
     border-radius: 20px;
 }
 
-#post_block #footer #block_vote.normal, #btn_upvote.normal, #btn_downvote.normal {
+#block_vote.normal, #btn_upvote.normal, #btn_downvote.normal {
     background-color: var(--primary_background_color_hover);
 }
 
-#post_block #footer #btn_upvote.normal {
+#btn_upvote.normal {
     background-color: var(--primary_background_color_hover);
 }
 
-#post_block #footer #btn_downvote.normal {
+#btn_downvote.normal {
     background-color: var(--primary_background_color_hover);
-}
-
-#post_block:hover #footer > *:not(.block_vote) {
-    background-color: var(--primary_background_color);
-}
-
-#post_block:hover #footer #block_vote.normal {
-    background-color: var(--primary_background_color);
-}
-
-#post_block:hover #footer #btn_upvote.normal {
-    background-color: var(--primary_background_color);
-}
-
-#post_block:hover #footer #btn_downvote.normal {
-    background-color: var(--primary_background_color);
 }
 
 #btn_comment, #btn_share {
@@ -262,12 +247,3 @@ a:hover {
 button {
     background-color: var(--primary_background_color);
 }
-
-// #footer > button:hover, button:hover {
-//     background-color: rgb(99, 122, 239);
-// }
-
-
-
-
-
