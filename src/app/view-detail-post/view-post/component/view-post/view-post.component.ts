@@ -69,11 +69,11 @@
       event.stopPropagation();
     }
   
-    @HostListener('document:click', ['$event'])
-    closeProfileMenu(event: Event) {
-        this.isOptionMenuOpen = false;
-        console.log("profile meneu close")
-    }
+    // @HostListener('document:click', ['$event'])
+    // closeProfileMenu(event: Event) {
+    //     this.isOptionMenuOpen = false;
+    //     console.log("profile meneu close")
+    // }
   
     votePost(event: Event, type: string) {
       event.stopPropagation();
