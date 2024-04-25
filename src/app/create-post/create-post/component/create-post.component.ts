@@ -184,11 +184,11 @@ export class TestComponent {
     console.log("select community: " + this.community);
   }
 
-  @HostListener('document:click', ['$event'])
-  closeProfileMenu(event: Event) {
-    if (event.target !== document.getElementById("input_search_community"))
-      this.isCommunitySearchDropdownOpen = false;
-  }
+  // @HostListener('document:click', ['$event'])
+  // closeProfileMenu(event: Event) {
+  //   if (event.target !== document.getElementById("input_search_community"))
+  //     this.isCommunitySearchDropdownOpen = false;
+  // }
 
   inputTitle(event: any) {
     const textareaEle: any = event.target;

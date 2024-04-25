@@ -72,11 +72,15 @@ export class HeaderBarComponent {
     event.stopPropagation();
   }
 
-  @HostListener('document:click', ['$event'])
-  closeProfileMenu(event: Event) {
-      this.isProfileMenuOpen = false;
-      console.log("profile meneu close")
-  }
+  // @HostListener('document:click', ['$event'])
+  // closeProfileMenu(event: Event) {
+  //     this.isProfileMenuOpen = false;
+  //     console.log("profile meneu close")
+  //     const cellText = document.getSelection();
+  //     if (cellText?.type === 'Range') 
+  //       event.stopPropagation();
+    
+  // }
 
   logOut() {
     this.router.navigate(["/signin"])
