@@ -33,6 +33,7 @@ import { ImageViewComponent } from './post-link/image-view/component/image-view/
 import { LinkViewComponent } from './post-link/link-review/component/link-view/link-view.component';
 import { ViewDetailPostComponent } from './view-detail-post/view-detail-post/component/view-detail-post.component';
 import { PostComponent } from './view-detail-post/view-post/component/view-post/view-post.component';
+import { CommentComponent } from './comment/component/comment/comment.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { PostComponent } from './view-detail-post/view-post/component/view-post/
     ImageViewComponent,
     LinkViewComponent,
     ViewDetailPostComponent,
-    PostComponent
+    PostComponent,
+    CommentComponent
   ],
   imports: [
     BrowserModule,

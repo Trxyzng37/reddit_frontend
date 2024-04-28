@@ -43,7 +43,12 @@
     public voteType: string = 'none'; //none upvote downvote
     public previousVote: number = this.vote;
     public shownDate: string = "";
-  
+    public  upvote = "../../../../../assets/icon/upvote.png"
+    public  upvote_fill = "../../../../../assets/icon/upvote-fill.png"
+    public  downvote = "../../../../../assets/icon/downvote.png"
+    public  downvote_fill = "../../../../../assets/icon/downvote-fill.png"
+
+
     ngOnInit() {
       this.shownDate = this.dateTimeService.getTimeByCompareCreatedAtAndCurrentDate(this.created_at);
       const username: string = this.storageService.getItem("username");
