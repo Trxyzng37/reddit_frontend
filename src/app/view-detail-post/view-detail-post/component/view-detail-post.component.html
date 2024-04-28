@@ -33,6 +33,7 @@
 <app-comment *ngFor="let comment of commentResults; let i=index"
     [commentData]="comment"
     [postId]="postId"
+    (createNewComment)="getNewCommentAfterReply($event)"
 >
 </app-comment>
 

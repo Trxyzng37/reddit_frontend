@@ -132,14 +132,31 @@ export class ViewDetailPostComponent {
       next: (response: CreateCommentResponse) => {
         console.log("save comment: "+response.comment_created);
         alert("Create comment successfully");
-        // this.cancelComment();
-        window.location.reload();
+        this.getCommentService.getComments(this.postId).subscribe({
+          next: (response: Comment[]) => {
+            this.commentResults = response;
+          },
+          error: (e: HttpErrorResponse) => {
+            console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
+          }
+         })
       },
       error: (e: HttpErrorResponse) => {
         console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
         alert("Error create comment");
       }
     })
+  }
+
+  getNewCommentAfterReply(event: Event) {
+    this.getCommentService.getComments(this.postId).subscribe({
+      next: (response: Comment[]) => {
+        this.commentResults = response;
+      },
+      error: (e: HttpErrorResponse) => {
+        console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
+      }
+     })
   }
 
 }

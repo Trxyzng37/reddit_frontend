@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { VotePostService } from 'src/app/post-link/post-link/service/vote-post/vote-post.service';
 import { DateTimeService } from 'src/app/shared/services/date-time/date-time.service';
@@ -32,6 +32,7 @@ export class CommentComponent {
 
   @Input() commentData!: Comment;
   @Input() postId: number = 0;
+  @Output() createNewComment = new EventEmitter<boolean>();
   public isShown: boolean = true;
 
   public voteType: string = 'none'; //none upvote downvote
@@ -54,7 +55,7 @@ export class CommentComponent {
     this.commentData.content = this.commentData.content.replace(/<img/g, '<img style="display:block;" ');
     this.commentData.content = this.commentData.content.replace(/<ol/g, '<ol style="margin-left:20px;" ');
     this.commentData.content = this.commentData.content.replace(/<ul/g, '<ul style="margin-left:30px;" ');
-    this.commentData.content = this.commentData.content.replace(/<pre/g, '<pre class="pre_code" ');
+    this.commentData.content = this.commentData.content.replace(/<pre/g, '<pre class="pre_code" style="width:fit-content" ');
     this.commentData.content = this.commentData.content.replace(/<code/g, '<code class="code" ');
     this.commentData.content = this.commentData.content.replace(/<a/g, '<a class="a" ');
     this.previousContent = this.commentData.content;
@@ -215,11 +216,11 @@ export class CommentComponent {
   }
 
   createComment() {
-    this.createCommentService.createComment(this.postId, this.commentData.parent_id, this.commentData.content, this.commentData.level).subscribe({
+    this.createCommentService.createComment(this.postId, this.commentData._id, this.commentData.content, this.commentData.level+1).subscribe({
       next: (response: CreateCommentResponse) => {
         console.log("save comment: "+response.comment_created);
         alert("Create comment successfully");
-        window.location.reload();
+        this.createNewComment.emit(true);
       },
       error: (e: HttpErrorResponse) => {
         console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
