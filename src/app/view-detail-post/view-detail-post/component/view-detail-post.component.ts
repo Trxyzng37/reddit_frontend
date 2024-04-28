@@ -6,6 +6,10 @@ import { GetPostService } from '../service/get-post/get-post.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { DateTimeService } from 'src/app/shared/services/date-time/date-time.service';
 import tinymce from 'tinymce';
+import { GetCommentsService } from '../service/get-comments/get-comments.service';
+import { Comment } from '../pojo/comment';
+import { CreateCommentService } from '../service/create-comment/create-comment.service';
+import { CreateCommentResponse } from '../pojo/create-comment-response';
 
 @Component({
   selector: 'app-view-detail-post',
@@ -17,19 +21,30 @@ export class ViewDetailPostComponent {
   public constructor(
     private route: ActivatedRoute,
     private dateTimeService: DateTimeService,
-    private getPostService: GetPostService
+    private getPostService: GetPostService,
+    private getCommentService: GetCommentsService,
+    private createCommentService: CreateCommentService
   ) {}
 
   public postId: number = 0;
   public post!: GetPostResponse;
   public shownDate: string = "";
+  public commentResults: Comment[] = [];
+  public content: string = "";
 
   ngOnInit() {
      this.postId = this.route.snapshot.params['post_id'];
      this.getPostService.getPostByPostId(this.postId).subscribe({
       next: (response: GetPostResponse) => {
         this.post = response;
-        console.log(response);
+      },
+      error: (e: HttpErrorResponse) => {
+        console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
+      }
+     })
+     this.getCommentService.getComments(this.postId).subscribe({
+      next: (response: Comment[]) => {
+        this.commentResults = response;
       },
       error: (e: HttpErrorResponse) => {
         console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
@@ -56,7 +71,7 @@ export class ViewDetailPostComponent {
     branding: false,
     resize: true,
     width: '100%',
-    min_height: 150,
+    min_height: 100,
     // max_height:1000,
     autoresize_min_height: 200,
     // autoresize_max_height: 300,
@@ -78,7 +93,7 @@ export class ViewDetailPostComponent {
     content_css: 'tinymce-5',
     content_style: 
       'p { margin: 0; } ' + 
-      'img { display: block; margin: 0 auto; out-line: 0; max-width: 100%; max-height: 100%}' +
+      'img { display: block; out-line: 0; max-width: 100%; max-height: 100%}' +
       'body {line-height: normal}' +
       'pre[class*=language-] {font-family: Consolas}',
     file_picker_callback: (cb: any, value:any, meta:any) => {
@@ -103,8 +118,28 @@ export class ViewDetailPostComponent {
   }
 
   onContentChanged = (event: any) =>{
-    // this.editorContent = event.editor.getContent({ format: 'html' });
-    // console.log(this.editorContent)
+    this.content = event.editor.getContent({ format: 'html' });
+    console.log(this.content)
+  }
+
+  cancelComment() {
+    this.content = "";
+    tinymce.activeEditor?.setContent(this.content);
+  }
+
+  createComment() {
+    this.createCommentService.createComment(this.postId, 0, this.content, 0).subscribe({
+      next: (response: CreateCommentResponse) => {
+        console.log("save comment: "+response.comment_created);
+        alert("Create comment successfully");
+        // this.cancelComment();
+        window.location.reload();
+      },
+      error: (e: HttpErrorResponse) => {
+        console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
+        alert("Error create comment");
+      }
+    })
   }
 
 }

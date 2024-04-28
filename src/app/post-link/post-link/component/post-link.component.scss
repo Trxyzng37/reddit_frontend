@@ -60,7 +60,7 @@ app-editor-view {
     // cursor: pointer;
 }
 
-img {
+#community_icon {
     width: 100%;
     height: 50px;
     margin-top: 5px;
@@ -219,7 +219,18 @@ a:hover {
 #btn_upvote, #btn_downvote {
     padding: 5px 5px;
     border-radius: 20px;
+    width: auto;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
+#btn_upvote img, #btn_downvote img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 50%;
 }
 
 #footer > div.upvote {

@@ -36,12 +36,12 @@ export class DateTimeService {
 
   getTimeByCompareCreatedAtAndCurrentDate(created_at: string): string {
     const currentDateStr: string = this.getCurrentDateTime().toISOString();
-    console.log("current date: "+currentDateStr);
-    console.log("created_at: "+created_at);
+    // console.log("current date: "+currentDateStr);
+    // console.log("created_at: "+created_at);
     const currentDate: number[] = this.findDateComponentFromDateString(currentDateStr);
     const createdAtDate: number[] = this.findDateComponentFromDateString(created_at);
-    console.log(currentDate)
-    console.log(createdAtDate)
+    // console.log(currentDate)
+    // console.log(createdAtDate)
     let shownDate: string = "";
     if (currentDate.length != 0 && createdAtDate.length != 0) {
       if (currentDate[0] - createdAtDate[0] >= 1) {
