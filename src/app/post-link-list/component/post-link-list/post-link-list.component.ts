@@ -16,15 +16,10 @@ export class PostLinkListComponent {
     private sanitizer: DomSanitizer,
     private DatetimeService: DateTimeService
   ) {
-    // this.trustedHtml = this.sanitizer
-    // .bypassSecurityTrustHtml(this.htmlContent)
   }
 
   public post_result: GetPostResponse[] = [];
 
-  // trustedHtml: any;
-  // htmlContent = "<h1>Html content</h1><img src='https://res.cloudinary.com/trxyzng-photo-storage/image/upload/v1711289964/test/test.jpg' style='width: 100px; height: 50px'/>";
-  
   ngOnInit() {
     this.getPostService.getAllPosts().subscribe({
       next: (response: GetPostResponse[]) => {

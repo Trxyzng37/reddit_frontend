@@ -26,25 +26,4 @@ export class EditorViewComponent {
     this.content = this.content.replace(/<a/g, '<a class="a" ');
     this.content = this.content.replace(/<blockquote/g, '<blockquote class="blockquote" ');
   }
-
-  // public viewSettings = {
-  //   base_url: '/tinymce',
-  //   suffix: '.min',
-  //   placeholder: 'VIEW',
-  //   contenteditable: false,
-  //   toolbar: false,
-  //   menubar: false,
-  //   statusbar: false,
-  //   width: '100%',
-  //   height: '20vh',
-  //   content_style: 
-  //   'p { margin: 0; } ' + 
-  //   'img { display: block; margin: 0 auto; }' +
-  //   'body {line-height: normal}' +
-  //   'pre[class*=language-] {font-family: Consolas, Monaco, Andale Mono, Ubuntu Mono, monospace;}',
-  //   init_instance_callback: (editor:any)=>{
-  //     console.log(editor.id)
-  //     editor.mode.set('readonly', false);
-  //   }
-  // }
 }

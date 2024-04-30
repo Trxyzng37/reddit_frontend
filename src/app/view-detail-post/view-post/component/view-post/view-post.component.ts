@@ -74,11 +74,9 @@
       event.stopPropagation();
     }
   
-    // @HostListener('document:click', ['$event'])
-    // closeProfileMenu(event: Event) {
-    //     this.isOptionMenuOpen = false;
-    //     console.log("profile meneu close")
-    // }
+    navigateToCommunity() {
+      this.router.navigate(["/r/" + this.communityName]);
+    }
   
     votePost(event: Event, type: string) {
       event.stopPropagation();

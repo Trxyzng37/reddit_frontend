@@ -9,6 +9,8 @@ import { CheckVotePostService } from '../service/check-vote-post/check-vote-post
 import { CheckVotePostResponse } from '../service/check-vote-post/pojo/check-vote-post-response';
 import { VotePostResponse } from '../service/vote-post/pojo/vote-post-response';
 import { DateTimeService } from 'src/app/shared/services/date-time/date-time.service';
+import { GetCommentsService } from 'src/app/view-detail-post/view-detail-post/service/get-comments/get-comments.service';
+import { Comment } from 'src/app/view-detail-post/view-detail-post/pojo/comment';
 
 @Component({
   selector: 'app-post-link',
@@ -21,7 +23,8 @@ export class PostLinkComponent {
     private votePostServie: VotePostService,
     private storageService: StorageService,
     private dateTimeService: DateTimeService,
-    private checkVotePostService: CheckVotePostService
+    private checkVotePostService: CheckVotePostService,
+    private getCommentService: GetCommentsService,
   ) {}
 
   @Input() post_id: number = 0;
@@ -42,6 +45,7 @@ export class PostLinkComponent {
   public voteType: string = 'none'; //none upvote downvote
   public previousVote: number = this.vote;
   public shownDate: string = "";
+  public comment_count: number = 0;
 
   public  upvote = "../../../../../assets/icon/upvote.png"
   public  upvote_fill = "../../../../../assets/icon/upvote-fill.png"
@@ -59,29 +63,37 @@ export class PostLinkComponent {
         console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
       }
     })
+    this.getCommentService.getComments(this.post_id).subscribe({
+      next: (response: Comment[]) => {
+        this.comment_count = response.length;
+      },
+      error: (e: HttpErrorResponse) => {
+        console.log("HttpServletResponse: " + e.error.message + "\n" + "Error: " + e.error);
+      }
+    })
   }  
 
   on_click() {
     this.router.navigate(["/post/" + this.post_id]);
   }
 
-  preventClick(event: Event) {
-    event.stopPropagation();
-  }
+  // preventClick(event: Event) {
+  //   event.stopPropagation();
+  // }
 
   public isOptionMenuOpen: boolean = false;
 
   openOptionMenu(event: Event) {
     this.isOptionMenuOpen = !this.isOptionMenuOpen;
-    console.log("Option menu open")
+    // console.log("Option menu open")
     event.stopPropagation();
   }
 
-  @HostListener('document:click', ['$event'])
-  closeProfileMenu(event: Event) {
-      this.isOptionMenuOpen = false;
-      console.log("profile meneu close")
-  }
+  // @HostListener('document:click', ['$event'])
+  // closeProfileMenu(event: Event) {
+  //     this.isOptionMenuOpen = false;
+  //     console.log("profile meneu close")
+  // }
 
   onIntersection({ target, visible }: { target: Element; visible: boolean }) {
     // if (visible) {
