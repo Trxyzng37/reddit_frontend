@@ -145,7 +145,7 @@ export class ViewDetailPostComponent {
     }
   }
 
-  createComment() {
+  createComment(event: Event) {
     const uid = this.storageService.getItem("uid") == null ? 0 : parseInt(this.storageService.getItem("uid"));
     if(uid === 0) {
       Swal.fire({
@@ -161,16 +161,15 @@ export class ViewDetailPostComponent {
     else {
       this.createCommentService.createComment(this.postId, 0, this.content, 0).subscribe({
         next: (response: CreateCommentResponse) => {
-          console.log("save comment: "+response.comment_created);
-          alert("Create comment successfully");
-          this.getCommentService.getComments(this.postId).subscribe({
-            next: (response: Comment[]) => {
-              this.commentResults = response;
-            },
-            error: (e: HttpErrorResponse) => {
-              console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
-            }
-           })
+          Swal.fire({
+            titleText: "Create comment successfully",
+            icon: "success",
+            heightAuto: true,
+            showConfirmButton: true,
+            focusCancel: false,
+            focusConfirm: false
+          })
+          this.reloadComment(event);
         },
         error: (e: HttpErrorResponse) => {
           console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
@@ -187,7 +186,7 @@ export class ViewDetailPostComponent {
     }
   }
 
-  getNewCommentAfterReply(event: Event) {
+  reloadComment(event: Event) {
     this.getCommentService.getComments(this.postId).subscribe({
       next: (response: Comment[]) => {
         this.commentResults = response;

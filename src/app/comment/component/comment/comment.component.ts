@@ -14,6 +14,8 @@ import { GetCommentStatusService } from '../../service/get-comment-status/get-co
 import { CommentStatusResponse } from '../../pojo/comment-status-response';
 import { EditCommentService } from '../../service/edit-comment/edit-comment.service';
 import Swal, { SweetAlertResult } from 'sweetalert2';
+import { DeleteCommentService } from '../../service/delete-comment/delete-comment.service';
+import { DeleteCommentResponse } from '../../pojo/delete-comment-response';
 
 @Component({
   selector: 'app-comment',
@@ -29,16 +31,17 @@ export class CommentComponent {
     private dateTimeService: DateTimeService,
     private createCommentService: CreateCommentService,
     private getCommentStatusService: GetCommentStatusService,
-    private editCommentService: EditCommentService
+    private editCommentService: EditCommentService,
+    private deleteCommentService: DeleteCommentService
   ) {}
 
 
   @Input() commentData!: Comment;
   @Input() postId: number = 0;
-  @Output() createNewComment = new EventEmitter<boolean>();
-  @Output() clearEditorContent = new EventEmitter<boolean>();
+  @Output() commentModified = new EventEmitter<boolean>();
 
   public isShown: boolean = true;
+  public isDeleted: boolean = false;
   public isReplyAllowed: boolean = false;
   public isEditAllowed: boolean = false;
   public isDeleteAllowed: boolean = false;
@@ -65,6 +68,7 @@ export class CommentComponent {
   ngOnInit() {
     // console.log("commentData: "+this.commentData);
     // console.log("Level: "+this.commentData.level);
+    this.isDeleted = this.commentData.deleted;
     this.uid = this.storageService.getItem("uid") === "" ? 0 : Number(this.storageService.getItem("uid"));
     this.isUserComment = this.commentData.uid == this.uid ? true : false;
     this.isEditAllowed = this.commentData.uid == this.uid ? true : false;
@@ -295,7 +299,7 @@ export class CommentComponent {
     else {
       this.createCommentService.createComment(this.postId, this.commentData._id, this.replyCommentData, this.commentData.level+1).subscribe({
         next: (response: CreateCommentResponse) => {
-          this.createNewComment.emit(true);
+          this.commentModified.emit(true);
           Swal.fire({
             titleText: "Create comment successfully",
             icon: "success",
@@ -371,5 +375,43 @@ export class CommentComponent {
     }
   }
 
+  deleteComment() {
+    Swal.fire({
+      titleText: "Do you want to delete this comment",
+      icon: "warning",
+      heightAuto: true,
+      showCancelButton: true,
+      showConfirmButton: true,
+      focusCancel: false,
+      focusConfirm: false
+    }).then((result) => {
+      this.deleteCommentService.deleteComment(this.postId, this.commentData._id).subscribe({
+        next: (response: DeleteCommentResponse) => {
+          this.commentModified.emit(true);
+          Swal.fire({
+            titleText: "Delete comment successfully",
+            icon: "success",
+            heightAuto: true,
+            showConfirmButton: true,
+            focusCancel: false,
+            focusConfirm: false
+          })
+        },
+        error: (e: HttpErrorResponse) => {
+          console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
+          if(this.uid == 0) {
+            Swal.fire({
+              titleText: "Error delete comment. Please try again",
+              icon: "error",
+              heightAuto: true,
+              showConfirmButton: true,
+              focusCancel: false,
+              focusConfirm: false
+            })
+          }
+        }
+      })
+    })
 
+  }
 }

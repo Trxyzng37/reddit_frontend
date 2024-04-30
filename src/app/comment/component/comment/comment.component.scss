@@ -6,7 +6,7 @@
 
 .container {
     background-color: var(--primary_background_color);
-    width: 100%;
+    width: calc(100%);
     height: auto;
     margin-bottom: 10px;
     padding: 5px 0;
@@ -41,6 +41,7 @@ img {
 
 #comment_content, #footer {
     margin-left: 35px;
+    box-sizing: border-box;
 }
 
 #footer {
@@ -69,8 +70,10 @@ img {
 
 #comment_content {
     height: auto;
-    width: 100%;
+    width: calc(100% - 35px - 7px);
     margin-top: 5px;
+    box-sizing: border-box;
+    overflow-wrap:break-word;
 }
 
 #btn_option {
