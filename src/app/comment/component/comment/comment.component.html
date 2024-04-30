@@ -1,7 +1,7 @@
 
 <div class="container" [style.padding-left]="margin" [ngClass]="{'user_comment': isUserComment == true}">
     <div id="header" (click)="showComment($event)">
-        <img src="../../../../assets/user-icon.png" />
+        <img [attr.src]="isShown ? '../../../../assets/user-icon.png' : '../../../../assets/icon/plus.png'" />
         <div id="info_block">
             <p>{{commentData.uid}}</p>
             <pre> • </pre>

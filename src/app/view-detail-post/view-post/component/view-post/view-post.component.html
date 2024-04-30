@@ -33,7 +33,7 @@
             <p id="vote_count">{{vote}}</p>
             <button id="btn_downvote" type="button" (click)="votePost($event, 'downvote')" [ngClass]="{'upvote': voteType === 'upvote', 'downvote': voteType === 'downvote', 'normal': voteType === 'none'}"><img [attr.src]="voteType === 'downvote' ? downvote_fill: downvote" /></button>
         </div>
-        <button id="btn_comment" type="button">
+        <button id="btn_comment" type="button" onclick="document.getElementById('comment').scrollIntoView();">
             <i class="pi pi-comment"></i>
             <p id="comment_count">{{commentCount}}</p>
         </button> 
