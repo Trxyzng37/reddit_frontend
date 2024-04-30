@@ -29,7 +29,7 @@
 
 <!-- <comments currentUserId="1"></comments> -->
 <!-- <div id="comment_block"></div> -->
-<p *ngIf="commentResults.length === 0">No comment found for this post</p>
+<h3 id="no_comment_block" *ngIf="commentResults.length === 0">No comment found for this post</h3>
 
 <app-comment id="comment" *ngFor="let comment of commentResults; let i=index"
     [commentData]="comment"

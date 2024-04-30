@@ -36,6 +36,10 @@ export class LinkViewComponent {
     else {
     }
   }
+
+  preventClick(event: Event) {
+    event.stopPropagation();
+  }
 }
 
 

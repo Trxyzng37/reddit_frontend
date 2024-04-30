@@ -50,7 +50,7 @@ hr {
 
 app-editor-view {
     height: auto;
-    max-height: 50vh;
+    // max-height: 50vh;
     overflow-y: hidden;
     z-index: 9999;
     // cursor: pointer;
@@ -111,6 +111,10 @@ a:hover {
     width: var(--community_icon);
     height: var(--community_icon);
     border-radius: 50%;
+}
+
+#community_name:hover {
+    cursor: pointer;
 }
 
 #btn_option {

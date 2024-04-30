@@ -9,9 +9,9 @@
 <div id="link_container" [ngStyle]="{'display': !isYoutubeLink ? 'flex' : 'none'}">
     <div>
         <h3>{{title}}</h3>
-        <a [href]="data.link" target="_blank">{{data.link}}</a>
+        <a [href]="data.link" target="_blank" (click)="preventClick($event)">{{data.link}}</a>
     </div>
-    <a [href]="data.link" target="_blank">
+    <a [href]="data.link" target="_blank" (click)="preventClick($event)">
         <img [src]="data.image">
         <i class="pi pi-external-link"></i>
     </a>

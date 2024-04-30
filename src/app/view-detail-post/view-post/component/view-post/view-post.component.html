@@ -1,6 +1,6 @@
 
 <!-- <hr> -->
-<div id="post_block"                  
+<div id="post_block"           
 >
     <nav id="community_bar">
         <div id="community_block">
@@ -8,7 +8,7 @@
                 <img id="community_icon" src="{{communityIcon}}" alt="community_icon"/>
             </a>
             <div id="link_date_block"> 
-                <span style="font-weight: bold;">r/{{communityName}}  </span>
+                <span id="community_name" style="font-weight: bold;" (click)="navigateToCommunity()">r/{{communityName}}  </span>
                 <i style="font-weight: bold;">·</i>
                 <span style="font-size: 13px;"> {{shownDate}}</span>
             </div>

@@ -31,6 +31,7 @@ const routes: Routes = [
         {path: '', title: 'trxyzng', component: PostLinkListComponent},
         {path: 'editor-view', component: EditorViewComponent},
         {path: 'post/:post_id', title: 'view-post', component: ViewDetailPostComponent},
+        {path: 'r/:community_name', title: 'view-community', component: TestComponent},
       ]
       }
     ]
