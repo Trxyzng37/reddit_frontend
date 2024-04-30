@@ -12,6 +12,7 @@ import { VoteCommentService } from '../../service/vote-comment/vote-comment.serv
 import { VoteCommentResponse } from '../../pojo/vote-comment-response';
 import { GetCommentStatusService } from '../../service/get-comment-status/get-comment-status.service';
 import { CommentStatusResponse } from '../../pojo/comment-status-response';
+import { EditCommentService } from '../../service/edit-comment/edit-comment.service';
 
 @Component({
   selector: 'app-comment',
@@ -26,21 +27,34 @@ export class CommentComponent {
     private storageService: StorageService,
     private dateTimeService: DateTimeService,
     private createCommentService: CreateCommentService,
-    private getCommentStatusService: GetCommentStatusService
+    private getCommentStatusService: GetCommentStatusService,
+    private editCommentService: EditCommentService
   ) {}
 
 
   @Input() commentData!: Comment;
   @Input() postId: number = 0;
   @Output() createNewComment = new EventEmitter<boolean>();
+  @Output() clearEditorContent = new EventEmitter<boolean>();
+
   public isShown: boolean = true;
+  public isReplyAllowed: boolean = false;
+  public isEditAllowed: boolean = false;
+  public isDeleteAllowed: boolean = false;
+  public isEditorShow: boolean = false;
+  public isOptionShow: boolean = false;
+  public isUserComment: boolean = false;
+
+  public replyCommentData: string = "";
+  public editCommentData: string = "";
+
 
   public voteType: string = 'none'; //none upvote downvote
   public previousVote: number = 0;
   public shownDate: string = "";
-  public isReply: boolean = false;
   public margin: string = "0px";
   public previousContent = "";
+  public uid: number = 0;
 
   public  upvote = "../../../../../assets/icon/upvote.png"
   public  upvote_fill = "../../../../../assets/icon/upvote-comment-fill.png"
@@ -48,8 +62,13 @@ export class CommentComponent {
   public  downvote_fill = "../../../../../assets/icon/downvote-comment-fill.png"
   
   ngOnInit() {
-    console.log("commentData: "+this.commentData)
-    console.log("Level: "+this.commentData.level)
+    // console.log("commentData: "+this.commentData);
+    // console.log("Level: "+this.commentData.level);
+    this.uid = this.storageService.getItem("uid") === "" ? 0 : Number(this.storageService.getItem("uid"));
+    this.isUserComment = this.commentData.uid == this.uid ? true : false;
+    this.isEditAllowed = this.commentData.uid == this.uid ? true : false;
+    this.isDeleteAllowed = this.commentData.uid == this.uid ? true : false;
+    this.isReplyAllowed = this.commentData.uid != this.uid ? true : false;
     this.shownDate = this.dateTimeService.getTimeByCompareCreatedAtAndCurrentDate(this.commentData.created_at);
     this.margin = this.commentData.level*30 + "px";
     this.commentData.content = this.commentData.content.replace(/<img/g, '<img style="display:block;" ');
@@ -59,6 +78,7 @@ export class CommentComponent {
     this.commentData.content = this.commentData.content.replace(/<code/g, '<code class="code" ');
     this.commentData.content = this.commentData.content.replace(/<a/g, '<a class="a" ');
     this.previousContent = this.commentData.content;
+    this.editCommentData = this.commentData.content;
     this.getCommentStatusService.getCommentStatus(this.commentData._id, this.commentData.uid).subscribe({
       next: (response: CommentStatusResponse) => {
         this.voteType = response.vote_type;
@@ -68,6 +88,7 @@ export class CommentComponent {
         console.log("Error check comment status");
       }
     })
+    // document.getElementById("editor")?.setAttribute("id", this.commentData._id.toString());
   }
 
   showComment(event: Event) {
@@ -77,38 +98,42 @@ export class CommentComponent {
 
   voteComment(event: Event, type: string) {
     event.stopPropagation();
-    if (this.voteType === 'none' && type === 'upvote') {
-      this.previousVote = this.commentData.vote;
-      this.commentData.vote += 1;
-      this.voteType = 'upvote';
+    if(this.uid === 0) {
+      alert("You need to login to vote comment");
     }
-    else if (this.voteType === 'none' && type === 'downvote') {
-      this.previousVote = this.commentData.vote;
-      this.commentData.vote -= 1;
-      this.voteType = 'downvote';
+    else {
+      if (this.voteType === 'none' && type === 'upvote') {
+        this.previousVote = this.commentData.vote;
+        this.commentData.vote += 1;
+        this.voteType = 'upvote';
+      }
+      else if (this.voteType === 'none' && type === 'downvote') {
+        this.previousVote = this.commentData.vote;
+        this.commentData.vote -= 1;
+        this.voteType = 'downvote';
+      }
+      else if (this.voteType === 'upvote' && type === 'upvote') {
+        this.previousVote = this.commentData.vote;
+        this.commentData.vote -= 1;
+        this.voteType = 'none';
+      }
+      else if (this.voteType === 'upvote' && type === 'downvote') {
+        this.previousVote = this.commentData.vote;
+        this.commentData.vote -= 2;
+        this.voteType = 'downvote';
+      }
+      else if (this.voteType === 'downvote' && type === 'upvote') {
+        this.previousVote = this.commentData.vote;
+        this.commentData.vote += 2;
+        this.voteType = 'upvote';
+      }
+      else if (this.voteType === 'downvote' && type === 'downvote') {
+        this.previousVote = this.commentData.vote;
+        this.commentData.vote += 1;
+        this.voteType = 'none';
+      }
+      this.sendVoteCommentToServer();
     }
-    else if (this.voteType === 'upvote' && type === 'upvote') {
-      this.previousVote = this.commentData.vote;
-      this.commentData.vote -= 1;
-      this.voteType = 'none';
-    }
-    else if (this.voteType === 'upvote' && type === 'downvote') {
-      this.previousVote = this.commentData.vote;
-      this.commentData.vote -= 2;
-      this.voteType = 'downvote';
-    }
-    else if (this.voteType === 'downvote' && type === 'upvote') {
-      this.previousVote = this.commentData.vote;
-      this.commentData.vote += 2;
-      this.voteType = 'upvote';
-    }
-    else if (this.voteType === 'downvote' && type === 'downvote') {
-      this.previousVote = this.commentData.vote;
-      this.commentData.vote += 1;
-      this.voteType = 'none';
-    }
-    // console.log(this.post_id + ": " + this.vote);
-    this.sendVoteCommentToServer();
   }
 
   sendVoteCommentToServer() {
@@ -127,19 +152,17 @@ export class CommentComponent {
     })
   }
 
-  reply(event: Event) {
-    // event.stopPropagation();
-    this.isReply = !this.isReply;
-    if (this.isReply === true) {
-      this.previousContent = this.commentData.content;
-      // tinymce.activeEditor?.setContent(this.previousContent);
+  reply() {
+    if (this.uid === 0) {
+      alert("You need to login to reply");
     }
     else {
-      this.commentData.content = this.previousContent;
+      this.isEditorShow = !this.isEditorShow;
     }
   }
 
   public editorSettings = {
+    selector: "editor",
     base_url: '/tinymce',
     suffix: '.min',
     plugins: 'link lists codesample image autoresize', 
@@ -206,26 +229,68 @@ export class CommentComponent {
   }
 
   onContentChanged = (event: any) =>{
-    this.commentData.content = event.editor.getContent({ format: 'html' });
-    console.log(this.commentData.content)
+    if (this.isEditAllowed && this.count == 2) {
+      this.editCommentData = event.editor.getContent({ format: 'html' });
+    console.log("edit content: "+this.editCommentData)
+    }
+    if (this.isReplyAllowed) {
+      this.replyCommentData = event.editor.getContent({ format: 'html' });
+      console.log("reply content: "+this.replyCommentData)
+    }
   }
 
   cancelComment() {
-    this.commentData.content = "";
-    tinymce.activeEditor?.setContent(this.commentData.content);
+    if(this.replyCommentData != "" || this.editCommentData != "") {
+      if(confirm("Do you want to clear this comment?")) {
+        this.replyCommentData = "";
+        tinymce.activeEditor?.setContent(this.replyCommentData);
+        alert("Clear comment OK")
+      }
+    }
+    this.isEditorShow = !this.isEditorShow;
+    this.count = 0;
+    this.editCommentData = this.commentData.content;
   }
 
   createComment() {
-    this.createCommentService.createComment(this.postId, this.commentData._id, this.commentData.content, this.commentData.level+1).subscribe({
-      next: (response: CreateCommentResponse) => {
-        console.log("save comment: "+response.comment_created);
-        alert("Create comment successfully");
-        this.createNewComment.emit(true);
-      },
-      error: (e: HttpErrorResponse) => {
-        console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
-        alert("Error create comment");
-      }
-    })
+    if(this.uid == 0) {
+      alert("You need to login to comment")
+    }
+    else {
+      this.createCommentService.createComment(this.postId, this.commentData._id, this.replyCommentData, this.commentData.level+1).subscribe({
+        next: (response: CreateCommentResponse) => {
+          console.log("save comment: "+response.comment_created);
+          alert("Create comment successfully");
+          this.createNewComment.emit(true);
+        },
+        error: (e: HttpErrorResponse) => {
+          console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
+          alert("Error create comment");
+        }
+      })
+    }
+  }
+
+  public count = 0;
+  showEditComment() {
+    this.isEditorShow = true;
+    tinymce.activeEditor?.setContent(this.editCommentData);
+    this.count++;
+    console.log("count: "+this.count)
+  }
+
+  sendEditComment() {
+      this.editCommentService.editComment(this.postId, this.commentData._id, this.editCommentData).subscribe({
+        next: (response: Comment) => {
+          alert("Edit comment successfully");
+          this.commentData.content = response.content;
+          this.previousContent = response.content;
+          this.isEditorShow = !this.isEditorShow;
+        },
+        error: (e: HttpErrorResponse) => {
+          console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
+          alert("Error edit comment"+this.commentData._id);
+        }
+      })
   }
 }

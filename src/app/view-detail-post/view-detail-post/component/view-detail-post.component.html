@@ -9,6 +9,7 @@
     [created_at]="post.created_at"
     [vote]="post.vote"
     [communityIcon]="post.community_icon"
+    [commentCount]="commentResults.length"
 >
 </app-post>
 
@@ -34,6 +35,7 @@
     [commentData]="comment"
     [postId]="postId"
     (createNewComment)="getNewCommentAfterReply($event)"
+    (clearEditorContent)="clearCommentContent()"
 >
 </app-comment>
 
