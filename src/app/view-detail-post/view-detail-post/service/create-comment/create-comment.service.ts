@@ -19,7 +19,7 @@ export class CreateCommentService {
   private endpoint: string = "/save-comment";
 
   createComment(post_id: number, parent_id: number, content: string, level: number): Observable<CreateCommentResponse> {
-    const uid = this.storageService.getItem("uid") == null ? -1 : parseInt(this.storageService.getItem("uid"));
+    const uid = this.storageService.getItem("uid") == null ? 0 : parseInt(this.storageService.getItem("uid"));
     const request = new CommentRequest(post_id, uid, parent_id, content, level);
     const body: string = JSON.stringify(request);
     let header: HttpHeaders = new HttpHeaders();

@@ -10,6 +10,8 @@ import { GetCommentsService } from '../service/get-comments/get-comments.service
 import { Comment } from '../pojo/comment';
 import { CreateCommentService } from '../service/create-comment/create-comment.service';
 import { CreateCommentResponse } from '../pojo/create-comment-response';
+import { StorageService } from 'src/app/shared/storage/storage.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-view-detail-post',
@@ -23,7 +25,8 @@ export class ViewDetailPostComponent {
     private dateTimeService: DateTimeService,
     private getPostService: GetPostService,
     private getCommentService: GetCommentsService,
-    private createCommentService: CreateCommentService
+    private createCommentService: CreateCommentService,
+    private storageService: StorageService
   ) {}
 
   public postId: number = 0;
@@ -124,38 +127,64 @@ export class ViewDetailPostComponent {
 
   cancelComment() {
     if(this.content != "") {
-      if(confirm("Do you want to clear this comment?")) {
-        this.content = "";
-        tinymce.activeEditor?.setContent(this.content);
-        alert("Clear comment OK")
-      }
+      Swal.fire({
+        titleText: "Do you want to clear this comment",
+        icon: "warning",
+        heightAuto: true,
+        showCancelButton: true,
+        showConfirmButton: true,
+        focusCancel: false,
+        focusConfirm: false,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire('Clear comment successfully', '', 'success')
+          this.content = "";
+          tinymce.activeEditor?.setContent(this.content);
+        } 
+      })
     }
   }
 
-  clearCommentContent() {
-    this.content = "";
-    tinymce.activeEditor?.setContent("");
-  }
-
   createComment() {
-    this.createCommentService.createComment(this.postId, 0, this.content, 0).subscribe({
-      next: (response: CreateCommentResponse) => {
-        console.log("save comment: "+response.comment_created);
-        alert("Create comment successfully");
-        this.getCommentService.getComments(this.postId).subscribe({
-          next: (response: Comment[]) => {
-            this.commentResults = response;
-          },
-          error: (e: HttpErrorResponse) => {
-            console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
-          }
-         })
-      },
-      error: (e: HttpErrorResponse) => {
-        console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
-        alert("Error create comment");
-      }
-    })
+    const uid = this.storageService.getItem("uid") == null ? 0 : parseInt(this.storageService.getItem("uid"));
+    if(uid === 0) {
+      Swal.fire({
+        titleText: "You need to login to comment",
+        icon: "warning",
+        heightAuto: true,
+        showConfirmButton: true,
+        focusCancel: false,
+        focusConfirm: false,
+        footer: '<a href="signin" style="color:red"><b>Click to go to login page<b/></a>'
+      })
+    }
+    else {
+      this.createCommentService.createComment(this.postId, 0, this.content, 0).subscribe({
+        next: (response: CreateCommentResponse) => {
+          console.log("save comment: "+response.comment_created);
+          alert("Create comment successfully");
+          this.getCommentService.getComments(this.postId).subscribe({
+            next: (response: Comment[]) => {
+              this.commentResults = response;
+            },
+            error: (e: HttpErrorResponse) => {
+              console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
+            }
+           })
+        },
+        error: (e: HttpErrorResponse) => {
+          console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
+          Swal.fire({
+            titleText: "Error create comment. Please try again",
+            icon: "success",
+            heightAuto: true,
+            showConfirmButton: true,
+            focusCancel: false,
+            focusConfirm: false
+          })
+        }
+      })
+    }
   }
 
   getNewCommentAfterReply(event: Event) {

@@ -13,6 +13,7 @@ import { VoteCommentResponse } from '../../pojo/vote-comment-response';
 import { GetCommentStatusService } from '../../service/get-comment-status/get-comment-status.service';
 import { CommentStatusResponse } from '../../pojo/comment-status-response';
 import { EditCommentService } from '../../service/edit-comment/edit-comment.service';
+import Swal, { SweetAlertResult } from 'sweetalert2';
 
 @Component({
   selector: 'app-comment',
@@ -92,14 +93,21 @@ export class CommentComponent {
   }
 
   showComment(event: Event) {
-    // event.stopPropagation();
     this.isShown = !this.isShown;
   }
 
   voteComment(event: Event, type: string) {
     event.stopPropagation();
     if(this.uid === 0) {
-      alert("You need to login to vote comment");
+      Swal.fire({
+        titleText: "You need to login to vote",
+        icon: "warning",
+        heightAuto: true,
+        showConfirmButton: true,
+        focusCancel: false,
+        focusConfirm: false,
+        footer: '<a href="signin" style="color:red"><b>Click to go to login page<b/></a>'
+      })
     }
     else {
       if (this.voteType === 'none' && type === 'upvote') {
@@ -153,8 +161,16 @@ export class CommentComponent {
   }
 
   reply() {
-    if (this.uid === 0) {
-      alert("You need to login to reply");
+    if(this.uid === 0) {
+      Swal.fire({
+        titleText: "You need to login to comment",
+        icon: "warning",
+        heightAuto: true,
+        showConfirmButton: true,
+        focusCancel: false,
+        focusConfirm: false,
+        footer: '<a href="signin" style="color:red"><b>Click to go to login page<b/></a>'
+      })
     }
     else {
       this.isEditorShow = !this.isEditorShow;
@@ -241,31 +257,64 @@ export class CommentComponent {
 
   cancelComment() {
     if(this.replyCommentData != "" || this.editCommentData != "") {
-      if(confirm("Do you want to clear this comment?")) {
-        this.replyCommentData = "";
-        tinymce.activeEditor?.setContent(this.replyCommentData);
-        alert("Clear comment OK")
+        Swal.fire({
+          titleText: "Do you want to clear this comment",
+          icon: "warning",
+          heightAuto: true,
+          showCancelButton: true,
+          showConfirmButton: true,
+          focusCancel: false,
+          focusConfirm: false
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire('Clear comment successfully', '', 'success')
+            this.replyCommentData = "";
+            tinymce.activeEditor?.setContent(this.replyCommentData);
+            this.isEditorShow = !this.isEditorShow;
+            this.count = 0;
+            this.editCommentData = this.commentData.content;
+          } 
+          if (result.isDismissed) {
+          }
+        })
       }
-    }
-    this.isEditorShow = !this.isEditorShow;
-    this.count = 0;
-    this.editCommentData = this.commentData.content;
   }
 
   createComment() {
     if(this.uid == 0) {
-      alert("You need to login to comment")
+      Swal.fire({
+        titleText: "You need to login to comment",
+        icon: "warning",
+        heightAuto: true,
+        showConfirmButton: true,
+        focusCancel: false,
+        focusConfirm: false,
+        footer: '<a href="signin" style="color:red"><b>Click to go to login page<b/></a>'
+      })
     }
     else {
       this.createCommentService.createComment(this.postId, this.commentData._id, this.replyCommentData, this.commentData.level+1).subscribe({
         next: (response: CreateCommentResponse) => {
-          console.log("save comment: "+response.comment_created);
-          alert("Create comment successfully");
           this.createNewComment.emit(true);
+          Swal.fire({
+            titleText: "Create comment successfully",
+            icon: "success",
+            heightAuto: true,
+            showConfirmButton: true,
+            focusCancel: false,
+            focusConfirm: false
+          })
         },
         error: (e: HttpErrorResponse) => {
           console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
-          alert("Error create comment");
+          Swal.fire({
+            titleText: "Error create comment. Please try again",
+            icon: "success",
+            heightAuto: true,
+            showConfirmButton: true,
+            focusCancel: false,
+            focusConfirm: false
+          })
         }
       })
     }
@@ -280,17 +329,47 @@ export class CommentComponent {
   }
 
   sendEditComment() {
+    if(this.commentData.content != this.editCommentData && this.editCommentData != "") {
       this.editCommentService.editComment(this.postId, this.commentData._id, this.editCommentData).subscribe({
         next: (response: Comment) => {
-          alert("Edit comment successfully");
+          Swal.fire({
+            titleText: "Edit comment successfully",
+            icon: "success",
+            heightAuto: true,
+            showConfirmButton: true,
+            focusCancel: false,
+            focusConfirm: false
+          })
           this.commentData.content = response.content;
           this.previousContent = response.content;
           this.isEditorShow = !this.isEditorShow;
         },
         error: (e: HttpErrorResponse) => {
           console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
-          alert("Error edit comment"+this.commentData._id);
+          if(this.uid == 0) {
+            Swal.fire({
+              titleText: "Error edit comment. Please try again",
+              icon: "error",
+              heightAuto: true,
+              showConfirmButton: true,
+              focusCancel: false,
+              focusConfirm: false
+            })
+          }
         }
       })
+    }
+    else {
+      Swal.fire({
+        titleText: "Please edit your comment",
+        icon: "info",
+        heightAuto: true,
+        showConfirmButton: true,
+        focusCancel: false,
+        focusConfirm: false
+      })
+    }
   }
+
+
 }

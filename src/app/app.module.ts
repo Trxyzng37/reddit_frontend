@@ -28,12 +28,12 @@ import { ImgUploadedComponent } from './create-post/img_uploaded/component/img-u
 import { ImgCaptionComponent } from './create-post/img-caption/img-caption/img-caption.component';
 import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 import { EditorViewComponent } from './post-link/editor/component/editor-view/editor-view.component';
-import { GalleryModule } from 'ng-gallery';
 import { ImageViewComponent } from './post-link/image-view/component/image-view/image-view.component';
 import { LinkViewComponent } from './post-link/link-review/component/link-view/link-view.component';
 import { ViewDetailPostComponent } from './view-detail-post/view-detail-post/component/view-detail-post.component';
 import { PostComponent } from './view-detail-post/view-post/component/view-post/view-post.component';
 import { CommentComponent } from './comment/component/comment/comment.component';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @NgModule({
   declarations: [
@@ -73,7 +73,7 @@ import { CommentComponent } from './comment/component/comment/comment.component'
     SafeHtmlPipe,
     EditorModule,
     FormsModule,
-    GalleryModule
+    SweetAlert2Module
   ],
   providers: [{ provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' }],
   bootstrap: [AppComponent]
