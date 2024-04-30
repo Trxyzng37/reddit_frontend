@@ -22,7 +22,7 @@
 </editor>
 <div id="btn_comment_block">
     <button id="btn_cancel_comment" type="button" (click)="cancelComment()">Cancel</button>
-    <button id="btn_submit_comment" type="button" (click)="createComment()">Comment</button>
+    <button id="btn_submit_comment" type="button" (click)="createComment($event)">Comment</button>
 </div>
 </div>
 
@@ -34,7 +34,7 @@
 <app-comment *ngFor="let comment of commentResults; let i=index"
     [commentData]="comment"
     [postId]="postId"
-    (createNewComment)="getNewCommentAfterReply($event)"
+    (commentModified)="reloadComment($event)"
 >
 </app-comment>
 
