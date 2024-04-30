@@ -31,7 +31,7 @@
 <!-- <div id="comment_block"></div> -->
 <p *ngIf="commentResults.length === 0">No comment found for this post</p>
 
-<app-comment *ngFor="let comment of commentResults; let i=index"
+<app-comment id="comment" *ngFor="let comment of commentResults; let i=index"
     [commentData]="comment"
     [postId]="postId"
     (commentModified)="reloadComment($event)"
