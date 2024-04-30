@@ -123,8 +123,18 @@ export class ViewDetailPostComponent {
   }
 
   cancelComment() {
+    if(this.content != "") {
+      if(confirm("Do you want to clear this comment?")) {
+        this.content = "";
+        tinymce.activeEditor?.setContent(this.content);
+        alert("Clear comment OK")
+      }
+    }
+  }
+
+  clearCommentContent() {
     this.content = "";
-    tinymce.activeEditor?.setContent(this.content);
+    tinymce.activeEditor?.setContent("");
   }
 
   createComment() {

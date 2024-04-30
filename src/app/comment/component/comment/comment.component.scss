@@ -4,15 +4,21 @@
     --btn_height: 30px;
 }
 
-#container {
+.container {
     background-color: var(--primary_background_color);
     width: 100%;
     height: auto;
-    margin-bottom: 20px;
-    // padding-bottom: 10px;
+    margin-bottom: 10px;
+    padding: 5px 0;
+    box-sizing: border-box;
+    border-radius: 10px;
 }
 
-#header, #info_block, #block_vote, #block_reply, #footer {
+.container > *, #comment_editor_block {
+    margin: 0 7px;
+}
+
+#header, #info_block, #block_vote, .footer_btn, #footer {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -38,9 +44,11 @@ img {
 }
 
 #footer {
-    width: auto;
+    width: -moz-fit-content;
+    width: fit-content;
     height: 30px;
     margin-top: 5px;
+    position: relative;
 }
 
 #footer > * {
@@ -52,28 +60,28 @@ img {
     height: 100%;
 }
 
-#block_reply {
+.footer_btn {
     width: auto;
     height: 100%;
-    padding: 0 15px;
-    margin: 0 15px;
-}
-
-#block_reply > p {
-    margin-left: 7px;
+    padding: 0 7px;
+    margin: 0 5px;
 }
 
 #comment_content {
     height: auto;
     width: 100%;
-    // min-height: 100px;
+    margin-top: 5px;
 }
 
-#block_option {
+#btn_option {
     width: auto;
     height: 100%;
     padding: 0 10px;
     border-radius: 50%;
+}
+
+#btn_option:hover, .footer_btn:hover {
+    background-color: var(--primary_background_color_hover);
 }
 
 #btn_upvote, #btn_downvote {
@@ -93,15 +101,15 @@ img {
     border-radius: 50%;
 }
 
-#btn_upvote, #btn_downvote, #block_vote, #block_reply, #block_option {
+#btn_upvote, #btn_downvote, #block_vote, .footer_btn, #btn_option {
     background-color: var(--primary_background_color);
 }
 
 #comment_editor_block {
-    width: calc(100%);
+    width: calc(100% - 7px);
     height: auto;
     position: relative;
-    margin-bottom: calc(var(--btn_height) * 2);
+    margin-bottom: calc(var(--btn_height) * 1);
 }
 
 #btn_comment_block {
@@ -125,8 +133,20 @@ img {
     background-color: rgb(169, 190, 190);
 }
 
-#btn_submit_comment {
+#btn_submit_comment, #btn_edit_comment {
     width: var(--btn_width);
     height: var(--btn_height);
     background-color: rgb(39, 71, 167);
+}
+
+.user_comment {
+    background-color: var(--primary_background_color_hover);
+}
+
+.user_comment  .footer_btn, .user_comment #block_vote, .user_comment #btn_downvote, .user_comment #btn_upvote {
+    background-color: var(--primary_background_color_hover);
+}
+
+.user_comment  .footer_btn:hover, .user_comment #btn_downvote:hover, .user_comment #btn_upvote:hover {
+    background-color: var(--primary_background_color);
 }

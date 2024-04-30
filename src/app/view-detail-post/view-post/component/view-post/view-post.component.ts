@@ -35,7 +35,7 @@
     @Input() vote: number = 1;
     @Input() communityIcon: string = "";
     @Input() index: number = 0;
-    @Input() arr_length: number = 0;
+    @Input() commentCount: number = 0;
   
     @Output() event = new EventEmitter<GetPostResponse>();
       

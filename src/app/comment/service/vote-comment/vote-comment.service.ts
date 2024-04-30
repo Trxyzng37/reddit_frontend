@@ -20,7 +20,7 @@ export class VoteCommentService {
   private endpoint: string = "/update-comment-vote";
 
   updateVoteComment(post_id: number, _id: number, vote: number, vote_type: string): Observable<VoteCommentResponse> {
-    const uid = this.storageService.getItem("uid") == null ? -1 : parseInt(this.storageService.getItem("uid"));
+    const uid = parseInt(this.storageService.getItem("uid"));
     const request = new voteCommentRequest(post_id, uid, _id, vote, vote_type);
     const body: string = JSON.stringify(request);
     let header: HttpHeaders = new HttpHeaders();
