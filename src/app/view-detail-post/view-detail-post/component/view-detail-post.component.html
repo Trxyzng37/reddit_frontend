@@ -13,22 +13,20 @@
 >
 </app-post>
 
-<div id="comment_editor_block">
+<div id="comment_editor_block"> 
     <editor
     [init]="editorSettings"
     (onSelectionChange)="onContentChanged($event)"
     style="width: calc(100%);"
 >
 </editor>
-<div id="btn_comment_block">
+<div id="btn_comment_block"> 
     <button id="btn_cancel_comment" type="button" (click)="cancelComment()">Cancel</button>
     <button id="btn_submit_comment" type="button" (click)="createComment($event)">Comment</button>
 </div>
 </div>
 
 
-<!-- <comments currentUserId="1"></comments> -->
-<!-- <div id="comment_block"></div> -->
 <h3 id="no_comment_block" *ngIf="commentResults.length === 0">No comment found for this post</h3>
 
 <app-comment id="comment" *ngFor="let comment of commentResults; let i=index"

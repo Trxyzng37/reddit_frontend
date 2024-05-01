@@ -43,7 +43,8 @@
     public voteType: string = 'none'; //none upvote downvote
     public previousVote: number = this.vote;
     public shownDate: string = "";
-    public isUser: boolean = false;
+    public isOptionMenuOpen: boolean = false;
+    public isAuthor: boolean = false;
 
     public  upvote = "../../../../../assets/icon/upvote.png"
     public  upvote_fill = "../../../../../assets/icon/upvote-fill.png"
@@ -54,7 +55,7 @@
     ngOnInit() {
       const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
       const name = this.storageService.getItem("username");
-      this.isUser = name == this.userName;
+      this.isAuthor = name == this.userName;
       this.shownDate = this.dateTimeService.getTimeByCompareCreatedAtAndCurrentDate(this.created_at);
       const username: string = this.storageService.getItem("username");
       this.checkVotePostService.checkVotePost(this.post_id, username).subscribe({
@@ -70,8 +71,6 @@
     preventClick(event: Event) {
       event.stopPropagation();
     }
-  
-    public isOptionMenuOpen: boolean = false;
   
     openOptionMenu(event: Event) {
       this.isOptionMenuOpen = !this.isOptionMenuOpen;

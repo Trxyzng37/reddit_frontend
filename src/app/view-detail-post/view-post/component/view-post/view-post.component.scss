@@ -139,6 +139,7 @@ a:hover {
     position: absolute;
     right: 10px;
     top: calc(var(--community_icon) + 10px);
+    z-index: 9999;
 }
 
 #dropdown_option_block > * {
