@@ -16,10 +16,10 @@
         </div>
         <button id="btn_option" type="button" (click)="openOptionMenu($event)"><i class="pi pi-ellipsis-h"></i></button>
         <div id="dropdown_option_block" [ngStyle]="{'display': isOptionMenuOpen ? 'block':'none'}">
-            <button *ngIf="isUser"><i class="pi pi-pencil"></i><p>Edit</p></button>
-            <button *ngIf="isUser"><i class="pi pi-trash"></i><p>Delete</p></button>
-            <button *ngIf="!isUser"><i class="pi pi-bookmark"></i><p>Save</p></button>
-            <button *ngIf="!isUser"><i class="pi pi-eye-slash"></i><p>Hide</p></button>
+            <button id="btn_edit" *ngIf="isAuthor" (click)="isEditPost($event)"><i class="pi pi-pencil"></i><p>Edit</p></button>
+            <button *ngIf="isAuthor"><i class="pi pi-trash"></i><p>Delete</p></button>
+            <button *ngIf="!isAuthor"><i class="pi pi-bookmark"></i><p>Save</p></button>
+            <button *ngIf="!isAuthor"><i class="pi pi-eye-slash"></i><p>Hide</p></button>
         </div>
     </nav>
 
