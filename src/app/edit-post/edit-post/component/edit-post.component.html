@@ -1,0 +1,18 @@
+<nav id="community_bar">
+<div id="community_block">
+    <a id="community_link" href="/a">
+        <img id="community_icon" src="../../../../assets/icon/logo.png" alt="community_icon"/>
+    </a>
+    <div id="link_date_block"> 
+        <span id="community_name" style="font-weight: bold;" >r/test </span>
+        <i style="font-weight: bold;">·</i>
+        <span style="font-size: 13px;"> 10 minute ago</span>
+    </div>
+    <a id="username" href="" style="font-size: 15px;">trxyzng</a>
+    <button id="btn_delete" *ngIf="true" (click)="deletePost()"><i class="pi pi-trash"></i><pre> Delete</pre></button>
+</div>
+</nav>
+
+<div id="edit_block">
+    <app-edit-editor-post></app-edit-editor-post>
+</div>

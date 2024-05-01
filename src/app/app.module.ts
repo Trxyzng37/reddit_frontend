@@ -34,6 +34,8 @@ import { ViewDetailPostComponent } from './view-detail-post/view-detail-post/com
 import { PostComponent } from './view-detail-post/view-post/component/view-post/view-post.component';
 import { CommentComponent } from './comment/component/comment/comment.component';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { EditPostComponent } from './edit-post/edit-post/component/edit-post.component';
+import { EditEditorPostComponent } from './edit-post/edit-editor-post/component/edit-editor-post.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +62,9 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     LinkViewComponent,
     ViewDetailPostComponent,
     PostComponent,
-    CommentComponent
+    CommentComponent,
+    EditEditorPostComponent,
+    EditPostComponent
   ],
   imports: [
     BrowserModule,

@@ -14,10 +14,6 @@
     box-sizing: border-box;
 }
 
-// #post_block:hover {
-//     background-color: var(--primary_background_color_hover);
-// }
-
 #post_block > *:not(:last-child)  {
     margin-bottom: 10px;
     padding: 0 10px;
@@ -53,10 +49,6 @@ app-editor-view {
     // max-height: 50vh;
     overflow-y: hidden;
     z-index: 9999;
-    // cursor: pointer;
-}
-
-app-editor-view {
     // cursor: pointer;
 }
 

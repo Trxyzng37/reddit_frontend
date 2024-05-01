@@ -1,0 +1,21 @@
+<div id="post_title_block">
+    <textarea id="input_post_title" maxlength="300" required placeholder="Title" (input)="inputTitle($event)"></textarea>
+    <span id="character_count">{{characterCount}}/300</span>
+</div>
+<div id="container">
+    <div id="editor">
+        <editor 
+        [init]="editorSettings"
+        (onSelectionChange)="setContent($event)"
+        >  
+        </editor>
+    </div>
+
+    <div id="btn_comment_block">
+        <button id="btn_cancel_comment" type="button" >Cancel</button>
+        <button id="btn_edit_comment" type="button" (click)="editPost()">Edit</button>
+    </div>
+</div>
+
+
+

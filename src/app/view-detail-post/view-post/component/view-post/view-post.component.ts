@@ -74,8 +74,11 @@
   
     openOptionMenu(event: Event) {
       this.isOptionMenuOpen = !this.isOptionMenuOpen;
-      console.log("Option menu open")
       event.stopPropagation();
+    }
+
+    editPost(event: Event) {
+      this.router.navigate(["/edit-post/" + this.post_id]);
     }
   
     navigateToCommunity() {

@@ -10,11 +10,11 @@ import { ChangePasswordComponent } from './change-password/components/change-pas
 import { ConfirmEmailComponent } from './signup/components/confirm-email/confirm-email.component';
 // import { signinGuard } from './signin/guards/signin.guard';
 import { TestComponent } from './create-post/create-post/component/create-post.component';
-import { PostLinkComponent } from './post-link/post-link/component/post-link.component';
 import { PostMainComponent } from './post-main/component/post-main/post-main.component';
 import { PostLinkListComponent } from './post-link-list/component/post-link-list/post-link-list.component';
 import { EditorViewComponent } from './post-link/editor/component/editor-view/editor-view.component';
 import { ViewDetailPostComponent } from './view-detail-post/view-detail-post/component/view-detail-post.component';
+import { EditPostComponent } from './edit-post/edit-post/component/edit-post.component';
 
 const routes: Routes = [
   // { path: 'signin', component: SigninComponent, canActivate: mapToCanActivate([signinGuard])},
@@ -29,6 +29,7 @@ const routes: Routes = [
       {path: '', component: PostMainComponent,
       children: [
         {path: '', title: 'trxyzng', component: PostLinkListComponent},
+        {path: 'edit-post/:post_id', component: EditPostComponent},
         {path: 'editor-view', component: EditorViewComponent},
         {path: 'post/:post_id', title: 'view-post', component: ViewDetailPostComponent},
         {path: 'r/:community_name', title: 'view-community', component: TestComponent},
