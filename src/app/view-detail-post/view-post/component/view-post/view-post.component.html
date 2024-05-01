@@ -12,11 +12,14 @@
                 <i style="font-weight: bold;">·</i>
                 <span style="font-size: 13px;"> {{shownDate}}</span>
             </div>
+            <a id="username" href="">{{userName}}</a>
         </div>
         <button id="btn_option" type="button" (click)="openOptionMenu($event)"><i class="pi pi-ellipsis-h"></i></button>
         <div id="dropdown_option_block" [ngStyle]="{'display': isOptionMenuOpen ? 'block':'none'}">
-            <button><i class="pi pi-bookmark"></i><p>Save</p></button>
-            <button><i class="pi pi-eye-slash"></i><p>Hide</p></button>
+            <button *ngIf="isUser"><i class="pi pi-pencil"></i><p>Edit</p></button>
+            <button *ngIf="isUser"><i class="pi pi-trash"></i><p>Delete</p></button>
+            <button *ngIf="!isUser"><i class="pi pi-bookmark"></i><p>Save</p></button>
+            <button *ngIf="!isUser"><i class="pi pi-eye-slash"></i><p>Hide</p></button>
         </div>
     </nav>
 

@@ -1,6 +1,6 @@
 
 :host {
-    --community_icon: 30px;
+    --community_icon: 35px;
 }
 
 #post_block {
@@ -97,6 +97,7 @@ a:hover {
 }
 
 #link_date_block {
+    align-self: flex-start;
 
 }
 
@@ -115,6 +116,12 @@ a:hover {
 
 #community_name:hover {
     cursor: pointer;
+}
+
+#username {
+    position: absolute;
+    top: 13px;
+    left: 55px;
 }
 
 #btn_option {
@@ -140,7 +147,7 @@ a:hover {
     background-color: var(--primary_background_color_hover);
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
 }
 
