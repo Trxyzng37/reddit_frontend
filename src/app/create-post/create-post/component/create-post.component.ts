@@ -90,9 +90,6 @@ export class TestComponent {
   }
 
   onImageUpload(file: File) {
-    // const files: FileList = event.target.files;
-    // const file = files[0];
-    // console.log(URL.createObjectURL(file))
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.addEventListener("loadend", () => {
@@ -141,7 +138,6 @@ export class TestComponent {
 
   onInputChange(img: Img) {
     this.imgArr[this.selected_id] = img;
-    // console.log(img.caption)
   }
 
   onInputSearchComunityFocus(event: Event) {

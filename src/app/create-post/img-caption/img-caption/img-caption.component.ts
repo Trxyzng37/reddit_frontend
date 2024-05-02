@@ -17,13 +17,21 @@ export class ImgCaptionComponent {
     link: new FormControl(''),
   })
 
-
+  ngOnChanges () {
+    let caption = (<HTMLInputElement>document.getElementById("txt_caption"));
+    console.log(this.img.caption)
+    caption.value = this.img.caption;
+    caption.value = caption.value.replace(/\r?\n|\r/g, "");
+    caption.style.height = 'auto';
+    caption.style.height = `${caption.scrollHeight}px`;
+    this.characterCount = caption.value.length;
+  }
 
   public characterCount: number = 0;
 
   onTextAreaInput(event: any) {
     const textareaEle: any = event.target;
-    textareaEle.value = textareaEle.value.replace(/(\r\n|\n|\r)/gm, "");
+    textareaEle.value = textareaEle.value.replace(/\r?\n|\r/g, "");
     textareaEle.style.height = 'auto';
     textareaEle.style.height = `${textareaEle.scrollHeight}px`;
     this.characterCount = textareaEle.value.length;
@@ -36,7 +44,6 @@ export class ImgCaptionComponent {
 
   changeCaption() {
     this.img.caption = this.form.value.caption;
-    console.log("on input change child value: ");
     console.log(this.img);
     this.imgOutput.emit(this.img);
   }

@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
+import { GetPostService } from 'src/app/view-detail-post/view-detail-post/service/get-post/get-post.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { GetPostResponse } from 'src/app/post-link-list/pojo/get-post-response';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-edit-post',
@@ -9,11 +13,24 @@ import Swal from 'sweetalert2';
 })
 export class EditPostComponent {
 
+  public constructor(
+    private getPostService: GetPostService,
+    private activeRoute: ActivatedRoute,
+    private route: Router
+  ) {}
 
-  public isOptionMenuOpen: boolean = false;
+  public post_type: string = "";
 
-  openOptionMenu() {
-    this.isOptionMenuOpen = !this.isOptionMenuOpen;
+  ngOnInit() {
+    const post_id = this.activeRoute.snapshot.params['post_id'];
+    this.getPostService.getPostByPostId(post_id).subscribe({
+      next: (response: GetPostResponse) => {
+          this.post_type = response.type;
+      },
+      error: (e: HttpErrorResponse) => {
+        console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
+      }
+    })
   }
 
   deletePost() {
@@ -28,7 +45,6 @@ export class EditPostComponent {
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire('Delete post successfully', '', 'success')
-        this.isOptionMenuOpen = false;
       } 
     })
   }

@@ -4,7 +4,7 @@
         <img src="{{img.data}}" draggable="false"/>
     </div>
     <div class="img_caption_block" [formGroup]="form">
-        <textarea class="txt_caption" maxlength="180" placeholder="Add a caption" 
+        <textarea id="txt_caption" maxlength="180" placeholder="Add a caption" 
             (input)="onTextAreaInput($event)"
             formControlName="caption"
             value={{img.caption}}

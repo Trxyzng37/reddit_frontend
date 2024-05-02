@@ -30,6 +30,9 @@ export class EditEditorPostComponent {
   public edit_title: string = "";
   public edit_content: string = "";
   public characterCount: number = 0;
+  public original_title: string = "";
+  public original_content: string = "";
+  public allowSubmit: boolean = false;
 
   ngOnInit() {
     const title = (<HTMLInputElement>document.getElementById("input_post_title"));
@@ -42,12 +45,22 @@ export class EditEditorPostComponent {
         this.edit_title = this.postData.title;
         this.edit_content = this.postData.content;
         this.characterCount = this.postData.title.length;
+        this.original_title = this.postData.title;
+        this.original_content = this.postData.content;
         tinymce.activeEditor?.setContent(this.postData.content);
+        this.AllowSubmit();
       },
       error: (e: HttpErrorResponse) => {
         console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
       }
     })
+  }
+
+  AllowSubmit() {
+    this.allowSubmit = (this.original_title !== this.edit_title || this.original_content !== this.edit_content) &&
+                       this.edit_title.length !== 0 &&
+                       this.edit_content.length !== 0
+                       ? false : true;
   }
 
   inputTitle(event: any) {
@@ -61,6 +74,7 @@ export class EditEditorPostComponent {
       this.characterCount = 0;
     }
     this.edit_title = textareaEle.value;
+    this.AllowSubmit();
   }
 
   public editorSettings = {
@@ -133,9 +147,11 @@ export class EditEditorPostComponent {
     if(this.count == 0) {
       this.count++;
       tinymce.activeEditor?.setContent(this.postData.content);
+      this.AllowSubmit();
     }
     this.count++;
     this.edit_content = event.editor.getContent({ format: 'html' });
+    this.AllowSubmit();
   }
 
   editPost() {
@@ -148,16 +164,17 @@ export class EditEditorPostComponent {
       focusCancel: false,
       focusConfirm: false,
     }).then((result) => {
-      this.editPostService.editPost("/edit-post", "editor", this.post_id, this.edit_title, this.edit_content).subscribe({
+      this.editPostService.editPost("/edit-editor-post", "editor", this.post_id, this.edit_title, this.edit_content).subscribe({
         next: (response: EditPostResponse) => {
           if (result.isConfirmed) {
             Swal.fire('Edit post successfully', '', 'success')
             this.route.navigate(["/post/"+this.post_id]);
           } 
+        },
+        error: (e: HttpErrorResponse) => {
+          Swal.fire('Fail to edit post. Please try again', '', 'error')
         }
       })
-
-
     })
   }
 }
