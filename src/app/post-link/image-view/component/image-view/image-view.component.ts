@@ -9,18 +9,12 @@ import { Img } from 'src/app/create-post/pojo/img';
   styleUrl: './image-view.component.scss'
 })
 export class ImageViewComponent {
-  public images: GalleryItem[] = [];
   @Input() content: string = "";
   public arr!: Img[];
   public isZoom: boolean = false;
 
   ngOnInit() {
     this.arr = JSON.parse(this.content);
-      for(let img of this.arr) {
-        let imageItem: ImageItem = new ImageItem({src: img.data, thumb: img.data});
-        this.images.push(imageItem);
-      }
-    console.log(this.images)
   }
 
   index: number = 0;
@@ -32,13 +26,11 @@ export class ImageViewComponent {
       this.index -= 1;
       this.leftAllowed = false;
       this.rightAllowed = true;
-      console.log("Index: "+this.index);
     }
     else if(this.index > 1) {
       this.index -= 1;
       this.leftAllowed = true;
       this.rightAllowed = true;
-      console.log("Index: "+this.index)
     }
     else {
       this.leftAllowed = false;
@@ -52,13 +44,11 @@ export class ImageViewComponent {
       this.index += 1;
       this.rightAllowed = false;
       this.leftAllowed = true;
-      // console.log("Index: "+this.index)
     }
     else if(this.index < this.arr.length - 2) {
       this.index += 1;
       this.rightAllowed = true;
       this.leftAllowed = true;
-      // console.log("Index: "+this.index)
     }
     else {
       this.rightAllowed = false;
@@ -72,6 +62,11 @@ export class ImageViewComponent {
 
   zoomImage(event: Event) {
     event.stopPropagation();
-    this.isZoom = !this.isZoom;
+    this.isZoom = true;
+  }
+
+  closeImg(event: Event) {
+    event.stopPropagation();
+    this.isZoom = false;
   }
 }

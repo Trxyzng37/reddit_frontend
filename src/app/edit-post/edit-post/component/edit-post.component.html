@@ -14,5 +14,6 @@
 </nav>
 
 <div id="edit_block">
-    <app-edit-editor-post></app-edit-editor-post>
+    <app-edit-editor-post *ngIf="post_type === 'editor'"></app-edit-editor-post>
+    <app-edit-img-post *ngIf="post_type === 'img'"></app-edit-img-post>
 </div>

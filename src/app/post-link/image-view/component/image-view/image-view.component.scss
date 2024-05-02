@@ -26,7 +26,7 @@
 #caption_link {
     height: auto;
     text-align: center;
-    background-color: rgba($color: #000000, $alpha: 0.6);
+    background-color: rgba($color: #000000, $alpha: 0.9);
 }
 
 .container > button {
@@ -57,10 +57,12 @@ i {
 #caption, #link {
     text-overflow: ellipsis;
     overflow-wrap:break-word;
+    color: #ffffff;
 }
 
 #link {
     text-decoration: underline;
+    color: #3090da;
 }
 
 .zoom_block {
