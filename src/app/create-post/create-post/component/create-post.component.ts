@@ -294,48 +294,6 @@ export class TestComponent {
     console.log(this.editorContent)
   }
 
-  // public viewSettings = {
-  //   base_url: '/tinymce',
-  //   suffix: '.min',
-  //   placeholder: 'VIEW',
-  //   contenteditable: false,
-  //   toolbar: false,
-  //   menubar: false,
-  //   statusbar: false,
-  //   width: '100%',
-  //   height: '20vh',
-  //   content_style: 'body img { display: block;margin: 0 auto;} ',
-  //   init_instance_callback: (editor:any)=>{
-  //     console.log(editor.id)
-  //     editor.mode.set('readonly', false);
-  //   }
-  // }
-
-  // public quillConfig = {
-  //   toolbar: {
-  //     container: [
-  //       [
-  //         'bold', 
-  //         'italic', 
-  //         'underline', 
-  //         'strike',
-  //         { 'header': 1 },              
-  //         { 'color': [] },          
-  //         { 'script': 'sub'}, 
-  //         { 'script': 'super' },   
-  //         'clean',
-  //         { 'list': 'ordered'}, 
-  //         { 'list': 'bullet' },                                           
-  //         'blockquote', 
-  //         'code-block',
-  //         'link', 
-  //         // 'image', 
-  //         'video'
-  //       ]                         
-  //     ],
-  //   },
-  // }
-
   createPost(type: string, content: string) {
     const username: string = this.storageService.getItem("username");
     const community: string = this.community;
