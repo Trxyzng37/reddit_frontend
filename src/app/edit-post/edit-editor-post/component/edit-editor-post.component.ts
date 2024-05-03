@@ -6,7 +6,7 @@ import { DateTimeService } from 'src/app/shared/services/date-time/date-time.ser
 import { GetPostService } from 'src/app/view-detail-post/view-detail-post/service/get-post/get-post.service';
 import Swal from 'sweetalert2';
 import tinymce from 'tinymce';
-import { EditPostService } from '../service/edit-editor-post/edit-editor-post.service';
+import { EditPostService } from '../../service/edit-post/edit-editor-post.service';
 import { EditPostResponse } from '../../pojo/edit-post-response';
 
 @Component({
@@ -164,6 +164,7 @@ export class EditEditorPostComponent {
       focusCancel: false,
       focusConfirm: false,
     }).then((result) => {
+      if (result.isConfirmed) {
       this.editPostService.editPost("/edit-editor-post", "editor", this.post_id, this.edit_title, this.edit_content).subscribe({
         next: (response: EditPostResponse) => {
           if (result.isConfirmed) {
@@ -175,6 +176,23 @@ export class EditEditorPostComponent {
           Swal.fire('Fail to edit post. Please try again', '', 'error')
         }
       })
+      }
+    })
+  }
+
+  cancelEdit() {
+    Swal.fire({
+      titleText: "Cancel edit post",
+      text: "The new content will not be saved",
+      icon: "warning",
+      heightAuto: true,
+      showCancelButton: true,
+      showConfirmButton: true,
+      focusCancel: false,
+      focusConfirm: false,
+    }).then((result) => {
+      if (result.isConfirmed) 
+        this.route.navigate(["/post/"+this.post_id]);
     })
   }
 }

@@ -12,7 +12,7 @@
     </div>
 
     <div id="btn_comment_block">
-        <button id="btn_cancel_comment" type="button" >Cancel</button>
+        <button id="btn_cancel_comment" type="button" (click)="cancelEdit()">Cancel</button>
         <button id="btn_edit_comment" type="button" (click)="editPost()" [disabled]="allowSubmit">Edit</button>
     </div>
 </div>

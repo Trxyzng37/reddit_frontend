@@ -5,6 +5,8 @@ import { GetPostService } from 'src/app/view-detail-post/view-detail-post/servic
 import { ActivatedRoute, Router } from '@angular/router';
 import { GetPostResponse } from 'src/app/post-link-list/pojo/get-post-response';
 import { HttpErrorResponse } from '@angular/common/http';
+import { DeletePostService } from '../../service/delete-post/delete-post.service';
+import { DeletePostResponse } from '../../pojo/delete-post-response';
 
 @Component({
   selector: 'app-edit-post',
@@ -16,14 +18,16 @@ export class EditPostComponent {
   public constructor(
     private getPostService: GetPostService,
     private activeRoute: ActivatedRoute,
-    private route: Router
+    private route: Router,
+    private deletePostService: DeletePostService
   ) {}
 
   public post_type: string = "";
+  public post_id: number = 0;
 
   ngOnInit() {
-    const post_id = this.activeRoute.snapshot.params['post_id'];
-    this.getPostService.getPostByPostId(post_id).subscribe({
+    this.post_id = this.activeRoute.snapshot.params['post_id'];
+    this.getPostService.getPostByPostId(this.post_id).subscribe({
       next: (response: GetPostResponse) => {
           this.post_type = response.type;
       },
@@ -44,8 +48,16 @@ export class EditPostComponent {
       focusConfirm: false,
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire('Delete post successfully', '', 'success')
-      } 
+        this.deletePostService.deletePost("/delete-post", this.post_id).subscribe({
+          next: (response: DeletePostResponse) => {
+            Swal.fire('Delete post successfully', '', 'success')
+            this.route.navigate([""]);
+          },
+          error: (e: HttpErrorResponse) => {
+            Swal.fire('Error delete post. Please try again', '', 'error')
+          }
+        })
+      }
     })
   }
 }

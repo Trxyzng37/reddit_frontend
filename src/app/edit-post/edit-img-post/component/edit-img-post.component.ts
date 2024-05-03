@@ -5,7 +5,7 @@ import { GetPostService } from 'src/app/view-detail-post/view-detail-post/servic
 import { ActivatedRoute, Router } from '@angular/router';
 import { GetPostResponse } from 'src/app/post-link-list/pojo/get-post-response';
 import { HttpErrorResponse } from '@angular/common/http';
-import { EditPostService } from '../../edit-editor-post/service/edit-editor-post/edit-editor-post.service';
+import { EditPostService } from '../../service/edit-post/edit-editor-post.service';
 import Swal from 'sweetalert2';
 import { EditPostResponse } from '../../pojo/edit-post-response';
 
@@ -177,17 +177,35 @@ export class EditImgPostComponent {
       }).then((result) => {
         this.edit_content = JSON.stringify(this.imgArr);
         console.log(this.edit_content);
+        // console.log("load")
         if (result.isConfirmed) {
           this.editPostService.editPost("/edit-img-post", "img", this.post_id, this.edit_title, this.edit_content).subscribe({
             next: (response: EditPostResponse) => {
               Swal.fire('Edit post successfully', '', 'success')
+              // console.log("done")
               this.route.navigate(["/post/"+this.post_id]);
             },
             error: (e: HttpErrorResponse) => {
-              console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
+              Swal.fire('Fail to edit post. Please try again', '', 'error')
             }
           })
         }
       })
+  }
+
+  cancelEdit() {
+    Swal.fire({
+      titleText: "Cancel edit post",
+      text: "The new content will not be saved",
+      icon: "warning",
+      heightAuto: true,
+      showCancelButton: true,
+      showConfirmButton: true,
+      focusCancel: false,
+      focusConfirm: false,
+    }).then((result) => {
+      if (result.isConfirmed) 
+        this.route.navigate(["/post/"+this.post_id]);
+    })
   }
 }
