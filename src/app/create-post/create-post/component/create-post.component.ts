@@ -27,8 +27,8 @@ export class TestComponent {
   @Input() img: Img = new Img("");
   @Input() selected_id: number = 0;
 
-  communities: Communities[] = [new Communities(1, "a", "aaa", "aaa", 1, "../../assets/icon/technology.png"), new Communities(2, "b", "bbb", "bbb", 2, "../../assets/icon/technology.png")];
-  public selected_community_icon: string = "../../assets/icon/dashed_circle.png";
+  communities: Communities[] = [];
+  public avatar: string = "../../assets/icon/dashed_circle.png";
   public isPostOpen: boolean = true;
   public isPostImageOpen: boolean = false;
   public isPostLinkOpen: boolean = false;
@@ -174,7 +174,7 @@ export class TestComponent {
   selectCommunity(community: Communities) {
     this.isCommunitySearchDropdownOpen = false;
     this.community = community.name;
-    this.selected_community_icon = community.icon_base64;
+    this.avatar = community.avatar;
     this.community = community.name;
     this.AllowSubmit();
     console.log("select community: " + this.community);
