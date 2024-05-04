@@ -1,19 +1,21 @@
 export class Communities {
-    public community_id: number;
+    public id: number;
     public name: string;
+    public uid: number;
     public description: string;
     public created_at: string;
     public subscriber_count: number;
-    public icon_base64: string;
+    public avatar: string;
 
-    public constructor(community_id: number, name: string, 
+    public constructor(id: number, name: string, uid: number,
                         description: string, created_at: string, 
-                        subscriber_count: number, icon_base64: string) {
-        this.community_id = community_id;
+                        subscriber_count: number, avatar: string) {
+        this.id = id;
         this.name = name;
+        this.uid = uid;
         this.description = description;
         this.created_at = created_at;
         this.subscriber_count = subscriber_count;
-        this.icon_base64 = icon_base64;
+        this.avatar = avatar;
     }
 }
