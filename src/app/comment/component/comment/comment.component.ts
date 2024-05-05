@@ -66,8 +66,6 @@ export class CommentComponent {
   public  downvote_fill = "../../../../../assets/icon/downvote-comment-fill.png"
   
   ngOnInit() {
-    // console.log("commentData: "+this.commentData);
-    // console.log("Level: "+this.commentData.level);
     this.isDeleted = this.commentData.deleted;
     this.uid = this.storageService.getItem("uid") === "" ? 0 : Number(this.storageService.getItem("uid"));
     this.isUserComment = this.commentData.uid == this.uid ? true : false;
@@ -84,7 +82,7 @@ export class CommentComponent {
     this.commentData.content = this.commentData.content.replace(/<a/g, '<a class="a" ');
     this.previousContent = this.commentData.content;
     this.editCommentData = this.commentData.content;
-    this.getCommentStatusService.getCommentStatus(this.commentData._id, this.commentData.uid).subscribe({
+    this.getCommentStatusService.getCommentStatus(this.commentData._id, this.uid).subscribe({
       next: (response: CommentStatusResponse) => {
         this.voteType = response.vote_type;
       },
