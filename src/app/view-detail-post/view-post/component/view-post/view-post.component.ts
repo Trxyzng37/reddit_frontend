@@ -28,7 +28,8 @@
     @Input() post_id: number = 0;
     @Input() type: string = "";
     @Input() communityName: string = "";
-    @Input() userName: string = "";
+    @Input() uid: number = 0;
+    @Input() username: string = "";
     @Input() title: string = "";
     @Input() content: string = "";
     @Input() created_at: string = "";
@@ -39,7 +40,6 @@
   
     @Output() event = new EventEmitter<GetPostResponse>();
       
-    public images!: GalleryItem[];
     public voteType: string = 'none'; //none upvote downvote
     public previousVote: number = this.vote;
     public shownDate: string = "";
@@ -54,8 +54,7 @@
 
     ngOnInit() {
       const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
-      const name = this.storageService.getItem("username");
-      this.isAuthor = name == this.userName;
+      this.isAuthor = uid == this.uid;
       this.shownDate = this.dateTimeService.getTimeByCompareCreatedAtAndCurrentDate(this.created_at);
       const username: string = this.storageService.getItem("username");
       this.checkVotePostService.checkVotePost(this.post_id, username).subscribe({
