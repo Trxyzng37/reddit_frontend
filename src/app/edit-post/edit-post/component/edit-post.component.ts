@@ -53,8 +53,10 @@ export class EditPostComponent {
         const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
         this.deletePostService.deletePost("/delete-post", this.post_id, uid).subscribe({
           next: (response: DeletePostResponse) => {
-            Swal.fire('Delete post successfully', '', 'success')
-            this.route.navigate([""]);
+            Swal.fire('Delete post successfully', '', 'success').then((result) => {
+              if (result.isConfirmed)
+                this.route.navigate([""]);
+            })
           },
           error: (e: HttpErrorResponse) => {
             Swal.fire('Error delete post. Please try again', '', 'error')
