@@ -10,6 +10,9 @@
   import { CheckVotePostResponse } from '../../../../post-link/post-link/service/check-vote-post/pojo/check-vote-post-response';
   import { VotePostResponse } from '../../../../post-link/post-link/service/vote-post/pojo/vote-post-response';
   import { DateTimeService } from 'src/app/shared/services/date-time/date-time.service';
+import Swal from 'sweetalert2';
+import { DeletePostService } from 'src/app/edit-post/service/delete-post/delete-post.service';
+import { DeletePostResponse } from 'src/app/edit-post/pojo/delete-post-response';
   
   @Component({
     selector: 'app-post',
@@ -22,7 +25,9 @@
       private votePostServie: VotePostService,
       private storageService: StorageService,
       private dateTimeService: DateTimeService,
-      private checkVotePostService: CheckVotePostService
+      private checkVotePostService: CheckVotePostService,
+      private deletePostService: DeletePostService,
+      private route: Router
     ) {}
   
     @Input() post_id: number = 0;
@@ -132,6 +137,31 @@
           this.voteType = 'none';
           console.log("Error vote post");
           console.log("vote when error: "+this.vote);
+        }
+      })
+    }
+
+    deletePost() {
+      Swal.fire({
+        titleText: "Are you sure you want to delete this post",
+        icon: "warning",
+        heightAuto: true,
+        showCancelButton: true,
+        showConfirmButton: true,
+        focusCancel: false,
+        focusConfirm: false,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
+          this.deletePostService.deletePost("/delete-post", this.post_id, uid).subscribe({
+            next: (response: DeletePostResponse) => {
+              Swal.fire('Delete post successfully', '', 'success')
+              this.route.navigate([""]);
+            },
+            error: (e: HttpErrorResponse) => {
+              Swal.fire('Error delete post. Please try again', '', 'error')
+            }
+          })
         }
       })
     }
