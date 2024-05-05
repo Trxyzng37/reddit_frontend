@@ -1,6 +1,7 @@
 export class GetPostResponse {
     public post_id: number;
     public type: string;
+    public uid: number;
     public username: string;
     public username_icon: string;
     public community_name: string;
@@ -9,10 +10,12 @@ export class GetPostResponse {
     public content: string;
     public created_at: string;
     public vote: number;
+    // public deleted: number;
 
-    public constructor(post_id: number, type: string, username: string, username_icon: string, community_name: string, community_icon: string, title: string, content: string, created_at: string, vote: number) {
+    public constructor(post_id: number, type: string, uid: number, username: string, username_icon: string, community_name: string, community_icon: string, title: string, content: string, created_at: string, vote: number) {
         this.post_id = post_id;
         this.type = type;
+        this.uid = uid;
         this.username = username;
         this.username_icon = username_icon;
         this.community_name = community_name;
@@ -21,5 +24,6 @@ export class GetPostResponse {
         this.content = content;
         this.created_at = created_at;
         this.vote = vote;
+        // this.deleted = deleted;
     }
 }
