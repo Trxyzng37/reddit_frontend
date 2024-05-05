@@ -57,7 +57,7 @@
       this.isAuthor = uid == this.uid;
       this.shownDate = this.dateTimeService.getTimeByCompareCreatedAtAndCurrentDate(this.created_at);
       const username: string = this.storageService.getItem("username");
-      this.checkVotePostService.checkVotePost(this.post_id, username).subscribe({
+      this.checkVotePostService.checkVotePost(this.post_id, uid).subscribe({
         next: (response: CheckVotePostResponse) => {
           this.voteType  = response.vote_type;
         },
@@ -121,8 +121,8 @@
     }
   
     sendVotePostToServer() {
-      const username: string = this.storageService.getItem("username");
-      this.votePostServie.votePost(this.post_id, this.vote, username, this.voteType).subscribe({
+      const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
+      this.votePostServie.votePost(this.post_id, this.vote, uid, this.voteType).subscribe({
         next: (response: VotePostResponse) => {
           console.log("Vote post_id: "+response.post_id);
         },

@@ -14,8 +14,8 @@ export class CheckVotePostService {
   ) { }
 
   private endpoint: string = "/check-vote-post";
-  checkVotePost(postId: number, username: string): Observable<CheckVotePostResponse> {
-    const fullUrl = this.endpoint + "?" + "username=" + username + "&" + "postId=" + postId;
+  checkVotePost(postId: number, uid: number): Observable<CheckVotePostResponse> {
+    const fullUrl = this.endpoint + "?" + "uid=" + uid + "&" + "postId=" + postId;
     console.log(fullUrl)
     let header: HttpHeaders = new HttpHeaders();
     header = header.append("Accept", 'application/json');
