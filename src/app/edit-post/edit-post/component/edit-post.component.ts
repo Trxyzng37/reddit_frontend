@@ -7,6 +7,7 @@ import { GetPostResponse } from 'src/app/post-link-list/pojo/get-post-response';
 import { HttpErrorResponse } from '@angular/common/http';
 import { DeletePostService } from '../../service/delete-post/delete-post.service';
 import { DeletePostResponse } from '../../pojo/delete-post-response';
+import { StorageService } from 'src/app/shared/storage/storage.service';
 
 @Component({
   selector: 'app-edit-post',
@@ -19,7 +20,8 @@ export class EditPostComponent {
     private getPostService: GetPostService,
     private activeRoute: ActivatedRoute,
     private route: Router,
-    private deletePostService: DeletePostService
+    private deletePostService: DeletePostService,
+    private storageService: StorageService
   ) {}
 
   public post_type: string = "";
@@ -48,7 +50,8 @@ export class EditPostComponent {
       focusConfirm: false,
     }).then((result) => {
       if (result.isConfirmed) {
-        this.deletePostService.deletePost("/delete-post", this.post_id).subscribe({
+        const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
+        this.deletePostService.deletePost("/delete-post", this.post_id, uid).subscribe({
           next: (response: DeletePostResponse) => {
             Swal.fire('Delete post successfully', '', 'success')
             this.route.navigate([""]);
