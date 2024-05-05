@@ -23,7 +23,7 @@ export class ImgCaptionComponent {
     caption.value = this.img.caption;
     caption.value = caption.value.replace(/\r?\n|\r/g, "");
     caption.style.height = 'auto';
-    caption.style.height = `${caption.scrollHeight}px`;
+    caption.style.height = caption.scrollHeight < 30 ? '30px' : `${caption.scrollHeight}px`;
     this.characterCount = caption.value.length;
   }
 
