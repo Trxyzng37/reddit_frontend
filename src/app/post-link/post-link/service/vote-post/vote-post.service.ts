@@ -16,9 +16,9 @@ export class VotePostService {
 
   private endpoint: string = "/vote-post";
 
-  votePost(post_id: number, vote:number, username: string, type: string): Observable<VotePostResponse> {
+  votePost(post_id: number, vote:number, uid: number, type: string): Observable<VotePostResponse> {
     let header: HttpHeaders = new HttpHeaders();
-    const votePostRequest: VotePostRequest = new VotePostRequest(post_id, vote, username, type);
+    const votePostRequest: VotePostRequest = new VotePostRequest(post_id, vote, uid, type);
     const body: string = JSON.stringify(votePostRequest);
     header = header.append("Accept", 'application/json');
     header = header.append('Content-Type', 'application/json');
