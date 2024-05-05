@@ -10,7 +10,7 @@
         <div id="search_result_list">
             <p class="communities_id" [ngStyle]="{'display': communities_result.length > 0 ? 'block':'none'}">Communities</p>
             <a class="search_result_link" routerLink="/{{i.name}}" *ngFor="let i of communities_result">
-                <img class="seach_result_icon" src={{i.icon_base64}}/>
+                <img class="seach_result_icon" src={{i.avatar}}/>
                 <div>
                     <p id="community_name">r/{{i.name}}</p>
                     <p id="member_count">{{i.subscriber_count}} members</p>
@@ -18,10 +18,10 @@
             </a>
             <p class="communities_id" [ngStyle]="{'display': user_profile_result.length > 0 ? 'block':'none'}">People</p>
             <a class="search_result_link" routerLink="/{{i.name}}" *ngFor="let i of user_profile_result">
-                <img class="seach_result_icon" src={{i.icon_base64}}/>
+                <img class="seach_result_icon" src={{i.avatar}}/>
                 <div>
-                    <p id="community_name">r/{{i.name}}</p>
-                    <p id="member_count">{{i.karma}} members</p>
+                    <p id="community_name">r/{{i.username}}</p>
+                    <p id="member_count">{{i.karma}} karma</p>
                 </div>
             </a>
         </div>
