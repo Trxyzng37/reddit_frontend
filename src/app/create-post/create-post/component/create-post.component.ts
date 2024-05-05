@@ -3,7 +3,7 @@ import { Img } from '../../pojo/img';
 import { SearchCommunitiesService } from '../../../shared/services/search-communites/search-communities.service';
 import { Communities } from '../../../shared/pojo/pojo/communities';
 import { HttpErrorResponse } from '@angular/common/http';
-import { PostRequest } from '../../pojo/create-post-request';
+import { CreatePostRequest } from '../../pojo/create-post-request';
 import { SendPostService } from '../service/send-post/send-post.service';
 import { StorageService } from 'src/app/shared/storage/storage.service';
 import { DateTimeService } from 'src/app/shared/services/date-time/date-time.service';
@@ -41,6 +41,7 @@ export class TestComponent {
   public editorContent: string = "";
   public imgArr: Img[] = [];
   public linkContent: string = "";
+  public community_id: number = 0;
 
   public editorAllowed: boolean = true;
   public imgAllowed: boolean = true;
@@ -176,6 +177,7 @@ export class TestComponent {
     this.community = community.name;
     this.avatar = community.avatar;
     this.community = community.name;
+    this.community_id = community.id;
     this.AllowSubmit();
     console.log("select community: " + this.community);
   }
@@ -295,12 +297,10 @@ export class TestComponent {
   }
 
   createPost(type: string, content: string) {
-    const username: string = this.storageService.getItem("username");
-    const community: string = this.community;
     const title: string = this.title;
     const created_at: Date = this.dateTimeService.getCurrentDateTime();
     console.log("Post type: " + type);
-    this.sendPostService.createPost(type, username, community, title, content, created_at).subscribe({
+    this.sendPostService.createPost(type, this.community_id, title, content, created_at).subscribe({
       next: (response: CreatePostResponse) => {
         if(response.CREATED === true)
           alert("Create new post successfully")
@@ -314,13 +314,12 @@ export class TestComponent {
   }
 
   createImgPost(type: string, content: Img[]) {
-    const username: string = this.storageService.getItem("username");
     const community: string = this.community;
     const title: string = this.title;
     const contentStr = JSON.stringify(content);
     const created_at: Date = this.dateTimeService.getCurrentDateTime();
     console.log("Post type: " + type);
-    this.sendPostService.createPost(type, username, community, title, contentStr, created_at).subscribe({
+    this.sendPostService.createPost(type, this.community_id, title, contentStr, created_at).subscribe({
       next: (response: CreatePostResponse) => {
         if(response.CREATED === true)
           alert("Create new post successfully")
@@ -334,13 +333,12 @@ export class TestComponent {
   }
 
   createLinkPost(type: string, content: string) {
-    const username: string = this.storageService.getItem("username");
     const community: string = this.community;
     const title: string = this.title;
     const created_at: Date = this.dateTimeService.getCurrentDateTime();
     console.log("Post type: " + type);
     
-    this.sendPostService.createPost(type, username, community, title, content, created_at).subscribe({
+    this.sendPostService.createPost(type, this.community_id, title, content, created_at).subscribe({
       next: (response: CreatePostResponse) => {
         if(response.CREATED === true)
           alert("Create new post successfully")
