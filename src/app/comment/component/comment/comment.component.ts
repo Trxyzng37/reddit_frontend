@@ -253,14 +253,14 @@ export class CommentComponent {
 
   onContentChanged(event: any) {
     this.count++;
-    console.log("count: "+this.count)
+    // console.log("count: "+this.count)
     if (this.isEditAllowed && this.count > 1) {
       this.editCommentData = tinymce.EditorManager.get(this.editor_id)!.getContent({ format: 'html' });
-      console.log("edit content: "+this.editCommentData)
+      // console.log("edit content: "+this.editCommentData)
     }
     if (this.isReplyAllowed) {
       this.replyCommentData = event.editor.getContent({ format: 'html' });
-      console.log("reply content: "+this.replyCommentData)
+      // console.log("reply content: "+this.replyCommentData)
     }
   }
 
@@ -305,14 +305,14 @@ export class CommentComponent {
       this.createCommentService.createComment(this.postId, this.commentData._id, this.replyCommentData, this.commentData.level+1).subscribe({
         next: (response: CreateCommentResponse) => {
           this.commentModified.emit(true);
-          Swal.fire({
-            titleText: "Create comment successfully",
-            icon: "success",
-            heightAuto: true,
-            showConfirmButton: true,
-            focusCancel: false,
-            focusConfirm: false
-          })
+          // Swal.fire({
+          //   titleText: "Create comment successfully",
+          //   icon: "success",
+          //   heightAuto: true,
+          //   showConfirmButton: true,
+          //   focusCancel: false,
+          //   focusConfirm: false
+          // })
         },
         error: (e: HttpErrorResponse) => {
           console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
@@ -335,8 +335,8 @@ export class CommentComponent {
     if(this.count < 2)
       tinymce.EditorManager.get(this.editor_id)?.setContent(this.editCommentData);
     this.count++;
-    console.log("count: "+this.count)
-    console.log("editCommentData: "+this.editCommentData)
+    // console.log("count: "+this.count)
+    // console.log("editCommentData: "+this.editCommentData)
   }
 
   sendEditComment() {
@@ -395,14 +395,14 @@ export class CommentComponent {
       this.deleteCommentService.deleteComment(this.postId, this.commentData._id).subscribe({
         next: (response: DeleteCommentResponse) => {
           this.commentModified.emit(true);
-          Swal.fire({
-            titleText: "Delete comment successfully",
-            icon: "success",
-            heightAuto: true,
-            showConfirmButton: true,
-            focusCancel: false,
-            focusConfirm: false
-          })
+          // Swal.fire({
+          //   titleText: "Delete comment successfully",
+          //   icon: "success",
+          //   heightAuto: true,
+          //   showConfirmButton: true,
+          //   focusCancel: false,
+          //   focusConfirm: false
+          // })
         },
         error: (e: HttpErrorResponse) => {
           console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
