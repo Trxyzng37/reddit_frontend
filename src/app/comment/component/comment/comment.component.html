@@ -32,8 +32,8 @@
             <pre> Delete</pre>
         </button>
     </div>
-<!-- [ngStyle]="{'display': isEditorShow ? 'block' : 'none'}" -->
-    <div id="comment_editor_block" *ngIf="isEditorShow && isShown">
+
+    <div id="comment_editor_block" [ngStyle]="{'display': isEditorShow && isShown ? 'block':'none'}">
         <editor
             [init]="editorSettings"
             (onSelectionChange)="onContentChanged($event)"
