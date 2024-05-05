@@ -16,9 +16,8 @@ export class DeletePostService {
     private storageService: StorageService
   ) { }
 
-  deletePost(endpoint: string, post_id: number): Observable<DeletePostResponse> {
-    const username = this.storageService.getItem("username");
-    const request = new DeletePostRequest(post_id, username);
+  deletePost(endpoint: string, post_id: number, uid: number): Observable<DeletePostResponse> {
+    const request = new DeletePostRequest(post_id, uid);
     const body: string = JSON.stringify(request);
     let header: HttpHeaders = new HttpHeaders();
     header = header.append("Accept", 'application/json');

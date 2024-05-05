@@ -1,9 +1,9 @@
 export class DeletePostRequest {
     public post_id: number;
-    public username: string;
+    public uid: number;
 
-    public constructor(post_id: number, username: string) {
+    public constructor(post_id: number, uid: number) {
         this.post_id = post_id;
-        this.username = username;
+        this.uid = uid;
     }
 }
