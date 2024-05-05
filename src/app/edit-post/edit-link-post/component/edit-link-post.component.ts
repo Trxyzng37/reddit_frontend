@@ -8,6 +8,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { OpenGraphResponse } from 'src/app/post-link/link-review/pojo/open-graph-response';
 import Swal from 'sweetalert2';
 import { EditPostResponse } from '../../pojo/edit-post-response';
+import { StorageService } from 'src/app/shared/storage/storage.service';
 
 @Component({
   selector: 'app-edit-link-post',
@@ -20,6 +21,7 @@ export class EditLinkPostComponent {
     private getPostService: GetPostService,
     private activeRoute: ActivatedRoute,
     private editPostService: EditPostService,
+    private storageService: StorageService,
     private route: Router
   ) {}
   public post_id: number = 0;
@@ -108,7 +110,8 @@ export class EditLinkPostComponent {
       focusConfirm: false,
       }).then((result) => {
         if (result.isConfirmed) {
-          this.editPostService.editPost("/edit-link-post", "link", this.post_id, this.edit_title, this.edit_content).subscribe({
+          const uid: number = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
+          this.editPostService.editPost("/edit-link-post", "link", this.post_id, uid, this.edit_title, this.edit_content).subscribe({
             next: (response: EditPostResponse) => {
               Swal.fire('Edit post successfully', '', 'success')
               this.route.navigate(["/post/"+this.post_id]);

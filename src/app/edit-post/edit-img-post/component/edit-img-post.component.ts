@@ -8,6 +8,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { EditPostService } from '../../service/edit-post/edit-editor-post.service';
 import Swal from 'sweetalert2';
 import { EditPostResponse } from '../../pojo/edit-post-response';
+import { StorageService } from 'src/app/shared/storage/storage.service';
 
 @Component({
   selector: 'app-edit-img-post',
@@ -20,6 +21,7 @@ export class EditImgPostComponent {
     private getPostService: GetPostService,
     private activeRoute: ActivatedRoute,
     private editPostService: EditPostService,
+    private storageService: StorageService,
     private route: Router
   ) {}
 
@@ -179,7 +181,8 @@ export class EditImgPostComponent {
         console.log(this.edit_content);
         // console.log("load")
         if (result.isConfirmed) {
-          this.editPostService.editPost("/edit-img-post", "img", this.post_id, this.edit_title, this.edit_content).subscribe({
+          const uid: number = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
+          this.editPostService.editPost("/edit-img-post", "img", this.post_id, uid, this.edit_title, this.edit_content).subscribe({
             next: (response: EditPostResponse) => {
               Swal.fire('Edit post successfully', '', 'success')
               // console.log("done")

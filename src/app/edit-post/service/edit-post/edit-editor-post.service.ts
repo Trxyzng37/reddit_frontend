@@ -15,8 +15,8 @@ export class EditPostService {
   ) { }
 
 
-  editPost(endpoint: string, type: string, post_id: number, edit_title: string, edit_content: string): Observable<EditPostResponse> {
-    const request = new EditPostRequest(post_id, type, edit_title, edit_content);
+  editPost(endpoint: string, type: string, post_id: number, uid: number, edit_title: string, edit_content: string): Observable<EditPostResponse> {
+    const request = new EditPostRequest(post_id, uid, type, edit_title, edit_content);
     const body: string = JSON.stringify(request);
     let header: HttpHeaders = new HttpHeaders();
     header = header.append("Accept", 'application/json');

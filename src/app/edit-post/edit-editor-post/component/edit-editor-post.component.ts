@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import tinymce from 'tinymce';
 import { EditPostService } from '../../service/edit-post/edit-editor-post.service';
 import { EditPostResponse } from '../../pojo/edit-post-response';
+import { StorageService } from 'src/app/shared/storage/storage.service';
 
 @Component({
   selector: 'app-edit-editor-post',
@@ -21,12 +22,13 @@ export class EditEditorPostComponent {
     private activeRoute: ActivatedRoute,
     private dateTimeService: DateTimeService,
     private editPostService: EditPostService,
+    private storageService: StorageService,
     private route: Router
   ) {}
 
   public post_id: number = 0;
   public shownDate: string = "";
-  public postData: GetPostResponse = new GetPostResponse(0, "", "", "", "", "", "", "", "", 0);
+  public postData!: GetPostResponse;
   public edit_title: string = "";
   public edit_content: string = "";
   public characterCount: number = 0;
@@ -165,7 +167,8 @@ export class EditEditorPostComponent {
       focusConfirm: false,
     }).then((result) => {
       if (result.isConfirmed) {
-      this.editPostService.editPost("/edit-editor-post", "editor", this.post_id, this.edit_title, this.edit_content).subscribe({
+        const uid: number = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
+        this.editPostService.editPost("/edit-editor-post", "editor", this.post_id, uid, this.edit_title, this.edit_content).subscribe({
         next: (response: EditPostResponse) => {
           if (result.isConfirmed) {
             Swal.fire('Edit post successfully', '', 'success')
