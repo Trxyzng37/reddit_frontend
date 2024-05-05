@@ -60,6 +60,8 @@ export class CommentComponent {
   public previousContent = "";
   public uid: number = 0;
 
+  public editor_id: string = "";
+
   public  upvote = "../../../../../assets/icon/upvote.png"
   public  upvote_fill = "../../../../../assets/icon/upvote-comment-fill.png"
   public  downvote = "../../../../../assets/icon/downvote.png"
@@ -244,12 +246,17 @@ export class CommentComponent {
       })
       input.click();
     },
+    init_instance_callback: (editor: any) => {
+      this.editor_id = editor.id;
+    }
   }
 
-  onContentChanged = (event: any) =>{
-    if (this.isEditAllowed && this.count == 2) {
-      this.editCommentData = event.editor.getContent({ format: 'html' });
-    console.log("edit content: "+this.editCommentData)
+  onContentChanged(event: any) {
+    this.count++;
+    console.log("count: "+this.count)
+    if (this.isEditAllowed && this.count > 2) {
+      this.editCommentData = tinymce.EditorManager.get(this.editor_id)!.getContent({ format: 'html' });
+      console.log("edit content: "+this.editCommentData)
     }
     if (this.isReplyAllowed) {
       this.replyCommentData = event.editor.getContent({ format: 'html' });
@@ -269,7 +276,7 @@ export class CommentComponent {
           focusConfirm: false
         }).then((result) => {
           if (result.isConfirmed) {
-            Swal.fire('Clear comment successfully', '', 'success')
+            // Swal.fire('Clear comment successfully', '', 'success')
             this.replyCommentData = "";
             tinymce.activeEditor?.setContent(this.replyCommentData);
             this.isEditorShow = !this.isEditorShow;
@@ -324,10 +331,12 @@ export class CommentComponent {
 
   public count = 0;
   showEditComment() {
-    this.isEditorShow = true;
-    tinymce.activeEditor?.setContent(this.editCommentData);
+    this.isEditorShow = !this.isEditorShow;
+    if(this.count < 2)
+      tinymce.EditorManager.get(this.editor_id)?.setContent(this.editCommentData);
     this.count++;
     console.log("count: "+this.count)
+    console.log("editCommentData: "+this.editCommentData)
   }
 
   sendEditComment() {
