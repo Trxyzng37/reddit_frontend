@@ -37,6 +37,7 @@
         <editor
             [init]="editorSettings"
             (onSelectionChange)="onContentChanged($event)"
+            (onChange)="onContentChanged($event)"
             style="width: calc(100%);"
         >
         </editor>
