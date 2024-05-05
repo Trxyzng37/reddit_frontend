@@ -254,7 +254,7 @@ export class CommentComponent {
   onContentChanged(event: any) {
     this.count++;
     console.log("count: "+this.count)
-    if (this.isEditAllowed && this.count > 2) {
+    if (this.isEditAllowed && this.count > 1) {
       this.editCommentData = tinymce.EditorManager.get(this.editor_id)!.getContent({ format: 'html' });
       console.log("edit content: "+this.editCommentData)
     }
@@ -343,14 +343,14 @@ export class CommentComponent {
     if(this.commentData.content != this.editCommentData && this.editCommentData != "") {
       this.editCommentService.editComment(this.postId, this.commentData._id, this.editCommentData).subscribe({
         next: (response: Comment) => {
-          Swal.fire({
-            titleText: "Edit comment successfully",
-            icon: "success",
-            heightAuto: true,
-            showConfirmButton: true,
-            focusCancel: false,
-            focusConfirm: false
-          })
+          // Swal.fire({
+          //   titleText: "Edit comment successfully",
+          //   icon: "success",
+          //   heightAuto: true,
+          //   showConfirmButton: true,
+          //   focusCancel: false,
+          //   focusConfirm: false
+          // })
           this.commentData.content = response.content;
           this.previousContent = response.content;
           this.isEditorShow = !this.isEditorShow;
