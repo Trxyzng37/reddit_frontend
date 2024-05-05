@@ -9,6 +9,8 @@ import { StorageService } from 'src/app/shared/storage/storage.service';
 import { DateTimeService } from 'src/app/shared/services/date-time/date-time.service';
 import { CreatePostResponse } from '../../pojo/create-post-response';
 import tinymce from 'tinymce';
+import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-test',
@@ -20,7 +22,8 @@ export class TestComponent {
     private searchCommunitiesService: SearchCommunitiesService,
     private sendPostService: SendPostService,
     private storageService: StorageService,
-    private dateTimeService: DateTimeService
+    private dateTimeService: DateTimeService,
+    private route: Router
   ) {
   }
 
@@ -303,9 +306,12 @@ export class TestComponent {
     this.sendPostService.createPost(type, this.community_id, title, content, created_at).subscribe({
       next: (response: CreatePostResponse) => {
         if(response.CREATED === true)
-          alert("Create new post successfully")
+          Swal.fire('Create post successfully', '', 'success').then((result) => {
+            if (result.isConfirmed)
+              this.route.navigate(["/post/"+response.POST_ID]);
+          })
         else 
-          alert("Error create new post")
+        Swal.fire('Error create post. Please try again', '', 'error')
       },
       error: (e: HttpErrorResponse) => {
         console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
@@ -322,9 +328,12 @@ export class TestComponent {
     this.sendPostService.createPost(type, this.community_id, title, contentStr, created_at).subscribe({
       next: (response: CreatePostResponse) => {
         if(response.CREATED === true)
-          alert("Create new post successfully")
+          Swal.fire('Create post successfully', '', 'success').then((result) => {
+            if (result.isConfirmed)
+              this.route.navigate(["/post/"+response.POST_ID]);
+          })
         else 
-          alert("Error create new post")
+          Swal.fire('Error create post. Please try again', '', 'error')
       },
       error: (e: HttpErrorResponse) => {
         console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
@@ -341,9 +350,12 @@ export class TestComponent {
     this.sendPostService.createPost(type, this.community_id, title, content, created_at).subscribe({
       next: (response: CreatePostResponse) => {
         if(response.CREATED === true)
-          alert("Create new post successfully")
+          Swal.fire('Create post successfully', '', 'success').then((result) => {
+            if (result.isConfirmed)
+              this.route.navigate(["/post/"+response.POST_ID]);
+          })
         else 
-          alert("Error create new post")
+          Swal.fire('Error create post. Please try again', '', 'error')
       },
       error: (e: HttpErrorResponse) => {
         console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
