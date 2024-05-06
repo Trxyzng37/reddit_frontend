@@ -1,5 +1,5 @@
 
-<div class="container" [style.padding-left]="margin" [ngClass]="{'user_comment': isUserComment == true}">
+<div class="container" [style.padding-left]="margin" [ngClass]="{'user_comment': isUserComment == true}" [ngStyle]="{'margin-top': commentData.level === 0 ? '10px' : '0'}">
     <div id="header" (click)="showComment($event)">
         <img [attr.src]="isShown ? '../../../../assets/user-icon.png' : '../../../../assets/icon/plus.png'" />
         <div id="info_block">
@@ -15,9 +15,9 @@
 
     <div id="footer" *ngIf="isShown">
         <div id="block_vote" class="block_vote" [ngClass]="{'upvote': voteType === 'upvote', 'downvote': voteType === 'downvote', 'normal': voteType === 'none'}">
-            <button id="btn_upvote" type="button" (click)="voteComment($event, 'upvote')" [ngClass]="{'upvote': voteType === 'upvote', 'downvote': voteType === 'downvote', 'normal': voteType === 'none'}"><img [attr.src]="voteType === 'upvote' ? upvote_fill: upvote" /></button>
+            <button id="btn_upvote" type="button" (click)="voteComment($event, 'upvote')" [ngClass]="{'upvote': voteType === 'upvote', 'downvote': voteType === 'downvote', 'normal': voteType === 'none'}" [disabled]="isDeleted"><img [attr.src]="voteType === 'upvote' ? upvote_fill: upvote" /></button>
             <p id="vote_count">{{commentData.vote}}</p>
-            <button id="btn_downvote" type="button" (click)="voteComment($event, 'downvote')" [ngClass]="{'upvote': voteType === 'upvote', 'downvote': voteType === 'downvote', 'normal': voteType === 'none'}"><img [attr.src]="voteType === 'downvote' ? downvote_fill: downvote" /></button>
+            <button id="btn_downvote" type="button" (click)="voteComment($event, 'downvote')" [ngClass]="{'upvote': voteType === 'upvote', 'downvote': voteType === 'downvote', 'normal': voteType === 'none'}" [disabled]="isDeleted"><img [attr.src]="voteType === 'downvote' ? downvote_fill: downvote" /></button>
         </div>
         <button class="footer_btn" type="button" (click)="reply()" *ngIf="isReplyAllowed && !isDeleted">
             <i class="pi pi-comment"></i>
