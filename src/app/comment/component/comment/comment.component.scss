@@ -39,8 +39,8 @@ img {
     border-radius: 50%;
 }
 
-#comment_content, #footer {
-    margin-left: 35px;
+#comment_content {
+    margin-left: 43px;
     box-sizing: border-box;
 }
 
@@ -48,8 +48,10 @@ img {
     width: -moz-fit-content;
     width: fit-content;
     height: 30px;
-    margin-top: 5px;
+    // margin-top: 5px;
     position: relative;
+    margin-left: 37px;
+    box-sizing: border-box;
 }
 
 #footer > * {
