@@ -1,34 +1,17 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-navigation-bar',
   templateUrl: './navigation-bar.component.html',
-  styleUrl: './navigation-bar.component.scss',
-  animations: [
-    trigger('openClose', [
-      // ...
-      state('open', style({
-        'display': 'block',
-        'transition': 'display 2s ease'
-      })),
-      state('closed', style({
-        'display': 'none',
-        'transition': 'display 2s ease'
-      })),
-      transition('open => closed', [
-        animate('1s')
-      ]),
-      transition('closed => open', [
-        animate('1s')
-      ]),
-    ]),
-  ]
+  styleUrl: './navigation-bar.component.scss'
 })
 export class NavigationBarComponent {
   public isOpen: boolean = true;
   public recent_status: string = 'down';
   public favorite_status: string = 'down';
+
+  @Output() showCommunityFormEvent = new EventEmitter<boolean>();
 
   public recent_visited_communities_list: {icon: string, name: string}[] = [
     {'icon': '../../../../assets/icon/google.png', 'name': 'Google'},
@@ -47,11 +30,13 @@ export class NavigationBarComponent {
   change_recent_status() {
     this.recent_status = this.recent_status === 'up' ? 'down':'up';
     this.isOpen = !this.isOpen;
-    // console.log(this.recent_status)
   }
 
   change_favorite_status() {
     this.favorite_status = this.favorite_status === 'up' ? 'down':'up';
-    // console.log(this.favorite_status)
+  }
+
+  showCreateCommunityForm() {
+    this.showCommunityFormEvent.emit(true);
   }
 }
