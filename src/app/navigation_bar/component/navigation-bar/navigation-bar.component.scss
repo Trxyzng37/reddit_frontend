@@ -1,5 +1,5 @@
 :host {
-    // box-sizing: content-box;
+    position: relative;
 }
 
 #main_navigation {
@@ -67,7 +67,7 @@ span {
     text-align: center;
 }
 
-#img_community_icon {
+#img_community_icon, #img_create_community {
     width: 30px;
     height: 30px;
     border-radius: 50%;

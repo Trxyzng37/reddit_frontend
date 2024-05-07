@@ -1,9 +1,7 @@
 :host {
     height: 100%;
     width: 100%;
-    // display: flex;
-    // flex-direction: column;
-    // overflow: hidden;
+    position: relative;
 }
 
 #outlet {
@@ -34,5 +32,21 @@ app-recent-visited-post {
 
 app-navigation-bar:hover, app-recent-visited-post:hover {
     overflow-y: auto;
+}
+
+
+//create-community 
+#create_community_container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba($color: #000000, $alpha: 0.85);
 }
 
