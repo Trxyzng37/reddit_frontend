@@ -38,12 +38,7 @@
                 (onSelectionChange)="onContentChanged($event)"
             >  
             </editor>
-            <!-- <editor
-                id="view"
-                [init]="viewSettings"
-                [(ngModel)]="editorContent"
-            >
-            </editor> -->
+
             <button class="btn_create_post" type="button" (click)="createPost('editor', this.editorContent)" [disabled]="editorAllowed">Post</button>
         </div>
         <div id="post_img_block" 
