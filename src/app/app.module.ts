@@ -14,7 +14,7 @@ import { ForgotPasswordComponent } from './forgot-password/components/forgot-pas
 import { PassCodeComponent } from './pass-code/components/pass-code/pass-code.component';
 import { ChangePasswordComponent } from './change-password/components/change-password/change-password.component';
 import { ConfirmEmailComponent } from './signup/components/confirm-email/confirm-email.component';
-import { TestComponent } from './create-post/create-post/component/create-post.component';
+import { CreatePostComponent } from './create-post/create-post/component/create-post.component';
 import { PostLinkComponent } from './post-link/post-link/component/post-link.component';
 import { PostLinkListComponent } from './post-link-list/component/post-link-list/post-link-list.component';
 import { PostMainComponent } from './post-main/component/post-main/post-main.component';
@@ -39,6 +39,8 @@ import { EditEditorPostComponent } from './edit-post/edit-editor-post/component/
 import { EditImgPostComponent } from './edit-post/edit-img-post/component/edit-img-post.component';
 import { EditLinkPostComponent } from './edit-post/edit-link-post/component/edit-link-post.component';
 import { CreateCommunityComponent } from './create-community/component/create-community.component';
+import { CommunityMainComponent } from './community-main/component/community-main.component';
+import { CommunityInfoComponent } from './community-info/community-info/community-info.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +53,7 @@ import { CreateCommunityComponent } from './create-community/component/create-co
     PassCodeComponent,
     ChangePasswordComponent,
     ConfirmEmailComponent,
-    TestComponent,
+    CreatePostComponent,
     PostLinkComponent,
     PostMainComponent,
     RecentVisitedPostComponent,
@@ -70,7 +72,9 @@ import { CreateCommunityComponent } from './create-community/component/create-co
     EditImgPostComponent,
     EditPostComponent,
     EditLinkPostComponent,
-    CreateCommunityComponent
+    CreateCommunityComponent,
+    CommunityMainComponent,
+    CommunityInfoComponent
   ],
   imports: [
     BrowserModule,
