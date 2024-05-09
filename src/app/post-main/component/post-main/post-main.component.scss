@@ -12,11 +12,16 @@
 
 #outlet {
     width: var(--post_width);
-    margin-left: calc(var(--margin_home) + 3vw);
+    margin-left: calc(var(--margin_home) + 2vw);
     margin-top: 50px;
     box-sizing: border-box;
 }
 
-app-post-link {
-    width: 100%;
+app-recent-visited-post {
+    position: fixed;
+    height: calc(100vh - var(--header_size));
+    right: 0;
+    width: 21vw;
+    top: var(--header_size);
+    right: var(--margin_home);
 }

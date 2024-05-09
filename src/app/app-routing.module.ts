@@ -9,12 +9,13 @@ import { PassCodeComponent } from './pass-code/components/pass-code/pass-code.co
 import { ChangePasswordComponent } from './change-password/components/change-password/change-password.component';
 import { ConfirmEmailComponent } from './signup/components/confirm-email/confirm-email.component';
 // import { signinGuard } from './signin/guards/signin.guard';
-import { TestComponent } from './create-post/create-post/component/create-post.component';
+import { CreatePostComponent } from './create-post/create-post/component/create-post.component';
 import { PostMainComponent } from './post-main/component/post-main/post-main.component';
 import { PostLinkListComponent } from './post-link-list/component/post-link-list/post-link-list.component';
 import { EditorViewComponent } from './post-link/editor/component/editor-view/editor-view.component';
 import { ViewDetailPostComponent } from './view-detail-post/view-detail-post/component/view-detail-post.component';
 import { EditPostComponent } from './edit-post/edit-post/component/edit-post.component';
+import { CommunityMainComponent } from './community-main/component/community-main.component';
 
 const routes: Routes = [
   // { path: 'signin', component: SigninComponent, canActivate: mapToCanActivate([signinGuard])},
@@ -26,18 +27,21 @@ const routes: Routes = [
   { path: 'check-confirm-email-passcode', title: 'check-confirm-email-passcode', component: ConfirmEmailComponent },
   { path: '', title: 'home', component: HomeComponent, 
     children: [
-      {path: '', component: PostMainComponent,
+      { path: '', component: PostMainComponent,
       children: [
         {path: '', title: 'trxyzng', component: PostLinkListComponent},
         {path: 'edit-post/:post_id', component: EditPostComponent},
-        {path: 'editor-view', component: EditorViewComponent},
-        {path: 'post/:post_id', title: 'view-post', component: ViewDetailPostComponent},
-        {path: 'r/:community_name', title: 'view-community', component: TestComponent},
+        {path: 'post/:post_id', title: 'view-post', component: ViewDetailPostComponent}
+      ]
+      },
+      { path: '', component: CommunityMainComponent,
+      children: [
+        {path: 'community', title: 'trxyzng', component: PostLinkListComponent},
       ]
       }
     ]
   },
-  {path: 'create-post', component: TestComponent},
+  {path: 'create-post', component: CreatePostComponent},
   { path: 'error', title:'error', component: ErrorComponent },
   // {path: '', redirectTo: 'home', pathMatch: 'full'},
   { path: '**', component: ErrorComponent }

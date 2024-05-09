@@ -1,0 +1,35 @@
+
+<div id="header_container">
+    <div id="banner_container">
+        <img id="img_banner" [src]="banner_url" *ngIf="banner_url.length != 0">
+    </div>
+    <div id="button_container">
+        <p id="community_name">r/TRXYZNG</p>
+        <div id="button_block">
+            <button class="btn" id="btn_create_post"><img id="img_icon" src="../../../assets/icon/plus.png"><p>Create a post</p></button>
+            <button class="btn" id="btn_join">Join</button>
+        </div>
+    </div>
+    <img id="img_avatar" [src]="avatar_url">
+</div>
+<div id="sort_container" >
+    <button id="btn_sort" (click)="showSortOption()">{{sort_option}}<i class="pi pi-chevron-down"></i></button>
+    <div id="sort_option_block" *ngIf="isSortOptionShow">
+        <button (click)="selectSort('Hot')">Hot</button>
+        <button (click)="selectSort('New')">New</button>
+        <button (click)="selectSort('Top today')">Top today</button>
+        <button (click)="selectSort('Top this month')">Top this month</button>
+        <button (click)="selectSort('Top this year')">Top this year</button>
+        <button (click)="selectSort('Top all time')">Top all time</button>
+    </div>
+</div>
+
+
+<div id="community_block">
+    <div id="outlet">
+        <router-outlet>
+        </router-outlet>
+    </div>
+    <community-info></community-info>
+</div>
+
