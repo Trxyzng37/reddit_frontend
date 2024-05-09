@@ -17,7 +17,7 @@ import { Router } from '@angular/router';
   templateUrl: './create-post.component.html',
   styleUrl: './create-post.component.scss'
 })
-export class TestComponent {
+export class CreatePostComponent {
   constructor (
     private searchCommunitiesService: SearchCommunitiesService,
     private sendPostService: SendPostService,
@@ -179,7 +179,6 @@ export class TestComponent {
     this.isCommunitySearchDropdownOpen = false;
     this.community = community.name;
     this.avatar = community.avatar;
-    this.community = community.name;
     this.community_id = community.id;
     this.AllowSubmit();
     console.log("select community: " + this.community);
