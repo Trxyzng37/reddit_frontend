@@ -1,8 +1,9 @@
 :host {
     background-color: var(--primary_background_color_hover);
     border-radius: 5px;
-    width: 18vw;
+    width: 100%;
     height: auto;
+    display: block;
 }
 
 #block_container {
