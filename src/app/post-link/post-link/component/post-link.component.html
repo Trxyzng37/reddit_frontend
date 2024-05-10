@@ -8,11 +8,11 @@
 (inViewportAction)="onIntersection($event)" -->
     <nav id="community_bar">
         <div id="community_block">
-            <a id="community_link" href="/{{communityName}}">
+            <a id="community_link" href="/r/{{post.community_id}}">
                 <img id="community_icon" src="{{communityIcon}}" alt="community_icon"/>
             </a>
             <div id="link_date_block"> 
-                <span style="font-weight: bold;">r/{{communityName}}  </span>
+                <a href="/r/{{post.community_id}}" style="font-weight: bold;">r/{{communityName}}  </a>
                 <i style="font-weight: bold;">·</i>
                 <span style="font-size: 13px;"> {{shownDate}}</span>
             </div>
