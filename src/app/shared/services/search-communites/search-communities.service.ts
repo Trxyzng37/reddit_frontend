@@ -7,7 +7,7 @@ import { Communities } from '../../pojo/pojo/communities';
 @Injectable({
   providedIn: 'root'
 })
-export class SearchCommunitiesService {
+export class CommunityService {
 
   constructor(
     private getService: GetService
@@ -18,6 +18,13 @@ export class SearchCommunitiesService {
   public searchCommunities(name: string): Observable<Communities[]> {
     const parameter: string ="name=" + name; 
     const endpointWithParameter: string = this.endpoint + "?" + parameter;
+    const header: HttpHeaders = new HttpHeaders();
+    return this.getService.get(endpointWithParameter, header, false);
+  }
+
+  public getCommunityInfoById(id: string): Observable<Communities> {
+    const parameter: string ="id=" + id; 
+    const endpointWithParameter: string = "/get-community-info" + "?" + parameter;
     const header: HttpHeaders = new HttpHeaders();
     return this.getService.get(endpointWithParameter, header, false);
   }

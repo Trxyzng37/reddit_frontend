@@ -1,9 +1,26 @@
+<div *ngIf="isCommunityPage">
+    <div id="header_container">
+        <div id="banner_container">
+            <img id="img_banner" src="{{community.avatar}}" *ngIf="1">
+        </div>
+        <div id="button_container">
+            <p id="community_name">r/{{community.name}}</p>
+            <div id="button_block">
+                <button class="btn" id="btn_create_post"><img id="img_icon" src="../../../assets/icon/plus.png"><p>Create a post</p></button>
+                <button class="btn" id="btn_join" (click)="joinCOmmunity()">Join</button>
+            </div>
+        </div>
+        <img id="img_avatar" src="{{community.avatar}}">
+    </div>
+</div>
 
     <div id="outlet">
         <router-outlet>
         </router-outlet>
     </div>
 
-    <app-recent-visited-post></app-recent-visited-post>
-
+    <app-recent-visited-post *ngIf="!isCommunityPage"></app-recent-visited-post>
+    <div id="community_info_block">
+        <community-info *ngIf="isCommunityPage" [community_info]="community"></community-info>
+    </div>
 
