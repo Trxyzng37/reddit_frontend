@@ -39,7 +39,6 @@ import { EditEditorPostComponent } from './edit-post/edit-editor-post/component/
 import { EditImgPostComponent } from './edit-post/edit-img-post/component/edit-img-post.component';
 import { EditLinkPostComponent } from './edit-post/edit-link-post/component/edit-link-post.component';
 import { CreateCommunityComponent } from './create-community/component/create-community.component';
-import { CommunityMainComponent } from './community-main/component/community-main.component';
 import { CommunityInfoComponent } from './community-info/community-info/community-info.component';
 
 @NgModule({
@@ -73,7 +72,6 @@ import { CommunityInfoComponent } from './community-info/community-info/communit
     EditPostComponent,
     EditLinkPostComponent,
     CreateCommunityComponent,
-    CommunityMainComponent,
     CommunityInfoComponent
   ],
   imports: [

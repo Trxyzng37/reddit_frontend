@@ -32,7 +32,9 @@ export class CreateCommunityComponent {
   public characterCount: number = 0;
   public description: string = "";
   public avatar_url: string = "../../../assets/icon/dashed_circle.png";
+  public banner_url: string = "../../../assets/banner/default_banner.jpg";
   public allowSubmit: boolean = false;
+  public isNameTaken: boolean = false;
 
   ngOnInit() {
     this.createCommunityForm.get('name').valueChanges.subscribe( () => {
@@ -42,7 +44,9 @@ export class CreateCommunityComponent {
   }
 
   AllowSubmit() {
-    this.allowSubmit = this.name_status == "VALID" && this.description.length >= 0 && this.avatar_url != "../../../assets/icon/dashed_circle.png";
+    this.allowSubmit = this.name_status == "VALID" && this.description.length >= 0 && 
+                       this.avatar_url != "../../../assets/icon/dashed_circle.png" && 
+                       this.banner_url != "../../../assets/banner/default_banner.jpg";
     console.log(this.allowSubmit)
   }
 
@@ -50,7 +54,11 @@ export class CreateCommunityComponent {
     this.closeFormEvent.emit(false);
   }
 
-  inputTitle(event: any) {
+  onInputName() {
+    this.isNameTaken = false;
+  }
+
+  onInputDescription(event: any) {
     const textareaEle: any = event.target;
     textareaEle.value = textareaEle.value.replace(/(\r\n|\n|\r)/gm, "");
     textareaEle.style.height = 'auto';
@@ -80,17 +88,36 @@ export class CreateCommunityComponent {
     })
   }
 
+  upLoadBanner(event: any) {
+    const files: FileList = event.target.files;
+    const file = files[0];
+    this.onBannerUpload(file);
+  }
+
+  onBannerUpload(file: File) {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.addEventListener("loadend", () => {
+      const data = reader.result as string;
+      this.banner_url = data;
+      this.AllowSubmit();
+    })
+  }
+
   submit() {
     const uid = this.storageService.getItem("uid") === "" ? 0 :  Number.parseInt(this.storageService.getItem("uid"));
-    this.createCommunityService.createCommunity(uid, this.createCommunityForm.value.name, this.description, this.avatar_url).subscribe({
+    this.createCommunityService.createCommunity(uid, this.createCommunityForm.value.name, this.description, this.avatar_url, this.banner_url).subscribe({
       next: (response: CreateCommunityResponse) => {
+        this.isNameTaken = false;
         Swal.fire('Create community successfully', '', 'success').then((result) => {
           if (result.isConfirmed)
-            this.route.navigate(["/community/"+response.community_id]);
+            this.route.navigate(["/r/"+response.community_id]);
         })
       },
       error: (e: HttpErrorResponse) => {
-        console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
+        if(e.error.error_code == 1) {
+          this.isNameTaken = true;
+        }
       }
     })
   }
