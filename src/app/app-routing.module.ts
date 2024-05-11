@@ -15,7 +15,6 @@ import { PostLinkListComponent } from './post-link-list/component/post-link-list
 import { EditorViewComponent } from './post-link/editor/component/editor-view/editor-view.component';
 import { ViewDetailPostComponent } from './view-detail-post/view-detail-post/component/view-detail-post.component';
 import { EditPostComponent } from './edit-post/edit-post/component/edit-post.component';
-import { CommunityMainComponent } from './community-main/component/community-main.component';
 
 const routes: Routes = [
   // { path: 'signin', component: SigninComponent, canActivate: mapToCanActivate([signinGuard])},
@@ -29,16 +28,18 @@ const routes: Routes = [
     children: [
       { path: '', component: PostMainComponent,
       children: [
-        {path: '', title: 'trxyzng', component: PostLinkListComponent},
+        {path: 'home', title: 'home', component: PostLinkListComponent},
+        {path: 'popular', title: 'popular', component: PostLinkListComponent},
+        {path: 'r/:community_id', title: 'trxyzng', component: PostLinkListComponent},
         {path: 'edit-post/:post_id', component: EditPostComponent},
         {path: 'post/:post_id', title: 'view-post', component: ViewDetailPostComponent}
       ]
       },
-      { path: '', component: CommunityMainComponent,
-      children: [
-        {path: 'community', title: 'trxyzng', component: PostLinkListComponent},
-      ]
-      }
+      // { path: '', component: CommunityMainComponent,
+      // children: [
+      //   {path: 'r/:community_id', title: 'trxyzng', component: PostLinkListComponent},
+      // ]
+      // }
     ]
   },
   {path: 'create-post', component: CreatePostComponent},
