@@ -1,13 +1,14 @@
 <div *ngIf="isCommunityPage">
     <div id="header_container">
         <div id="banner_container">
-            <img id="img_banner" src="{{community.avatar}}" *ngIf="1">
+            <img id="img_banner" src="{{community.banner}}" *ngIf="1">
         </div>
         <div id="button_container">
             <p id="community_name">r/{{community.name}}</p>
             <div id="button_block">
                 <button class="btn" id="btn_create_post"><img id="img_icon" src="../../../assets/icon/plus.png"><p>Create a post</p></button>
-                <button class="btn" id="btn_join" (click)="joinCOmmunity()">Join</button>
+                <button class="btn" id="btn_join" [ngStyle]="{'background-color': isJoinCommunity ? 'green' : 'white'}" (click)="joinCommunity()">{{joinText}}</button>
+                <button class="btn" *ngIf="isOwner" (click)="editCommunity()">Edit community</button>
             </div>
         </div>
         <img id="img_avatar" src="{{community.avatar}}">
