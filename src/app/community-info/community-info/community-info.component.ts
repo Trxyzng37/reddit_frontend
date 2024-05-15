@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Communities } from 'src/app/shared/pojo/pojo/communities';
 import { UserInfoService } from 'src/app/shared/services/user-info/user-info.service';
 import { UserProfile } from 'src/app/shared/pojo/pojo/user-profile';
-import { CommunityService } from 'src/app/shared/services/search-communites/search-communities.service';
+import { CommunityService } from 'src/app/shared/services/search-communites/community.service';
 import { StorageService } from 'src/app/shared/storage/storage.service';
 import { JoinCommunityResponse } from 'src/app/shared/services/search-communites/pojo/join-community-response';
 import { GetPostService } from 'src/app/view-detail-post/view-detail-post/service/get-post/get-post.service';
@@ -27,10 +27,11 @@ export class CommunityInfoComponent {
 
   public userInfo: UserProfile = new UserProfile(0, "", "", "", 0, "");
   public isJoinCommunity: boolean = false;
+  public isCommunityPage: boolean = false;
   public joinText: string = this.isJoinCommunity ? 'Leave' : 'Join';
 
   ngOnInit() {
-
+    this.isCommunityPage = window.location.href.includes("/r/");
   }
 
   ngOnChanges() {
