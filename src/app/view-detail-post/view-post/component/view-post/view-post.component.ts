@@ -13,7 +13,7 @@
 import Swal from 'sweetalert2';
 import { DeletePostService } from 'src/app/edit-post/service/delete-post/delete-post.service';
 import { DeletePostResponse } from 'src/app/edit-post/pojo/delete-post-response';
-import { CommunityService } from 'src/app/shared/services/search-communites/search-communities.service';
+import { CommunityService } from 'src/app/shared/services/search-communites/community.service';
 import { JoinCommunityResponse } from 'src/app/shared/services/search-communites/pojo/join-community-response';
   
   @Component({

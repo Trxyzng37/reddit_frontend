@@ -7,7 +7,7 @@ import { CreateCommunityResponse } from 'src/app/create-community/pojo/create-co
 import { HttpErrorResponse } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { CommunityService } from 'src/app/shared/services/search-communites/search-communities.service';
+import { CommunityService } from 'src/app/shared/services/search-communites/community.service';
 import { Communities } from 'src/app/shared/pojo/pojo/communities';
 import { EditCommunityService } from '../service/edit-community.service';
 import { EditCommunityResponse } from '../pojo/edit-community-response';

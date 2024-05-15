@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { GetPostResponse } from 'src/app/post-link-list/pojo/get-post-response';
 import { Communities } from 'src/app/shared/pojo/pojo/communities';
 import { JoinCommunityResponse } from 'src/app/shared/services/search-communites/pojo/join-community-response';
-import { CommunityService } from 'src/app/shared/services/search-communites/search-communities.service';
+import { CommunityService } from 'src/app/shared/services/search-communites/community.service';
 import { StorageService } from 'src/app/shared/storage/storage.service';
 import { GetPostService } from 'src/app/view-detail-post/view-detail-post/service/get-post/get-post.service';
 
