@@ -11,6 +11,10 @@ import { VotePostResponse } from '../service/vote-post/pojo/vote-post-response';
 import { DateTimeService } from 'src/app/shared/services/date-time/date-time.service';
 import { GetCommentsService } from 'src/app/view-detail-post/view-detail-post/service/get-comments/get-comments.service';
 import { Comment } from 'src/app/view-detail-post/view-detail-post/pojo/comment';
+import { CommunityService } from 'src/app/shared/services/search-communites/search-communities.service';
+import { JoinCommunityResponse } from 'src/app/shared/services/search-communites/pojo/join-community-response';
+import { CheckShowPostService } from 'src/app/shared/services/check-show-post/check-show-post.service';
+import { DefaultResponse } from 'src/app/shared/pojo/default-response';
 
 @Component({
   selector: 'app-post-link',
@@ -25,8 +29,11 @@ export class PostLinkComponent {
     private dateTimeService: DateTimeService,
     private checkVotePostService: CheckVotePostService,
     private getCommentService: GetCommentsService,
+    private communityService: CommunityService,
+    private showPostService: CheckShowPostService
   ) {}
 
+  @Input() post!: GetPostResponse;
   @Input() post_id: number = 0;
   @Input() type: string = "";
   @Input() communityName: string = "";
@@ -38,14 +45,19 @@ export class PostLinkComponent {
   @Input() communityIcon: string = "";
   @Input() index: number = 0;
   @Input() arr_length: number = 0;
+  @Input() joinCommunityEventCount: number = 0;
 
   @Output() event = new EventEmitter<GetPostResponse>();
+  @Output() joinCommunityEvent = new EventEmitter<boolean>();
     
-  public images!: GalleryItem[];
   public voteType: string = 'none'; //none upvote downvote
   public previousVote: number = this.vote;
   public shownDate: string = "";
   public comment_count: number = 0;
+  public isJoinCommunity: boolean = false;
+  public isHomePage: boolean = false;
+  public isCommunityPage: boolean = false;
+  public joinText: string = this.isJoinCommunity ? 'Leave' : 'Join';
 
   public  upvote = "../../../../../assets/icon/upvote.png"
   public  upvote_fill = "../../../../../assets/icon/upvote-fill.png"
@@ -53,6 +65,12 @@ export class PostLinkComponent {
   public  downvote_fill = "../../../../../assets/icon/downvote-fill.png"
 
   ngOnInit() {
+    const found = window.location.href.match('/home');
+    if(found != null) 
+      this.isHomePage = true;
+    const found1 = window.location.href.match('/r/');
+    if(found1 != null) 
+      this.isCommunityPage = true;
     this.shownDate = this.dateTimeService.getTimeByCompareCreatedAtAndCurrentDate(this.created_at);
     const uid: number = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
     this.checkVotePostService.checkVotePost(this.post_id, uid).subscribe({
@@ -71,10 +89,30 @@ export class PostLinkComponent {
         console.log("HttpServletResponse: " + e.error.message + "\n" + "Error: " + e.error);
       }
     })
+    this.communityService.checkJoinCommunityStatus(uid, this.post.community_id).subscribe({
+      next: (response: JoinCommunityResponse) => {
+        this.isJoinCommunity = response.join_community == 0 ? false : true;
+        this.joinText = this.isJoinCommunity ? 'Leave' : 'Join';
+      }
+    })
   }  
 
+  ngOnChanges() {
+    const uid: number = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
+    this.communityService.checkJoinCommunityStatus(uid, this.post.community_id).subscribe({
+      next: (response: JoinCommunityResponse) => {
+        this.isJoinCommunity = response.join_community == 0 ? false : true;
+        this.joinText = this.isJoinCommunity ? 'Leave' : 'Join';
+      }
+    })
+  }
+
   on_click() {
-    this.router.navigate(["/post/" + this.post_id]);
+    window.location.href = "/post/" + this.post_id;
+  }
+
+  stopPropagation(event: Event) {
+    event.stopPropagation();
   }
 
   // preventClick(event: Event) {
@@ -95,22 +133,31 @@ export class PostLinkComponent {
   //     console.log("profile meneu close")
   // }
 
+  showCount: number = 0;
   onIntersection({ target, visible }: { target: Element; visible: boolean }) {
-    // if (visible) {
-    //   console.log("Post index: "+this.index);
-    //   console.log("LENGTH: "+this.arr_length);
-    //   console.log(this.index===this.arr_length-1)
-    //   if(this.index == (this.arr_length-1)) {
-    //     if(confirm("END OF PAGE. Want to add new post")) {
-    //       // const o: GetPostResponse = new GetPostResponse(this.post_id+1, "new page"+1, "test"+1, this.created_at, this.vote+1, this.communityIcon);
-    //       console.log("Add new post: ");
-    //       // this.addNewPost(o);
-    //     }
-    //     else {
-    //       console.log("No add post")
-    //     }
-    //   }
-    // }
+    if (visible) {
+      console.log("Post index: "+this.index);
+      this.showCount++;
+      if(this.showCount == 1) {
+        const uid: number = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
+        this.showPostService.setShowPost(uid, this.post_id, 1).subscribe({})
+      }
+
+      // console.log("count: "+this.count)
+      // this.count++;
+      // console.log("LENGTH: "+this.arr_length);
+      // console.log(this.index===this.arr_length-1)
+      // if(this.index == (this.arr_length-1)) {
+      //   if(confirm("END OF PAGE. Want to add new post")) {
+      //     // const o: GetPostResponse = new GetPostResponse(this.post_id+1, "new page"+1, "test"+1, this.created_at, this.vote+1, this.communityIcon);
+      //     console.log("Add new post: ");
+      //     // this.addNewPost(o);
+      //   }
+      //   else {
+      //     console.log("No add post")
+      //   }
+      // }
+    }
   }
 
   addNewPost(o: GetPostResponse) {
@@ -165,6 +212,21 @@ export class PostLinkComponent {
         this.voteType = 'none';
         console.log("Error vote post");
         console.log("vote when error: "+this.vote);
+      }
+    })
+  }
+
+  joinCommunity(event: Event) {
+    event.stopPropagation();
+    const uid: number = this.storageService.getItem("uid") == "" ? 0 :  Number.parseInt(this.storageService.getItem("uid"));
+    this.communityService.joinCommunity(uid, this.post.community_id, this.isJoinCommunity == false ? 1 : 0).subscribe({
+      next: (response: JoinCommunityResponse) => {
+        this.isJoinCommunity = response.join_community == 0 ? false : true;
+        this.joinText = this.isJoinCommunity ? 'Leave' : 'Join';
+        this.joinCommunityEvent.emit(this.isJoinCommunity);
+      },
+      error: (e: HttpErrorResponse) => {
+        console.log("error join community");
       }
     })
   }

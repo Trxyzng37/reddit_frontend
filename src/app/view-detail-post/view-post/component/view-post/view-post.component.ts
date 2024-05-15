@@ -13,6 +13,8 @@
 import Swal from 'sweetalert2';
 import { DeletePostService } from 'src/app/edit-post/service/delete-post/delete-post.service';
 import { DeletePostResponse } from 'src/app/edit-post/pojo/delete-post-response';
+import { CommunityService } from 'src/app/shared/services/search-communites/search-communities.service';
+import { JoinCommunityResponse } from 'src/app/shared/services/search-communites/pojo/join-community-response';
   
   @Component({
     selector: 'app-post',
@@ -27,9 +29,11 @@ import { DeletePostResponse } from 'src/app/edit-post/pojo/delete-post-response'
       private dateTimeService: DateTimeService,
       private checkVotePostService: CheckVotePostService,
       private deletePostService: DeletePostService,
-      private route: Router
+      private route: Router,
+      private communityService: CommunityService
     ) {}
   
+    @Input() post!: GetPostResponse;
     @Input() post_id: number = 0;
     @Input() type: string = "";
     @Input() communityName: string = "";
@@ -50,6 +54,9 @@ import { DeletePostResponse } from 'src/app/edit-post/pojo/delete-post-response'
     public shownDate: string = "";
     public isOptionMenuOpen: boolean = false;
     public isAuthor: boolean = false;
+    public isHomePage: boolean = false;
+    public isJoinCommunity: boolean = false;
+    public joinText: string = this.isJoinCommunity ? 'Leave' : 'Join';
 
     public  upvote = "../../../../../assets/icon/upvote.png"
     public  upvote_fill = "../../../../../assets/icon/upvote-fill.png"
@@ -60,8 +67,21 @@ import { DeletePostResponse } from 'src/app/edit-post/pojo/delete-post-response'
     ngOnInit() {
       const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
       this.isAuthor = uid == this.uid;
+      const found = window.location.href.match('/home');
+      if(found != null) 
+        this.isHomePage = true;
       this.shownDate = this.dateTimeService.getTimeByCompareCreatedAtAndCurrentDate(this.created_at);
-      const username: string = this.storageService.getItem("username");
+    }  
+
+    ngOnChanges() {
+      this.shownDate = this.dateTimeService.getTimeByCompareCreatedAtAndCurrentDate(this.created_at);
+      const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
+      this.communityService.checkJoinCommunityStatus(uid, this.post.community_id).subscribe({
+        next: (response: JoinCommunityResponse) => {
+          this.isJoinCommunity = response.join_community == 0 ? false : true;
+          this.joinText = this.isJoinCommunity ? 'Leave' : 'Join';
+        }
+      })
       this.checkVotePostService.checkVotePost(this.post_id, uid).subscribe({
         next: (response: CheckVotePostResponse) => {
           this.voteType  = response.vote_type;
@@ -70,7 +90,7 @@ import { DeletePostResponse } from 'src/app/edit-post/pojo/delete-post-response'
           console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
         }
       })
-    }  
+    }
   
     preventClick(event: Event) {
       event.stopPropagation();
@@ -164,6 +184,20 @@ import { DeletePostResponse } from 'src/app/edit-post/pojo/delete-post-response'
               Swal.fire('Error delete post. Please try again', '', 'error')
             }
           })
+        }
+      })
+    }
+
+    joinCommunity(event: Event) {
+      event.stopPropagation();
+      const uid: number = this.storageService.getItem("uid") == "" ? 0 :  Number.parseInt(this.storageService.getItem("uid"));
+      this.communityService.joinCommunity(uid, this.post.community_id, this.isJoinCommunity == false ? 1 : 0).subscribe({
+        next: (response: JoinCommunityResponse) => {
+          this.isJoinCommunity = response.join_community == 0 ? false : true;
+          this.joinText = this.isJoinCommunity ? 'Leave' : 'Join';
+        },
+        error: (e: HttpErrorResponse) => {
+          console.log("error join community");
         }
       })
     }

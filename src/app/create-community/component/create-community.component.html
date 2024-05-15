@@ -1,5 +1,5 @@
 <div id="container">
-    <form [formGroup]="createCommunityForm" (ngSubmit)="submit()">
+    <form [formGroup]="createCommunityForm">
         <div id="header">
             <img id="header_icon" src="../../../assets/icon/create_community_header_icon.png">
             <h2>Create community</h2>
@@ -33,7 +33,7 @@
         </div>
         <div id="button_container">
             <button id="btn_cancel" type="button" (click)="closeForm()">Cancel</button>
-            <button id="btn_submit" type="submit" [disabled]="!allowSubmit">
+            <button id="btn_submit" type="submit" [disabled]="!allowSubmit" (click)="submit()">
                 <p *ngIf="name_status == 'INVALID'">Create community</p>
                 <p *ngIf="name_status == 'VALID'">Create r/{{community_name.value}}</p>
             </button>

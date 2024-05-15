@@ -40,6 +40,7 @@ import { EditImgPostComponent } from './edit-post/edit-img-post/component/edit-i
 import { EditLinkPostComponent } from './edit-post/edit-link-post/component/edit-link-post.component';
 import { CreateCommunityComponent } from './create-community/component/create-community.component';
 import { CommunityInfoComponent } from './community-info/community-info/community-info.component';
+import { EditCommunityComponent } from './edit-community/component/edit-community.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,8 @@ import { CommunityInfoComponent } from './community-info/community-info/communit
     EditPostComponent,
     EditLinkPostComponent,
     CreateCommunityComponent,
-    CommunityInfoComponent
+    CommunityInfoComponent,
+    EditCommunityComponent
   ],
   imports: [
     BrowserModule,

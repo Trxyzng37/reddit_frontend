@@ -1,23 +1,29 @@
 <hr>
 <div id="post_block" 
-    (click)="on_click()"                 
+    (click)="on_click()"      
+    (click)="on_click()"
+    inViewport
+    [inViewportOptions]="{ threshold: [1] }"
+    (inViewportAction)="onIntersection($event)"           
 >
-<!-- (click)="on_click()" -->
-<!-- inViewport
-[inViewportOptions]="{ threshold: [0] }"
-(inViewportAction)="onIntersection($event)" -->
+
     <nav id="community_bar">
         <div id="community_block">
-            <a id="community_link" href="/r/{{post.community_id}}">
+            <a id="community_link" href="/r/{{post.community_id}}" (click)="stopPropagation($event)">
                 <img id="community_icon" src="{{communityIcon}}" alt="community_icon"/>
             </a>
             <div id="link_date_block"> 
-                <a href="/r/{{post.community_id}}" style="font-weight: bold;">r/{{communityName}}  </a>
+                <a href="/r/{{post.community_id}}" style="font-weight: bold;"(click)="stopPropagation($event)">r/{{communityName}}  </a>
                 <i style="font-weight: bold;">·</i>
                 <span style="font-size: 13px;"> {{shownDate}}</span>
+                <p>{{index}}</p>
             </div>
         </div>
-        <button id="btn_option" type="button" (click)="openOptionMenu($event)"><i class="pi pi-ellipsis-h"></i></button>
+        
+        <div id="option_block">
+            <button class="btn" id="btn_join" *ngIf="!isHomePage && !isCommunityPage" (click)="joinCommunity($event)">{{joinText}}</button>
+            <button id="btn_option" type="button" (click)="openOptionMenu($event)"><i class="pi pi-ellipsis-h"></i></button>
+        </div>
         <div id="dropdown_option_block" [ngStyle]="{'display': isOptionMenuOpen ? 'block':'none'}">
             <button><i class="pi pi-bookmark"></i><p>Save</p></button>
             <button><i class="pi pi-eye-slash"></i><p>Hide</p></button>
