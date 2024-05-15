@@ -15,6 +15,8 @@ import { PostLinkListComponent } from './post-link-list/component/post-link-list
 import { EditorViewComponent } from './post-link/editor/component/editor-view/editor-view.component';
 import { ViewDetailPostComponent } from './view-detail-post/view-detail-post/component/view-detail-post.component';
 import { EditPostComponent } from './edit-post/edit-post/component/edit-post.component';
+import { CreateCommunityComponent } from './create-community/component/create-community.component';
+import { EditCommunityComponent } from './edit-community/component/edit-community.component';
 
 const routes: Routes = [
   // { path: 'signin', component: SigninComponent, canActivate: mapToCanActivate([signinGuard])},
@@ -34,15 +36,11 @@ const routes: Routes = [
         {path: 'edit-post/:post_id', component: EditPostComponent},
         {path: 'post/:post_id', title: 'view-post', component: ViewDetailPostComponent}
       ]
-      },
-      // { path: '', component: CommunityMainComponent,
-      // children: [
-      //   {path: 'r/:community_id', title: 'trxyzng', component: PostLinkListComponent},
-      // ]
-      // }
+      }
     ]
   },
   {path: 'create-post', component: CreatePostComponent},
+  {path: 'edit-community/:community_id', component: EditCommunityComponent},
   { path: 'error', title:'error', component: ErrorComponent },
   // {path: '', redirectTo: 'home', pathMatch: 'full'},
   { path: '**', component: ErrorComponent }

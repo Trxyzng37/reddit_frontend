@@ -1,6 +1,48 @@
 <!-- <div [innerHTML]="trustedHtml"></div> -->
 
+<div id="sort_container" *ngIf="isHomePage">
+    <button id="btn_sort" (click)="showSortOption()">{{sort_option}}<i class="pi pi-chevron-down"></i></button>
+    <div id="sort_option_block" *ngIf="isSortOptionShow">
+        <button (click)="selectSort('Hot')">Hot</button>
+        <button (click)="selectSort('New')">New</button>
+        <button (click)="selectSort('Top today')">Top today</button>
+        <button (click)="selectSort('Top this week')">Top this week</button>
+        <button (click)="selectSort('Top this month')">Top this month</button>
+        <button (click)="selectSort('Top this year')">Top this year</button>
+        <button (click)="selectSort('Top all time')">Top all time</button>
+    </div>
+</div>
+
+<div id="sort_container" *ngIf="isPopularPage">
+    <button id="btn_sort" (click)="showSortOption()">{{sort_option}}<i class="pi pi-chevron-down"></i></button>
+    <div id="sort_option_block" *ngIf="isSortOptionShow">
+        <button (click)="selectSort('Hot')">Hot</button>
+        <button (click)="selectSort('New')">New</button>
+        <button (click)="selectSort('Top today')">Top today</button>
+        <button (click)="selectSort('Top this week')">Top this week</button>
+        <button (click)="selectSort('Top this month')">Top this month</button>
+        <button (click)="selectSort('Top this year')">Top this year</button>
+        <button (click)="selectSort('Top all time')">Top all time</button>
+    </div>
+</div>
+
+<div id="sort_container" *ngIf="isCommunityPage">
+    <button id="btn_sort" (click)="showSortOption()">{{sort_option}}<i class="pi pi-chevron-down"></i></button>
+    <div id="sort_option_block" *ngIf="isSortOptionShow">
+        <button (click)="selectSort('Hot')">Hot</button>
+        <button (click)="selectSort('New')">New</button>
+        <button (click)="selectSort('Top today')">Top today</button>
+        <button (click)="selectSort('Top this week')">Top this week</button>
+        <button (click)="selectSort('Top this month')">Top this month</button>
+        <button (click)="selectSort('Top this year')">Top this year</button>
+        <button (click)="selectSort('Top all time')">Top all time</button>
+    </div>
+</div>
+
+
+
 <app-post-link *ngFor="let post of post_result; let index = index;" 
+                    [post]="post"
                     [post_id]="post.post_id"
                     [type]="post.type"
                     [communityName]="post.community_name"
@@ -13,5 +55,9 @@
                     [index]="index"
                     [arr_length]="post_result.length"
                     (event)="addPost($event)"
+                    (joinCommunityEvent)="joinCommunityEvent($event)"
+                    [joinCommunityEventCount]="joinCommunityEventCount"
 >
 </app-post-link>
+
+<p id="empty_block" *ngIf="post_result.length == 0">Look like it empty</p>

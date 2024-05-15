@@ -4,17 +4,20 @@
 >
     <nav id="community_bar">
         <div id="community_block">
-            <a id="community_link" href="/{{communityName}}">
+            <a id="community_link" href="r/{{post.community_id}}">
                 <img id="community_icon" src="{{communityIcon}}" alt="community_icon"/>
             </a>
             <div id="link_date_block"> 
-                <span id="community_name" style="font-weight: bold;" (click)="navigateToCommunity()">r/{{communityName}}  </span>
+                <a id="community_name" style="font-weight: bold;" href="r/{{post.community_id}}">r/{{communityName}}  </a>
                 <i style="font-weight: bold;">·</i>
                 <span style="font-size: 13px;"> {{shownDate}}</span>
             </div>
             <a id="username" href="">{{username}}</a>
         </div>
-        <button id="btn_option" type="button" (click)="openOptionMenu($event)"><i class="pi pi-ellipsis-h"></i></button>
+        <div id="option_block">
+            <!-- <button class="btn" id="btn_join" id="btn_join" *ngIf="!isHomePage" (click)="joinCommunity($event)">{{joinText}}</button> -->
+            <button id="btn_option" type="button" (click)="openOptionMenu($event)"><i class="pi pi-ellipsis-h"></i></button>
+        </div>
         <div id="dropdown_option_block" [ngStyle]="{'display': isOptionMenuOpen ? 'block':'none'}">
             <button id="btn_edit" *ngIf="isAuthor" (click)="editPost($event)"><i class="pi pi-pencil"></i><p>Edit</p></button>
             <button *ngIf="isAuthor" (click)="deletePost()"><i class="pi pi-trash"></i><p>Delete</p></button>

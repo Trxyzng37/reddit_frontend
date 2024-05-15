@@ -1,51 +1,29 @@
-<p>{{community_info.name}}</p>
-<p>{{community_info.description}}</p>
-<div id="block_container">
-    <div id="member_block">
-        <p>{{community_info.subscriber_count}}</p>
-        <p>Members</p>
+<div class="info_block">
+    <div id="join_block">
+        <b id="txt_community_name">r/{{community_info.name}}</b>
+        <button id="btn_join" id="btn_join" id="btn_join" (click)="joinCommunity($event)">{{joinText}}</button>
+    </div>
+    <b id="txt_community_name">{{community_info.name}}</b>
+    <p>{{community_info.description}}</p>
+    <div id="block_container">
+        <div id="member_block">
+            <b>{{community_info.subscriber_count}}</b>
+            <pre> Members</pre>
+        </div>
     </div>
 </div>
 
-<p>TEST</p>
-<p>TEST</p>
-<p>TEST</p>
-<p>TEST</p>
-<p>TEST</p>
-<p>TEST</p>
-<p>TEST</p>
-<p>TEST</p>
-<p>TEST</p>
-<p>TEST</p>
-<p>TEST</p>
-<p>TEST</p>
-<p>TEST</p>
-<p>TEST</p>
-<!-- <p>TEST</p>
-<p>TEST</p>
-<p>TEST</p>
-<p>TEST</p>
-<p>TEST</p>
-<p>TEST</p>
-<p>TEST</p>
-<p>TEST</p>
-<p>TEST</p>
-<p>TEST</p>
-<p>TEST</p>
-<p>TEST</p>
-<p>TEST</p>
-<p>TEST</p>
-<p>TEST</p>
-<p>TEST</p>
-<p>TEST</p>
-<p>TEST</p>
-<p>TEST</p>
-<p>TEST</p>
-<p>TEST</p>
-<p>TEST</p>
-<p>TEST</p>
-<p>TEST</p>
-<p>TEST</p>
-<p>TEST</p>
-<p>TEST</p> -->
+
+<hr style="border: 1px solid black;">
+
+<div class="info_block">
+    <b>OWNER</b>
+    <div id="owner_block">
+        <img id="avatar" src="{{userInfo.avatar}}">
+        <a href="/u/{{userInfo.uid}}">u/{{userInfo.username}}</a>
+    </div>
+</div>
+
+
+
 

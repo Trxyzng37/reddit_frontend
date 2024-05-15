@@ -30,7 +30,7 @@ export class ViewDetailPostComponent {
   ) {}
 
   public postId: number = 0;
-  public post!: GetPostResponse;
+  public post: GetPostResponse = new GetPostResponse(0, "", 0, "", "", 0, "", "", "", "", "", 0);
   public shownDate: string = "";
   public commentResults: Comment[] = [];
   public content: string = "";
@@ -61,7 +61,7 @@ export class ViewDetailPostComponent {
     plugins: 'link lists codesample image autoresize', 
     toolbar: "bold italic underline strikethrough forecolor subscript superscript removeformat numlist bullist link blockquote codesample image",
     toolbar_mode: 'wrap',
-    placeholder: '(Optional)',
+    placeholder: 'Enter your comment',
     automatic_uploads: true,
     file_picker_types: 'image',
     images_file_types: 'jpg,svg,webp,png,jpeg',
@@ -161,14 +161,15 @@ export class ViewDetailPostComponent {
     else {
       this.createCommentService.createComment(this.postId, 0, this.content, 0).subscribe({
         next: (response: CreateCommentResponse) => {
-          Swal.fire({
-            titleText: "Create comment successfully",
-            icon: "success",
-            heightAuto: true,
-            showConfirmButton: true,
-            focusCancel: false,
-            focusConfirm: false
-          })
+          // Swal.fire({
+          //   titleText: "Create comment successfully",
+          //   icon: "success",
+          //   heightAuto: true,
+          //   showConfirmButton: true,
+          //   focusCancel: false,
+          //   focusConfirm: false
+          // })
+          tinymce.activeEditor?.setContent("");
           this.reloadComment(event);
         },
         error: (e: HttpErrorResponse) => {

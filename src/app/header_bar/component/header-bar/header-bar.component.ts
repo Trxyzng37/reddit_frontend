@@ -2,7 +2,7 @@ import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { StorageService } from 'src/app/shared/storage/storage.service';
 import { Communities } from '../../../shared/pojo/pojo/communities';
-import { SearchCommunitiesService } from '../../../shared/services/search-communites/search-communities.service';
+import { CommunityService } from '../../../shared/services/search-communites/search-communities.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserProfile } from '../../../shared/pojo/pojo/user-profile';
 import { SearchUserProfileService } from '../../../shared/services/search-user-profile/search-user-profile.service';
@@ -17,7 +17,7 @@ import { Router } from '@angular/router';
 export class HeaderBarComponent {
   public constructor(
     private storageService: StorageService,
-    private searchCommunitiesService: SearchCommunitiesService,
+    private searchCommunitiesService: CommunityService,
     private searchUserProfileService: SearchUserProfileService,
     private element: ElementRef,
     private router: Router

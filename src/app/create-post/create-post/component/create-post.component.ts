@@ -1,6 +1,6 @@
 import { Component, HostListener, Input } from '@angular/core';
 import { Img } from '../../pojo/img';
-import { SearchCommunitiesService } from '../../../shared/services/search-communites/search-communities.service';
+import { CommunityService } from '../../../shared/services/search-communites/search-communities.service';
 import { Communities } from '../../../shared/pojo/pojo/communities';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CreatePostRequest } from '../../pojo/create-post-request';
@@ -19,7 +19,7 @@ import { Router } from '@angular/router';
 })
 export class CreatePostComponent {
   constructor (
-    private searchCommunitiesService: SearchCommunitiesService,
+    private searchCommunitiesService: CommunityService,
     private sendPostService: SendPostService,
     private storageService: StorageService,
     private dateTimeService: DateTimeService,

@@ -8,6 +8,8 @@ import { CreateCommunityResponse } from '../pojo/create-community-response';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
+import { CommunityService } from 'src/app/shared/services/search-communites/search-communities.service';
+import { JoinCommunityResponse } from 'src/app/shared/services/search-communites/pojo/join-community-response';
 
 @Component({
   selector: 'create-community',
@@ -19,6 +21,7 @@ export class CreateCommunityComponent {
   public constructor(
     private storageService: StorageService,
     private createCommunityService: CreateCommunityService,
+    private communityService: CommunityService,
     private route: Router
   ) {}
 
@@ -111,7 +114,15 @@ export class CreateCommunityComponent {
         this.isNameTaken = false;
         Swal.fire('Create community successfully', '', 'success').then((result) => {
           if (result.isConfirmed)
-            this.route.navigate(["/r/"+response.community_id]);
+            this.closeForm();
+            this.communityService.joinCommunity(uid, response.community_id, 1).subscribe({
+              next: (res: JoinCommunityResponse) => {
+                setTimeout(() => {
+                  window.location.href = "/r/"+response.community_id;
+                }, 100)
+              }
+            })
+            
         })
       },
       error: (e: HttpErrorResponse) => {
