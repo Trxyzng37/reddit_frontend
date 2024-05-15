@@ -8,7 +8,7 @@ import { CreateCommunityResponse } from '../pojo/create-community-response';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
-import { CommunityService } from 'src/app/shared/services/search-communites/search-communities.service';
+import { CommunityService } from 'src/app/shared/services/search-communites/community.service';
 import { JoinCommunityResponse } from 'src/app/shared/services/search-communites/pojo/join-community-response';
 
 @Component({

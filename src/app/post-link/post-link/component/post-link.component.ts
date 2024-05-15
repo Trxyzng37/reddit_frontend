@@ -11,7 +11,7 @@ import { VotePostResponse } from '../service/vote-post/pojo/vote-post-response';
 import { DateTimeService } from 'src/app/shared/services/date-time/date-time.service';
 import { GetCommentsService } from 'src/app/view-detail-post/view-detail-post/service/get-comments/get-comments.service';
 import { Comment } from 'src/app/view-detail-post/view-detail-post/pojo/comment';
-import { CommunityService } from 'src/app/shared/services/search-communites/search-communities.service';
+import { CommunityService } from 'src/app/shared/services/search-communites/community.service';
 import { JoinCommunityResponse } from 'src/app/shared/services/search-communites/pojo/join-community-response';
 import { CheckShowPostService } from 'src/app/shared/services/check-show-post/check-show-post.service';
 import { DefaultResponse } from 'src/app/shared/pojo/default-response';
