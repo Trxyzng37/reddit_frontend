@@ -89,4 +89,8 @@ export class PostMainComponent {
   editCommunity() {
     window.location.href = "/edit-community/"+this.community_id;
   }
+
+  createPost() {
+    window.location.href = "/create-post?cid="+this.community_id;
+  }
 }

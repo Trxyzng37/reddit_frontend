@@ -23,6 +23,7 @@ export class CreatePostComponent {
     private sendPostService: SendPostService,
     private storageService: StorageService,
     private dateTimeService: DateTimeService,
+    private communityService: CommunityService,
     private route: Router
   ) {
   }
@@ -49,6 +50,20 @@ export class CreatePostComponent {
   public editorAllowed: boolean = true;
   public imgAllowed: boolean = true;
   public linkAllowed: boolean = true;
+
+  ngOnInit() {
+    const found = window.location.href.match('cid=([0-9]+)');
+    if(found != null) {
+      this.communityService.getCommunityInfoById(found[1]).subscribe({
+        next: (response: Communities) => {
+          this.community_id = response.id;
+          this.community = response.name;
+          this.avatar = response.avatar;
+          this.AllowSubmit();
+        }
+      })
+    }
+  }
 
   AllowSubmit() {
     console.log(this.community.length === 0 && this.title.length === 0)

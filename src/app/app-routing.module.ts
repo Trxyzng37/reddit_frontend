@@ -40,6 +40,7 @@ const routes: Routes = [
     ]
   },
   {path: 'create-post', component: CreatePostComponent},
+  {path: 'create-post?cid=:community_id', component: CreatePostComponent},
   {path: 'edit-community/:community_id', component: EditCommunityComponent},
   { path: 'error', title:'error', component: ErrorComponent },
   // {path: '', redirectTo: 'home', pathMatch: 'full'},
