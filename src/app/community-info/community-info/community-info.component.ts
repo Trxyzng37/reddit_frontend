@@ -28,6 +28,7 @@ export class CommunityInfoComponent {
   public userInfo: UserProfile = new UserProfile(0, "", "", "", 0, "");
   public isJoinCommunity: boolean = false;
   public isCommunityPage: boolean = false;
+  public isOwner: boolean = false;
   public joinText: string = this.isJoinCommunity ? 'Leave' : 'Join';
 
   ngOnInit() {
@@ -35,12 +36,13 @@ export class CommunityInfoComponent {
   }
 
   ngOnChanges() {
+    const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
+    this.isOwner = uid == this.community_info.uid;
     this.userInfoService.getUserInfo(this.community_info.uid).subscribe({
       next: (response: UserProfile) => {
         this.userInfo = response;
       }
     })
-    const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
     this.communityService.checkJoinCommunityStatus(uid, this.community_info.id).subscribe({
       next: (response: JoinCommunityResponse) => {
         this.isJoinCommunity = response.join_community == 0 ? false : true;
@@ -61,5 +63,9 @@ export class CommunityInfoComponent {
         console.log("error join community");
       }
     })
+  }
+
+  editCommunity() {
+    window.location.href = "/edit-community/"+this.community_info.id;
   }
 }
