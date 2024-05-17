@@ -12,6 +12,8 @@ import { CreateCommentService } from '../service/create-comment/create-comment.s
 import { CreateCommentResponse } from '../pojo/create-comment-response';
 import { StorageService } from 'src/app/shared/storage/storage.service';
 import Swal from 'sweetalert2';
+import { RecentVisitService } from 'src/app/shared/services/recent-visit/recent-visit.service';
+import { DefaultResponse } from 'src/app/shared/pojo/default-response';
 
 @Component({
   selector: 'app-view-detail-post',
@@ -26,7 +28,8 @@ export class ViewDetailPostComponent {
     private getPostService: GetPostService,
     private getCommentService: GetCommentsService,
     private createCommentService: CreateCommentService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private recentVisitPostService: RecentVisitService
   ) {}
 
   public postId: number = 0;
@@ -37,6 +40,7 @@ export class ViewDetailPostComponent {
 
   ngOnInit() {
      this.postId = this.route.snapshot.params['post_id'];
+     const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
      this.getPostService.getPostByPostId(this.postId).subscribe({
       next: (response: GetPostResponse) => {
         this.post = response;
@@ -52,6 +56,9 @@ export class ViewDetailPostComponent {
       error: (e: HttpErrorResponse) => {
         console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
       }
+     })
+     this.recentVisitPostService.setRecentVisit("/set-recent-visit-post", uid, this.postId).subscribe({
+      next: (response: DefaultResponse) => {}
      })
   }
 

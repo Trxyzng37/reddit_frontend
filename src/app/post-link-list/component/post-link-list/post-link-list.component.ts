@@ -6,6 +6,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { DateTimeService } from 'src/app/shared/services/date-time/date-time.service';
 import { ActivatedRoute } from '@angular/router';
 import { StorageService } from 'src/app/shared/storage/storage.service';
+import { RecentVisitService } from 'src/app/shared/services/recent-visit/recent-visit.service';
+import { DefaultResponse } from 'src/app/shared/pojo/default-response';
 @Component({
   selector: 'app-post-link-list',
   templateUrl: './post-link-list.component.html',
@@ -17,7 +19,8 @@ export class PostLinkListComponent {
     private sanitizer: DomSanitizer,
     private DatetimeService: DateTimeService,
     private activeRoute: ActivatedRoute,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private recentVisitService: RecentVisitService
   ) {}
 
   post_result: GetPostResponse[] = [];
@@ -43,6 +46,9 @@ export class PostLinkListComponent {
       if(a!=null) {
         this.community_id = Number.parseInt(a[1]);
         this.getCommunityPost("hot");
+        this.recentVisitService.setRecentVisit("/set-recent-visit-community", uid, this.community_id).subscribe({
+          next: (response: DefaultResponse) => {},
+        })
       }
     }
     if(this.isPopularPage) {
