@@ -28,7 +28,7 @@ export class EditEditorPostComponent {
 
   public post_id: number = 0;
   public shownDate: string = "";
-  public postData!: GetPostResponse;
+  public postData: GetPostResponse = new GetPostResponse(0,"",0,"","",0,"","","","","",0);
   public edit_title: string = "";
   public edit_content: string = "";
   public characterCount: number = 0;
