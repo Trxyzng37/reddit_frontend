@@ -20,8 +20,8 @@ export class EditCommunityService {
 
   private endpoint: string = "/edit-community";
 
-  editCommunity(community_id: number, uid: number, description: string, avatar: string, banner: string): Observable<EditCommunityResponse> {
-    const request = new EditCommunityRequest(community_id, uid, description, avatar, banner);
+  editCommunity(community_id: number, uid: number, description: string, avatar: string, banner: string, scope: number): Observable<EditCommunityResponse> {
+    const request = new EditCommunityRequest(community_id, uid, description, avatar, banner, scope);
     const body: string = JSON.stringify(request);
     let header: HttpHeaders = new HttpHeaders();
     header = header.append("Accept", 'application/json');

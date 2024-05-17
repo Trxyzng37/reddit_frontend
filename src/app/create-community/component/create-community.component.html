@@ -31,6 +31,17 @@
             </div>
             <button id="btn_upload_banner" type="button" (click)="input_banner.click()">Upload your community banner</button>
         </div>
+        <div id="scope_block">
+            <b>Select your community scope</b>
+            <div class="radio_block">
+                <input id="input_public" type="radio" name="scope" value="0" checked="checked" (click)="selectScope(0)">
+                <label for="input_public"><pre> Public (Everyone can post)</pre></label>
+            </div>
+            <div class="radio_block">
+                <input id="input_moderate" type="radio" name="scope" value="1" (click)="selectScope(1)">
+                <label for="input_moderate"><pre> Protected (Moderator need to accept post before it can be view)</pre></label>
+            </div>
+        </div>
         <div id="button_container">
             <button id="btn_cancel" type="button" (click)="closeForm()">Cancel</button>
             <button id="btn_submit" type="submit" [disabled]="!allowSubmit" (click)="submit()">

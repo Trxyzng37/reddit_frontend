@@ -1,5 +1,5 @@
 <div id="container">
-    <div id="form">
+    <div id="form" *ngIf="isOwner">
         <div id="header">
             <h2 style="width: 100%;; text-align: center;">Edit community r/{{communityInfo.name}}</h2>
         </div>
@@ -24,13 +24,27 @@
             </div>
             <button id="btn_upload_banner" type="button" (click)="input_banner.click()">Upload your community banner</button>
         </div>
+        <div id="scope_block">
+            <b>Select your community scope</b>
+            <div class="radio_block">
+                <input id="public" type="radio" name="scope" value="0" (click)="selectScope(0)">
+                <label for="public"><p> <b>Public</b> (Everyone can post)</p></label>
+            </div>
+            <div class="radio_block">
+                <input id="protect" type="radio" name="scope" value="1" (click)="selectScope(1)">
+                <label for="protect"><p> <b>Protected</b> (Moderator need to accept post before it can be view)</p></label>
+            </div>
+        </div>
         <div id="button_container">
             <button id="btn_cancel" type="button" (click)="cancel()">Cancel</button>
             <button id="btn_submit" type="submit" [disabled]="!allowSubmit" (click)="submit()">
                 <p>Edit r/{{community_name.value}}</p>
             </button>
         </div>
-
+    </div>
+    <div *ngIf="!isOwner">
+        <h2>Permission denied</h2>
     </div>
 </div>
+
 
