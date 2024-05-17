@@ -1,6 +1,6 @@
 <nav id="navigation_bar">
     <nav id="main_navigation">
-        <a routerLink="/home"><span class="icon pi pi-home"></span><span>Home</span></a>
+        <a href="/home"><span class="icon pi pi-home"></span><span>Home</span></a>
         <a href="/popular"><span class="icon pi pi-chart-line"></span><span>Popular</span></a>
         <a href="/create-post"><span class="icon pi pi-align-justify"></span><span>All</span></a>
     </nav>
@@ -10,7 +10,7 @@
             <span class="pi btn_icon" [ngClass]="recent_status === 'up' ? 'pi-chevron-down':'pi-chevron-up'"></span>
         </button>
         <div [ngStyle]="{'display': recent_status === 'up' ? 'none':'block'}">
-            <a *ngFor="let recent_community of recent_visited_communities_list" routerLink="/r/{{recent_community.name}}"><img id="img_community_icon" src="{{recent_community.icon}}" alt="test"/><pre>r/{{recent_community.name}}</pre></a>
+            <a *ngFor="let recent_community of recentVisitCommunities" href="r/{{recent_community.id}}"><img id="img_community_icon" src="{{recent_community.avatar}}" alt="test"/><pre>r/{{recent_community.name}}</pre></a>
         </div>
 
     </nav>
@@ -20,7 +20,7 @@
             <span class="pi btn_icon" [ngClass]="favorite_status === 'up' ? 'pi-chevron-down':'pi-chevron-up'"></span>
         </button>
         <div [ngStyle]="{'display': favorite_status === 'up' ? 'none':'block'}">
-            <a *ngFor="let recent_community of recent_visited_communities_list" href="/{{recent_community.name}}"><img id="img_community_icon" src="{{recent_community.icon}}" alt="test"/><pre>r/{{recent_community.name}}</pre></a>
+            <a *ngFor="let favorite_community of favoriteCommunities" href="r/{{favorite_community.id}}"><img id="img_community_icon" src="{{favorite_community.avatar}}" alt="test"/><pre>r/{{favorite_community.name}}</pre></a>
         </div>
     </nav>
     <nav>
