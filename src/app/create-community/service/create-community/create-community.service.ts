@@ -18,8 +18,8 @@ export class CreateCommunityService {
 
   private endpoint: string = "/create-community";
 
-  createCommunity(uid: number, name: string, description: string, avatar: string, banner: string): Observable<CreateCommunityResponse> {
-    const request = new CreateCommunityRequest(uid, name, description, avatar, banner);
+  createCommunity(uid: number, name: string, description: string, avatar: string, banner: string, scope: number): Observable<CreateCommunityResponse> {
+    const request = new CreateCommunityRequest(uid, name, description, avatar, banner, scope);
     const body: string = JSON.stringify(request);
     let header: HttpHeaders = new HttpHeaders();
     header = header.append("Accept", 'application/json');

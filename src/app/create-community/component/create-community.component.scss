@@ -130,6 +130,27 @@ input, textarea {
     align-items: center;
 }
 
+#scope_block {
+    width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.radio_block {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+#input_public, #input_moderate {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+}
+
 #avatar_container {
     width: calc(var(--avatar_width) + 5px);
     aspect-ratio: 1/1;

@@ -27,7 +27,7 @@ export class EditCommunityComponent {
   ) {}
 
 
-  public communityInfo!: Communities;
+  public communityInfo: Communities = new Communities(0,"",0,"","",0,"","",0);
   public name_status: string = 'INVALID'; 
   public characterCount: number = 0;
   public description: string = "";
@@ -36,8 +36,11 @@ export class EditCommunityComponent {
   public allowSubmit: boolean = false;
   public isNameTaken: boolean = false;
   public community_id: number = 0;
+  public scope: number = 0;
+  public isOwner: boolean = true;
 
   ngOnInit() {
+    const uid = this.storageService.getItem("uid") === "" ? 0 :  Number.parseInt(this.storageService.getItem("uid"));
     let found = window.location.href.match('community/([[0-9]+)');
     if(found != null) {
       this.community_id = Number.parseInt(found[1]);
@@ -47,18 +50,22 @@ export class EditCommunityComponent {
           this.description = response.description;
           this.avatar_url = response.avatar;
           this.banner_url = response.banner;
+          this.scope = response.scope;
           this.characterCount = this.description.length;
+          this.isOwner = uid == response.uid;
+          let check = this.scope === 0 ? "public" : "protect";
+          let found = <HTMLInputElement>document.getElementById(check);
+          found.checked = true;
         }
-    })
+      })
     }
-
   }
+
 
   AllowSubmit() {
     this.allowSubmit = this.description.length >= 0 && 
                        this.avatar_url.length != 0 && 
                        this.banner_url.length != 0;
-    console.log(this.allowSubmit)
   }
 
   onInputDescription(event: any) {
@@ -107,6 +114,11 @@ export class EditCommunityComponent {
     })
   }
 
+  selectScope(scope: number) {
+    this.scope = scope;
+    this.AllowSubmit();
+  }
+
   cancel() {
     Swal.fire({
       title: "Are you sure you want to cancel? All the content will be lost",
@@ -122,7 +134,7 @@ export class EditCommunityComponent {
 
   submit() {
     const uid = this.storageService.getItem("uid") === "" ? 0 :  Number.parseInt(this.storageService.getItem("uid"));
-    this.editCommunityService.editCommunity(this.community_id, uid, this.description, this.avatar_url, this.banner_url).subscribe({
+    this.editCommunityService.editCommunity(this.community_id, uid, this.description, this.avatar_url, this.banner_url, this.scope).subscribe({
       next: (response: EditCommunityResponse) => {
         this.isNameTaken = false;
         Swal.fire('Edit community successfully', '', 'success').then((result) => {

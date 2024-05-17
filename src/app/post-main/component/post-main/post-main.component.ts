@@ -26,7 +26,7 @@ export class PostMainComponent {
   public isOwner: boolean = false;
 
   public community_id: number = 0;
-  public community: Communities = new Communities(0, "", 0, "", "", 0, "", "");
+  public community: Communities = new Communities(0, "", 0, "", "", 0, "", "", 0);
   public banner_url: string = "../../../assets/banner/lol.png";
   public avatar_url: string = "../../../assets/icon/tft.jpg";
   public joinText: string = this.isJoinCommunity ? 'Joined' : 'Join';

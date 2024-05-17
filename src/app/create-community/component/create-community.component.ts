@@ -34,6 +34,7 @@ export class CreateCommunityComponent {
 
   public characterCount: number = 0;
   public description: string = "";
+  public scope: number = 0;
   public avatar_url: string = "../../../assets/icon/dashed_circle.png";
   public banner_url: string = "../../../assets/banner/default_banner.jpg";
   public allowSubmit: boolean = false;
@@ -49,7 +50,7 @@ export class CreateCommunityComponent {
   AllowSubmit() {
     this.allowSubmit = this.name_status == "VALID" && this.description.length >= 0 && 
                        this.avatar_url != "../../../assets/icon/dashed_circle.png" && 
-                       this.banner_url != "../../../assets/banner/default_banner.jpg";
+                       this.banner_url != "../../../assets/banner/default_banner.jpg"
     console.log(this.allowSubmit)
   }
 
@@ -107,9 +108,14 @@ export class CreateCommunityComponent {
     })
   }
 
+  selectScope(scope: number) {
+    this.scope = scope;
+    this.AllowSubmit();
+  }
+
   submit() {
     const uid = this.storageService.getItem("uid") === "" ? 0 :  Number.parseInt(this.storageService.getItem("uid"));
-    this.createCommunityService.createCommunity(uid, this.createCommunityForm.value.name, this.description, this.avatar_url, this.banner_url).subscribe({
+    this.createCommunityService.createCommunity(uid, this.createCommunityForm.value.name, this.description, this.avatar_url, this.banner_url, this.scope).subscribe({
       next: (response: CreateCommunityResponse) => {
         this.isNameTaken = false;
         Swal.fire('Create community successfully', '', 'success').then((result) => {
