@@ -177,7 +177,7 @@ import { JoinCommunityResponse } from 'src/app/shared/services/search-communites
             next: (response: DeletePostResponse) => {
               Swal.fire('Delete post successfully', '', 'success').then((result) => {
                 if (result.isConfirmed)
-                  this.route.navigate([""]);
+                  window.location.href = "r/" + this.post.community_id;
               })
             },
             error: (e: HttpErrorResponse) => {
