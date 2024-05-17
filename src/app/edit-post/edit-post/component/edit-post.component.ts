@@ -26,12 +26,14 @@ export class EditPostComponent {
 
   public post_type: string = "";
   public post_id: number = 0;
+  private community_id = 0;
 
   ngOnInit() {
     this.post_id = this.activeRoute.snapshot.params['post_id'];
     this.getPostService.getPostByPostId(this.post_id).subscribe({
       next: (response: GetPostResponse) => {
           this.post_type = response.type;
+          this.community_id = response.community_id;
       },
       error: (e: HttpErrorResponse) => {
         console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
@@ -55,7 +57,7 @@ export class EditPostComponent {
           next: (response: DeletePostResponse) => {
             Swal.fire('Delete post successfully', '', 'success').then((result) => {
               if (result.isConfirmed)
-                this.route.navigate([""]);
+                window.location.href = "r/"+this.community_id;
             })
           },
           error: (e: HttpErrorResponse) => {

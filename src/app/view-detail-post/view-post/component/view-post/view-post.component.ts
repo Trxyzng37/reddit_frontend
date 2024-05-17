@@ -66,7 +66,6 @@ import { JoinCommunityResponse } from 'src/app/shared/services/search-communites
 
     ngOnInit() {
       const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
-      this.isAuthor = uid == this.uid;
       const found = window.location.href.match('/home');
       if(found != null) 
         this.isHomePage = true;
@@ -76,6 +75,7 @@ import { JoinCommunityResponse } from 'src/app/shared/services/search-communites
     ngOnChanges() {
       this.shownDate = this.dateTimeService.getTimeByCompareCreatedAtAndCurrentDate(this.created_at);
       const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
+      this.isAuthor = uid == this.uid;
       this.communityService.checkJoinCommunityStatus(uid, this.post.community_id).subscribe({
         next: (response: JoinCommunityResponse) => {
           this.isJoinCommunity = response.join_community == 0 ? false : true;
