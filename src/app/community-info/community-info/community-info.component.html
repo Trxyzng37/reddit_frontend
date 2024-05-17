@@ -4,7 +4,7 @@
         <button id="btn_join" id="btn_join" id="btn_join" *ngIf="!isCommunityPage" (click)="joinCommunity($event)">{{joinText}}</button>
     </div>
     <b id="txt_community_name">{{community_info.name}}</b>
-    <p>{{community_info.description}}</p>
+    <p id="description">{{community_info.description}}</p>
     <div id="block_container">
         <div id="member_block">
             <b>{{community_info.subscriber_count}}</b>
