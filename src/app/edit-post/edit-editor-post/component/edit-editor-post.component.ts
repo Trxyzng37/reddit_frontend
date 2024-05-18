@@ -60,8 +60,7 @@ export class EditEditorPostComponent {
 
   AllowSubmit() {
     this.allowSubmit = (this.original_title !== this.edit_title || this.original_content !== this.edit_content) &&
-                       this.edit_title.length !== 0 &&
-                       this.edit_content.length !== 0
+                       this.edit_title.length !== 0
                        ? false : true;
   }
 

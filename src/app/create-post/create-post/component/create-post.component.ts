@@ -46,6 +46,7 @@ export class CreatePostComponent {
   public imgArr: Img[] = [];
   public linkContent: string = "";
   public community_id: number = 0;
+  public allow: number = 0;
 
   public editorAllowed: boolean = true;
   public imgAllowed: boolean = true;
@@ -175,7 +176,7 @@ export class CreatePostComponent {
       console.log("community: " + value);
       this.searchCommunitiesService.searchCommunities(value).subscribe({
         next: (response: Communities[]) => {
-          console.log(response)
+          // console.log(response)
           this.communities = response;
         },
         error: (e: HttpErrorResponse) => {
@@ -195,8 +196,9 @@ export class CreatePostComponent {
     this.community = community.name;
     this.avatar = community.avatar;
     this.community_id = community.id;
+    this.allow = community.scope == 0 ? 1 : 0;
     this.AllowSubmit();
-    console.log("select community: " + this.community);
+    console.log("scope of community: " + this.allow);
   }
 
   // @HostListener('document:click', ['$event'])
@@ -317,7 +319,7 @@ export class CreatePostComponent {
     const title: string = this.title;
     const created_at: Date = this.dateTimeService.getCurrentDateTime();
     console.log("Post type: " + type);
-    this.sendPostService.createPost(type, this.community_id, title, content, created_at).subscribe({
+    this.sendPostService.createPost(type, this.community_id, title, content, created_at, this.allow).subscribe({
       next: (response: CreatePostResponse) => {
         if(response.CREATED === true)
           Swal.fire('Create post successfully', '', 'success').then((result) => {
@@ -339,7 +341,7 @@ export class CreatePostComponent {
     const contentStr = JSON.stringify(content);
     const created_at: Date = this.dateTimeService.getCurrentDateTime();
     console.log("Post type: " + type);
-    this.sendPostService.createPost(type, this.community_id, title, contentStr, created_at).subscribe({
+    this.sendPostService.createPost(type, this.community_id, title, contentStr, created_at, this.allow).subscribe({
       next: (response: CreatePostResponse) => {
         if(response.CREATED === true)
           Swal.fire('Create post successfully', '', 'success').then((result) => {
@@ -361,7 +363,7 @@ export class CreatePostComponent {
     const created_at: Date = this.dateTimeService.getCurrentDateTime();
     console.log("Post type: " + type);
     
-    this.sendPostService.createPost(type, this.community_id, title, content, created_at).subscribe({
+    this.sendPostService.createPost(type, this.community_id, title, content, created_at, this.allow).subscribe({
       next: (response: CreatePostResponse) => {
         if(response.CREATED === true)
           Swal.fire('Create post successfully', '', 'success').then((result) => {
