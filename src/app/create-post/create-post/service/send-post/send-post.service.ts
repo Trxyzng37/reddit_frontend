@@ -18,9 +18,9 @@ export class SendPostService {
 
   private endpoint: string = "/create-post";
 
-  createPost(type: string, community_id: number, title: string, content: string, created_at: Date): Observable<CreatePostResponse> {
+  createPost(type: string, community_id: number, title: string, content: string, created_at: Date, allow: number): Observable<CreatePostResponse> {
     const uid = this.storageService.getItem("uid") === "" ? 0 :  Number.parseInt(this.storageService.getItem("uid"));
-    const request = new CreatePostRequest(type, uid, community_id, title, content, created_at);
+    const request = new CreatePostRequest(type, uid, community_id, title, content, created_at, allow);
     const body: string = JSON.stringify(request);
     // console.log(request)
     let header: HttpHeaders = new HttpHeaders();
