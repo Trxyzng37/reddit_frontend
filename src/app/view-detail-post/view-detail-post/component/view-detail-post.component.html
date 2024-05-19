@@ -1,5 +1,6 @@
 
 <app-post
+    *ngIf="!isDeleted"
     [post]="post"
     [post_id]="post.post_id"
     [type]="post.type"
@@ -15,23 +16,29 @@
 >
 </app-post>
 
-<div id="comment_editor_block"> 
+<div id="deleted_post_block" *ngIf="isDeleted">
+    <b>Post does not exist</b>
+</div>
+
+<div id="comment_editor_block" *ngIf="!isDeleted"> 
     <editor
     [init]="editorSettings"
     (onSelectionChange)="onContentChanged($event)"
     style="width: calc(100%);"
 >
 </editor>
-<div id="btn_comment_block"> 
+<div id="btn_comment_block" *ngIf="!isDeleted"> 
     <button id="btn_cancel_comment" type="button" (click)="cancelComment()">Cancel</button>
     <button id="btn_submit_comment" type="button" (click)="createComment($event)">Comment</button>
 </div>
 </div>
 
 
-<h3 id="no_comment_block" *ngIf="commentResults.length === 0">No comment found for this post</h3>
+<h3 id="no_comment_block" *ngIf="commentResults.length === 0 && !isDeleted">No comment found for this post</h3>
 
-<app-comment id="comment" *ngFor="let comment of commentResults; let i=index"
+<app-comment id="comment"
+    ngIf="!isDeleted"
+    *ngFor="let comment of commentResults; let i=index"
     [commentData]="comment"
     [postId]="postId"
     (commentModified)="reloadComment($event)"
