@@ -24,8 +24,12 @@
     </div>
 </div>
 
-<div id="edit_block" *ngIf="isOwner" (click)="editCommunity()">
+<div class="btn_block" *ngIf="isOwner" (click)="editCommunity()">
     <button class="btn">Edit community info</button>
+</div>
+
+<div class="btn_block" *ngIf="isOwner" (click)="controlPosts()">
+    <button class="btn">Control posts</button>
 </div>
 
 

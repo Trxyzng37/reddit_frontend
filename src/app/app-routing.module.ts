@@ -34,7 +34,8 @@ const routes: Routes = [
         {path: 'popular', title: 'popular', component: PostLinkListComponent},
         {path: 'r/:community_id', title: 'trxyzng', component: PostLinkListComponent},
         {path: 'edit-post/:post_id', component: EditPostComponent},
-        {path: 'post/:post_id', title: 'view-post', component: ViewDetailPostComponent}
+        {path: 'post/:post_id', title: 'view-post', component: ViewDetailPostComponent},
+        {path: 'control-posts/:community_id', component: PostLinkListComponent}
       ]
       }
     ]
