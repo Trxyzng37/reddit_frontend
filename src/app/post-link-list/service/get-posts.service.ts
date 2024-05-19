@@ -39,4 +39,10 @@ export class GetPostsService {
     let header: HttpHeaders = new HttpHeaders();
     return this.getService.get(fullUrl, header, false);
   }
+
+  public getPostInCommunityNotAllow(endpoint: string, community_id: number): Observable<GetPostResponse[]> {
+    const fullUrl = endpoint + "?" + "cid=" + community_id; 
+    let header: HttpHeaders = new HttpHeaders();
+    return this.getService.get(fullUrl, header, false);
+  }
 }

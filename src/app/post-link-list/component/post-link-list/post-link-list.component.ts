@@ -28,6 +28,7 @@ export class PostLinkListComponent {
   public isCommunityPage: boolean = false;
   public isHomePage: boolean = false;
   public isPopularPage: boolean = false;
+  public isControlPage: boolean = false;
   public sort_option: string = "Hot";
   public community_id: number = 0;
   public joinCommunityEventCount: number = 0;
@@ -37,6 +38,7 @@ export class PostLinkListComponent {
     this.isCommunityPage = window.location.href.includes("/r/");
     this.isHomePage = window.location.href.includes("/home");
     this.isPopularPage = window.location.href.includes("/popular");
+    this.isControlPage = window.location.href.includes("/control-posts/");
     if(this.isHomePage) {
       this.getHomePost(uid, "hot");
     }
@@ -53,6 +55,10 @@ export class PostLinkListComponent {
     }
     if(this.isPopularPage) {
       this.getPopularPost(uid, "hot");
+    }
+    if(this.isControlPage) {
+      this.community_id = this.activeRoute.snapshot.params["community_id"];
+      this.getCommunityPostNotAllow(this.community_id);
     }
   }
 
@@ -133,8 +139,25 @@ export class PostLinkListComponent {
     })
   }
 
+  getCommunityPostNotAllow(uid: number) {
+    this.getPostService.getPostInCommunityNotAllow("/get-control-posts", this.community_id).subscribe({
+      next: (response: GetPostResponse[]) => {
+        this.post_result = response;
+      },
+      error: (e: HttpErrorResponse) => {
+        console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
+      }
+    })
+  }
+
   joinCommunityEvent(event: Event) {
     this.joinCommunityEventCount += 1;
     console.log("post-link-list: "+this.joinCommunityEventCount)
+  }
+
+  allowPostEvent(post_id: number) {
+    this.post_result = this.post_result.filter( post => {
+      return post.post_id !== post_id
+    } )
   }
 }

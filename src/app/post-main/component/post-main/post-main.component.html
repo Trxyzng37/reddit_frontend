@@ -1,4 +1,4 @@
-<div *ngIf="isCommunityPage">
+<div *ngIf="isCommunityPage || isControlPage">
     <div id="header_container">
         <div id="banner_container">
             <img id="img_banner" src="{{community.banner}}" *ngIf="1">
@@ -14,13 +14,17 @@
     </div>
 </div>
 
-    <div id="outlet">
-        <router-outlet>
-        </router-outlet>
-    </div>
+<div id="control_block" *ngIf="isControlPage">
+    <h2>Select which post you want to allow in your community</h2>
+</div>
 
-    <app-recent-visited-post *ngIf="!isCommunityPage && !isViewPostPage"></app-recent-visited-post>
-    <div id="community_info_block" *ngIf="isCommunityPage || isViewPostPage" >
-        <community-info [community_info]="community"></community-info>
-    </div>
+<div id="outlet">
+    <router-outlet>
+    </router-outlet>
+</div>
+
+<app-recent-visited-post *ngIf="!isCommunityPage && !isViewPostPage && !isControlPage"></app-recent-visited-post>
+<div id="community_info_block" *ngIf="isCommunityPage || isViewPostPage || isControlPage" >
+    <community-info [community_info]="community"></community-info>
+</div>
 

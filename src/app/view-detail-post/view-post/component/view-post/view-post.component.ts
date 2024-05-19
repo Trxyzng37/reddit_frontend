@@ -15,6 +15,9 @@ import { DeletePostService } from 'src/app/edit-post/service/delete-post/delete-
 import { DeletePostResponse } from 'src/app/edit-post/pojo/delete-post-response';
 import { CommunityService } from 'src/app/shared/services/search-communites/community.service';
 import { JoinCommunityResponse } from 'src/app/shared/services/search-communites/pojo/join-community-response';
+import { Communities } from 'src/app/shared/pojo/pojo/communities';
+import { AllowPostService } from 'src/app/post-link/post-link/service/allow-post/allow-post.service';
+import { DefaultResponse } from 'src/app/shared/pojo/default-response';
   
   @Component({
     selector: 'app-post',
@@ -30,10 +33,12 @@ import { JoinCommunityResponse } from 'src/app/shared/services/search-communites
       private checkVotePostService: CheckVotePostService,
       private deletePostService: DeletePostService,
       private route: Router,
-      private communityService: CommunityService
+      private communityService: CommunityService,
+      private allowPostService: AllowPostService
+
     ) {}
   
-    @Input() post!: GetPostResponse;
+    @Input() post: GetPostResponse = new GetPostResponse(0,"",0,"","",0,"","","","","",0,0,0);
     @Input() post_id: number = 0;
     @Input() type: string = "";
     @Input() communityName: string = "";
@@ -54,9 +59,13 @@ import { JoinCommunityResponse } from 'src/app/shared/services/search-communites
     public shownDate: string = "";
     public isOptionMenuOpen: boolean = false;
     public isAuthor: boolean = false;
+    public isCommunityOwner: boolean = false;
+    public isAllow: boolean = false;
     public isHomePage: boolean = false;
     public isJoinCommunity: boolean = false;
+    public isDeleted: boolean = false;
     public joinText: string = this.isJoinCommunity ? 'Leave' : 'Join';
+    public communityInfo!: Communities;
 
     public  upvote = "../../../../../assets/icon/upvote.png"
     public  upvote_fill = "../../../../../assets/icon/upvote-fill.png"
@@ -76,18 +85,19 @@ import { JoinCommunityResponse } from 'src/app/shared/services/search-communites
       this.shownDate = this.dateTimeService.getTimeByCompareCreatedAtAndCurrentDate(this.created_at);
       const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
       this.isAuthor = uid == this.uid;
-      this.communityService.checkJoinCommunityStatus(uid, this.post.community_id).subscribe({
-        next: (response: JoinCommunityResponse) => {
-          this.isJoinCommunity = response.join_community == 0 ? false : true;
-          this.joinText = this.isJoinCommunity ? 'Leave' : 'Join';
-        }
-      })
       this.checkVotePostService.checkVotePost(this.post_id, uid).subscribe({
         next: (response: CheckVotePostResponse) => {
           this.voteType  = response.vote_type;
         },
         error: (e: HttpErrorResponse) => {
           console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
+        }
+      })
+      this.communityService.getCommunityInfoById(this.post.community_id.toString()).subscribe({
+        next: (response: Communities) => {
+          this.communityInfo = response;
+          this.isCommunityOwner = uid === this.communityInfo.uid;
+          this.isAllow = this.post.allow == 0 ? true : false;
         }
       })
     }
@@ -201,6 +211,25 @@ import { JoinCommunityResponse } from 'src/app/shared/services/search-communites
         }
       })
     }
-  
+
+    allowPost(event: Event) {
+      this.allowPostService.setAllowPost(this.post_id, 1).subscribe({
+        next: (response: DefaultResponse) => {
+          this.isAllow = false;
+        }
+      })
+    }
+
+    notAllowPost() {
+      this.deletePostService.deletePost("/delete-post", this.post_id, this.post.uid).subscribe({
+        next: (response: DeletePostResponse) => {
+          this.isDeleted = true;
+          this.title = "[Deleted by moderator]"
+          this.content = "[Deleted by moderator]";
+        },
+        error: (e: HttpErrorResponse) => {
+        }
+      })
+    }
   }
   

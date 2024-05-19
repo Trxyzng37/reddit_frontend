@@ -15,6 +15,10 @@ import { CommunityService } from 'src/app/shared/services/search-communites/comm
 import { JoinCommunityResponse } from 'src/app/shared/services/search-communites/pojo/join-community-response';
 import { CheckShowPostService } from 'src/app/shared/services/check-show-post/check-show-post.service';
 import { DefaultResponse } from 'src/app/shared/pojo/default-response';
+import { AllowPostService } from '../service/allow-post/allow-post.service';
+import { DeletePostService } from 'src/app/edit-post/service/delete-post/delete-post.service';
+import { DeletePostResponse } from 'src/app/edit-post/pojo/delete-post-response';
+import { Communities } from 'src/app/shared/pojo/pojo/communities';
 
 @Component({
   selector: 'app-post-link',
@@ -30,7 +34,9 @@ export class PostLinkComponent {
     private checkVotePostService: CheckVotePostService,
     private getCommentService: GetCommentsService,
     private communityService: CommunityService,
-    private showPostService: CheckShowPostService
+    private showPostService: CheckShowPostService,
+    private allowPostService: AllowPostService,
+    private deletePostService: DeletePostService
   ) {}
 
   @Input() post!: GetPostResponse;
@@ -49,6 +55,7 @@ export class PostLinkComponent {
 
   @Output() event = new EventEmitter<GetPostResponse>();
   @Output() joinCommunityEvent = new EventEmitter<boolean>();
+  @Output() allowPostEvent = new EventEmitter<number>();
     
   public voteType: string = 'none'; //none upvote downvote
   public previousVote: number = this.vote;
@@ -57,6 +64,9 @@ export class PostLinkComponent {
   public isJoinCommunity: boolean = false;
   public isHomePage: boolean = false;
   public isCommunityPage: boolean = false;
+  public isControlPage: boolean = false;
+  public isCommunityOwner: boolean = false;
+  public communityInfo!: Communities;
   public joinText: string = this.isJoinCommunity ? 'Leave' : 'Join';
 
   public  upvote = "../../../../../assets/icon/upvote.png"
@@ -71,6 +81,8 @@ export class PostLinkComponent {
     const found1 = window.location.href.match('/r/');
     if(found1 != null) 
       this.isCommunityPage = true;
+    this.isControlPage = window.location.href.includes("/control-posts/");
+
     this.shownDate = this.dateTimeService.getTimeByCompareCreatedAtAndCurrentDate(this.created_at);
     const uid: number = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
     this.checkVotePostService.checkVotePost(this.post_id, uid).subscribe({
@@ -105,6 +117,12 @@ export class PostLinkComponent {
         this.joinText = this.isJoinCommunity ? 'Leave' : 'Join';
       }
     })
+    this.communityService.getCommunityInfoById(this.post.community_id.toString()).subscribe({
+      next: (response: Communities) => {
+        this.communityInfo = response;
+        this.isCommunityOwner = uid === this.communityInfo.uid;
+      }
+    })
   }
 
   on_click() {
@@ -115,10 +133,6 @@ export class PostLinkComponent {
     event.stopPropagation();
   }
 
-  // preventClick(event: Event) {
-  //   event.stopPropagation();
-  // }
-
   public isOptionMenuOpen: boolean = false;
 
   openOptionMenu(event: Event) {
@@ -126,12 +140,6 @@ export class PostLinkComponent {
     // console.log("Option menu open")
     event.stopPropagation();
   }
-
-  // @HostListener('document:click', ['$event'])
-  // closeProfileMenu(event: Event) {
-  //     this.isOptionMenuOpen = false;
-  //     console.log("profile meneu close")
-  // }
 
   showCount: number = 0;
   onIntersection({ target, visible }: { target: Element; visible: boolean }) {
@@ -227,6 +235,24 @@ export class PostLinkComponent {
       },
       error: (e: HttpErrorResponse) => {
         console.log("error join community");
+      }
+    })
+  }
+
+  allowPost(event: Event) {
+    event.stopPropagation();
+    this.allowPostService.setAllowPost(this.post_id, 1).subscribe({
+      next: (response: DefaultResponse) => {
+        this.allowPostEvent.emit(this.post_id);
+      }
+    })
+  }
+
+  deletePost(event: Event) {
+    event.stopPropagation();
+    this.deletePostService.deletePost("/delete-post", this.post_id, this.post.uid).subscribe({
+      next: (response: DeletePostResponse) => {
+        this.allowPostEvent.emit(this.post_id);
       }
     })
   }
