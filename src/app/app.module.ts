@@ -42,6 +42,7 @@ import { CreateCommunityComponent } from './create-community/component/create-co
 import { CommunityInfoComponent } from './community-info/community-info/community-info.component';
 import { EditCommunityComponent } from './edit-community/component/edit-community.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,

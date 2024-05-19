@@ -68,4 +68,8 @@ export class CommunityInfoComponent {
   editCommunity() {
     window.location.href = "/edit-community/"+this.community_info.id;
   }
+
+  controlPosts() {
+    window.location.href = "/control-posts/"+this.community_info.id;
+  }
 }
