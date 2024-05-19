@@ -15,8 +15,9 @@
             <a id="username" href="">{{username}}</a>
         </div>
         <div id="option_block">
-            <!-- <button class="btn" id="btn_join" id="btn_join" *ngIf="!isHomePage" (click)="joinCommunity($event)">{{joinText}}</button> -->
-            <button id="btn_option" type="button" (click)="openOptionMenu($event)"><i class="pi pi-ellipsis-h"></i></button>
+            <button class="btn" id="btn_join" style="background-color: green;" *ngIf="isCommunityOwner && isAllow && !isDeleted" (click)="allowPost($event)">Allow</button>
+            <button class="btn" id="btn_join" style="background-color: red;" *ngIf="isCommunityOwner && !isDeleted" (click)="notAllowPost($event)">Delete</button>
+            <button id="btn_option" *ngIf="isAuthor" type="button" (click)="openOptionMenu($event)"><i class="pi pi-ellipsis-h"></i></button>
         </div>
         <div id="dropdown_option_block" [ngStyle]="{'display': isOptionMenuOpen ? 'block':'none'}">
             <button id="btn_edit" *ngIf="isAuthor" (click)="editPost($event)"><i class="pi pi-pencil"></i><p>Edit</p></button>

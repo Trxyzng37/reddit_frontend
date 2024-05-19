@@ -11,9 +11,10 @@ export class GetPostResponse {
     public content: string;
     public created_at: string;
     public vote: number;
-    // public deleted: number;
+    public allow: number;
+    public deleted: number;
 
-    public constructor(post_id: number, type: string, uid: number, username: string, username_icon: string, community_id: number, community_name: string, community_icon: string, title: string, content: string, created_at: string, vote: number) {
+    public constructor(post_id: number, type: string, uid: number, username: string, username_icon: string, community_id: number, community_name: string, community_icon: string, title: string, content: string, created_at: string, vote: number, allow: number, deleted: number) {
         this.post_id = post_id;
         this.type = type;
         this.uid = uid;
@@ -26,6 +27,7 @@ export class GetPostResponse {
         this.content = content;
         this.created_at = created_at;
         this.vote = vote;
-        // this.deleted = deleted;
+        this.allow = allow;
+        this.deleted = deleted;
     }
 }

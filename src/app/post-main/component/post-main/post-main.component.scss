@@ -108,3 +108,12 @@ app-recent-visited-post {
     top: calc(85px);
     left: calc(2vw);
 }
+
+
+#control_block {
+    width: 50vw;
+    height: auto;
+    text-align: center;
+    margin-top: 20px;
+    margin-left: calc(var(--margin_home) + 2vw);
+}

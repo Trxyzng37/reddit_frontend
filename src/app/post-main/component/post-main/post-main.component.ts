@@ -6,6 +6,7 @@ import { JoinCommunityResponse } from 'src/app/shared/services/search-communites
 import { CommunityService } from 'src/app/shared/services/search-communites/community.service';
 import { StorageService } from 'src/app/shared/storage/storage.service';
 import { GetPostService } from 'src/app/view-detail-post/view-detail-post/service/get-post/get-post.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-post-main',
@@ -17,12 +18,14 @@ export class PostMainComponent {
   public constructor (
     private communityService: CommunityService,
     private storageService: StorageService,
-    private getPostService: GetPostService
+    private getPostService: GetPostService,
+    private activeRoute: ActivatedRoute
   ) {}
 
   public isCommunityPage: boolean = false;
   public isViewPostPage: boolean = false;
   public isJoinCommunity: boolean = false;
+  public isControlPage: boolean = false;
   public isOwner: boolean = false;
 
   public community_id: number = 0;
@@ -35,6 +38,7 @@ export class PostMainComponent {
     const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
     this.isCommunityPage = window.location.href.includes("/r/");
     this.isViewPostPage = window.location.href.includes("/post/");
+    this.isControlPage = window.location.href.includes("/control-posts/");
     if(this.isCommunityPage) {
       let regex = '/r/([0-9]+)';
       const a = window.location.href.match(regex);
@@ -67,6 +71,18 @@ export class PostMainComponent {
                 this.isOwner = uid == this.community.uid;
               }
             })
+          }
+        })
+      }
+    }
+    if(this.isControlPage) {
+      let regex = '/control-posts/([0-9]+)';
+      const a = window.location.href.match(regex);
+      if(a != null) {
+        this.communityService.getCommunityInfoById(a[1].toString()).subscribe({
+          next: (response: Communities) => {
+            this.community = response;
+            this.isOwner = uid == this.community.uid;
           }
         })
       }

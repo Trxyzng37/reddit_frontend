@@ -20,8 +20,10 @@
         </div>
         
         <div id="option_block">
-            <button class="btn" id="btn_join" *ngIf="!isHomePage && !isCommunityPage" (click)="joinCommunity($event)">{{joinText}}</button>
-            <button id="btn_option" type="button" (click)="openOptionMenu($event)"><i class="pi pi-ellipsis-h"></i></button>
+            <button class="btn" id="btn_join" *ngIf="!isHomePage && !isCommunityPage && !isControlPage" (click)="joinCommunity($event)">{{joinText}}</button>
+            <button class="btn" id="btn_join" style="background-color: green;" *ngIf="isControlPage" (click)="allowPost($event)">Allow</button>
+            <button class="btn" id="btn_join" style="background-color: red;" *ngIf="isControlPage && isCommunityOwner" (click)="deletePost($event)">Delete</button>
+            <button id="btn_option" type="button" *ngIf="!isControlPage" (click)="openOptionMenu($event)"><i class="pi pi-ellipsis-h"></i></button>
         </div>
         <div id="dropdown_option_block" [ngStyle]="{'display': isOptionMenuOpen ? 'block':'none'}">
             <button><i class="pi pi-bookmark"></i><p>Save</p></button>
