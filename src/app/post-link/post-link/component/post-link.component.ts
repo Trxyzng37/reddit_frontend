@@ -82,7 +82,6 @@ export class PostLinkComponent {
     if(found1 != null) 
       this.isCommunityPage = true;
     this.isControlPage = window.location.href.includes("/control-posts/");
-
     this.shownDate = this.dateTimeService.getTimeByCompareCreatedAtAndCurrentDate(this.created_at);
     const uid: number = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
     this.checkVotePostService.checkVotePost(this.post_id, uid).subscribe({
