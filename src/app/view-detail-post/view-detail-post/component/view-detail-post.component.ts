@@ -33,10 +33,11 @@ export class ViewDetailPostComponent {
   ) {}
 
   public postId: number = 0;
-  public post: GetPostResponse = new GetPostResponse(0, "", 0, "", "", 0, "", "", "", "", "", 0);
+  public post: GetPostResponse = new GetPostResponse(0, "", 0, "", "", 0, "", "", "", "", "", 0,0,0);
   public shownDate: string = "";
   public commentResults: Comment[] = [];
   public content: string = "";
+  public isDeleted: boolean = false;
 
   ngOnInit() {
      this.postId = this.route.snapshot.params['post_id'];
@@ -47,6 +48,7 @@ export class ViewDetailPostComponent {
       },
       error: (e: HttpErrorResponse) => {
         console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
+        this.isDeleted = true;
       }
      })
      this.getCommentService.getComments(this.postId).subscribe({
