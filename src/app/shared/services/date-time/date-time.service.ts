@@ -64,10 +64,7 @@ export class DateTimeService {
         shownDate = currentDate[4] - createdAtDate[4] + " minute ago";
         return shownDate;
       }
-      if (currentDate[5] - createdAtDate[5] >= 1) {
-        shownDate = currentDate[5] - createdAtDate[5] + " second ago";
-        return shownDate;
-      }
+      shownDate = "1 minute ago"
     }
     return shownDate;
   }
