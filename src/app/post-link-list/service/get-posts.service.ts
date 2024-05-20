@@ -45,4 +45,10 @@ export class GetPostsService {
     let header: HttpHeaders = new HttpHeaders();
     return this.getService.get(fullUrl, header, false);
   }
+
+  public getPostForSearch(endpoint: string, search_text: string, sort_option: string): Observable<GetPostResponse[]> {
+    const fullUrl = endpoint + "?" + "text=" + search_text + "&" + "sort=" + sort_option; 
+    let header: HttpHeaders = new HttpHeaders();
+    return this.getService.get(fullUrl, header, false);
+  }
 }

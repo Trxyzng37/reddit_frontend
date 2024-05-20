@@ -17,6 +17,7 @@ import { ViewDetailPostComponent } from './view-detail-post/view-detail-post/com
 import { EditPostComponent } from './edit-post/edit-post/component/edit-post.component';
 import { CreateCommunityComponent } from './create-community/component/create-community.component';
 import { EditCommunityComponent } from './edit-community/component/edit-community.component';
+import { SearchResultsComponent } from './search-page/search-results/search-results.component';
 
 const routes: Routes = [
   // { path: 'signin', component: SigninComponent, canActivate: mapToCanActivate([signinGuard])},
@@ -35,7 +36,8 @@ const routes: Routes = [
         {path: 'r/:community_id', title: 'trxyzng', component: PostLinkListComponent},
         {path: 'edit-post/:post_id', component: EditPostComponent},
         {path: 'post/:post_id', title: 'view-post', component: ViewDetailPostComponent},
-        {path: 'control-posts/:community_id', component: PostLinkListComponent}
+        {path: 'control-posts/:community_id', component: PostLinkListComponent},
+        {path: 'search/:text', component: SearchResultsComponent},
       ]
       }
     ]
