@@ -24,6 +24,7 @@
                     <p id="member_count">{{i.karma}} karma</p>
                 </div>
             </a>
+            <a id="btn_search" [ngStyle]="{'display': input.value.length > 0 ? 'flex':'none'}" href="search/{{input.value}}"><img src="../../../../assets/icon/search.png"><p>Search for "{{input.value}}"</p></a>
         </div>
     </div>
 
