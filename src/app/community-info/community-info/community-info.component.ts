@@ -25,7 +25,7 @@ export class CommunityInfoComponent {
 
   @Input() community_info: Communities = new Communities(0, "", 0, "", "", 0, "", "", 0);
 
-  public userInfo: UserProfile = new UserProfile(0, "", "", "", 0, "");
+  public userInfo: UserProfile = new UserProfile(0, "", "", "", 0, 0, "");
   public isJoinCommunity: boolean = false;
   public isCommunityPage: boolean = false;
   public isOwner: boolean = false;

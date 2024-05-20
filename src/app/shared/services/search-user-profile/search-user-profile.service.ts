@@ -21,4 +21,11 @@ export class SearchUserProfileService {
     const header: HttpHeaders = new HttpHeaders();
     return this.getService.get(endpointWithParameter, header, false);
   }
+
+  public getUserProfileByName(endpoint: string, name: string): Observable<UserProfile> {
+    const parameter: string ="username=" + name; 
+    const endpointWithParameter: string = endpoint + "?" + parameter;
+    const header: HttpHeaders = new HttpHeaders();
+    return this.getService.get(endpointWithParameter, header, false);
+  }
 }
