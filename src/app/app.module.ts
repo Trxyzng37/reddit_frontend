@@ -41,6 +41,10 @@ import { EditLinkPostComponent } from './edit-post/edit-link-post/component/edit
 import { CreateCommunityComponent } from './create-community/component/create-community.component';
 import { CommunityInfoComponent } from './community-info/community-info/community-info.component';
 import { EditCommunityComponent } from './edit-community/component/edit-community.component';
+import { SearchPostViewComponent } from './search-page/post/search-post-view/search-post-view.component';
+import { SearchResultsComponent } from './search-page/search-results/search-results.component';
+import { SearchCommunityViewComponent } from './search-page/search-community-view/search-community-view/search-community-view.component';
+import { SearchPeopleViewComponent } from './search-page/search-people-view/search-people-view/search-people-view.component';
 
 
 @NgModule({
@@ -75,7 +79,11 @@ import { EditCommunityComponent } from './edit-community/component/edit-communit
     EditLinkPostComponent,
     CreateCommunityComponent,
     CommunityInfoComponent,
-    EditCommunityComponent
+    EditCommunityComponent,
+    SearchPostViewComponent,
+    SearchResultsComponent,
+    SearchCommunityViewComponent,
+    SearchPeopleViewComponent
   ],
   imports: [
     BrowserModule,
