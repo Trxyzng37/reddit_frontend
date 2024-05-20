@@ -21,7 +21,7 @@
                 <img class="seach_result_icon" src={{i.avatar}}/>
                 <div>
                     <p id="community_name">r/{{i.username}}</p>
-                    <p id="member_count">{{i.karma}} karma</p>
+                    <p id="member_count">{{i.post_karma + i.comment_karma}} karma</p>
                 </div>
             </a>
             <a id="btn_search" [ngStyle]="{'display': input.value.length > 0 ? 'flex':'none'}" href="search/{{input.value}}"><img src="../../../../assets/icon/search.png"><p>Search for "{{input.value}}"</p></a>
