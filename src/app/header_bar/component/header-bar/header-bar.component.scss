@@ -69,6 +69,7 @@
     display: none;
 }
 
+
 #search_result_list {
     display: block;
     width: 100%;
@@ -77,6 +78,29 @@
     border-radius: 5px;
     overflow: auto;
     box-sizing: border-box;
+}
+
+#btn_search {
+    padding: 10px 20px;
+    width: auto;
+    border-top: 1px solid black;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: rgb(238, 182, 182);
+}
+
+#btn_search > img {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+#btn_search > p {
+    width: auto;
 }
 
 ::-webkit-scrollbar-track {
@@ -92,6 +116,7 @@
     font-weight: 500;
     box-sizing: border-box;
 }
+
 
 #community_name {
     font-size: 16px;
