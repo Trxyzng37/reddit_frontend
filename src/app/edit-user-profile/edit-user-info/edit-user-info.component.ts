@@ -5,6 +5,7 @@ import { UserProfile } from 'src/app/shared/pojo/pojo/user-profile';
 import { StorageService } from 'src/app/shared/storage/storage.service';
 import { EditUserInfoService } from '../service/update-user-info/edit-user-info.service';
 import { DefaultResponse } from 'src/app/shared/pojo/default-response';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-edit-user-info',
@@ -78,8 +79,15 @@ export class EditUserInfoComponent {
     const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
     this.editUserInfoService.updateUserInfoByUid(uid, this.userInfo.description, this.userInfo.avatar).subscribe({
       next: (response: DefaultResponse) => {
-        window.location.href = "/user/" + this.userInfo.username;
+        Swal.fire({
+          title: "Edit info successfully",
+          icon: 'success'
+        })
       }
     })
+  }
+
+  cancel() {
+    window.history.back();
   }
 }

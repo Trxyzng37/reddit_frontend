@@ -1,7 +1,14 @@
 
+:host {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 #container {
     width: 40vw;
-    height: auto;
     background-color: rgb(96, 96, 233);
     display: flex;
     flex-direction: column;
@@ -9,6 +16,19 @@
     align-items: center;
     padding: 20px;
     border-radius: 20px;
+    overflow-x: hidden;
+    position: relative;
+}
+
+#btn_back {
+    width: 30px;
+    aspect-ratio: 1/1;
+    background-image: url("../../../assets/icon/back.png");
+    background-size: contain;
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    border-radius: 50%;
 }
 
 label {
