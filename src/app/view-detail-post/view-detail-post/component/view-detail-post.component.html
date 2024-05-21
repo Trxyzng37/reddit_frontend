@@ -36,12 +36,14 @@
 
 <h3 id="no_comment_block" *ngIf="commentResults.length === 0 && !isDeleted">No comment found for this post</h3>
 
-<app-comment id="comment"
-    ngIf="!isDeleted"
-    *ngFor="let comment of commentResults; let i=index"
+<div class="comment_container" *ngFor="let comment of commentResults; let i=index">
+    <app-comment id="comment"
+    *ngIf="!isDeleted"
     [commentData]="comment"
     [postId]="postId"
     (commentModified)="reloadComment($event)"
->
-</app-comment>
+    >
+    </app-comment>
+</div>
+
 

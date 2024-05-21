@@ -58,8 +58,13 @@ comment {
     width: 100%;
 }
 
-app-comment {
+.comment_container {
     width: calc(100% - 40px);
+    height: 100%;
+}
+
+app-comment {
+    width: 100%;
     margin: 0 20px;
 }
 
