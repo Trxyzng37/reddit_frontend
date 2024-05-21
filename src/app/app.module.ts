@@ -45,7 +45,9 @@ import { SearchPostViewComponent } from './search-page/post/search-post-view/sea
 import { SearchResultsComponent } from './search-page/search-results/search-results.component';
 import { SearchCommunityViewComponent } from './search-page/search-community-view/search-community-view/search-community-view.component';
 import { SearchPeopleViewComponent } from './search-page/search-people-view/search-people-view/search-people-view.component';
-
+import { UserProfileComponent } from './user-profile/user-profile/user-profile.component';
+import { PostViewComponent } from './user-profile/post-view/post-view/post-view.component';
+import { UserInfoComponent } from './user-info/user-info/user-info.component';
 
 @NgModule({
   declarations: [
@@ -83,7 +85,10 @@ import { SearchPeopleViewComponent } from './search-page/search-people-view/sear
     SearchPostViewComponent,
     SearchResultsComponent,
     SearchCommunityViewComponent,
-    SearchPeopleViewComponent
+    SearchPeopleViewComponent,
+    UserProfileComponent,
+    PostViewComponent,
+    UserInfoComponent
   ],
   imports: [
     BrowserModule,

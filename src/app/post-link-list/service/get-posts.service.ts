@@ -51,4 +51,10 @@ export class GetPostsService {
     let header: HttpHeaders = new HttpHeaders();
     return this.getService.get(fullUrl, header, false);
   }
+
+  public getPostByUser(endpoint: string, uid: number, sort_option: string): Observable<GetPostResponse[]> {
+    const fullUrl = endpoint + "?" + "uid=" + uid + "&" + "sort=" + sort_option; 
+    let header: HttpHeaders = new HttpHeaders();
+    return this.getService.get(fullUrl, header, false);
+  }
 }

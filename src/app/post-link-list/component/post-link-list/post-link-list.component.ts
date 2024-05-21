@@ -8,6 +8,8 @@ import { ActivatedRoute } from '@angular/router';
 import { StorageService } from 'src/app/shared/storage/storage.service';
 import { RecentVisitService } from 'src/app/shared/services/recent-visit/recent-visit.service';
 import { DefaultResponse } from 'src/app/shared/pojo/default-response';
+import { SearchUserProfileService } from 'src/app/shared/services/search-user-profile/search-user-profile.service';
+import { UserProfile } from 'src/app/shared/pojo/pojo/user-profile';
 @Component({
   selector: 'app-post-link-list',
   templateUrl: './post-link-list.component.html',
@@ -20,7 +22,8 @@ export class PostLinkListComponent {
     private DatetimeService: DateTimeService,
     private activeRoute: ActivatedRoute,
     private storageService: StorageService,
-    private recentVisitService: RecentVisitService
+    private recentVisitService: RecentVisitService,
+    private searchUserProfileService: SearchUserProfileService
   ) {}
 
   post_result: GetPostResponse[] = [];
@@ -29,8 +32,10 @@ export class PostLinkListComponent {
   public isHomePage: boolean = false;
   public isPopularPage: boolean = false;
   public isControlPage: boolean = false;
-  public sort_option: string = "Hot";
+  public isUserPage: boolean = false;
+  public sort_option: string = "New";
   public community_id: number = 0;
+  public user_id: number = 0;
   public joinCommunityEventCount: number = 0;
 
   ngOnInit() {
@@ -39,6 +44,7 @@ export class PostLinkListComponent {
     this.isHomePage = window.location.href.includes("/home");
     this.isPopularPage = window.location.href.includes("/popular");
     this.isControlPage = window.location.href.includes("/control-posts/");
+    this.isUserPage = window.location.href.includes("/user/");
     if(this.isHomePage) {
       this.getHomePost(uid, "hot");
     }
@@ -59,6 +65,15 @@ export class PostLinkListComponent {
     if(this.isControlPage) {
       this.community_id = this.activeRoute.snapshot.params["community_id"];
       this.getCommunityPostNotAllow(this.community_id);
+    }
+    if(this.isUserPage) {
+      const username = this.activeRoute.snapshot.params['username'];
+      this.searchUserProfileService.getUserProfileByName("/get-user-info-by-username", username).subscribe({
+        next: (response: UserProfile) => {
+          this.user_id = response.uid;
+          this.getUserPost("new");
+        }
+      })
     }
   }
 
@@ -100,6 +115,8 @@ export class PostLinkListComponent {
       this.getPopularPost(uid, sort_option);
     if(this.isHomePage)
       this.getHomePost(uid, sort_option);
+    if(this.isUserPage) 
+      this.getUserPost(sort_option);
   }
 
   showSortOption() {
@@ -141,6 +158,17 @@ export class PostLinkListComponent {
 
   getCommunityPostNotAllow(uid: number) {
     this.getPostService.getPostInCommunityNotAllow("/get-control-posts", this.community_id).subscribe({
+      next: (response: GetPostResponse[]) => {
+        this.post_result = response;
+      },
+      error: (e: HttpErrorResponse) => {
+        console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
+      }
+    })
+  }
+
+  getUserPost(sort_type: string) {
+    this.getPostService.getPostByUser("/get-posts-by-uid", this.user_id, sort_type).subscribe({
       next: (response: GetPostResponse[]) => {
         this.post_result = response;
       },
