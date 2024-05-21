@@ -48,6 +48,7 @@ export class CommentComponent {
   public isEditorShow: boolean = false;
   public isOptionShow: boolean = false;
   public isUserComment: boolean = false;
+  public isUserPage: boolean = false;
 
   public replyCommentData: string = "";
   public editCommentData: string = "";
@@ -69,6 +70,7 @@ export class CommentComponent {
   
   ngOnInit() {
     this.isDeleted = this.commentData.deleted;
+    this.isUserPage = window.location.href.includes("/user/");
     this.uid = this.storageService.getItem("uid") === "" ? 0 : Number(this.storageService.getItem("uid"));
     this.isUserComment = this.commentData.uid == this.uid ? true : false;
     this.isEditAllowed = this.commentData.uid == this.uid ? true : false;
