@@ -19,6 +19,7 @@ import { CreateCommunityComponent } from './create-community/component/create-co
 import { EditCommunityComponent } from './edit-community/component/edit-community.component';
 import { SearchResultsComponent } from './search-page/search-results/search-results.component';
 import { UserProfileComponent } from './user-profile/user-profile/user-profile.component';
+import { EditUserInfoComponent } from './edit-user-profile/edit-user-info/edit-user-info.component';
 
 const routes: Routes = [
   // { path: 'signin', component: SigninComponent, canActivate: mapToCanActivate([signinGuard])},
@@ -47,6 +48,7 @@ const routes: Routes = [
   {path: 'create-post', component: CreatePostComponent},
   {path: 'create-post?cid=:community_id', component: CreatePostComponent},
   {path: 'edit-community/:community_id', component: EditCommunityComponent},
+  {path: 'setting/:username', component: EditUserInfoComponent},
   { path: 'error', title:'error', component: ErrorComponent },
   // {path: '', redirectTo: 'home', pathMatch: 'full'},
   { path: '**', component: ErrorComponent }

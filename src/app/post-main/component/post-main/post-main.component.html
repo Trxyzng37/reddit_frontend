@@ -23,8 +23,12 @@
     </router-outlet>
 </div>
 
-<app-recent-visited-post *ngIf="!isCommunityPage && !isViewPostPage && !isControlPage"></app-recent-visited-post>
+<app-recent-visited-post *ngIf="!isCommunityPage && !isViewPostPage && !isControlPage && !isUserPage"></app-recent-visited-post>
 <div id="community_info_block" *ngIf="isCommunityPage || isViewPostPage || isControlPage" >
     <community-info [community_info]="community"></community-info>
+</div>
+
+<div id="user_info_block" *ngIf="isUserPage" >
+    <user-info></user-info>
 </div>
 
