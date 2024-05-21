@@ -48,6 +48,7 @@ import { SearchPeopleViewComponent } from './search-page/search-people-view/sear
 import { UserProfileComponent } from './user-profile/user-profile/user-profile.component';
 import { PostViewComponent } from './user-profile/post-view/post-view/post-view.component';
 import { UserInfoComponent } from './user-info/user-info/user-info.component';
+import { EditUserInfoComponent } from './edit-user-profile/edit-user-info/edit-user-info.component';
 
 @NgModule({
   declarations: [
@@ -88,7 +89,8 @@ import { UserInfoComponent } from './user-info/user-info/user-info.component';
     SearchPeopleViewComponent,
     UserProfileComponent,
     PostViewComponent,
-    UserInfoComponent
+    UserInfoComponent,
+    EditUserInfoComponent
   ],
   imports: [
     BrowserModule,

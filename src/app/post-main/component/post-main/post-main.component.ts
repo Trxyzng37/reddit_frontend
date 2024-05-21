@@ -26,6 +26,7 @@ export class PostMainComponent {
   public isViewPostPage: boolean = false;
   public isJoinCommunity: boolean = false;
   public isControlPage: boolean = false;
+  public isUserPage: boolean = false;
   public isOwner: boolean = false;
 
   public community_id: number = 0;
@@ -39,6 +40,7 @@ export class PostMainComponent {
     this.isCommunityPage = window.location.href.includes("/r/");
     this.isViewPostPage = window.location.href.includes("/post/");
     this.isControlPage = window.location.href.includes("/control-posts/");
+    this.isUserPage = window.location.href.includes("/user/");
     if(this.isCommunityPage) {
       let regex = '/r/([0-9]+)';
       const a = window.location.href.match(regex);

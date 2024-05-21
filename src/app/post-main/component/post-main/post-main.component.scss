@@ -34,6 +34,16 @@ app-recent-visited-post {
     overflow: auto;
 }
 
+#user_info_block {
+    position: fixed;
+    width: 18vw;
+    height: calc(100vh - var(--header_size));
+    top: calc(var(--header_size) + 10px);
+    right: calc(var(--margin_home) + 3vw);
+    overflow: auto;
+    background-color: lightpink;
+}
+
 //banner 
 #header_container {
     display: block;
