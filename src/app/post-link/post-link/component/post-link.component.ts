@@ -106,6 +106,13 @@ export class PostLinkComponent {
         this.joinText = this.isJoinCommunity ? 'Leave' : 'Join';
       }
     })
+    if(this.post.type == "editor") {
+        let pattern = /<figure class="image">([\s\S]*?)<\/figure>/;
+        this.content = this.content.replace(pattern, (match, url) => {
+          const s = match.match('src="([^"]+)"')
+          return `<a>${s![1]}</a>`;
+      });
+    }
   }  
 
   ngOnChanges() {
