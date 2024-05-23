@@ -8,6 +8,7 @@
 
 a {
     font-size: 16px;
+    margin-left: 5px;
 }
 
 a:hover {
@@ -80,6 +81,7 @@ a:hover {
 #avatar {
     width: 40px;
     height: 40px;
+    border-radius: 50%;
 }
 
 .btn_block {
@@ -94,9 +96,9 @@ a:hover {
 
 .btn {
     height: 40px;
-    width: auto;
+    width: 100%;
     min-width: 60px;
-    padding: 0 10px;
+    margin: 0 10px;
     border-radius: 10px;
     font-size: medium;
     border: 2px solid black;
