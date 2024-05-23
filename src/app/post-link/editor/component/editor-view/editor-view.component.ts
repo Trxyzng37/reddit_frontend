@@ -25,5 +25,10 @@ export class EditorViewComponent {
     this.content = this.content.replace(/<ul/g, '<ul class="ul" ');
     this.content = this.content.replace(/<a/g, '<a class="a" ');
     this.content = this.content.replace(/<blockquote/g, '<blockquote class="blockquote" ');
+    if(window.location.href.includes("/post/")) {
+      const container = document.getElementById("container");
+      container!.style.height = "auto";
+      container!.removeAttribute("id");
+    }
   }
 }

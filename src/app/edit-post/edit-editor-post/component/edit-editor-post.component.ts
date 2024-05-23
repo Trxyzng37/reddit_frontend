@@ -90,7 +90,7 @@ export class EditEditorPostComponent {
     images_file_types: 'jpg,svg,webp,png,jpeg',
     images_reuse_filename: true,
     image_dimensions: false,
-    // image_caption: true,
+    image_caption: true,
     image_description: false,
     statusbar: true,
     elementpath: false,

@@ -84,12 +84,24 @@ i {
 
 #btn_close_zoom {
     position: absolute;
-    top: 20px;
+    top: 23px;
     right: 20px;
     width: 50px;
-    height: 50px;
+    aspect-ratio: 1/1;
+    font-size: 45px;
+    color: #ffffff;
 }
 
 #btn_close_zoom:hover {
     cursor: pointer;
+}
+
+#btn_caption {
+    position: absolute;
+    top: 23px;
+    right: 100px;
+    width: 50px;
+    aspect-ratio: 1/1;
+    font-size: 45px;
+    color: #ffffff;
 }
