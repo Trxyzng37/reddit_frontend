@@ -96,7 +96,7 @@ import { DefaultResponse } from 'src/app/shared/pojo/default-response';
       this.communityService.getCommunityInfoById(this.post.community_id.toString()).subscribe({
         next: (response: Communities) => {
           this.communityInfo = response;
-          this.isCommunityOwner = uid === this.communityInfo.uid;
+          this.isCommunityOwner = uid == (this.communityInfo.uid != null ? this.communityInfo.uid : 0);
           this.isAllow = this.post.allow == 0 ? true : false;
         }
       })
