@@ -47,12 +47,12 @@ app-post {
     background-color: rgb(39, 71, 167);
 }
 
-#comment_block {
-    width: calc(100% - 40px);
-    height: 200px;
-    background-color: aqua;
-    margin: 20px 0 50px 0;
-}
+// #comment_block {
+//     width: calc(100% - 40px);
+//     height: 200px;
+//     background-color: aqua;
+//     margin: 20px 0 50px 0;
+// }
 
 comment {
     width: 100%;
@@ -60,12 +60,11 @@ comment {
 
 .comment_container {
     width: calc(100% - 40px);
-    height: 100%;
+    height: auto;
 }
 
 app-comment {
     width: 100%;
-    margin: 0 20px;
 }
 
 #no_comment_block {

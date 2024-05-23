@@ -38,6 +38,7 @@ export class ViewDetailPostComponent {
   public commentResults: Comment[] = [];
   public content: string = "";
   public isDeleted: boolean = false;
+  public width: string[] = [];
 
   ngOnInit() {
      this.postId = this.route.snapshot.params['post_id'];
@@ -54,6 +55,9 @@ export class ViewDetailPostComponent {
      this.getCommentService.getComments(this.postId).subscribe({
       next: (response: Comment[]) => {
         this.commentResults = response;
+        for(let comment of this.commentResults) {
+          // this.width.push("calc(100% - " + comment.level*30 + "px)");
+        }
       },
       error: (e: HttpErrorResponse) => {
         console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
