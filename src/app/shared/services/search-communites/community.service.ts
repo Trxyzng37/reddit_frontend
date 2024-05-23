@@ -33,6 +33,13 @@ export class CommunityService {
     return this.getService.get(endpointWithParameter, header, false);
   }
 
+  public getCommunityInfoByUid(uid: number): Observable<Communities[]> {
+    const parameter: string ="uid=" + uid; 
+    const endpointWithParameter: string = "/get-community-info-by-uid" + "?" + parameter;
+    const header: HttpHeaders = new HttpHeaders();
+    return this.getService.get(endpointWithParameter, header, false);
+  }
+
   public getSubscribedCommunitiesByUid(uid: number): Observable<Communities[]> {
     const parameter: string ="uid=" + uid; 
     const endpointWithParameter: string = "/get-subscribed-communities" + "?" + parameter;
