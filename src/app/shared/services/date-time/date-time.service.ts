@@ -69,5 +69,13 @@ export class DateTimeService {
     return shownDate;
   }
 
+  getStringRepresentDateTime(created_at: string): string {
+    const date = new Date(created_at);
+    const day = date.getUTCDate();
+    const year = date.getUTCFullYear();
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const month = monthNames[date.getUTCMonth()];
 
+    return `${month}, ${day}, ${year}`;
+  }
 }
