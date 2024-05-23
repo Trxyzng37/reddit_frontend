@@ -1,9 +1,9 @@
 
 <div class="container" [style.padding-left]="margin" [ngClass]="{'user_comment': isUserComment == true}" [ngStyle]="{'margin-top': commentData.level === 0 ? '10px' : '0'}">
     <div id="header" (click)="showComment($event)">
-        <img [attr.src]="isShown ? '../../../../assets/user-icon.png' : '../../../../assets/icon/plus.png'" />
+        <img [attr.src]="isShown ? commentData.user_icon : '../../../../assets/icon/plus.png'" />
         <div id="info_block">
-            <p>{{commentData.uid}}</p>
+            <p>{{commentData.username}}</p>
             <pre> • </pre>
             <p>{{shownDate}}</p>
         </div>

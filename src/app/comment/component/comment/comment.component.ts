@@ -36,7 +36,7 @@ export class CommentComponent {
   ) {}
 
 
-  @Input() commentData!: Comment;
+  @Input() commentData: Comment = new Comment(0,0,'','',0,'',0,'',0,false);
   @Input() postId: number = 0;
   @Output() commentModified = new EventEmitter<boolean>();
 
@@ -307,14 +307,6 @@ export class CommentComponent {
       this.createCommentService.createComment(this.postId, this.commentData._id, this.replyCommentData, this.commentData.level+1).subscribe({
         next: (response: CreateCommentResponse) => {
           this.commentModified.emit(true);
-          // Swal.fire({
-          //   titleText: "Create comment successfully",
-          //   icon: "success",
-          //   heightAuto: true,
-          //   showConfirmButton: true,
-          //   focusCancel: false,
-          //   focusConfirm: false
-          // })
         },
         error: (e: HttpErrorResponse) => {
           console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
