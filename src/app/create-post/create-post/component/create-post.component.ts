@@ -60,6 +60,7 @@ export class CreatePostComponent {
           this.community_id = response.id;
           this.community = response.name;
           this.avatar = response.avatar;
+          this.allow = response.scope == 0 ? 1 : 0;
           this.AllowSubmit();
         }
       })

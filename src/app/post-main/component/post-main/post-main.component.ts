@@ -7,6 +7,7 @@ import { CommunityService } from 'src/app/shared/services/search-communites/comm
 import { StorageService } from 'src/app/shared/storage/storage.service';
 import { GetPostService } from 'src/app/view-detail-post/view-detail-post/service/get-post/get-post.service';
 import { ActivatedRoute } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-post-main',
@@ -30,7 +31,7 @@ export class PostMainComponent {
   public isOwner: boolean = false;
 
   public community_id: number = 0;
-  public community: Communities = new Communities(0, "", 0, "", "", 0, "", "", 0);
+  public community: Communities = new Communities(0, "", 0, "", "", 0, "", "", 0, 0);
   public banner_url: string = "../../../assets/banner/lol.png";
   public avatar_url: string = "../../../assets/icon/tft.jpg";
   public joinText: string = this.isJoinCommunity ? 'Joined' : 'Join';
@@ -50,6 +51,11 @@ export class PostMainComponent {
           next: (response: Communities) => {
             this.community = response;
             this.isOwner = uid == this.community.uid;
+            if(this.community.deleted == 1)
+              Swal.fire("The community\nr/"+this.community.name+"\nhas been deleted","","warning").then((result)=> {
+                if(result.isConfirmed) 
+                  window.history.back();
+              })
           }
         })
         this.communityService.checkJoinCommunityStatus(uid, this.community_id).subscribe({
@@ -85,6 +91,11 @@ export class PostMainComponent {
           next: (response: Communities) => {
             this.community = response;
             this.isOwner = uid == this.community.uid;
+            if(this.community.deleted == 1)
+              Swal.fire("The community\nr/"+this.community.name+"\nhas been deleted","","warning").then((result)=> {
+                if(result.isConfirmed) 
+                  window.history.back();
+              })
           }
         })
       }

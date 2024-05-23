@@ -6,8 +6,6 @@ import { UserProfile } from 'src/app/shared/pojo/pojo/user-profile';
 import { CommunityService } from 'src/app/shared/services/search-communites/community.service';
 import { StorageService } from 'src/app/shared/storage/storage.service';
 import { JoinCommunityResponse } from 'src/app/shared/services/search-communites/pojo/join-community-response';
-import { GetPostService } from 'src/app/view-detail-post/view-detail-post/service/get-post/get-post.service';
-import { GetPostResponse } from 'src/app/post-link-list/pojo/get-post-response';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -23,7 +21,7 @@ export class CommunityInfoComponent {
     private storageService: StorageService
   ) {}
 
-  @Input() community_info: Communities = new Communities(0, "", 0, "", "", 0, "", "", 0);
+  @Input() community_info: Communities = new Communities(0, "", 0, "", "", 0, "", "", 0,0);
 
   public userInfo: UserProfile = new UserProfile(0, "", "", "", 0, 0, "");
   public isJoinCommunity: boolean = false;

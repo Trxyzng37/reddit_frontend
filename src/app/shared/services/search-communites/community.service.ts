@@ -6,6 +6,8 @@ import { Communities } from '../../pojo/pojo/communities';
 import { PostService } from '../post/post.service';
 import { JoinCommunityRequest } from './pojo/join-community-request';
 import { JoinCommunityResponse } from './pojo/join-community-response';
+import { DefaultResponse } from '../../pojo/default-response';
+import { DeleteCommunityRequest } from './pojo/delete-community-request';
 
 @Injectable({
   providedIn: 'root'
@@ -60,5 +62,14 @@ export class CommunityService {
     const endpointWithParameter: string = "/check-join-community" + "?" + "uid=" + uid + "&" + "cid=" + community_id;
     const header: HttpHeaders = new HttpHeaders();
     return this.getService.get(endpointWithParameter, header, false);
+  }
+
+  public deleteCommunity(community_id: number, uid: number, deleted: number): Observable<DefaultResponse> {
+    const endpoint: string = "/delete-community";
+    const body = JSON.stringify(new DeleteCommunityRequest(community_id, uid, deleted));
+    let header: HttpHeaders = new HttpHeaders();
+    header = header.append("Accept", 'application/json');
+    header = header.append('Content-Type', 'application/json');
+    return this.postService.post(endpoint, header, body, false);
   }
 }
