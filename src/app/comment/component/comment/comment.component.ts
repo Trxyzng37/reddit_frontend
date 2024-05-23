@@ -77,7 +77,7 @@ export class CommentComponent {
     this.isDeleteAllowed = this.commentData.uid == this.uid ? true : false;
     this.isReplyAllowed = this.commentData.uid != this.uid ? true : false;
     this.shownDate = this.dateTimeService.getTimeByCompareCreatedAtAndCurrentDate(this.commentData.created_at);
-    this.margin = this.commentData.level*30 + "px";
+    // this.margin = this.commentData.level*30 + "px";
     this.commentData.content = this.commentData.content.replace(/<img/g, '<img style="display:block;" ');
     this.commentData.content = this.commentData.content.replace(/<ol/g, '<ol style="margin-left:20px;" ');
     this.commentData.content = this.commentData.content.replace(/<ul/g, '<ul style="margin-left:30px;" ');
