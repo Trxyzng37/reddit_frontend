@@ -3,8 +3,9 @@
   <button id="btn_right" type="button" (click)="right($event)" [ngStyle]="{'display':rightAllowed && arr.length != 1 ? 'block':'none'}"><i class="pi pi-angle-right"></i></button>
   <button id="btn_left" type="button" (click)="left($event)" [ngStyle]="{'display':leftAllowed && arr.length != 1 ? 'block':'none'}"><i class="pi pi-angle-left"></i></button>
     <img src="{{arr[index].data}}" (click)="zoomImage($event)"/>
-    <img id="btn_close_zoom" src="../../../../../assets/icon/close.png"  (click)="closeImg($event)" *ngIf="isZoom"/>
-    <div id="caption_link" (click)="preventClick($event)">
+    <i id="btn_close_zoom" class="pi pi-times-circle" title="Back" (click)="closeImg($event)" *ngIf="isZoom"></i>
+    <i class="pi pi-info-circle" id="btn_caption"(click)="showCaption($event)" *ngIf="isZoom" title="Turn caption on or off"></i>
+    <div id="caption_link" *ngIf="isCaptionOn" (click)="preventClick($event)">
       <p id="caption">{{arr[index].caption}}</p>
       <a id="link" href="{{arr[index].link}}" target="_blank">{{arr[index].link}}</a>
     </div>

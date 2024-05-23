@@ -1,8 +1,3 @@
 
 
-<div [innerHTML]=sanitizer.bypassSecurityTrustHtml(content)></div>
-<!-- <editor
-    [init]="viewSettings"
-    [(ngModel)]="content"
->
-</editor> -->
+<div id="container" [innerHTML]=sanitizer.bypassSecurityTrustHtml(content)></div>
