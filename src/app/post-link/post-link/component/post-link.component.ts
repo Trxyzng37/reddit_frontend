@@ -107,11 +107,16 @@ export class PostLinkComponent {
       }
     })
     if(this.post.type == "editor") {
-        let pattern = /<figure class="image">([\s\S]*?)<\/figure>/;
-        this.content = this.content.replace(pattern, (match, url) => {
+        let figure_pattern = /<figure class="image">([\s\S]*?)<\/figure>/g;
+        this.content = this.content.replace(figure_pattern, (match, url) => {
           const s = match.match('src="([^"]+)"')
           return `<a>${s![1]}</a>`;
-      });
+        });
+        let img_pattern = /<img src="[^"]*" alt="">/g;
+        this.content = this.content.replace(img_pattern, (match, url) => {
+          const s = match.match('src="([^"]+)"')
+          return `<a>${s![1]}</a>`;
+        });   
     }
   }  
 
