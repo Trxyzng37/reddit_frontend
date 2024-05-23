@@ -27,7 +27,7 @@
 
     <nav id="main_content">
         <h2 [ngStyle]="{'display': type=='link'?'none':'block'}">{{title}}</h2>
-        <app-editor-view *ngIf="type=='editor'"  [content]="content" ></app-editor-view>
+        <app-editor-view *ngIf="type=='editor'"  [content]="content"></app-editor-view>
         <app-image-view *ngIf="type=='img'" [content]="content" ></app-image-view>
         <app-link-view *ngIf="type=='link'" [title]="title" [content]="content" ></app-link-view>
     </nav>
