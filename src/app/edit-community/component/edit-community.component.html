@@ -35,12 +35,15 @@
                 <label for="protect"><p> <b>Protected</b> (Moderator need to accept post before it can be view)</p></label>
             </div>
         </div>
-        <div id="button_container">
-            <button id="btn_cancel" type="button" (click)="cancel()">Cancel</button>
-            <button id="btn_submit" type="submit" [disabled]="!allowSubmit" (click)="submit()">
-                <p>Edit r/{{community_name.value}}</p>
-            </button>
+        <div id="btn_block">
+            <div id="button_container">
+                <button id="btn_cancel" type="button" (click)="cancel()">Cancel</button>
+                <button id="btn_submit" type="submit" [disabled]="!allowSubmit" (click)="submit()">
+                    <p>Edit r/{{community_name.value}}</p>
+                </button>
+            </div>
         </div>
+        <button id="btn_delete" (click)="deleteCommunity()">Delete community</button>
     </div>
     <div *ngIf="!isOwner">
         <h2>Permission denied</h2>

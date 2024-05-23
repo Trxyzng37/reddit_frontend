@@ -11,6 +11,7 @@ import { CommunityService } from 'src/app/shared/services/search-communites/comm
 import { Communities } from 'src/app/shared/pojo/pojo/communities';
 import { EditCommunityService } from '../service/edit-community.service';
 import { EditCommunityResponse } from '../pojo/edit-community-response';
+import { DefaultResponse } from 'src/app/shared/pojo/default-response';
 
 @Component({
   selector: 'app-edit-community',
@@ -27,7 +28,7 @@ export class EditCommunityComponent {
   ) {}
 
 
-  public communityInfo: Communities = new Communities(0,"",0,"","",0,"","",0);
+  public communityInfo: Communities = new Communities(0,"",0,"","",0,"","",0,0);
   public name_status: string = 'INVALID'; 
   public characterCount: number = 0;
   public description: string = "";
@@ -121,7 +122,7 @@ export class EditCommunityComponent {
 
   cancel() {
     Swal.fire({
-      title: "Are you sure you want to cancel? All the content will be lost",
+      title: "Are you sure you want to cancel? All the change will be lost",
       showCancelButton: true,
       confirmButtonText: "OK",
       denyButtonText: "Continue edit"
@@ -148,6 +149,27 @@ export class EditCommunityComponent {
         }
       }
     })
+  }
+
+  deleteCommunity() {
+    Swal.fire({
+      title: "Are you sure you want to permantly delete community\n r/"+this.communityInfo.name,
+      text: "All posts and comments in this community will be deleted forever!!!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Delete",
+      denyButtonText: "Cancel"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.communityService.deleteCommunity(this.communityInfo.id, this.communityInfo.uid, 1).subscribe({
+          next: (response: DefaultResponse) => {
+            Swal.fire("delete community successfully","","success").then((result) => {
+              window.location.href = "/home";
+            })
+          }
+        })
+      }
+    });
   }
 }
 

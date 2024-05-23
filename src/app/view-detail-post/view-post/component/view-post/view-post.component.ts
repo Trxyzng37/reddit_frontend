@@ -65,7 +65,7 @@ import { DefaultResponse } from 'src/app/shared/pojo/default-response';
     public isJoinCommunity: boolean = false;
     public isDeleted: boolean = false;
     public joinText: string = this.isJoinCommunity ? 'Leave' : 'Join';
-    public communityInfo: Communities = new Communities(0,'',0,'','',0,'','',0);
+    public communityInfo: Communities = new Communities(0,'',0,'','',0,'','',0,0);
 
     public  upvote = "../../../../../assets/icon/upvote.png"
     public  upvote_fill = "../../../../../assets/icon/upvote-fill.png"

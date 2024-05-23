@@ -8,11 +8,12 @@ export class Communities {
     public avatar: string;
     public banner: string;
     public scope: number;
+    public deleted: number;
 
     public constructor(id: number, name: string, uid: number,
                         description: string, created_at: string, 
                         subscriber_count: number, avatar: string,
-                        banner: string, scope: number) {
+                        banner: string, scope: number, deleted: number) {
         this.id = id;
         this.name = name;
         this.uid = uid;
@@ -22,5 +23,6 @@ export class Communities {
         this.avatar = avatar;
         this.banner = banner;
         this.scope = scope;
+        this.deleted = deleted;
     }
 }
