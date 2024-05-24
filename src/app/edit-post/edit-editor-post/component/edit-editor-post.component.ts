@@ -119,7 +119,7 @@ export class EditEditorPostComponent {
     content_css: 'tinymce-5',
     content_style: 
       'p { margin: 0; } ' + 
-      'img { display: block; out-line: 0; max-width: 100%; max-height: 100%}' +
+      'img { display: block; margin: 0 auto; out-line: 0; max-width: 100%; max-height: 100%}' +
       'body {line-height: normal}' +
       'pre[class*=language-] {font-family: Consolas}',
     file_picker_callback: (cb: any, value:any, meta:any) => {
