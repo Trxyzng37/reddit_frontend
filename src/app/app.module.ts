@@ -49,6 +49,7 @@ import { UserProfileComponent } from './user-profile/user-profile/user-profile.c
 import { PostViewComponent } from './user-profile/post-view/post-view/post-view.component';
 import { UserInfoComponent } from './user-info/user-info/user-info.component';
 import { EditUserInfoComponent } from './edit-user-profile/edit-user-info/edit-user-info.component';
+import { CommentViewComponent } from './user-profile/comment-view/comment-view/comment-view.component';
 
 @NgModule({
   declarations: [
@@ -90,7 +91,8 @@ import { EditUserInfoComponent } from './edit-user-profile/edit-user-info/edit-u
     UserProfileComponent,
     PostViewComponent,
     UserInfoComponent,
-    EditUserInfoComponent
+    EditUserInfoComponent,
+    CommentViewComponent
   ],
   imports: [
     BrowserModule,
