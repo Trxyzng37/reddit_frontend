@@ -13,7 +13,8 @@ export class SearchUserProfileService {
     private getService: GetService
   ) { }
 
-  private endpoint: string = "/find-user-profile"
+  private endpoint: string = "/find-user-profile";
+  private uid_endpoint: string = "/get-user-info-by-uid";
 
   public searchUserProfile(name: string): Observable<UserProfile[]> {
     const parameter: string ="name=" + name; 
@@ -25,6 +26,13 @@ export class SearchUserProfileService {
   public getUserProfileByName(endpoint: string, name: string): Observable<UserProfile> {
     const parameter: string ="username=" + name; 
     const endpointWithParameter: string = endpoint + "?" + parameter;
+    const header: HttpHeaders = new HttpHeaders();
+    return this.getService.get(endpointWithParameter, header, false);
+  }
+
+  public getUserProfileByUid(uid: number): Observable<UserProfile> {
+    const parameter: string ="uid=" + uid; 
+    const endpointWithParameter: string = this.uid_endpoint + "?" + parameter;
     const header: HttpHeaders = new HttpHeaders();
     return this.getService.get(endpointWithParameter, header, false);
   }
