@@ -19,7 +19,7 @@ export class HeaderBarComponent {
     private storageService: StorageService,
     private searchCommunitiesService: CommunityService,
     private searchUserProfileService: SearchUserProfileService,
-    private element: ElementRef,
+    private userProfileService: SearchUserProfileService,
     private router: Router
   ) {}
 
@@ -27,11 +27,18 @@ export class HeaderBarComponent {
   public isProfileMenuOpen: boolean = false;
   public communities_result: Communities[] = [];
   public user_profile_result: UserProfile[] = [];
+  public userInfo: UserProfile = new UserProfile(0,'','','',0,0,'');
 
   ngOnInit() {
     this.isSignIn = this.storageService.getItem("isSignIn") === "true" ? true:false;
     console.log(this.storageService.getItem("isSignIn"))
     this.storageService.setItem("isSignIn", "true");
+    const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid")); 
+    this.userProfileService.getUserProfileByUid(uid).subscribe({
+      next: (response: UserProfile) => {
+        this.userInfo = response;
+      }
+    })
   }
 
   onClick() {
@@ -85,5 +92,9 @@ export class HeaderBarComponent {
   logOut() {
     this.router.navigate(["/signin"])
     this.storageService.setItem("isSignIn", "false");
+  }
+
+  navigateToUserProfile() {
+    window.location.href = "/user/" + this.userInfo.username;
   }
 }
