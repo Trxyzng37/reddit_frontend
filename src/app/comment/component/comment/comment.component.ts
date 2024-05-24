@@ -36,7 +36,7 @@ export class CommentComponent {
   ) {}
 
 
-  @Input() commentData: Comment = new Comment(0,0,'','',0,'',0,'',0,false);
+  @Input() commentData: Comment = new Comment(0,0,0,'','',0,'',0,'',0,false);
   @Input() postId: number = 0;
   @Output() commentModified = new EventEmitter<boolean>();
 
@@ -69,6 +69,7 @@ export class CommentComponent {
   public  downvote_fill = "../../../../../assets/icon/downvote-comment-fill.png"
   
   ngOnInit() {
+    this.commentData.content = this.commentData.content.replace("<img src=", "<img class='img_comment' src=");
     this.isDeleted = this.commentData.deleted;
     this.isUserPage = window.location.href.includes("/user/");
     this.uid = this.storageService.getItem("uid") === "" ? 0 : Number(this.storageService.getItem("uid"));
