@@ -10,6 +10,7 @@ import { RecentVisitService } from 'src/app/shared/services/recent-visit/recent-
 import { DefaultResponse } from 'src/app/shared/pojo/default-response';
 import { SearchUserProfileService } from 'src/app/shared/services/search-user-profile/search-user-profile.service';
 import { UserProfile } from 'src/app/shared/pojo/pojo/user-profile';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-post-link-list',
   templateUrl: './post-link-list.component.html',
@@ -25,6 +26,8 @@ export class PostLinkListComponent {
     private recentVisitService: RecentVisitService,
     private searchUserProfileService: SearchUserProfileService
   ) {}
+
+  @Input() searchOption: string = "posts";
 
   post_result: GetPostResponse[] = [];
   public isSortOptionShow: boolean = false;
@@ -75,6 +78,11 @@ export class PostLinkListComponent {
         }
       })
     }
+  }
+
+  ngOnChanges() {
+    if(this.user_id != 0 && this.searchOption == "wait_for_approve")
+      this.getPostsByUidAndNotAllow(this.user_id);
   }
 
   addPost(o: GetPostResponse) {
@@ -187,5 +195,19 @@ export class PostLinkListComponent {
     this.post_result = this.post_result.filter( post => {
       return post.post_id !== post_id
     } )
+  }
+
+  showProgress = false;
+  getPostsByUidAndNotAllow(uid: number) {
+    this.showProgress = true;
+    this.getPostService.getPostsByUidAndNotAllowAndNotDeleted("/get-posts-by-uid-not-delete-not-allow", uid).subscribe({
+      next: (response: GetPostResponse[]) => {
+        this.post_result = response;
+        this.showProgress = false;
+      },
+      error: (e: HttpErrorResponse) => {
+        console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
+      }
+    })
   }
 }

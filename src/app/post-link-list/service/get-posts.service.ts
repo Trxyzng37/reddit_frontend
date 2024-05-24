@@ -57,4 +57,10 @@ export class GetPostsService {
     let header: HttpHeaders = new HttpHeaders();
     return this.getService.get(fullUrl, header, false);
   }
+
+  public getPostsByUidAndNotAllowAndNotDeleted(endpoint: string, uid: number): Observable<GetPostResponse[]> {
+    const fullUrl = endpoint + "?" + "uid=" + uid; 
+    let header: HttpHeaders = new HttpHeaders();
+    return this.getService.get(fullUrl, header, false);
+  }
 }
