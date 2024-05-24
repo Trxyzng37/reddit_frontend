@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { SearchUserProfileService } from 'src/app/shared/services/search-user-profile/search-user-profile.service';
 import { UserProfile } from 'src/app/shared/pojo/pojo/user-profile';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GetCommentsService } from 'src/app/view-detail-post/view-detail-post/service/get-comments/get-comments.service';
 import { Comment } from 'src/app/view-detail-post/view-detail-post/pojo/comment';
 import { HttpErrorResponse } from '@angular/common/http';
+import { StorageService } from 'src/app/shared/storage/storage.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -14,6 +15,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class UserProfileComponent {
   public constructor(
     private searchUserProfileService: SearchUserProfileService,
+    private storageService: StorageService,
     private getCommentService: GetCommentsService,
     private activeRoute: ActivatedRoute
   ) {}
@@ -23,13 +25,15 @@ export class UserProfileComponent {
   public searchOption: string = "posts";
   public sort_option: string = "New";
   public isSortOptionShow: boolean = false;
-
+  public isOwner: boolean = false;
 
   ngOnInit() {
-    const username = this.activeRoute.snapshot.params['username']
+    const username = this.activeRoute.snapshot.params['username'];
+    const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
     this.searchUserProfileService.getUserProfileByName("/get-user-info-by-username", username).subscribe({
       next: (response: UserProfile) => {
         this.userInfo = response;
+        this.isOwner = uid == this.userInfo.uid;
         this.getCommentsByUid("new");
       }
     })

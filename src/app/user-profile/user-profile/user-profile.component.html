@@ -9,6 +9,7 @@
 <div id="btn_block">
     <button type="button" [ngClass]="{'selected_btn': searchOption == 'posts'}" (click)="selectSearchOption('posts')">Posts</button>
     <button type="button" [ngClass]="{'selected_btn': searchOption == 'comments'}" (click)="selectSearchOption('comments')">Comments</button>
+    <button type="button" *ngIf="isOwner" [ngClass]="{'selected_btn': searchOption == 'wait_for_approve'}" (click)="selectSearchOption('wait_for_approve')">Wait for approve</button>
 </div>
 
 <div id="sort_container" *ngIf="searchOption == 'comments'">
@@ -25,6 +26,7 @@
 </div>
 
 <app-post-link-list [ngStyle]="{'display': searchOption == 'posts' ? 'block' : 'none'}"></app-post-link-list>
+<app-post-link-list [searchOption]="searchOption" [ngStyle]="{'display': searchOption == 'wait_for_approve' ? 'block' : 'none'}"></app-post-link-list>
 <div id="comment_container" [ngStyle]="{'display': searchOption == 'comments' ? 'block' : 'none'}">
     <app-comment-view
         *ngFor="let comment of comments"

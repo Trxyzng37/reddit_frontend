@@ -40,7 +40,7 @@ const routes: Routes = [
         {path: 'post/:post_id', title: 'view-post', component: ViewDetailPostComponent},
         {path: 'control-posts/:community_id', component: PostLinkListComponent},
         {path: 'search/:text', component: SearchResultsComponent},
-        {path: 'user/:username', component: UserProfileComponent},
+        {path: 'user/:username', component: UserProfileComponent}
       ]
       }
     ]
