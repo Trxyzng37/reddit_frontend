@@ -26,8 +26,9 @@
 
 <app-post-link-list [ngStyle]="{'display': searchOption == 'posts' ? 'block' : 'none'}"></app-post-link-list>
 <div id="comment_container" [ngStyle]="{'display': searchOption == 'comments' ? 'block' : 'none'}">
-    <app-comment 
+    <app-comment-view
         *ngFor="let comment of comments"
         [commentData]="comment"
-    ></app-comment>
+    ></app-comment-view>
+    <div *ngIf="comments.length == 0" style="width: 100%; padding: 50px 0; text-align: center;">This user has no comment</div>
 </div>
