@@ -42,7 +42,7 @@
     [commentData]="comment"
     [postId]="postId"
     (commentModified)="reloadComment($event)"
-    [ngStyle]="{'padding-left': comment.level*30+'px', 'width': width[i], 'display': 'block'}"
+    [ngStyle]="{'padding-left': comment.level*30+'px', 'width': width[i], 'display': 'block', 'margin-top': comment.level == 0 ? '30px' : 0}"
     >
     </app-comment>
 </div>
