@@ -20,11 +20,13 @@ export class NavigationBarComponent {
   public isOpen: boolean = true;
   public recent_status: string = 'down';
   public favorite_status: string = 'down';
+  public moderation_status:boolean = false;
 
   @Output() showCommunityFormEvent = new EventEmitter<boolean>();
 
   public favoriteCommunities: Communities[] = [];
   public recentVisitCommunities: Communities[] = [];
+  public moderationCommunities: Communities[] = [];
 
   ngOnInit() {
     const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
@@ -38,6 +40,11 @@ export class NavigationBarComponent {
         this.recentVisitCommunities = response;
       }
     })
+    this.communityService.getCommunityInfoByUid(uid).subscribe({
+      next: (response: Communities[]) => {
+        this.moderationCommunities = response;
+      }
+    })
   }
 
   change_recent_status() {
@@ -47,6 +54,10 @@ export class NavigationBarComponent {
 
   change_favorite_status() {
     this.favorite_status = this.favorite_status === 'up' ? 'down':'up';
+  }
+
+  change_moderation_status() {
+    this.moderation_status = !this.moderation_status;
   }
 
   showCreateCommunityForm() {
