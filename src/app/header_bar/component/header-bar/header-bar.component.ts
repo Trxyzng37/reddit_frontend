@@ -97,4 +97,8 @@ export class HeaderBarComponent {
   navigateToUserProfile() {
     window.location.href = "/user/" + this.userInfo.username;
   }
+
+  createPost() {
+    window.location.href = "/create-post";
+  }
 }
