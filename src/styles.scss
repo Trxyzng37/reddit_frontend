@@ -145,3 +145,7 @@ a, a:visited {
   max-width: 200px;
   max-height: 200px;
 }
+
+input:focus {
+  outline: none !important;
+}
