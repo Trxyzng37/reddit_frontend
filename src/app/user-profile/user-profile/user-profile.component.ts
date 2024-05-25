@@ -26,6 +26,7 @@ export class UserProfileComponent {
   public sort_option: string = "New";
   public isSortOptionShow: boolean = false;
   public isOwner: boolean = false;
+  public isLoad: boolean = false;
 
   ngOnInit() {
     const username = this.activeRoute.snapshot.params['username'];
@@ -39,8 +40,23 @@ export class UserProfileComponent {
     })
   }
 
+  count=0;
   selectSearchOption(option: string) {
     this.searchOption = option;
+    if(option == "wait_for_approve") {
+      
+      if(this.count == 0) {
+        this.isLoad = true;
+        // setTimeout(()=>{
+        //   this.isLoad = false;
+        // }, 3000)
+      }
+      this.count++;
+    }
+  }
+
+  loadApprove(event: Event) {
+    this.isLoad = false;
   }
 
   selectSort(sort_type: string) {

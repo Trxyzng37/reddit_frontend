@@ -26,11 +26,15 @@
 </div>
 
 <app-post-link-list [ngStyle]="{'display': searchOption == 'posts' ? 'block' : 'none'}"></app-post-link-list>
-<app-post-link-list [searchOption]="searchOption" [ngStyle]="{'display': searchOption == 'wait_for_approve' ? 'block' : 'none'}"></app-post-link-list>
+<app-post-link-list [searchOption]="searchOption" (isLoadEvent)="loadApprove($event)" [ngStyle]="{'display': searchOption == 'wait_for_approve' ? 'block' : 'none'}"></app-post-link-list>
 <div id="comment_container" [ngStyle]="{'display': searchOption == 'comments' ? 'block' : 'none'}">
     <app-comment-view
         *ngFor="let comment of comments"
         [commentData]="comment"
     ></app-comment-view>
     <div *ngIf="comments.length == 0" style="width: 100%; padding: 50px 0; text-align: center;">This user has no comment</div>
+</div>
+
+<div id="loading_block" *ngIf="isLoad">
+    <b>Loading data. Please wait...</b>
 </div>
