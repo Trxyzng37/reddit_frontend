@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { GetPostResponse } from '../../pojo/get-post-response';
 import { GetPostsService } from '../../service/get-posts.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -28,6 +28,7 @@ export class PostLinkListComponent {
   ) {}
 
   @Input() searchOption: string = "posts";
+  @Output() isLoadEvent = new EventEmitter<boolean>();
 
   post_result: GetPostResponse[] = [];
   public isSortOptionShow: boolean = false;
@@ -204,6 +205,7 @@ export class PostLinkListComponent {
       next: (response: GetPostResponse[]) => {
         this.post_result = response;
         this.showProgress = false;
+        this.isLoadEvent.emit(true);
       },
       error: (e: HttpErrorResponse) => {
         console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);

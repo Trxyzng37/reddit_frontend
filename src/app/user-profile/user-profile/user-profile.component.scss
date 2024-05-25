@@ -1,3 +1,6 @@
+:host {
+    position: relative;
+}
 
 #header, #btn_block {
     display: flex;
@@ -106,4 +109,17 @@
 app-comment {
     padding: 10px 0;
     border-bottom: 1px solid black;
+}
+
+#loading_block {
+    width: 51vw; 
+    height: 100vh;
+    position: fixed;
+    background-color: var(--primary_background_color_hover);
+    left: 375px;
+    top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
 }
