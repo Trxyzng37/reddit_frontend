@@ -7,6 +7,7 @@ import { CommunityService } from 'src/app/shared/services/search-communites/comm
 import { StorageService } from 'src/app/shared/storage/storage.service';
 import { JoinCommunityResponse } from 'src/app/shared/services/search-communites/pojo/join-community-response';
 import { HttpErrorResponse } from '@angular/common/http';
+import { PresentationService } from 'src/app/shared/services/presentation/presentation.service';
 
 @Component({
   selector: 'community-info',
@@ -18,7 +19,8 @@ export class CommunityInfoComponent {
   constructor (
     private userInfoService: UserInfoService,
     private communityService: CommunityService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    public presentationService: PresentationService
   ) {}
 
   @Input() community_info: Communities = new Communities(0, "", 0, "", "", 0, "", "", 0,0);

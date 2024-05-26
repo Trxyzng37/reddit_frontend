@@ -50,12 +50,17 @@ span {
     font-size: 1.5rem;
 }
 
+#btn_popular {
+    margin-bottom: 10px;
+}
+
 .btn_change_status {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    margin: 10px 0;
 }
 
 .btn_icon.pi-chevron-up::before, .pi-chevron-down::before {

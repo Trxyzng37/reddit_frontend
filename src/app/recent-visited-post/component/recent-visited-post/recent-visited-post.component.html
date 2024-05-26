@@ -13,9 +13,9 @@
             </div>
         </div>
         <div id="vote_block">
-            <p style="font-size: 14px;" *ngIf="post.vote > 0">{{post.vote}} upvotes</p>
-            <p style="font-size: 14px;" *ngIf="post.vote == 0">{{post.vote}} vote</p>
-            <p style="font-size: 14px;" *ngIf="post.vote < 0">{{post.vote}} downvotes</p>
+            <p class="txt_vote" *ngIf="post.vote > 0">{{presentationService.transformNumber(post.vote)}} upvotes</p>
+            <p class="txt_vote" *ngIf="post.vote == 0">{{presentationService.transformNumber(post.vote)}} vote</p>
+            <p class="txt_vote" *ngIf="post.vote < 0">{{presentationService.transformNumber(post.vote)}} downvotes</p>
         </div>
     </div>
 </nav>
