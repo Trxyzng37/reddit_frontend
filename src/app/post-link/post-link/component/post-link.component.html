@@ -6,7 +6,6 @@
     [inViewportOptions]="{ threshold: [1] }"
     (inViewportAction)="onIntersection($event)"           
 >
-
     <nav id="community_bar">
         <div id="community_block">
             <a id="community_link" href="/r/{{post.community_id}}" (click)="stopPropagation($event)">
