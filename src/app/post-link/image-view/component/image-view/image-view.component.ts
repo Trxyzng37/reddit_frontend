@@ -12,7 +12,7 @@ export class ImageViewComponent {
   @Input() content: string = "";
   public arr!: Img[];
   public isZoom: boolean = false;
-  public isCaptionOn: boolean = false;
+  public isCaptionOn: boolean = true;
 
   ngOnInit() {
     this.arr = JSON.parse(this.content);
@@ -69,6 +69,7 @@ export class ImageViewComponent {
   closeImg(event: Event) {
     event.stopPropagation();
     this.isZoom = false;
+    this.isCaptionOn = true;
   }
 
   showCaption(event: Event) {
