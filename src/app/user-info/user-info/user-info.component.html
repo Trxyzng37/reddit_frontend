@@ -6,11 +6,11 @@
 
 <div id="karma_block">
     <div class="info">
-        <b>{{userInfo.post_karma}}</b>
+        <b>{{presentationService.formatKarma(userInfo.post_karma)}}</b>
         <p>Post karma</p>
     </div>
     <div class="info">
-        <b>{{userInfo.comment_karma}}</b>
+        <b>{{presentationService.formatKarma(userInfo.comment_karma)}}</b>
         <p>Comment karma</p>
     </div>
 </div>

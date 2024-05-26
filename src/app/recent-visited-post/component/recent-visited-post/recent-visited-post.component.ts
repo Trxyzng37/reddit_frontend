@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RecentVisitService } from 'src/app/shared/services/recent-visit/recent-visit.service';
 import { GetPostResponse } from 'src/app/post-link-list/pojo/get-post-response';
 import { StorageService } from 'src/app/shared/storage/storage.service';
+import { PresentationService } from 'src/app/shared/services/presentation/presentation.service';
 
 @Component({
   selector: 'app-recent-visited-post',
@@ -13,7 +14,8 @@ export class RecentVisitedPostComponent {
 
   public constructor(
     private recentVisitPostService: RecentVisitService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    public presentationService: PresentationService
   ) {}
 
   public posts: GetPostResponse[] = [];

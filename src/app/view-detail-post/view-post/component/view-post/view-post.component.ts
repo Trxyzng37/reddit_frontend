@@ -18,6 +18,7 @@ import { JoinCommunityResponse } from 'src/app/shared/services/search-communites
 import { Communities } from 'src/app/shared/pojo/pojo/communities';
 import { AllowPostService } from 'src/app/post-link/post-link/service/allow-post/allow-post.service';
 import { DefaultResponse } from 'src/app/shared/pojo/default-response';
+import { PresentationService } from 'src/app/shared/services/presentation/presentation.service';
   
   @Component({
     selector: 'app-post',
@@ -34,8 +35,8 @@ import { DefaultResponse } from 'src/app/shared/pojo/default-response';
       private deletePostService: DeletePostService,
       private route: Router,
       private communityService: CommunityService,
-      private allowPostService: AllowPostService
-
+      private allowPostService: AllowPostService,
+      public presentationService: PresentationService
     ) {}
   
     @Input() post: GetPostResponse = new GetPostResponse(0,"",0,"","",0,"","","","","",0,0,0);

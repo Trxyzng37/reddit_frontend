@@ -1,7 +1,7 @@
 <nav id="navigation_bar">
     <nav id="main_navigation">
         <a href="/home"><span class="icon pi pi-home"></span><span>Home</span></a>
-        <a href="/popular"><span class="icon pi pi-chart-line"></span><span>Popular</span></a>
+        <a id="btn_popular" href="/popular"><span class="icon pi pi-chart-line"></span><span>Popular</span></a>
     </nav>
 
     <nav> 
@@ -24,16 +24,16 @@
     </nav>
     <nav> 
         <button class="btn_change_status" type="button" (click)="change_favorite_status()">
-            <span>Favorite</span>
+            <span>Communities</span>
             <span class="pi btn_icon" [ngClass]="favorite_status === 'up' ? 'pi-chevron-down':'pi-chevron-up'"></span>
         </button>
+        <nav [ngStyle]="{'display': favorite_status === 'up' ? 'none':'block'}">
+            <button type="button" (click)="showCreateCommunityForm()"><img id="img_create_community" src="../../../../assets/icon/plus.png" alt=""/><pre>Create a community</pre></button>
+        </nav>
         <div [ngStyle]="{'display': favorite_status === 'up' ? 'none':'block'}">
             <a *ngFor="let favorite_community of favoriteCommunities" href="r/{{favorite_community.id}}"><img id="img_community_icon" src="{{favorite_community.avatar}}" alt=""/><pre>r/{{favorite_community.name}}</pre></a>
         </div>
     </nav>
-    <nav>
-        <button type="button" (click)="showCreateCommunityForm()"><img id="img_create_community" src="../../../../assets/icon/plus.png" alt=""/><pre>Create a community</pre></button>
-    </nav>
-    <p id="trademark">TRXYZNG 2024</p>
+    <!-- <p id="trademark">TRXYZNG 2024</p> -->
 </nav>
 

@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Communities } from 'src/app/shared/pojo/pojo/communities';
 import { UserProfile } from 'src/app/shared/pojo/pojo/user-profile';
 import { DateTimeService } from 'src/app/shared/services/date-time/date-time.service';
+import { PresentationService } from 'src/app/shared/services/presentation/presentation.service';
 import { CommunityService } from 'src/app/shared/services/search-communites/community.service';
 import { SearchUserProfileService } from 'src/app/shared/services/search-user-profile/search-user-profile.service';
 import { StorageService } from 'src/app/shared/storage/storage.service';
@@ -17,7 +18,8 @@ export class UserInfoComponent {
     private searchUserProfileService: SearchUserProfileService,
     private communityService: CommunityService,
     private storageService: StorageService,
-    private dateTimeService: DateTimeService
+    private dateTimeService: DateTimeService,
+    public presentationService: PresentationService
   ) {}
 
   public userInfo: UserProfile = new UserProfile(0,'','','',0,0,'');

@@ -19,6 +19,7 @@ import { AllowPostService } from '../service/allow-post/allow-post.service';
 import { DeletePostService } from 'src/app/edit-post/service/delete-post/delete-post.service';
 import { DeletePostResponse } from 'src/app/edit-post/pojo/delete-post-response';
 import { Communities } from 'src/app/shared/pojo/pojo/communities';
+import { PresentationService } from 'src/app/shared/services/presentation/presentation.service';
 
 @Component({
   selector: 'app-post-link',
@@ -36,7 +37,8 @@ export class PostLinkComponent {
     private communityService: CommunityService,
     private showPostService: CheckShowPostService,
     private allowPostService: AllowPostService,
-    private deletePostService: DeletePostService
+    private deletePostService: DeletePostService,
+    public presentationService: PresentationService
   ) {}
 
   @Input() post!: GetPostResponse;
