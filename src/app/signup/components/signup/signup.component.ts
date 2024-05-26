@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { getCookie } from 'typescript-cookie';
 import { GoogleSignUpResponse } from '../../pojo/google-signup-response';
 import { StorageService } from '../../../shared/storage/storage.service';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -39,6 +40,7 @@ export class SignupComponent implements OnInit {
   public username_status: string = 'INVALID';
   public password_status: string = 'INVALID';
   public confirm_password_status: string = 'INVALID';
+  public isLoad: boolean = false;
 
   ngOnInit(): void {
     this.signUpForm.get('email').valueChanges.subscribe( () => {
@@ -62,20 +64,18 @@ export class SignupComponent implements OnInit {
     });
 
     const cookie: string = getCookie("signup") as string || "";
-    console.log(cookie)
     if (cookie === "") {
-      alert("No cookie signup")
     }
     else {
       try {
         const signup: GoogleSignUpResponse = JSON.parse(cookie);
         if (signup.isSignUp)
-          alert("Signup using google OK")
+          Swal.fire('Sign up using google successfully','','success')
         else
-          alert("A user with this email have already exist")
+          Swal.fire('A user with this email has already exist. \nPlease use a different email','','error')
       }
         catch (e) {
-          alert("Error signup using goolge. Please try to signup again")
+          Swal.fire("Error signup using goolge. Please try again",'','error')
         }
       }
   }
@@ -85,32 +85,38 @@ export class SignupComponent implements OnInit {
       const username: string = this.signUpForm.value.username;
       const password: string = this.signUpForm.value.password;
       const email: string = this.signUpForm.value.email;
+      this.isLoad = true;
       const observable: Observable<UsernamePasswordSignUpResponse> = this.signUpService.UsernamePasswordSignUp(username, password, email);
       observable.subscribe({
         next: (response: UsernamePasswordSignUpResponse) => {
-          console.log(response)
-          console.log("IS SIGN_UP: " + response.isSignUp)
           if (response.isSignUp) {
-            alert("Sign-up OK");
+            // Swal.fire({
+            //   text: 'Sign up successfully',
+            //   icon: 'success'
+            // }).then((result)=>{
+            //   if(result.isConfirmed) {
+            //     this.storageService.setItem("signup-email", email);
+            //     this.router.navigate(["/check-confirm-email-passcode"])
+            //   }
+            // })
             this.storageService.setItem("signup-email", email);
             this.router.navigate(["/check-confirm-email-passcode"])
           }
           else {
-            if (response.emailError) {
-              alert("Email already exist");
+            if (response.emailError == 1) {
+              Swal.fire("Email already exist",'','warning')
             }
-            if (response.usernameError) {
-              alert("Username already exist");
+            if (response.usernameError == 1) {
+              Swal.fire("Username already exist",'','warning')
             }
           }
+          this.isLoad = false;
         },
         error: (e: HttpErrorResponse) => {
-          console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
+          Swal.fire("Error sign up. Please try again",'','error');
+          this.isLoad = false;
         }
       })
-    }
-    else {
-      alert("Make sure all field is follow requirements");
     }
   }
 
