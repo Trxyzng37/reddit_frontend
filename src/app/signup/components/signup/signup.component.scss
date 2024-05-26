@@ -4,6 +4,10 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: var(--primary_background_color);
+    overflow: auto;
 }
 
 :host > * {
@@ -40,16 +44,18 @@ form > p {
     font-size: 13px;
 }
 
-form > input[type=text] {
+form > input {
     margin: 5px 0px 0px 0px;
     border: 1px solid black;
     border-radius: 5px;
     width: 90%;
-    height: 25px;
+    height: auto;
+    padding: 5px 0;
     margin-bottom: 10px;
+    padding-left: 5px;
 }
 
-input[type=text]:focus {
+input[type=text]:focus, input[type=password]:focus {
     border: 2px solid black;
 }
 
@@ -68,8 +74,9 @@ a {
 #btnSignUp {
     background-color: #92e596;
     font-size: medium;
-    width: 70px;
-    height: 30px;
+    width: auto;
+    height: auto;
+    padding: 5px 10px;
     border: 2px black solid;
     border-radius: 5px;
     // position: relative;
@@ -124,3 +131,40 @@ a {
     display: block;
     color: red;
 }
+
+#load_container {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba($color: #000000, $alpha: 0.3);
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#load_block {
+    padding: 60px 80px;
+    background-color: var(--primary_background_color_hover);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+
+.loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 2s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
