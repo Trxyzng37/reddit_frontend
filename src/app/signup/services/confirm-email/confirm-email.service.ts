@@ -41,7 +41,9 @@ export class ConfirmEmailService {
     const endpoint: string = "/resend-confirm-email-passcode";
     const resendEmailPasscodeRequest: ResendEmailPasscodeRequest = new ResendEmailPasscodeRequest(email);
     const requestBody: string = JSON.stringify(resendEmailPasscodeRequest);
-    const header: HttpHeaders = new HttpHeaders();
+    let header: HttpHeaders = new HttpHeaders();
+    header = header.append("Accept", 'application/json');
+    header = header.append('Content-Type', 'application/json');
     return this.postService.post(endpoint, header, requestBody, false);
   }
 }
