@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { ChangePasswordResponse } from '../../pojo/change-password-response';
 import { HttpErrorResponse } from '@angular/common/http';
 import { StorageService } from '../../../shared/storage/storage.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-change-password',
@@ -29,24 +30,31 @@ export class ChangePasswordComponent implements OnInit{
   onSubmit(){
     if (this.ChangePasswordForm.status === "VALID") {
       const password: string = this.ChangePasswordForm.value.newPassword;
-      const observable: Observable<ChangePasswordResponse> = this.changePasswordService.changePassword(password);
-      observable.subscribe({
-        next: (response: ChangePasswordResponse) => {
-          if (response.isPasswordChange) {
-            alert("Change password successfully")
-            this.storageService.removeItem("forgot-password-email");
+      const email: string = this.storageService.getItem("forgot-password-email");
+      if (email === "")
+        Swal.fire("Error changing password. Please try again",'','error');
+      else {
+        const observable: Observable<ChangePasswordResponse> = this.changePasswordService.changePassword(email, password);
+        observable.subscribe({
+          next: (response: ChangePasswordResponse) => {
+            if (response.isPasswordChange) {
+              Swal.fire("Change password successfully",'','success')
+              this.storageService.removeItem("forgot-password-email");
+              this.router.navigate(['/signin'])
+            }
+            if (!response.isPasswordChange) {
+              Swal.fire("Old and new password can not be the same",'','warning');
+            }
+          },
+          error: (e: HttpErrorResponse) => {
+            Swal.fire("Error changing password. Please try again",'','error');
+            console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
           }
-          if (!response.isPasswordChange) {
-            alert("Old and new password can not be the same");
-          }
-        },
-        error: (e: HttpErrorResponse) => {
-          console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
-        }
-      })
+        })
+      }
     }
     else {
-      alert("Field value is not the same");
+      Swal.fire("Field value is not the same",'','warning');
     }
   }
 
