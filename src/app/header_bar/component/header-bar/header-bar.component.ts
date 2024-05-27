@@ -30,9 +30,7 @@ export class HeaderBarComponent {
   public userInfo: UserProfile = new UserProfile(0,'','','',0,0,'');
 
   ngOnInit() {
-    this.isSignIn = this.storageService.getItem("isSignIn") === "true" ? true:false;
-    console.log(this.storageService.getItem("isSignIn"))
-    this.storageService.setItem("isSignIn", "true");
+    this.isSignIn = (this.storageService.getItem("uid") != "" && this.storageService.getItem("uid") != "0") ? true:false;
     const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid")); 
     this.userProfileService.getUserProfileByUid(uid).subscribe({
       next: (response: UserProfile) => {

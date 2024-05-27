@@ -4,9 +4,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    // width: 100%;
-    // height: 100%;
     --signin_length: 300px;
+    height: 100vh;
+    overflow-x: hidden;
 }
 
 :host > * {
@@ -25,7 +25,7 @@
 
 form {
     width: var(--signin_length);
-    height: 200px;
+    height: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -44,11 +44,12 @@ form > input[type=text], input[type=password] {
     border: 1px solid black;
     border-radius: 5px;
     width: 90%;
-    height: 25px;
+    height: auto;
     margin-bottom: 10px;
+    padding: 5px;
 }
 
-input[type=text]:focus, input[type=password]:focus {
+input[type=password]:focus, #username:focus {
     border: 2px solid black;
 }
 
@@ -76,19 +77,15 @@ p {
     font-size: medium;
 }
 
-input:focus {
-    border: 2px solid black;
-    border-radius: 5px;
-}
-
 #btnSignIn {
     background-color: #92e596;
-    font-size: medium;
-    width: 70px;
-    height: 30px;
+    font-size: 16px;
+    width: auto;
+    height: auto;
+    padding: 5px 10px;
     border: 2px black solid;
     border-radius: 5px;
-    position: relative;
+    margin-bottom: 10px;
 }
 
 #google_login {

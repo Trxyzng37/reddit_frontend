@@ -8,7 +8,7 @@
         <a routerLink="/forgot-password">Forgot password?</a>
     </div>
     <input id="password" name="password" type="password" formControlName="password" required>
-    <button type="submit" id="btnSignIn">Login</button>
+    <button type="submit" id="btnSignIn" [disabled]="signInForm.status == 'INVALID'">Login</button>
 </form>
 
 <p class="p">Or</p>
