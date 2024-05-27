@@ -64,7 +64,7 @@ export class ConfirmEmailComponent {
 
   public reSendPasscode() {
     this.isLoad = true;
-    const observable: Observable<ResendEmailPasscodeResponse> = this.confirmEmailService.reSendPasscode(this.email);
+    const observable: Observable<ResendEmailPasscodeResponse> = this.confirmEmailService.reSendPasscode("/resend-confirm-email-passcode", this.email);
     observable.subscribe({
       next: (response: ResendEmailPasscodeResponse) => {
         if (response.createdNewPasscode) {

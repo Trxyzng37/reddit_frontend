@@ -21,8 +21,6 @@ export class CheckPasscodeService {
 
   checkPasscode(passcode: number): Observable<PasscodeResponse> {
     const email: string = this.storageService.getItem("forgot-password-email");
-    if (email === "")
-      alert("Empty email for check passcode")
     const sendAt: Date = this.dateTimeService.getCurrentDateTime();
     const passcodeRequest: PassCodeRequest = new PassCodeRequest(email, passcode, sendAt);
     const requestBody: string = JSON.stringify(passcodeRequest);
