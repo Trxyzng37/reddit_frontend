@@ -1,7 +1,7 @@
 
 #video_container {
     width: 100%;
-    height: 50vh;
+    height: calc(50vh + 35px);
 }
 
 #video_container > h3 {
@@ -10,7 +10,7 @@
 
 iframe, video {
     width: 100%;
-    height: calc(100%);
+    height: calc(100% - 35px);
 }
 
 #link_container {
