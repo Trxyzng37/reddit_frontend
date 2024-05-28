@@ -28,11 +28,13 @@ export class CommunityInfoComponent {
   public userInfo: UserProfile = new UserProfile(0, "", "", "", 0, 0, "");
   public isJoinCommunity: boolean = false;
   public isCommunityPage: boolean = false;
+  public isControlPostPage: boolean = false;
   public isOwner: boolean = false;
   public joinText: string = this.isJoinCommunity ? 'Leave' : 'Join';
 
   ngOnInit() {
     this.isCommunityPage = window.location.href.includes("/r/");
+    this.isControlPostPage = window.location.href.includes("/control-posts/");
   }
 
   ngOnChanges() {
