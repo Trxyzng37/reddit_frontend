@@ -7,9 +7,9 @@
                 </div>
                 <h3 >{{post.title}}</h3>
                 <div id="vote_block">
-                    <p style="font-size: 14px;">{{post.vote}} votes</p>
+                    <p style="font-size: 14px;">{{presentationService.transformNumber(post.vote)}} votes</p>
                     <pre> · </pre>
-                    <p style="font-size: 14px;">{{comment_count}} comments</p>
+                    <p style="font-size: 14px;">{{presentationService.transformNumber(comment_count)}} comments</p>
                 </div>
             </div>
             <div id="img_block" *ngIf="img.length != 0">

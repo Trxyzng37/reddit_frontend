@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { DeletePostService } from 'src/app/edit-post/service/delete-post/delete-post.service';
 import { GetPostResponse } from 'src/app/post-link-list/pojo/get-post-response';
 import { DateTimeService } from 'src/app/shared/services/date-time/date-time.service';
+import { PresentationService } from 'src/app/shared/services/presentation/presentation.service';
 import { CommunityService } from 'src/app/shared/services/search-communites/community.service';
 import { StorageService } from 'src/app/shared/storage/storage.service';
 import { Comment } from 'src/app/view-detail-post/view-detail-post/pojo/comment';
@@ -19,6 +20,7 @@ export class SearchPostViewComponent {
     private storageService: StorageService,
     private dateTimeService: DateTimeService,
     private getCommentService: GetCommentsService,
+    public presentationService: PresentationService
   ) {}
 
   @Input() post!: GetPostResponse;
