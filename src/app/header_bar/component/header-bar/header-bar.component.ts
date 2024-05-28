@@ -89,7 +89,8 @@ export class HeaderBarComponent {
 
   logOut() {
     this.router.navigate(["/signin"])
-    this.storageService.setItem("isSignIn", "false");
+    this.storageService.removeItem("uid");
+    this.storageService.removeItem("username");
   }
 
   navigateToUserProfile() {
