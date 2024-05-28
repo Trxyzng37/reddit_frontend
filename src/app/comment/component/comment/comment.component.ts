@@ -227,7 +227,7 @@ export class CommentComponent {
     content_css: 'tinymce-5',
     content_style: 
       'p { margin: 0; } ' + 
-      'img { display: block; out-line: 0; max-width: 100%; max-height: 100%}' +
+      'img { display: block; out-line: 0; max-width: 200px; max-height: 200px}' +
       'body {line-height: normal}' +
       'pre[class*=language-] {font-family: Consolas}',
     file_picker_callback: (cb: any, value:any, meta:any) => {
@@ -378,42 +378,23 @@ export class CommentComponent {
   }
 
   deleteComment() {
-    Swal.fire({
-      titleText: "Do you want to delete this comment",
-      icon: "warning",
-      heightAuto: true,
-      showCancelButton: true,
-      showConfirmButton: true,
-      focusCancel: false,
-      focusConfirm: false
-    }).then((result) => {
-      this.deleteCommentService.deleteComment(this.postId, this.commentData._id).subscribe({
-        next: (response: DeleteCommentResponse) => {
-          this.commentModified.emit(true);
-          // Swal.fire({
-          //   titleText: "Delete comment successfully",
-          //   icon: "success",
-          //   heightAuto: true,
-          //   showConfirmButton: true,
-          //   focusCancel: false,
-          //   focusConfirm: false
-          // })
-        },
-        error: (e: HttpErrorResponse) => {
-          console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
-          if(this.uid == 0) {
-            Swal.fire({
-              titleText: "Error delete comment. Please try again",
-              icon: "error",
-              heightAuto: true,
-              showConfirmButton: true,
-              focusCancel: false,
-              focusConfirm: false
-            })
-          }
+    this.deleteCommentService.deleteComment(this.postId, this.commentData._id).subscribe({
+      next: (response: DeleteCommentResponse) => {
+        this.commentModified.emit(true);
+      },
+      error: (e: HttpErrorResponse) => {
+        console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
+        if(this.uid == 0) {
+          Swal.fire({
+            titleText: "Error delete comment. Please try again",
+            icon: "error",
+            heightAuto: true,
+            showConfirmButton: true,
+            focusCancel: false,
+            focusConfirm: false
+          })
         }
-      })
+      }
     })
-
   }
 }
