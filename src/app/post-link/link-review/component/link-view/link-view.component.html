@@ -2,7 +2,7 @@
 
 <div id="video_container" [ngStyle]="{'display': isYoutubeLink ? 'block' : 'none'}">
     <h3>{{title}}</h3>
-    <iframe [src]="sanitizer.bypassSecurityTrustResourceUrl(data.link)" allow="autoplay">
+    <iframe [src]="sanitizer.bypassSecurityTrustResourceUrl(data.link)" allow="autoplay" allowfullscreen>
     </iframe>
 </div>
 
