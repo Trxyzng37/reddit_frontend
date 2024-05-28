@@ -21,19 +21,19 @@ export class LinkViewComponent {
   
   public isYoutubeLink: boolean = false;
   public data!: OpenGraphResponse;
-  regex = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]*).*/;
+  regex = /https:\/\/www\.youtube\.com\/watch\?v=([A-Za-z0-9]+)/;
   
   ngOnInit() {
     this.data = JSON.parse(this.content);
     // alert(this.data.link)
     if (this.data?.link.match(this.regex)) {
       this.isYoutubeLink = true;
-      const videoId = this.data?.link.match(this.regex)
-      console.log(videoId?.length);
-      this.data.link = `https://www.youtube.com/embed/${videoId![2]}`;
-      console.log(this.data.link)
+      const videoId = this.data.link.match(this.regex)
+      this.data.link = `https://www.youtube.com/embed/${videoId![1]}`;
     }
     else {
+      // if(this.data.image == "")
+      //   this.data.image = "../../../../../assets/icon/logo.png";
     }
   }
 
