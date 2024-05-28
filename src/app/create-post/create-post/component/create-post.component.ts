@@ -39,6 +39,7 @@ export class CreatePostComponent {
   public isImgUpload: boolean = false;
   public isCommunitySearchDropdownOpen: boolean = false;
   public characterCount: number = 0;
+  public isLoad: boolean = false;
 
   public title: string = "";
   public community: string = "";
@@ -188,6 +189,7 @@ export class CreatePostComponent {
     else {
       this.communities = [];
       this.community = "";
+      this.avatar = "../../assets/icon/dashed_circle.png";
     }
     this.AllowSubmit();
   }
@@ -320,17 +322,23 @@ export class CreatePostComponent {
     const title: string = this.title;
     const created_at: Date = this.dateTimeService.getCurrentDateTime();
     console.log("Post type: " + type);
+    this.isLoad = true;
     this.sendPostService.createPost(type, this.community_id, title, content, created_at, this.allow).subscribe({
       next: (response: CreatePostResponse) => {
-        if(response.CREATED === true)
+        if(response.CREATED === true) {
+          this.isLoad = false;
           Swal.fire('Create post successfully', '', 'success').then((result) => {
             if (result.isConfirmed)
               this.route.navigate(["/post/"+response.POST_ID]);
           })
-        else 
-        Swal.fire('Error create post. Please try again', '', 'error')
+        }
+        else {
+          this.isLoad = false;
+          Swal.fire('Error create post. Please try again', '', 'error')
+        }
       },
       error: (e: HttpErrorResponse) => {
+        this.isLoad = false;
         console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
       }
     })
@@ -342,17 +350,23 @@ export class CreatePostComponent {
     const contentStr = JSON.stringify(content);
     const created_at: Date = this.dateTimeService.getCurrentDateTime();
     console.log("Post type: " + type);
+    this.isLoad = true;
     this.sendPostService.createPost(type, this.community_id, title, contentStr, created_at, this.allow).subscribe({
       next: (response: CreatePostResponse) => {
-        if(response.CREATED === true)
+        if(response.CREATED === true) {
+          this.isLoad = false;
           Swal.fire('Create post successfully', '', 'success').then((result) => {
             if (result.isConfirmed)
               this.route.navigate(["/post/"+response.POST_ID]);
           })
-        else 
+        }
+        else {
+          this.isLoad = false;
           Swal.fire('Error create post. Please try again', '', 'error')
+        }
       },
       error: (e: HttpErrorResponse) => {
+        this.isLoad = false;
         console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
       }
     })
@@ -363,18 +377,23 @@ export class CreatePostComponent {
     const title: string = this.title;
     const created_at: Date = this.dateTimeService.getCurrentDateTime();
     console.log("Post type: " + type);
-    
+    this.isLoad = true;
     this.sendPostService.createPost(type, this.community_id, title, content, created_at, this.allow).subscribe({
       next: (response: CreatePostResponse) => {
-        if(response.CREATED === true)
+        if(response.CREATED === true) {
+          this.isLoad= false;
           Swal.fire('Create post successfully', '', 'success').then((result) => {
             if (result.isConfirmed)
               this.route.navigate(["/post/"+response.POST_ID]);
           })
-        else 
+        }
+        else {
+          this.isLoad = false;
           Swal.fire('Error create post. Please try again', '', 'error')
+        }
       },
       error: (e: HttpErrorResponse) => {
+        this.isLoad = false;
         console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
       }
     })
