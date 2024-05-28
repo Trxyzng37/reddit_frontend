@@ -7,7 +7,7 @@
     <nav> 
         <button class="btn_change_status" type="button" (click)="change_moderation_status()">
             <span>Moderation</span>
-            <span class="pi btn_icon" [ngClass]="favorite_status === 'up' ? 'pi-chevron-down':'pi-chevron-up'"></span>
+            <span class="pi btn_icon" [ngClass]="moderation_status ? 'pi-chevron-down':'pi-chevron-up'"></span>
         </button>
         <div [ngStyle]="{'display': moderation_status ? 'none':'block'}">
             <a *ngFor="let moderation_community of moderationCommunities" href="r/{{moderation_community.id}}"><img id="img_community_icon" src="{{moderation_community.avatar}}" alt=""/><pre>r/{{moderation_community.name}}</pre></a>

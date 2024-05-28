@@ -87,6 +87,7 @@ export class PostMainComponent {
       let regex = '/control-posts/([0-9]+)';
       const a = window.location.href.match(regex);
       if(a != null) {
+        this.community_id = Number.parseInt(a[1]);
         this.communityService.getCommunityInfoById(a[1].toString()).subscribe({
           next: (response: Communities) => {
             this.community = response;
@@ -96,6 +97,12 @@ export class PostMainComponent {
                 if(result.isConfirmed) 
                   window.history.back();
               })
+          }
+        })
+        this.communityService.checkJoinCommunityStatus(uid, this.community_id).subscribe({
+          next: (response: JoinCommunityResponse) => {
+            this.isJoinCommunity = response.join_community == 0 ? false : true;
+            this.joinText = this.isJoinCommunity ? 'Joined' : 'Join';
           }
         })
       }

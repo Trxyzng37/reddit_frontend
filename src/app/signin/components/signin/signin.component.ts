@@ -68,7 +68,7 @@ export class SigninComponent implements OnInit {
       observable.subscribe({
         next: (response: UsernamePasswordSignInResponse) => {
           if (response.isSignIn) {
-            this.storageService.setItem("username", this.signInForm.value.username);
+            // this.storageService.setItem("username", this.signInForm.value.username);
             this.storageService.setItem('uid', response.uid.toString());
             this.router.navigate(['/home'])
           }
