@@ -12,7 +12,7 @@
                 <i style="font-weight: bold;">·</i>
                 <span style="font-size: 13px;"> {{shownDate}}</span>
             </div>
-            <a id="username" href="">{{username}}</a>
+            <a id="username" href="/user/{{username}}">{{username}}</a>
         </div>
         <div id="option_block">
             <button class="btn" id="btn_join" style="background-color: green;" *ngIf="isCommunityOwner && isAllow && !isDeleted" (click)="allowPost($event)">Allow</button>
