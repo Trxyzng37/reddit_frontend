@@ -21,7 +21,7 @@ export class LinkViewComponent {
   
   public isYoutubeLink: boolean = false;
   public data!: OpenGraphResponse;
-  regex = /https:\/\/www\.youtube\.com\/watch\?v=([A-Za-z0-9]+)/;
+  regex = /https:\/\/www\.youtube\.com\/watch\?v=([^]+)/;
   
   ngOnInit() {
     this.data = JSON.parse(this.content);
