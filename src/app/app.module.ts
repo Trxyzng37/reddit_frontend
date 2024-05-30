@@ -50,6 +50,8 @@ import { PostViewComponent } from './user-profile/post-view/post-view/post-view.
 import { UserInfoComponent } from './user-info/user-info/user-info.component';
 import { EditUserInfoComponent } from './edit-user-profile/edit-user-info/edit-user-info.component';
 import { CommentViewComponent } from './user-profile/comment-view/comment-view/comment-view.component';
+import { VideoViewComponent } from './post-link/video-view/video-view/video-view.component';
+import { EditVideoViewComponent } from './edit-post/edit-video-post/edit-video-view/edit-video-view.component';
 
 @NgModule({
   declarations: [
@@ -92,7 +94,9 @@ import { CommentViewComponent } from './user-profile/comment-view/comment-view/c
     PostViewComponent,
     UserInfoComponent,
     EditUserInfoComponent,
-    CommentViewComponent
+    CommentViewComponent,
+    VideoViewComponent,
+    EditVideoViewComponent
   ],
   imports: [
     BrowserModule,
