@@ -35,6 +35,7 @@ export class CreatePostComponent {
   public avatar: string = "../../assets/icon/dashed_circle.png";
   public isPostOpen: boolean = true;
   public isPostImageOpen: boolean = false;
+  public isPostVideoOpen: boolean = false;
   public isPostLinkOpen: boolean = false;
   public isImgUpload: boolean = false;
   public isCommunitySearchDropdownOpen: boolean = false;
@@ -45,12 +46,14 @@ export class CreatePostComponent {
   public community: string = "";
   public editorContent: string = "";
   public imgArr: Img[] = [];
+  public videoContent: string = "";
   public linkContent: string = "";
   public community_id: number = 0;
   public allow: number = 0;
 
   public editorAllowed: boolean = true;
   public imgAllowed: boolean = true;
+  public videoAllowed: boolean = true;
   public linkAllowed: boolean = true;
 
   ngOnInit() {
@@ -73,6 +76,7 @@ export class CreatePostComponent {
     this.editorAllowed = this.community.length != 0 && this.title.length != 0 ? false : true;
     this.imgAllowed = this.community !== "" && this.title !== "" && this.imgArr.length > 0 ? false : true;
     this.linkAllowed = this.community !== "" && this.title !== "" && this.linkContent !=="" ? false : true;
+    this.videoAllowed = this.community !== "" && this.title !== "" && this.videoContent !== "" ? false : true;
   }
 
   onDrop(event: any) {
@@ -131,6 +135,8 @@ export class CreatePostComponent {
 
   deleteImg(id: number) {
     this.imgArr.splice(id, 1);
+    const t = <HTMLInputElement>document.getElementById("input_upload_img");
+    t.value = "";
     if (id === 0 && this.imgArr.length === 0) {
       this.img = new Img("");
       this.selected_id = -1;
@@ -156,6 +162,30 @@ export class CreatePostComponent {
   selectImg(id: number) {
     this.img = this.imgArr[id];
     this.selected_id = id;
+  }
+
+  onVideoUpload(event: any) {
+    const file = event.target.files;
+    const reader = new FileReader();
+    reader.readAsDataURL(file[0]);
+    reader.addEventListener("loadend", () => {
+      const data = reader.result as string;
+      if(data.length > 6700000) {
+        Swal.fire("Maximum video size is 5MB",'','warning');
+        this.AllowSubmit();
+      }
+      else {
+        this.videoContent = data;
+        this.AllowSubmit();
+      }
+    })
+  }
+
+  deleteVideo() {
+    this.videoContent = "";
+    const t = <HTMLInputElement>document.getElementById("input_upload_video");
+    t.value = "";
+    this.AllowSubmit();
   }
 
   onInputChange(img: Img) {
@@ -315,7 +345,7 @@ export class CreatePostComponent {
 
   onContentChanged = (event: any) =>{
     this.editorContent = event.editor.getContent({ format: 'html' });
-    console.log(this.editorContent)
+    // console.log(this.editorContent)
   }
 
   createPost(type: string, content: string) {
@@ -373,6 +403,33 @@ export class CreatePostComponent {
   }
 
   createLinkPost(type: string, content: string) {
+    const community: string = this.community;
+    const title: string = this.title;
+    const created_at: Date = this.dateTimeService.getCurrentDateTime();
+    console.log("Post type: " + type);
+    this.isLoad = true;
+    this.sendPostService.createPost(type, this.community_id, title, content, created_at, this.allow).subscribe({
+      next: (response: CreatePostResponse) => {
+        if(response.CREATED === true) {
+          this.isLoad= false;
+          Swal.fire('Create post successfully', '', 'success').then((result) => {
+            if (result.isConfirmed)
+              this.route.navigate(["/post/"+response.POST_ID]);
+          })
+        }
+        else {
+          this.isLoad = false;
+          Swal.fire('Error create post. Please try again', '', 'error')
+        }
+      },
+      error: (e: HttpErrorResponse) => {
+        this.isLoad = false;
+        console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
+      }
+    })
+  }
+
+  createVideoPost(type: string, content: string) {
     const community: string = this.community;
     const title: string = this.title;
     const created_at: Date = this.dateTimeService.getCurrentDateTime();

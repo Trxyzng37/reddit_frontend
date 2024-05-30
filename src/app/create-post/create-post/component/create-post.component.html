@@ -23,12 +23,13 @@
         </div>
     </div>
     <div id="post_type_block">
-        <button class="btn_post_type" type="button" (click)="isPostOpen=true;isPostImageOpen=false;isPostLinkOpen=false" [ngClass]="{'btn_post_type_selected': isPostOpen}">Post</button>
-        <button class="btn_post_type" type="button" (click)="isPostOpen=false;isPostImageOpen=true;isPostLinkOpen=false" [ngClass]="{'btn_post_type_selected': isPostImageOpen}">Image and video</button>
-        <button class="btn_post_type" type="button" (click)="isPostOpen=false;isPostImageOpen=false;isPostLinkOpen=true" [ngClass]="{'btn_post_type_selected': isPostLinkOpen}">Link</button>
+        <button class="btn_post_type" type="button" (click)="isPostOpen=true;isPostImageOpen=false;isPostLinkOpen=false;isPostVideoOpen=false" [ngClass]="{'btn_post_type_selected': isPostOpen}">Post</button>
+        <button class="btn_post_type" type="button" (click)="isPostOpen=false;isPostImageOpen=true;isPostLinkOpen=false;isPostVideoOpen=false" [ngClass]="{'btn_post_type_selected': isPostImageOpen}">Image</button>
+        <button class="btn_post_type" type="button" (click)="isPostOpen=false;isPostImageOpen=false;isPostLinkOpen=false;isPostVideoOpen=true" [ngClass]="{'btn_post_type_selected': isPostVideoOpen}">Video</button>
+        <button class="btn_post_type" type="button" (click)="isPostOpen=false;isPostImageOpen=false;isPostLinkOpen=true;isPostVideoOpen=false" [ngClass]="{'btn_post_type_selected': isPostLinkOpen}">Link</button>
     </div>
     <div id="post_title_block">
-        <textarea id="input_post_title" maxlength="300" required placeholder="Title" (input)="inputTitle($event)"></textarea>
+        <textarea id="input_post_title" maxlength="300" required placeholder="Title (required)" (input)="inputTitle($event)"></textarea>
         <span id="character_count">{{characterCount}}/300</span>
     </div>
     <div id="post_content_block">
@@ -67,6 +68,16 @@
             <app-img-caption [img]="img" [ngStyle]="{'display': isImgUpload ? 'block' : 'none'}" (imgOutput)="onInputChange($event)"></app-img-caption>
             <button class="btn_create_post" id="btn_create_post_img" type="button" (click)="createImgPost('img', this.imgArr)" [disabled]="imgAllowed">Post</button>
         </div>
+        <div id="post_video_block" [ngStyle]="{'display': isPostVideoOpen ? 'flex' : 'none', 'background-color': videoContent.length == 0 ? 'var(--primary_background_color_hover)':'transparent'}">
+                <input id="input_upload_video" type="file" accept=".mp4, .mov, .wmv, .WebM" (change)="onVideoUpload($event)" #input_video>
+                <p style="margin-right: 10px;" [ngStyle]="{'display': videoContent.length == 0 ? 'block':'none' }">Click button to upload video</p>
+                <button id="btn_upload_video" type="button" (click)="input_video.click()" [ngStyle]="{'display': videoContent.length == 0 ? 'block':'none' }"><img style="width: 50px; height: 50px" src="../../assets/icon/upload.png"/></button>
+                <div id="video_block" [ngStyle]="{'display': videoContent.length > 0 ? 'block':'none' }">
+                    <video src="{{videoContent}}" preload="none" poster="" controls="true" disablepictureinpicture="true" style="align-self: flex-start;"></video>
+                    <button id="btn_delete_video" type="button" (click)="deleteVideo()" title="Delete video"><i class="pi pi-trash"></i></button>
+                </div>
+        </div>
+        <button id="btn_create_post_video" type="button" (click)="createVideoPost('video', this.videoContent)" [disabled]="videoAllowed" [ngStyle]="{'display': isPostVideoOpen ? 'block' : 'none'}">Post</button>
         <div id="post_link_block" [ngStyle]="{'display': isPostLinkOpen ? 'block' : 'none'}">
             <textarea (input)="inputLink($event)" placeholder="Enter a full link start with http or https"></textarea>
             <button id="btn_create_post_link" type="button" (click)="createLinkPost('link', this.linkContent)" [disabled]="linkAllowed">Post</button>
