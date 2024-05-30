@@ -297,6 +297,65 @@ hr {
     margin-bottom: 10px;
 }
 
+#post_video_block {
+    min-height: 25vh;
+    height: auto;
+    width: 100%;
+    background-color: var(--primary_background_color_hover);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+#input_upload_video {
+    width: 0px;
+    height: 0px;
+    display: none;
+}
+
+#video_block {
+    position: relative;
+    width: 100%;
+}
+
+video {
+    width: 100%;
+    height: 35vh;
+    min-height: 350px;
+    background-color: #000000;
+}
+
+#btn_upload_video {
+    width: 100px;
+    height: 100px;
+    background-color: rgb(168, 136, 244);
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+#btn_delete_video {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+}
+
+#btn_delete_video:hover {
+    background-color: var(--primary_background_color_hover);
+}
+
+#btn_delete_video > i {
+    font-size: 1.5rem;
+    color: #ffffff;
+}
+
 #post_link_block {
     height: auto;
     width: 100%;
@@ -335,6 +394,16 @@ hr {
     left: calc(100% - 60px);
 }
 
+#btn_create_post_video {
+    width: 60px;
+    height: 30px;
+    border: 1px solid black;
+    border-radius: 10px;
+    font-weight: 500;
+    position: relative;
+    left: calc(100% - 60px);
+    top: 30px;
+}
 
 //load
 #load_container {
