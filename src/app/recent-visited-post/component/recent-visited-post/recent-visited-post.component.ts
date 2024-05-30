@@ -34,6 +34,9 @@ export class RecentVisitedPostComponent {
           if(post.type == "img") {
             this.img.push(JSON.parse(post.content)[0].data);
           }
+          if(post.type == "video") {
+            this.img.push("../../../../assets/banner/lol.png");
+          }
           if(post.type == "editor") {
             const found = post.content.match('src="([^"]*)"')
             if(found)
