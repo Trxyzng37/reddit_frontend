@@ -36,6 +36,7 @@ export class EditImgPostComponent {
   public edit_content: string = "";
   public original_title: string = "";
   public original_content: string = "";
+  public isLoad: boolean = false;
 
   ngOnInit() {
     const title = (<HTMLInputElement>document.getElementById("input_post_title"));
@@ -181,14 +182,18 @@ export class EditImgPostComponent {
         console.log(this.edit_content);
         // console.log("load")
         if (result.isConfirmed) {
+          this.isLoad = true;
           const uid: number = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
           this.editPostService.editPost("/edit-img-post", "img", this.post_id, uid, this.edit_title, this.edit_content).subscribe({
             next: (response: EditPostResponse) => {
-              Swal.fire('Edit post successfully', '', 'success')
-              // console.log("done")
-              this.route.navigate(["/post/"+this.post_id]);
+              this.isLoad = false;
+              Swal.fire('Edit post successfully', '', 'success').then((result)=>{
+                if(result.isConfirmed)
+                  this.route.navigate(["/post/"+this.post_id]);
+              });
             },
             error: (e: HttpErrorResponse) => {
+              this.isLoad = false;
               Swal.fire('Fail to edit post. Please try again', '', 'error')
             }
           })
