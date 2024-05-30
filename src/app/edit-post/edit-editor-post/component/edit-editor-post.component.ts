@@ -35,6 +35,7 @@ export class EditEditorPostComponent {
   public original_title: string = "";
   public original_content: string = "";
   public allowSubmit: boolean = false;
+  public isLoad: boolean = false;
 
   ngOnInit() {
     const title = (<HTMLInputElement>document.getElementById("input_post_title"));
@@ -166,15 +167,20 @@ export class EditEditorPostComponent {
       focusConfirm: false,
     }).then((result) => {
       if (result.isConfirmed) {
+        this.isLoad = true;
         const uid: number = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
         this.editPostService.editPost("/edit-editor-post", "editor", this.post_id, uid, this.edit_title, this.edit_content).subscribe({
         next: (response: EditPostResponse) => {
           if (result.isConfirmed) {
-            Swal.fire('Edit post successfully', '', 'success')
-            this.route.navigate(["/post/"+this.post_id]);
+            this.isLoad = false;
+            Swal.fire('Edit post successfully', '', 'success').then((result)=>{
+              if(result.isConfirmed)
+                this.route.navigate(["/post/"+this.post_id]);
+            });
           } 
         },
         error: (e: HttpErrorResponse) => {
+          this.isLoad = false;
           Swal.fire('Fail to edit post. Please try again', '', 'error')
         }
       })
