@@ -11,6 +11,7 @@ import { DefaultResponse } from 'src/app/shared/pojo/default-response';
 import { SearchUserProfileService } from 'src/app/shared/services/search-user-profile/search-user-profile.service';
 import { UserProfile } from 'src/app/shared/pojo/pojo/user-profile';
 import Swal from 'sweetalert2';
+import { SavePostService } from 'src/app/shared/services/save-post/save-post.service';
 @Component({
   selector: 'app-post-link-list',
   templateUrl: './post-link-list.component.html',
@@ -24,6 +25,7 @@ export class PostLinkListComponent {
     private activeRoute: ActivatedRoute,
     private storageService: StorageService,
     private recentVisitService: RecentVisitService,
+    private savePostService: SavePostService,
     private searchUserProfileService: SearchUserProfileService
   ) {}
 
@@ -84,6 +86,8 @@ export class PostLinkListComponent {
   ngOnChanges() {
     if(this.user_id != 0 && this.searchOption == "wait_for_approve")
       this.getPostsByUidAndNotAllow(this.user_id);
+    if(this.user_id != 0 && this.searchOption == "saved")
+      this.getSavedPostsByUid(this.user_id);
   }
 
   addPost(o: GetPostResponse) {
@@ -202,6 +206,20 @@ export class PostLinkListComponent {
   getPostsByUidAndNotAllow(uid: number) {
     this.showProgress = true;
     this.getPostService.getPostsByUidAndNotAllowAndNotDeleted("/get-posts-by-uid-not-delete-not-allow", uid).subscribe({
+      next: (response: GetPostResponse[]) => {
+        this.post_result = response;
+        this.showProgress = false;
+        this.isLoadEvent.emit(true);
+      },
+      error: (e: HttpErrorResponse) => {
+        console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
+      }
+    })
+  }
+
+  getSavedPostsByUid(uid: number) {
+    this.showProgress = true;
+    this.savePostService.getSavedPostsByUid(uid).subscribe({
       next: (response: GetPostResponse[]) => {
         this.post_result = response;
         this.showProgress = false;

@@ -25,8 +25,7 @@
             <button id="btn_option" type="button" *ngIf="!isControlPage" (click)="openOptionMenu($event)"><i class="pi pi-ellipsis-h"></i></button>
         </div>
         <div id="dropdown_option_block" [ngStyle]="{'display': isOptionMenuOpen ? 'block':'none'}">
-            <button><i class="pi pi-bookmark"></i><p>Save</p></button>
-            <button><i class="pi pi-eye-slash"></i><p>Hide</p></button>
+            <button (click)="savePost($event)"><i class="pi" [ngClass]="saved ? 'pi-bookmark-fill':'pi-bookmark'"></i><p>{{savedText}}</p></button>
         </div>
     </nav>
 

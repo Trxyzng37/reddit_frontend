@@ -43,15 +43,15 @@ export class UserProfileComponent {
   count=0;
   selectSearchOption(option: string) {
     this.searchOption = option;
-    if(option == "wait_for_approve") {
+    if(option == "wait_for_approve" || option == "saved") {
       
-      if(this.count == 0) {
+      // if(this.count == 0) {
         this.isLoad = true;
         // setTimeout(()=>{
         //   this.isLoad = false;
         // }, 3000)
-      }
-      this.count++;
+      // }
+      // this.count++;
     }
   }
 
