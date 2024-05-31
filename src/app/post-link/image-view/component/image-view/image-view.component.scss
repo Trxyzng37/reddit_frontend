@@ -73,9 +73,9 @@ i {
     z-index: 9999;
     width: 100vw;
     height: 100vh;
-    position: absolute;
-    top: -50px;
-    left: -22vw;
+    position: fixed;
+    top: 0;
+    left: 0;
     display: flex;
     justify-content: center;
     align-items: center;
