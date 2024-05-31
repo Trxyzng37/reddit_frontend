@@ -22,6 +22,7 @@
         <div id="dropdown_option_block" [ngStyle]="{'display': isOptionMenuOpen ? 'block':'none'}">
             <button id="btn_edit" *ngIf="isAuthor" (click)="editPost($event)"><i class="pi pi-pencil"></i><p>Edit</p></button>
             <button *ngIf="isAuthor" (click)="deletePost()"><i class="pi pi-trash"></i><p>Delete</p></button>
+            <button (click)="savePost($event)"><i class="pi" [ngClass]="saved ? 'pi-bookmark-fill':'pi-bookmark'"></i><p>{{savedText}}</p></button>
         </div>
     </nav>
 

@@ -20,6 +20,9 @@ import { DeletePostService } from 'src/app/edit-post/service/delete-post/delete-
 import { DeletePostResponse } from 'src/app/edit-post/pojo/delete-post-response';
 import { Communities } from 'src/app/shared/pojo/pojo/communities';
 import { PresentationService } from 'src/app/shared/services/presentation/presentation.service';
+import { SavePostService } from 'src/app/shared/services/save-post/save-post.service';
+import { SavedPostResponse } from 'src/app/shared/services/save-post/pojo/saved-post-response';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-post-link',
@@ -38,7 +41,8 @@ export class PostLinkComponent {
     private showPostService: CheckShowPostService,
     private allowPostService: AllowPostService,
     private deletePostService: DeletePostService,
-    public presentationService: PresentationService
+    public presentationService: PresentationService,
+    private savePostService: SavePostService
   ) {}
 
   @Input() post!: GetPostResponse;
@@ -70,6 +74,8 @@ export class PostLinkComponent {
   public isCommunityOwner: boolean = false;
   public communityInfo!: Communities;
   public joinText: string = this.isJoinCommunity ? 'Leave' : 'Join';
+  public saved: boolean = false;
+  public savedText: string = this.saved ? 'Unsave' : "Save";
 
   public  upvote = "../../../../../assets/icon/upvote.png"
   public  upvote_fill = "../../../../../assets/icon/upvote-fill.png"
@@ -120,6 +126,12 @@ export class PostLinkComponent {
           return `<a>${s![1]}</a>`;
         });   
     }
+    this.savePostService.getSavedPostStatusByUid(uid, this.post_id).subscribe({
+      next: (response: SavedPostResponse) => {
+        this.saved = response.saved == 1 ? true : false;
+        this.savedText = response.saved == 1 ? 'Unsave' : "Save";
+      }
+    })
   }  
 
   ngOnChanges() {
@@ -263,11 +275,36 @@ export class PostLinkComponent {
 
   deletePost(event: Event) {
     event.stopPropagation();
-    this.deletePostService.deletePost("/delete-post", this.post_id, this.post.uid).subscribe({
-      next: (response: DeletePostResponse) => {
-        this.allowPostEvent.emit(this.post_id);
+    Swal.fire({
+      titleText: "Delete this post ?",
+      text: "Change can not be undo",
+      icon: 'warning',
+      confirmButtonText: 'Delete',
+      cancelButtonText: 'Cancel',
+      showCancelButton: true,
+      showConfirmButton: true
+    }).then((result) => {
+      if(result.isConfirmed) {
+        this.deletePostService.deletePost("/delete-post", this.post_id, this.post.uid).subscribe({
+          next: (response: DeletePostResponse) => {
+            this.allowPostEvent.emit(this.post_id);
+          }
+        })
       }
     })
   }
 
+
+  savePost(event: Event) {
+    event.stopPropagation();
+    const uid: number = this.storageService.getItem("uid") == "" ? 0 :  Number.parseInt(this.storageService.getItem("uid"));
+    const saveStatus = !this.saved ? 1 : 0;
+    this.savePostService.savePostByUid(uid, this.post_id, saveStatus).subscribe({
+      next: (response: DefaultResponse) => {
+        this.saved = !this.saved;
+        this.savedText = this.saved ? "Unsave" : "Save";
+      },
+      error: (e: HttpErrorResponse) => {}
+    })
+  }
 }

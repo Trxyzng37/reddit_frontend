@@ -19,6 +19,8 @@ import { Communities } from 'src/app/shared/pojo/pojo/communities';
 import { AllowPostService } from 'src/app/post-link/post-link/service/allow-post/allow-post.service';
 import { DefaultResponse } from 'src/app/shared/pojo/default-response';
 import { PresentationService } from 'src/app/shared/services/presentation/presentation.service';
+import { SavePostService } from 'src/app/shared/services/save-post/save-post.service';
+import { SavedPostResponse } from 'src/app/shared/services/save-post/pojo/saved-post-response';
   
   @Component({
     selector: 'app-post',
@@ -36,7 +38,8 @@ import { PresentationService } from 'src/app/shared/services/presentation/presen
       private route: Router,
       private communityService: CommunityService,
       private allowPostService: AllowPostService,
-      public presentationService: PresentationService
+      public presentationService: PresentationService,
+      private savePostService: SavePostService
     ) {}
   
     @Input() post: GetPostResponse = new GetPostResponse(0,"",0,"","",0,"","","","","",0,0,0);
@@ -73,6 +76,8 @@ import { PresentationService } from 'src/app/shared/services/presentation/presen
     public  downvote = "../../../../../assets/icon/downvote.png"
     public  downvote_fill = "../../../../../assets/icon/downvote-fill.png"
 
+    public saved: boolean = false;
+    public savedText: string = this.saved ? 'Unsave' : "Save";
 
     ngOnInit() {
       const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
@@ -99,6 +104,12 @@ import { PresentationService } from 'src/app/shared/services/presentation/presen
           this.communityInfo = response;
           this.isCommunityOwner = uid == (this.communityInfo.uid != null ? this.communityInfo.uid : 0);
           this.isAllow = this.post.allow == 0 ? true : false;
+        }
+      })
+      this.savePostService.getSavedPostStatusByUid(uid, this.post_id).subscribe({
+        next: (response: SavedPostResponse) => {
+          this.saved = response.saved == 1 ? true : false;
+          this.savedText = response.saved == 1 ? 'Unsave' : "Save";
         }
       })
     }
@@ -222,14 +233,39 @@ import { PresentationService } from 'src/app/shared/services/presentation/presen
     }
 
     notAllowPost() {
-      this.deletePostService.deletePost("/delete-post", this.post_id, this.post.uid).subscribe({
-        next: (response: DeletePostResponse) => {
-          this.isDeleted = true;
-          this.title = "[Deleted by moderator]"
-          this.content = "[Deleted by moderator]";
-        },
-        error: (e: HttpErrorResponse) => {
+      Swal.fire({
+        titleText: "Delete this post ?",
+        text: "Change can not be undo",
+        icon: 'warning',
+        confirmButtonText: 'Delete',
+        cancelButtonText: 'Cancel',
+        showCancelButton: true,
+        showConfirmButton: true
+      }).then((result) => {
+        if(result.isConfirmed) {
+          this.deletePostService.deletePost("/delete-post", this.post_id, this.post.uid).subscribe({
+            next: (response: DeletePostResponse) => {
+              this.isDeleted = true;
+              this.title = "[Deleted by moderator]"
+              this.content = "[Deleted by moderator]";
+            },
+            error: (e: HttpErrorResponse) => {
+            }
+          })
         }
+      })
+    }
+
+    savePost(event: Event) {
+      event.stopPropagation();
+      const uid: number = this.storageService.getItem("uid") == "" ? 0 :  Number.parseInt(this.storageService.getItem("uid"));
+      const saveStatus = !this.saved ? 1 : 0;
+      this.savePostService.savePostByUid(uid, this.post_id, saveStatus).subscribe({
+        next: (response: DefaultResponse) => {
+          this.saved = !this.saved;
+          this.savedText = this.saved ? "Unsave" : "Save";
+        },
+        error: (e: HttpErrorResponse) => {}
       })
     }
   }
