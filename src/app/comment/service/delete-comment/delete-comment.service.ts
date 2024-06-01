@@ -19,8 +19,7 @@ export class DeleteCommentService {
   private endpoint: string = "/delete-comment";
 
   deleteComment(post_id: number, _id: number): Observable<DeleteCommentResponse> {
-    const uid = parseInt(this.storageService.getItem("uid"));
-    const request = new DeleteCommentRequest(post_id, uid, _id);
+    const request = new DeleteCommentRequest(post_id, _id);
     const body: string = JSON.stringify(request);
     let header: HttpHeaders = new HttpHeaders();
     header = header.append("Accept", 'application/json');

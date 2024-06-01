@@ -27,7 +27,7 @@
             <i class="pi pi-pencil"> </i>
             <pre> Edit</pre>
         </button>
-        <button class="footer_btn" type="button" (click)="deleteComment()" *ngIf="isDeleteAllowed && !isDeleted">
+        <button class="footer_btn" type="button" (click)="deleteComment()" *ngIf="(isDeleteAllowed && !isDeleted) || (isCommunityOwner)">
             <i class="pi pi-trash"> </i>
             <pre> Delete</pre>
         </button>

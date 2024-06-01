@@ -14,6 +14,8 @@ import { StorageService } from 'src/app/shared/storage/storage.service';
 import Swal from 'sweetalert2';
 import { RecentVisitService } from 'src/app/shared/services/recent-visit/recent-visit.service';
 import { DefaultResponse } from 'src/app/shared/pojo/default-response';
+import { CommunityService } from 'src/app/shared/services/search-communites/community.service';
+import { Communities } from 'src/app/shared/pojo/pojo/communities';
 
 @Component({
   selector: 'app-view-detail-post',
@@ -29,7 +31,8 @@ export class ViewDetailPostComponent {
     private getCommentService: GetCommentsService,
     private createCommentService: CreateCommentService,
     private storageService: StorageService,
-    private recentVisitPostService: RecentVisitService
+    private recentVisitPostService: RecentVisitService,
+    private communityService: CommunityService
   ) {}
 
   public postId: number = 0;
@@ -39,6 +42,7 @@ export class ViewDetailPostComponent {
   public content: string = "";
   public isDeleted: boolean = false;
   public width: string[] = [];
+  public isCommunityOwner: boolean = false;
 
   ngOnInit() {
      this.postId = this.route.snapshot.params['post_id'];
@@ -46,6 +50,11 @@ export class ViewDetailPostComponent {
      this.getPostService.getPostByPostId(this.postId).subscribe({
       next: (response: GetPostResponse) => {
         this.post = response;
+        this.communityService.getCommunityInfoById(this.post.community_id.toString()).subscribe({
+          next: (response: Communities) => {
+            this.isCommunityOwner = uid === response.uid;
+          }
+        })
       },
       error: (e: HttpErrorResponse) => {
         console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
@@ -55,9 +64,9 @@ export class ViewDetailPostComponent {
      this.getCommentService.getComments(this.postId).subscribe({
       next: (response: Comment[]) => {
         this.commentResults = response;
-        for(let comment of this.commentResults) {
-          // this.width.push("calc(100% - " + comment.level*30 + "px)");
-        }
+        // for(let comment of this.commentResults) {
+        //   // this.width.push("calc(100% - " + comment.level*30 + "px)");
+        // }
       },
       error: (e: HttpErrorResponse) => {
         console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);

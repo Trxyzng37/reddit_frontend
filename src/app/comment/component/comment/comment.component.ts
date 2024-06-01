@@ -38,6 +38,7 @@ export class CommentComponent {
 
   @Input() commentData: Comment = new Comment(0,0,0,'','',0,'',0,'',0,false);
   @Input() postId: number = 0;
+  @Input() isCommunityOwner: boolean = false;
   @Output() commentModified = new EventEmitter<boolean>();
 
   public isShown: boolean = true;
@@ -378,6 +379,27 @@ export class CommentComponent {
   }
 
   deleteComment() {
+    this.deleteCommentService.deleteComment(this.postId, this.commentData._id).subscribe({
+      next: (response: DeleteCommentResponse) => {
+        this.commentModified.emit(true);
+      },
+      error: (e: HttpErrorResponse) => {
+        console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
+        if(this.uid == 0) {
+          Swal.fire({
+            titleText: "Error delete comment. Please try again",
+            icon: "error",
+            heightAuto: true,
+            showConfirmButton: true,
+            focusCancel: false,
+            focusConfirm: false
+          })
+        }
+      }
+    })
+  }
+
+  deleteCommentByCommunityOwner() {
     this.deleteCommentService.deleteComment(this.postId, this.commentData._id).subscribe({
       next: (response: DeleteCommentResponse) => {
         this.commentModified.emit(true);
