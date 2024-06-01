@@ -99,13 +99,15 @@ import { SavedPostResponse } from 'src/app/shared/services/save-post/pojo/saved-
           console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
         }
       })
-      this.communityService.getCommunityInfoById(this.post.community_id.toString()).subscribe({
-        next: (response: Communities) => {
-          this.communityInfo = response;
-          this.isCommunityOwner = uid == (this.communityInfo.uid != null ? this.communityInfo.uid : 0);
-          this.isAllow = this.post.allow == 0 ? true : false;
-        }
-      })
+      if(this.post.post_id != 0) {
+        this.communityService.getCommunityInfoById(this.post.community_id.toString()).subscribe({
+          next: (response: Communities) => {
+            this.communityInfo = response;
+            this.isCommunityOwner = uid == (this.communityInfo.uid != null ? this.communityInfo.uid : 0);
+            this.isAllow = this.post.allow == 0 ? true : false;
+          }
+        })
+      }
       this.savePostService.getSavedPostStatusByUid(uid, this.post_id).subscribe({
         next: (response: SavedPostResponse) => {
           this.saved = response.saved == 1 ? true : false;
