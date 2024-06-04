@@ -24,7 +24,6 @@ app-navigation-bar {
 app-recent-visited-post {
     position: fixed;
     height: calc(100vh - var(--header_size));
-    right: 0;
     width: 21vw;
     top: var(--header_size);
     right: var(--margin_home);
@@ -58,4 +57,14 @@ create-community {
     scrollbar-gutter: stable;
     border-radius: 10px;
 }
+
+@media only screen and (max-width: 800px) {
+    app-navigation-bar {
+        display: none;
+    }
+    #outlet {
+        left: 0;
+        width: 100%;
+    }
+  }
 
