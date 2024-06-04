@@ -247,6 +247,7 @@
     width: 45px;
     aspect-ratio: 1/1;
     margin-right: 10px;
+    display: none;
 }
 
 #icon_open_nav {
@@ -263,7 +264,7 @@
     background-color: var(--primary_background_color_hover);
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 900px) {
     #search_block {
         position: relative;
         left: 0;
@@ -279,6 +280,10 @@
 
     #btn_create_post {
         margin-left: 10px;
+    }
+
+    #main_logo_block > button {
+        display: block;
     }
 }
 
