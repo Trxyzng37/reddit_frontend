@@ -33,9 +33,10 @@ hr {
     width: 100%;
 }
 
+//content
 #main_content {
     margin-top: 5px;
-    // -webkit-line-clamp: 3;
+    min-width: 400px;
 }
 
 // #main_content > * {

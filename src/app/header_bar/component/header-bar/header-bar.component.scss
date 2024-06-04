@@ -241,3 +241,44 @@
     height: 25px;
 }
 
+#main_logo_block > button {
+    background-color: transparent;
+    border-radius: 50%;
+    width: 45px;
+    aspect-ratio: 1/1;
+    margin-right: 10px;
+}
+
+#icon_open_nav {
+    font-size: 25px;
+    border-radius: 50%;
+    width: 45px;
+    aspect-ratio: 1/1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#icon_open_nav:hover {
+    background-color: var(--primary_background_color_hover);
+}
+
+@media only screen and (max-width: 800px) {
+    #search_block {
+        position: relative;
+        left: 0;
+    }
+
+    #txt_name {
+        display: none;
+    }
+
+    #main_logo {
+        margin-right: 15px;
+    }
+
+    #btn_create_post {
+        margin-left: 10px;
+    }
+}
+

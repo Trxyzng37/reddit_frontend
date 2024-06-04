@@ -128,3 +128,23 @@ app-recent-visited-post {
     margin-top: 20px;
     margin-left: calc(var(--margin_home) + 2vw);
 }
+
+@media only screen and (max-width: 800px) {
+    app-recent-visited-post, #community_info_block, #user_info_block {
+        display: none;
+        right: calc(var(--margin_home));
+    }
+    #outlet {
+        width: 100%;
+        margin-left: 0;
+    }
+}
+
+@media only screen and (min-width: 800px) and (max-width: 1000px) {
+    app-recent-visited-post, #community_info_block, #user_info_block {
+        right: 30px;
+    }
+    #outlet {
+        margin-left: 20px;
+    }
+}
