@@ -1,5 +1,6 @@
 :host {
     position: relative;
+    // min-width: 250px;
 }
 
 #main_navigation {
@@ -78,4 +79,12 @@ span {
     border-radius: 50%;
     margin-left: 20px;
     margin-right: 5px;
+}
+
+@media only screen and (max-width: 900px) {  
+    #navigation_bar {
+        overflow-y: auto;
+        overflow-x: hidden;
+        width: 300px;
+    }
 }

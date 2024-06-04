@@ -58,9 +58,13 @@ create-community {
     border-radius: 10px;
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 900px) {
     app-navigation-bar {
-        display: none;
+        position: fixed;
+        left: 0;
+        width: auto;
+        z-index: 999;
+        background-color: var(--primary_background_color);
     }
     #outlet {
         left: 0;
@@ -68,3 +72,8 @@ create-community {
     }
   }
 
+@media only screen and (min-width: 900px) {  
+    app-navigation-bar {
+        display: block;
+    }
+}

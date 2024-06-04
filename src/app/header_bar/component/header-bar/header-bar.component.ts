@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Output, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { StorageService } from 'src/app/shared/storage/storage.service';
 import { Communities } from '../../../shared/pojo/pojo/communities';
@@ -23,6 +23,8 @@ export class HeaderBarComponent {
     private router: Router
   ) {}
 
+  @Output() openNavigationEvent = new EventEmitter<Object>;
+
   public isSignIn: boolean = false;
   public isProfileMenuOpen: boolean = false;
   public communities_result: Communities[] = [];
@@ -37,6 +39,8 @@ export class HeaderBarComponent {
         this.userInfo = response;
       }
     })
+    if (window.innerWidth < 900)
+      this.isOpen = false;
   }
 
   onClick() {
@@ -99,5 +103,13 @@ export class HeaderBarComponent {
 
   createPost() {
     window.location.href = "/create-post";
+  }
+
+  isOpen = false;
+  opeNavigation() {
+    this.isOpen = !this.isOpen;
+    this.openNavigationEvent.emit({
+      data: this.isOpen
+    });
   }
 }

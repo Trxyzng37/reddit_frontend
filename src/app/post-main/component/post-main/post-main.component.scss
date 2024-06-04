@@ -129,7 +129,7 @@ app-recent-visited-post {
     margin-left: calc(var(--margin_home) + 2vw);
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 900px) {
     app-recent-visited-post, #community_info_block, #user_info_block {
         display: none;
         right: calc(var(--margin_home));
@@ -140,7 +140,7 @@ app-recent-visited-post {
     }
 }
 
-@media only screen and (min-width: 800px) and (max-width: 1000px) {
+@media only screen and (min-width: 900px) and (max-width: 1000px) {
     app-recent-visited-post, #community_info_block, #user_info_block {
         right: 30px;
     }
