@@ -285,7 +285,7 @@ export class PostLinkComponent {
       showConfirmButton: true
     }).then((result) => {
       if(result.isConfirmed) {
-        this.deletePostService.deletePost("/delete-post", this.post_id, this.post.uid).subscribe({
+        this.deletePostService.deletePost("/delete-post", this.post_id, this.post.uid, 'moderator').subscribe({
           next: (response: DeletePostResponse) => {
             this.allowPostEvent.emit(this.post_id);
           }

@@ -50,6 +50,7 @@ export class ViewDetailPostComponent {
      this.getPostService.getPostByPostId(this.postId).subscribe({
       next: (response: GetPostResponse) => {
         this.post = response;
+        this.isDeleted = this.post.deleted == 1 ? true : false;
         this.communityService.getCommunityInfoById(this.post.community_id.toString()).subscribe({
           next: (response: Communities) => {
             this.isCommunityOwner = uid === response.uid;
@@ -72,9 +73,11 @@ export class ViewDetailPostComponent {
         console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
       }
      })
-     this.recentVisitPostService.setRecentVisit("/set-recent-visit-post", uid, this.postId).subscribe({
-      next: (response: DefaultResponse) => {}
-     })
+     if(!this.isDeleted) {
+      this.recentVisitPostService.setRecentVisit("/set-recent-visit-post", uid, this.postId).subscribe({
+        next: (response: DefaultResponse) => {}
+       })
+     }
   }
 
   public editorSettings = {

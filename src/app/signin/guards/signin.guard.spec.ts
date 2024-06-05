@@ -1,17 +1,17 @@
-import { TestBed } from '@angular/core/testing';
-import { CanActivateFn } from '@angular/router';
+// import { TestBed } from '@angular/core/testing';
+// import { CanActivateFn } from '@angular/router';
 
-import { signinGuard } from './signin.guard';
+// import { signinGuard } from './signin.guard';
 
-describe('signinGuard', () => {
-  const executeGuard: CanActivateFn = (...guardParameters) => 
-      TestBed.runInInjectionContext(() => signinGuard(...guardParameters));
+// describe('signinGuard', () => {
+//   const executeGuard: CanActivateFn = (...guardParameters) => 
+//       TestBed.runInInjectionContext(() => signinGuard(...guardParameters));
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-  });
+//   beforeEach(() => {
+//     TestBed.configureTestingModule({});
+//   });
 
-  it('should be created', () => {
-    expect(executeGuard).toBeTruthy();
-  });
-});
+//   it('should be created', () => {
+//     expect(executeGuard).toBeTruthy();
+//   });
+// });

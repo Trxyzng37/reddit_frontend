@@ -35,19 +35,19 @@
     </nav>
 
     <nav id="footer">
-        <div id="block_vote" class="block_vote" [ngClass]="{'upvote': voteType === 'upvote', 'downvote': voteType === 'downvote', 'normal': voteType === 'none'}">
-            <button id="btn_upvote" type="button" (click)="votePost($event, 'upvote')" [ngClass]="{'upvote': voteType === 'upvote', 'downvote': voteType === 'downvote', 'normal': voteType === 'none'}"><img [attr.src]="voteType === 'upvote' ? upvote_fill: upvote" /></button>
+        <div id="block_vote" class="block_vote" [ngClass]="{'upvote': voteType === 'upvote', 'downvote': voteType === 'downvote', 'normal': voteType === 'none'}" [ngStyle]="{'opacity': isDeleted ? '0.6' : '1'}">
+            <button id="btn_upvote" type="button" (click)="votePost($event, 'upvote')" [ngClass]="{'upvote': voteType === 'upvote', 'downvote': voteType === 'downvote', 'normal': voteType === 'none'}" [disabled]="isDeleted"><img [attr.src]="voteType === 'upvote' ? upvote_fill: upvote" /></button>
             <p id="vote_count">{{presentationService.transformNumber(vote)}}</p>
-            <button id="btn_downvote" type="button" (click)="votePost($event, 'downvote')" [ngClass]="{'upvote': voteType === 'upvote', 'downvote': voteType === 'downvote', 'normal': voteType === 'none'}"><img [attr.src]="voteType === 'downvote' ? downvote_fill: downvote" /></button>
+            <button id="btn_downvote" type="button" (click)="votePost($event, 'downvote')" [ngClass]="{'upvote': voteType === 'upvote', 'downvote': voteType === 'downvote', 'normal': voteType === 'none'}" [disabled]="isDeleted"><img [attr.src]="voteType === 'downvote' ? downvote_fill: downvote" /></button>
         </div>
-        <button id="btn_comment" type="button" onclick="document.getElementById('comment').scrollIntoView();">
+        <button id="btn_comment" type="button" onclick="document.getElementById('comment').scrollIntoView();" [disabled]="isDeleted">
             <i class="pi pi-comment"></i>
             <p id="comment_count">{{presentationService.transformNumber(commentCount)}}</p>
         </button> 
-        <button id="btn_share" type="button">
+        <!-- <button id="btn_share" type="button" [disabled]="isDeleted">
             <i class="pi pi-upload"></i>
             <p>Share</p>
-        </button>
+        </button> -->
     </nav>
 </div>
 
