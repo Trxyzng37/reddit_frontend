@@ -100,6 +100,7 @@ import { SavedPostResponse } from 'src/app/shared/services/save-post/pojo/saved-
         }
       })
       if(this.post.post_id != 0) {
+        this.isDeleted = this.post.deleted == 1 ? true : false;
         this.communityService.getCommunityInfoById(this.post.community_id.toString()).subscribe({
           next: (response: Communities) => {
             this.communityInfo = response;
@@ -197,7 +198,7 @@ import { SavedPostResponse } from 'src/app/shared/services/save-post/pojo/saved-
       }).then((result) => {
         if (result.isConfirmed) {
           const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
-          this.deletePostService.deletePost("/delete-post", this.post_id, uid).subscribe({
+          this.deletePostService.deletePost("/delete-post", this.post_id, uid, 'user').subscribe({
             next: (response: DeletePostResponse) => {
               Swal.fire('Delete post successfully', '', 'success').then((result) => {
                 if (result.isConfirmed)
@@ -245,11 +246,12 @@ import { SavedPostResponse } from 'src/app/shared/services/save-post/pojo/saved-
         showConfirmButton: true
       }).then((result) => {
         if(result.isConfirmed) {
-          this.deletePostService.deletePost("/delete-post", this.post_id, this.post.uid).subscribe({
+          this.deletePostService.deletePost("/delete-post", this.post_id, this.post.uid, 'moderator').subscribe({
             next: (response: DeletePostResponse) => {
               this.isDeleted = true;
               this.title = "[Deleted by moderator]"
               this.content = "[Deleted by moderator]";
+              this.type = "editor";
             },
             error: (e: HttpErrorResponse) => {
             }

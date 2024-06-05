@@ -1,6 +1,5 @@
 
 <app-post
-    *ngIf="!isDeleted"
     [post]="post"
     [post_id]="post.post_id"
     [type]="post.type"
@@ -15,10 +14,6 @@
     [commentCount]="commentResults.length"
 >
 </app-post>
-
-<div id="deleted_post_block" *ngIf="isDeleted">
-    <b>Post does not exist</b>
-</div>
 
 <div id="comment_editor_block" *ngIf="!isDeleted"> 
     <editor
