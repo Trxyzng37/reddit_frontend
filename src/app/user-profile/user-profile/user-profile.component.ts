@@ -44,14 +44,7 @@ export class UserProfileComponent {
   selectSearchOption(option: string) {
     this.searchOption = option;
     if(option == "wait_for_approve" || option == "saved") {
-      
-      // if(this.count == 0) {
         this.isLoad = true;
-        // setTimeout(()=>{
-        //   this.isLoad = false;
-        // }, 3000)
-      // }
-      // this.count++;
     }
   }
 
