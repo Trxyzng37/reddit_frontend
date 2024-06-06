@@ -39,8 +39,12 @@ export class HeaderBarComponent {
         this.userInfo = response;
       }
     })
-    if (window.innerWidth < 900)
+    if (window.innerWidth < 900) {
       this.isOpen = false;
+      this.openNavigationEvent.emit({
+        data: this.isOpen
+      });
+    }
   }
 
   onClick() {

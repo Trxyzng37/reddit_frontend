@@ -1,13 +1,13 @@
-<div *ngIf="isCommunityPage || isControlPage">
+<div id="h_container" *ngIf="isCommunityPage || isControlPage">
     <div id="header_container">
         <div id="banner_container">
             <img id="img_banner" src="{{community.banner}}" *ngIf="1">
         </div>
         <div id="button_container">
-            <p id="community_name">r/{{community.name}}</p>
+            <p id="community_name" title="r/{{community.name}}">r/{{community.name}}</p>
             <div id="button_block">
-                <button class="btn" id="btn_create_post" (click)="createPost()"><img id="img_icon" src="../../../assets/icon/plus.png"><p>Create a post</p></button>
-                <button class="btn" id="btn_join" [ngStyle]="{'background-color': isJoinCommunity ? 'lightgreen' : 'white'}" (click)="joinCommunity()">{{joinText}}</button>
+                <button class="btn" id="btn_create_post" (click)="createPost()"><img id="img_icon" src="../../../assets/icon/plus.png"><p class="txt_btn">Create a post</p></button>
+                <button class="btn txt_btn" id="btn_join" [ngStyle]="{'background-color': isJoinCommunity ? 'lightgreen' : 'white'}" (click)="joinCommunity()">{{joinText}}</button>
             </div>
         </div>
         <img id="img_avatar" src="{{community.avatar}}">
