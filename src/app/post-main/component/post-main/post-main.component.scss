@@ -153,11 +153,15 @@ app-recent-visited-post, #community_info_block, #user_info_block {
         font-size: 14px;
     }
 }
-@media only screen and (max-width: 1402px) {
+@media only screen and (max-width: 1480px) {
     #button_block {
         position: absolute;
         top: 50px;
-        left: calc(80px + 2.5vw);;
+        left: calc(80px + 2.5vw);
+    }
+    #control_block {
+        position: relative;
+        top: 30px;
     }
     #outlet {
         margin-top: 50px;
@@ -172,7 +176,7 @@ app-recent-visited-post, #community_info_block, #user_info_block {
         margin-left: 20px;
         width: calc(70% - 50px);
     }
-    #h_container {
+    #h_container, #control_block {
         margin-left: calc(2vw);
         width: calc(70% - 50px);
     }
@@ -197,7 +201,7 @@ app-recent-visited-post, #community_info_block, #user_info_block {
         // display: none;
         right: calc(var(--margin_home));
     }
-    #outlet, #h_container {
+    #outlet, #h_container, #control_block {
         width: calc(100% - 230px);
         margin-left: 10px;
     }
@@ -213,7 +217,7 @@ app-recent-visited-post, #community_info_block, #user_info_block {
         display: none;
         right: calc(var(--margin_home));
     }
-    #outlet, #h_container {
+    #outlet, #h_container, #control_block {
         width: calc(100% - 20px);
     }
 }
