@@ -1,10 +1,11 @@
 :host {
     width: 40vw;
+    min-width: 500px;
     --avatar_width: 100px;
     --banner_width: 100%;
 }
 
-#container {
+#community_container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -48,6 +49,10 @@ form {
     // background-color: rgb(181, 211, 244);
     padding: 20px 10px;
     position: relative;
+}
+
+p {
+    white-space: initial;
 }
 
 input, textarea {
@@ -147,8 +152,12 @@ input, textarea {
 
 #input_public, #input_moderate {
     width: 20px;
-    height: 20px;
+    aspect-ratio: 1/1;
     margin: 0;
+}
+
+.radio_block  p {
+    margin-left: 10px;
 }
 
 #avatar_container {
