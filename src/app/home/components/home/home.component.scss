@@ -53,9 +53,11 @@ app-navigation-bar:hover, app-recent-visited-post:hover {
 
 create-community {
     height: 90vh;
+    min-height: 400px;
     overflow-y: auto;
     scrollbar-gutter: stable;
     border-radius: 10px;
+    // overflow-x: hidden;
 }
 
 @media only screen and (max-width: 900px) {

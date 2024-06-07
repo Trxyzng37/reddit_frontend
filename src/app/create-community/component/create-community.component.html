@@ -1,4 +1,4 @@
-<div id="container">
+<div id="community_container">
     <form [formGroup]="createCommunityForm">
         <div id="header">
             <img id="header_icon" src="../../../assets/icon/create_community_header_icon.png">
@@ -35,11 +35,11 @@
             <b>Select your community scope</b>
             <div class="radio_block">
                 <input id="input_public" type="radio" name="scope" value="0" checked="checked" (click)="selectScope(0)">
-                <label for="input_public"><pre> Public (Everyone can post)</pre></label>
+                <label for="input_public"><p>Public (Everyone can post)</p></label>
             </div>
             <div class="radio_block">
                 <input id="input_moderate" type="radio" name="scope" value="1" (click)="selectScope(1)">
-                <label for="input_moderate"><pre> Protected (Moderator need to accept post before it can be view)</pre></label>
+                <label for="input_moderate"><p>Protected (Moderator need to accept post before it can be view)</p></label>
             </div>
         </div>
         <div id="button_container">
