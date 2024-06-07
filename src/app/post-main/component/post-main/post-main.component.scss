@@ -143,16 +143,6 @@ app-recent-visited-post, #community_info_block, #user_info_block {
 }
 
 //community header 
-@media only screen and (max-width: 1450px) {
-    #img_icon {
-        width: 15px;
-        aspect-ratio: 1/1;
-        margin-right: 5px;
-    }
-    .txt_btn {
-        font-size: 14px;
-    }
-}
 @media only screen and (max-width: 1480px) {
     #button_block {
         position: absolute;
