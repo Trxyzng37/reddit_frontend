@@ -7,6 +7,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { UserProfile } from '../../../shared/pojo/pojo/user-profile';
 import { SearchUserProfileService } from '../../../shared/services/search-user-profile/search-user-profile.service';
 import { Router } from '@angular/router';
+import { PresentationService } from 'src/app/shared/services/presentation/presentation.service';
 
 @Component({
   selector: 'app-header-bar',
@@ -20,7 +21,8 @@ export class HeaderBarComponent {
     private searchCommunitiesService: CommunityService,
     private searchUserProfileService: SearchUserProfileService,
     private userProfileService: SearchUserProfileService,
-    private router: Router
+    private router: Router,
+    public presentationService: PresentationService 
   ) {}
 
   @Output() openNavigationEvent = new EventEmitter<Object>;
@@ -30,6 +32,8 @@ export class HeaderBarComponent {
   public communities_result: Communities[] = [];
   public user_profile_result: UserProfile[] = [];
   public userInfo: UserProfile = new UserProfile(0,'','','',0,0,'');
+  public background_mode: string = "Dark mode"; 
+  public isSearch: boolean = false;
 
   ngOnInit() {
     this.isSignIn = (this.storageService.getItem("uid") != "" && this.storageService.getItem("uid") != "0") ? true:false;
@@ -58,6 +62,8 @@ export class HeaderBarComponent {
         next: (response: Communities[]) => {
           console.log(response)
           this.communities_result = response.slice(0,4);
+          const search = <HTMLInputElement>document.getElementById("search_box");
+          this.isSearch = search.value.length > 0;
         },
         error: (e: HttpErrorResponse) => {
           console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
@@ -67,6 +73,8 @@ export class HeaderBarComponent {
         next: (response: UserProfile[]) => {
           console.log(response)
           this.user_profile_result = response.slice(0,4);
+          const search = <HTMLInputElement>document.getElementById("search_box");
+          this.isSearch = search.value.length > 0;
         },
         error: (e: HttpErrorResponse) => {
           console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
@@ -76,6 +84,8 @@ export class HeaderBarComponent {
     else {
       this.communities_result = [];
       this.user_profile_result = [];
+      const search = <HTMLInputElement>document.getElementById("search_box");
+      this.isSearch = search.value.length > 0;
     }
   }
 
@@ -115,5 +125,17 @@ export class HeaderBarComponent {
     this.openNavigationEvent.emit({
       data: this.isOpen
     });
+  }
+
+  useDarkMode() {
+    const current_background = getComputedStyle(document.body).getPropertyValue('--primary_background_color');
+    if(current_background == "#EFF7FF") {
+      document.body.style.setProperty("--primary_background_color", "#121212");
+      this.background_mode = "Light mode";
+    }
+    else {
+      document.body.style.setProperty("--primary_background_color", "#EFF7FF");
+      this.background_mode = "Dark mode"
+    }
   }
 }
