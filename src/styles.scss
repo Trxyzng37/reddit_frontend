@@ -7,11 +7,14 @@
     --header_size: 50px;
     --form_length: 300px;
     --scrollbar_size: 10px;
-    --primary_background_color: rgb(157, 243, 185);
-    --primary_background_color_hover: rgb(68, 216, 117);
+    --primary_background_color: #ffffff;
+    --primary_background_color_hover: #efefef;
     --margin_home: 20px;
     --post_width: 50vw;
     --post-header-height: 30px;
+    --neutral: #efefef;
+    --box_shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    --light_border: #c6c6c6;
     // overflow: hidden;
 }
 
@@ -25,7 +28,8 @@ html, body, * {
 
 body {
     width: 100vw;
-    height: 100vh;    
+    height: 100vh;  
+    background-color: var(--primary_background_color);  
 }  
 
 textarea {
