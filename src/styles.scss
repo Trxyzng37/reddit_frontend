@@ -15,7 +15,8 @@
     --neutral: #efefef;
     --box_shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     --light_border: #c6c6c6;
-    // overflow: hidden;
+    --scrollbar_track: #ffffff;
+    --scrollbar_thumb: #c6c6c6;
 }
 
 html, body, * {
@@ -65,12 +66,12 @@ a, a:visited {
   
   /* background */
   ::-webkit-scrollbar-track {
-    background: rgb(240, 118, 118); 
+    background: var(--scrollbar_track); 
   }
    
   /* Handle */
   ::-webkit-scrollbar-thumb {
-    background: #909090; 
+    background: var(--scrollbar_thumb); 
   }
   
   /* Handle on hover */
