@@ -30,7 +30,7 @@ export class CommunityInfoComponent {
   public isCommunityPage: boolean = false;
   public isControlPostPage: boolean = false;
   public isOwner: boolean = false;
-  public joinText: string = this.isJoinCommunity ? 'Leave' : 'Join';
+  public joinText: string = this.isJoinCommunity ? 'Joined' : 'Join';
 
   ngOnInit() {
     this.isCommunityPage = window.location.href.includes("/r/");
@@ -48,7 +48,7 @@ export class CommunityInfoComponent {
     this.communityService.checkJoinCommunityStatus(uid, this.community_info.id).subscribe({
       next: (response: JoinCommunityResponse) => {
         this.isJoinCommunity = response.join_community == 0 ? false : true;
-        this.joinText = this.isJoinCommunity ? 'Leave' : 'Join';
+        this.joinText = this.isJoinCommunity ? 'Joined' : 'Join';
       }
     })
   }
@@ -59,7 +59,7 @@ export class CommunityInfoComponent {
     this.communityService.joinCommunity(uid, this.community_info.id, this.isJoinCommunity == false ? 1 : 0).subscribe({
       next: (response: JoinCommunityResponse) => {
         this.isJoinCommunity = response.join_community == 0 ? false : true;
-        this.joinText = this.isJoinCommunity ? 'Leave' : 'Join';
+        this.joinText = this.isJoinCommunity ? 'Joined' : 'Join';
       },
       error: (e: HttpErrorResponse) => {
         console.log("error join community");

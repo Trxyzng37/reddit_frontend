@@ -1,11 +1,7 @@
 
-:host {
-    // overflow: auto;
-}
-
 :host > div {
-    border-bottom: 1px solid black;
-    margin: 0px 10px;
+    border-bottom: 1px solid var(--light_border);
+    margin-left: 10px;
     padding: 20px 0;
 }
 
@@ -34,7 +30,7 @@
 }
 
 #edit_block > * {
-    margin: 0 10px;
+    margin: 0;
 }
 
 .setting_block {
@@ -63,6 +59,7 @@
     padding: 10px;
     border-radius: 20px;
     font-size: 13px;
+    background-color: var(--primary_background_color);
 }
 
 #edit_block > button {
@@ -73,7 +70,11 @@
 
 #moderator_block, #edit_block {
     padding: 0;
-    margin: 0;
+    margin-left: 10px;
+}
+
+#moderator_block {
+    margin-bottom: 10px;
 }
 
 img {
@@ -83,7 +84,7 @@ img {
 }
 
 .community_info:hover {
-    background-color: aqua;
+    background-color: var(--primary_background_color);
 }
 
 .community_info {
@@ -92,4 +93,10 @@ img {
     justify-content: flex-start;
     align-items: center;
     padding: 10px 10px;
+    border-radius: 20px;
+}
+
+#moderator_block:last-child {
+    margin-bottom: 30px;
+    border: none;
 }
