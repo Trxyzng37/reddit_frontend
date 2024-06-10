@@ -34,7 +34,7 @@ app-recent-visited-post {
     height: calc(100vh - var(--header_size));
     top: calc(var(--header_size) + 10px);
     background-color: var(--neutral);
-    border-radius: 10px;
+    // border-radius: 10px;
     overflow: hidden;
     scrollbar-gutter: stable;
     background-clip: content-box;
