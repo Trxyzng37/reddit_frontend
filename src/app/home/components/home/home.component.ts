@@ -17,7 +17,14 @@ export class HomeComponent implements OnInit {
   constructor( 
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if(window.innerWidth > 1200) {
+      this.isNavigationOpen = true;
+    }
+    else {
+      this.isNavigationOpen = false;
+    }
+  }
 
   change_recent_status() {
     this.recent_status = this.recent_status === 'up' ? 'down':'up';
@@ -40,7 +47,7 @@ export class HomeComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
-    if(event.target.innerWidth > 900) {
+    if(event.target.innerWidth > 1200) {
         this.isNavigationOpen = true;
       }
     else {

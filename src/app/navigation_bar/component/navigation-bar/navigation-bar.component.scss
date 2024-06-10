@@ -22,7 +22,7 @@
 #navigation_bar > nav {
     width: 90%;
     height: auto;
-    border-bottom: 1px solid var(--neutral);
+    border-bottom: 1px solid var(--light_border);
 }
 
 #navigation_bar a, button {
@@ -81,11 +81,11 @@ span {
     margin-right: 5px;
 }
 
-@media only screen and (max-width: 900px) {  
+@media only screen and (max-width: 1200px) {  
     #navigation_bar {
         overflow-y: auto;
         overflow-x: hidden;
-        width: 300px;
+        // width: 300px;
     }
 }
 

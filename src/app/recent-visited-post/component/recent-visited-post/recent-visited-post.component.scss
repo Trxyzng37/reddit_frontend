@@ -2,13 +2,13 @@
     width: 100%;
     height: 100%;
     display: block;
-    background-color: rgb(243, 172, 230);
+    background-color: var(--neutral);
     overflow: hidden;
     scrollbar-gutter: stable;
-    // padding-right: calc(var(--scrollbar_size) - 1px);
     background-clip: content-box;
     box-sizing: border-box;
     border-radius: 10px;
+    padding-right: 10px;
 }
 
 #recent_visited_post_bar:hover {
@@ -36,7 +36,7 @@ a:hover {
     width: 100%;
     height: auto;
     padding: 10px 10px;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid var(--light_border);
 }
 
 #post_block {
@@ -101,6 +101,7 @@ a:hover {
     width: 100%;
     height: 100%;
     border-radius: 5px;
+    border: 1px solid var(--light_border);
 }
 
 #vote_block {

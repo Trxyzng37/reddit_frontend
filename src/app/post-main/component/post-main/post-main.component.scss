@@ -6,56 +6,58 @@
     overflow: hidden;
     overflow-y: scroll;
     scrollbar-gutter: stable;
-    border-left: 1px solid black;
     box-sizing: border-box;
 }
 
 #outlet {
-    width: var(--post_width);
-    margin-left: calc(var(--margin_home) + 2vw);
+    width: calc(100% - 380px);
+    margin-left: calc(2vw);
     margin-top: 20px;
     box-sizing: border-box;
 }
 
 app-recent-visited-post {
     position: fixed;
-    height: calc(100vh - var(--header_size));
-    width: 18vw;
-    top: var(--header_size);
-    right: calc(var(--margin_home) + 3vw);
+    height: calc(100vh - var(--header_size) - 10px);
+    top: calc(var(--header_size) + 10px);
 }
 
 #community_info_block {
     position: fixed;
-    width: 18vw;
     height: calc(100vh - var(--header_size));
     top: calc(var(--header_size) + 10px);
-    right: calc(var(--margin_home) + 3vw);
     overflow: auto;
 }
 
 #user_info_block {
     position: fixed;
-    width: 18vw;
     height: calc(100vh - var(--header_size));
     top: calc(var(--header_size) + 10px);
-    right: calc(var(--margin_home) + 3vw);
-    overflow: auto;
-    background-color: lightpink;
+    background-color: var(--neutral);
+    border-radius: 10px;
+    overflow: hidden;
+    scrollbar-gutter: stable;
+    background-clip: content-box;
+    padding-right: 10px;
+}
+
+#user_info_block:hover {
+    overflow-y: auto;
 }
 
 //banner 
 
 #h_container {
-    width: var(--post_width);
+    width: calc(100% - 380px);
+    margin-left: 2vw;
+    margin-top: 10px;
 }
 
 #header_container {
     display: block;
     width: 100%;
     height: auto;
-    margin-left: calc(var(--margin_home) + 2vw);
-    margin-top: 10px;
+    // margin-left: calc(var(--margin_home) + 2vw);
     // margin-bottom: 10px;
     border-radius: 5px;
     position: relative;
@@ -139,10 +141,10 @@ app-recent-visited-post {
 }
 
 app-recent-visited-post, #community_info_block, #user_info_block {
-    min-width: 200px;
+    width: 300px;
+    right: 40px;
 }
 
-//community header 
 @media only screen and (max-width: 1480px) {
     #button_block {
         position: absolute;
@@ -153,22 +155,12 @@ app-recent-visited-post, #community_info_block, #user_info_block {
         position: relative;
         top: 30px;
     }
-    #outlet {
-        margin-top: 50px;
-    }
 }
 
-@media only screen and (min-width: 900px) and (max-width: 1100px) {
-    app-recent-visited-post, #community_info_block, #user_info_block {
-        right: 30px;
-    }
-    #outlet {
-        margin-left: 20px;
-        width: calc(70% - 50px);
-    }
+@media only screen and (min-width: 900px) and (max-width: 1200px) {
     #h_container, #control_block {
         margin-left: calc(2vw);
-        width: calc(70% - 50px);
+        width: calc(100% - 380px);
     }
 
     #header_container {
@@ -176,38 +168,12 @@ app-recent-visited-post, #community_info_block, #user_info_block {
     }
 }
 
-@media only screen and (max-width: 1050) {
-    #community_info_block {
-        right: 15px;
-    }
-
-    #outlet {
-        width: calc(65% - 30px)
-    }
-}
-
-@media only screen and (max-width: 900px) {
-    app-recent-visited-post, #community_info_block, #user_info_block {
-        // display: none;
-        right: calc(var(--margin_home));
-    }
-    #outlet, #h_container, #control_block {
-        width: calc(100% - 230px);
-        margin-left: 10px;
-    }
-
-    #header_container {
-        width: 100%;
-        margin-left: 0;
-    }
-}
-
-@media only screen and (max-width: 680px) {
+@media only screen and (max-width: 850px) {
     app-recent-visited-post, #community_info_block, #user_info_block {
         display: none;
         right: calc(var(--margin_home));
     }
     #outlet, #h_container, #control_block {
-        width: calc(100% - 20px);
+        width: calc(100% - 30px);
     }
 }
