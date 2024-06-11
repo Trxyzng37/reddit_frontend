@@ -90,17 +90,17 @@ app-recent-visited-post {
     font-weight: 600;
     min-width: 350px;
     margin-left: calc(80px + 2.5vw);
-    background-color: yellow;
+    background-color: transparent;
 }
 
 .btn {
     height: 40px;
     width: auto;
     min-width: 60px;
-    padding: 0 10px;
-    border-radius: 10px;
+    padding: 0 15px;
+    border-radius: 20px;
     font-size: medium;
-    border: 2px solid black;
+    // border: 1px solid var(--light_border);
     background-color: none;
 }
 
@@ -111,13 +111,24 @@ app-recent-visited-post {
     align-items: center;
 }
 
+#btn_create_post {
+    background-color: var(--primary_background_color);
+    border: 1px solid #737373;
+}
+
+#btn_create_post:hover {
+    border: 1px solid black;
+}
+
 #btn_join {
     margin: 0 20px;
+    padding: 0 30px;
 }
 
 #img_icon {
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
+    margin-right: 5px;
 }
 
 #img_avatar {
@@ -128,7 +139,7 @@ app-recent-visited-post {
     position: absolute;
     top: calc(85px);
     left: calc(2vw);
-    background-color: rgba($color: #000000, $alpha: 0.8);
+    background-color: rgba($color: #000000, $alpha: 0.6);
 }
 
 
