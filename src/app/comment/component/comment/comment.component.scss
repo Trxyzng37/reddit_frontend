@@ -92,7 +92,7 @@ img {
 }
 
 #btn_option:hover, .footer_btn:hover {
-    background-color: var(--primary_background_color_hover);
+    background-color: var(--neutral);
 }
 
 #btn_upvote, #btn_downvote {
@@ -160,4 +160,24 @@ img {
 
 .user_comment  .footer_btn:hover, .user_comment #btn_downvote:hover, .user_comment #btn_upvote:hover {
     background-color: var(--primary_background_color);
+}
+
+.upvote {
+    background-color: var(--upvote);
+}
+
+.downvote {
+    background-color: var(--downvote);
+}
+
+// #btn_upvote:hover {
+//     background-color: var(--upvote)
+// }
+
+// #btn_downvote:hover {
+//     background-color: var(--downvote)
+// }
+
+.footer_btn:hover {
+    background-color: var(--neutral);
 }

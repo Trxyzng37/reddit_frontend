@@ -16,6 +16,7 @@ import { EditCommentService } from '../../service/edit-comment/edit-comment.serv
 import Swal, { SweetAlertResult } from 'sweetalert2';
 import { DeleteCommentService } from '../../service/delete-comment/delete-comment.service';
 import { DeleteCommentResponse } from '../../pojo/delete-comment-response';
+import { PresentationService } from 'src/app/shared/services/presentation/presentation.service';
 
 @Component({
   selector: 'app-comment',
@@ -32,7 +33,8 @@ export class CommentComponent {
     private createCommentService: CreateCommentService,
     private getCommentStatusService: GetCommentStatusService,
     private editCommentService: EditCommentService,
-    private deleteCommentService: DeleteCommentService
+    private deleteCommentService: DeleteCommentService,
+    public presentationService: PresentationService
   ) {}
 
 
@@ -185,6 +187,7 @@ export class CommentComponent {
     }
   }
 
+  img_count = 0;
   public editorSettings = {
     selector: "editor",
     base_url: '/tinymce',
@@ -232,23 +235,29 @@ export class CommentComponent {
       'body {line-height: normal}' +
       'pre[class*=language-] {font-family: Consolas}',
     file_picker_callback: (cb: any, value:any, meta:any) => {
-      const input = document.createElement('input');
-      input.setAttribute('type', 'file');
-      input.setAttribute('accept', 'image/*');
-      input.addEventListener('change', (e:any) => {
-        const file = e.target.files[0];
-        const reader = new FileReader();
-        reader.addEventListener('load', () => {
-          const id = file.name;
-          const blobCache =  tinymce.activeEditor!.editorUpload.blobCache;
-          const base64 = (<string>reader.result).split(',')[1];
-          const blobInfo = blobCache.create(id, file, base64);
-          blobCache.add(blobInfo);
-          cb(blobInfo.blobUri(), { title: file.name });
-        });
-        reader.readAsDataURL(file);
-      })
-      input.click();
+      if(this.img_count == 0) {
+        const input = document.createElement('input');
+        input.setAttribute('type', 'file');
+        input.setAttribute('accept', 'image/*');
+        input.addEventListener('change', (e:any) => {
+          const file = e.target.files[0];
+          const reader = new FileReader();
+          reader.addEventListener('load', () => {
+            const id = file.name;
+            const blobCache =  tinymce.activeEditor!.editorUpload.blobCache;
+            const base64 = (<string>reader.result).split(',')[1];
+            const blobInfo = blobCache.create(id, file, base64);
+            blobCache.add(blobInfo);
+            cb(blobInfo.blobUri(), { title: file.name });
+          });
+          reader.readAsDataURL(file);
+        })
+        input.click();
+        this.img_count++;
+      }
+      else {
+        Swal.fire("Only 1 image is allow in a comment",'','warning');
+      }
     },
     init_instance_callback: (editor: any) => {
       this.editor_id = editor.id;

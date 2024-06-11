@@ -250,27 +250,27 @@ app-editor-view {
 }
 
 #footer > div.upvote {
-    background-color: orange;
+    background-color: var(--upvote);
 }
 
 #footer > div.downvote {
-    background-color: rgb(99, 122, 239);
+    background-color: var(--downvote);
 }
 
 #block_vote > button.upvote {
-    background-color: orange;
+    background-color: var(--upvote);
 }
 
 #block_vote > button.downvote {
-    background-color: rgb(99, 122, 239);
+    background-color: var(--downvote);
 }
 
 #post_block #footer #block_vote #btn_upvote:hover {
-    background-color: orange;
+    background-color: var(--upvote)
 }
 
 #post_block #footer #block_vote #btn_downvote:hover {
-    background-color: rgb(99, 122, 239);
+    background-color: var(--downvote);
 }
 
 #btn_comment > p, #btn_share > p {
