@@ -4,7 +4,7 @@
     justify-content: flex-start;
     align-items: center;
     --btn_width: 75px;
-    --btn_height: 30px;
+    --btn_height: 35px;
     margin-bottom: 50px;
 }
 
@@ -31,20 +31,21 @@ app-post {
 
 #btn_comment_block > * {
     text-align: center;
-    border-radius: 5px;
+    border-radius: 20px;
     margin-left: 10px;
+    font-size: 14px;
+    width: auto;
+    padding: 0 15px;
+    height: var(--btn_height);
+    border: 1px solid var(--neutral);
 }
 
 #btn_cancel_comment {
-    width: 50px;
-    height: var(--btn_height);
-    background-color: rgb(169, 190, 190);
+    background-color: var(--neutral);
 }
 
 #btn_submit_comment {
-    width: var(--btn_width);
-    height: var(--btn_height);
-    background-color: rgb(39, 71, 167);
+    background-color: var(--allow);
 }
 
 // #comment_block {
@@ -68,7 +69,8 @@ app-comment {
 }
 
 #no_comment_block {
-    margin-bottom: 50px;
+    margin: 0 50px;
+    font-size: 20px;
 }
 
 #deleted_post_block {
