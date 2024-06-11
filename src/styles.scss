@@ -14,10 +14,13 @@
     --post-header-height: 30px;
     --neutral: #efefef;
     --box_shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    --menu_box_shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
     --light_border: #b7b7b7;
     --scrollbar_track: #ffffff;
     --scrollbar_thumb: #c6c6c6;
     --join: #ad2e00;
+    --allow: #5959f9;
+    --delete: #fb3030;
 }
 
 html, body, * {
@@ -58,7 +61,9 @@ a, a:visited {
     color: black
 }
 
-
+.swal2-container {
+  z-index: 99999;
+}
 
 
 ::-webkit-scrollbar {

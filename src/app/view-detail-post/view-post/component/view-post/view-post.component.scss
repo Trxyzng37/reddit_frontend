@@ -70,20 +70,18 @@ app-editor-view {
 
 #btn_join {
     width: auto;
-    height: 80%;
-    padding: 0 10px;
+    height: 100%;
+    padding: 0 15px;
     background-color: white;
-    border: 2px solid black;
-    border-radius: 5px;
+    border: 1px solid var(--neutral);
+    border-radius: 20px;
     margin-right: 10px;
+    font-size: 14px;
+    color: var(--primary_background_color);
 }
 
 #btn_join:hover {
     background-color: rgb(231, 190, 136);
-}
-
-a:hover {
-    color: blue;
 }
 
 #community_bar {
@@ -151,22 +149,31 @@ a:hover {
     right: 10px;
     top: calc(var(--community_icon) + 5px);
     z-index: 9999;
+    box-shadow: var(--menu_box_shadow);
+    background-color: transparent;
+    border-radius: 10px;
 }
 
 #dropdown_option_block > * {
     width: 100%;
     height: 40px;
-    background-color: var(--primary_background_color_hover);
+    background-color: var(--primary_background_color);
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
+    padding-left: 5px;
 }
 
-// #dropdown_option_block:first-child {
-//     border-top-left-radius: 10px;
-//     border-top-right-radius: 10px;
-// }
+#btn_edit {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+#btn_save {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
 
 #dropdown_option_block i {
     margin-left: 15px;
@@ -178,7 +185,7 @@ a:hover {
 }
 
 #dropdown_option_block > *:hover {
-    opacity: 0.8;
+    background-color: var(--neutral);
 }
 
 #footer {
@@ -206,23 +213,23 @@ a:hover {
 }
 
 #block_vote.normal, #btn_upvote.normal, #btn_downvote.normal {
-    background-color: var(--primary_background_color_hover);
+    background-color: var(--neutral);
 }
 
 #btn_upvote.normal {
-    background-color: var(--primary_background_color_hover);
+    background-color: var(--neutral);
 }
 
 #btn_downvote.normal {
-    background-color: var(--primary_background_color_hover);
+    background-color: var(--neutral);
 }
 
 #btn_comment, #btn_share {
-    padding: 0px 5px;
+    padding: 0px 10px;
 }
 
-#post_block #footer #btn_comment:hover, #post_block #footer #btn_share:hover {
-    background-color: rgba($color: #dcffcb, $alpha: 1.0);
+#btn_comment:hover {
+    opacity: 0.8;
 }
 
 #btn_upvote, #btn_downvote {

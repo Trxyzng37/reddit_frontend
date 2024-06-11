@@ -80,6 +80,7 @@ export class ViewDetailPostComponent {
      }
   }
 
+  img_count = 0;
   public editorSettings = {
     base_url: '/tinymce',
     suffix: '.min',
@@ -125,24 +126,30 @@ export class ViewDetailPostComponent {
       'body {line-height: normal}' +
       'pre[class*=language-] {font-family: Consolas}',
     file_picker_callback: (cb: any, value:any, meta:any) => {
-      const input = document.createElement('input');
-      input.setAttribute('type', 'file');
-      input.setAttribute('accept', 'image/*');
-      input.addEventListener('change', (e:any) => {
-        const file = e.target.files[0];
-        const reader = new FileReader();
-        reader.addEventListener('load', () => {
-          const id = file.name;
-          const blobCache =  tinymce.activeEditor!.editorUpload.blobCache;
-          const base64 = (<string>reader.result).split(',')[1];
-          const blobInfo = blobCache.create(id, file, base64);
-          blobCache.add(blobInfo);
-          cb(blobInfo.blobUri(), { title: file.name });
-        });
-        reader.readAsDataURL(file);
-      })
-      input.click();
-    },
+      if(this.img_count == 0) {
+        const input = document.createElement('input');
+        input.setAttribute('type', 'file');
+        input.setAttribute('accept', 'image/*');
+        input.addEventListener('change', (e:any) => {
+          const file = e.target.files[0];
+          const reader = new FileReader();
+          reader.addEventListener('load', () => {
+            const id = file.name;
+            const blobCache =  tinymce.activeEditor!.editorUpload.blobCache;
+            const base64 = (<string>reader.result).split(',')[1];
+            const blobInfo = blobCache.create(id, file, base64);
+            blobCache.add(blobInfo);
+            cb(blobInfo.blobUri(), { title: file.name });
+          });
+          reader.readAsDataURL(file);
+        })
+        this.img_count++;
+        input.click();
+      }
+      else {
+        Swal.fire("Only 1 image is allow in a comment",'','warning')
+      }
+    }
   }
 
   onContentChanged = (event: any) =>{

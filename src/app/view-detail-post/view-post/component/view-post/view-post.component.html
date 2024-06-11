@@ -1,5 +1,4 @@
 
-<!-- <hr> -->
 <div id="post_block"           
 >
     <nav id="community_bar">
@@ -15,14 +14,14 @@
             <a id="username" href="/user/{{username}}">{{username}}</a>
         </div>
         <div id="option_block">
-            <button class="btn" id="btn_join" style="background-color: green;" *ngIf="isCommunityOwner && isAllow && !isDeleted" (click)="allowPost($event)">Allow</button>
-            <button class="btn" id="btn_join" style="background-color: red;" *ngIf="isCommunityOwner && !isDeleted" (click)="notAllowPost($event)">Delete</button>
+            <button class="btn" id="btn_join" style="background-color: var(--allow);" *ngIf="isCommunityOwner && isAllow && !isDeleted" (click)="allowPost($event)">Allow</button>
+            <button class="btn" id="btn_join" style="background-color: var(--delete);" *ngIf="isCommunityOwner && !isDeleted" (click)="notAllowPost($event)">Delete</button>
             <button id="btn_option" *ngIf="isAuthor" type="button" (click)="openOptionMenu($event)"><i class="pi pi-ellipsis-h"></i></button>
         </div>
         <div id="dropdown_option_block" [ngStyle]="{'display': isOptionMenuOpen ? 'block':'none'}">
             <button id="btn_edit" *ngIf="isAuthor" (click)="editPost($event)"><i class="pi pi-pencil"></i><p>Edit</p></button>
             <button *ngIf="isAuthor" (click)="deletePost()"><i class="pi pi-trash"></i><p>Delete</p></button>
-            <button (click)="savePost($event)"><i class="pi" [ngClass]="saved ? 'pi-bookmark-fill':'pi-bookmark'"></i><p>{{savedText}}</p></button>
+            <button id="btn_save" (click)="savePost($event)"><i class="pi" [ngClass]="saved ? 'pi-bookmark-fill':'pi-bookmark'"></i><p>{{savedText}}</p></button>
         </div>
     </nav>
 
