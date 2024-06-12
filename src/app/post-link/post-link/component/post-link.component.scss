@@ -137,7 +137,7 @@ a:hover {
     width: auto;
     height: 100%;
     padding: 0 15px;
-    background-color: white;
+    background-color: var(--primary_background_color);
     border: 1px solid var(--neutral);
     border-radius: 20px;
     margin-right: 10px;
@@ -146,7 +146,19 @@ a:hover {
 }
 
 #btn_join:hover {
-    background-color: rgb(231, 190, 136);
+    background-color: var(--neutral);
+}
+
+#btn_joinn {
+    width: auto;
+    height: 100%;
+    padding: 0 15px;
+    // background-color: var(--downvote);
+    border: 1px solid var(--neutral);
+    border-radius: 20px;
+    margin-right: 10px;
+    font-size: 14px;
+    // color: var(--primary_background_color);
 }
 
 #btn_option {
@@ -220,9 +232,9 @@ a:hover {
     border-radius: 20px;
 }
 
-#post_block #footer #block_vote.normal, #btn_upvote.normal, #btn_downvote.normal {
-    background-color: var(--primary_background_color_hover);
-}
+// #post_block #footer #block_vote.normal, #btn_upvote.normal, #btn_downvote.normal {
+//     background-color: var(--primary_background_color_hover);
+// }
 
 #post_block #footer #btn_upvote.normal {
     background-color: var(--primary_background_color_hover);
@@ -308,7 +320,6 @@ a:hover {
 {
     background-color: var(--neutral);
 }
-
 
 button {
     background-color: var(--primary_background_color);

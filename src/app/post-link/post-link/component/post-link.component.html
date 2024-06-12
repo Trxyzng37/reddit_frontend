@@ -19,7 +19,7 @@
         </div>
         
         <div id="option_block">
-            <button class="btn" id="btn_join" *ngIf="!isHomePage && !isCommunityPage && !isControlPage" (click)="joinCommunity($event)">{{joinText}}</button>
+            <button id="btn_joinn" class="btn" *ngIf="!isHomePage && !isCommunityPage && !isControlPage" (click)="joinCommunity($event)" [ngStyle]="{'background-color': isJoinCommunity ? 'var(----primary_background_color)' : 'var(--allow)', 'color': isJoinCommunity ? '#000000' : 'var(--primary_background_color)', 'border': isJoinCommunity ? '1px solid black' : 'none'}">{{joinText}}</button>
             <button class="btn" id="btn_join" style="background-color: var(--allow);" *ngIf="isControlPage" (click)="allowPost($event)">Allow</button>
             <button class="btn" id="btn_join" style="background-color: var(--delete);" *ngIf="isControlPage && isCommunityOwner" (click)="deletePost($event)">Delete</button>
             <button id="btn_option" type="button" *ngIf="!isControlPage" (click)="openOptionMenu($event)"><i class="pi pi-ellipsis-h"></i></button>
