@@ -73,7 +73,7 @@ export class PostLinkComponent {
   public isControlPage: boolean = false;
   public isCommunityOwner: boolean = false;
   public communityInfo!: Communities;
-  public joinText: string = this.isJoinCommunity ? 'Leave' : 'Join';
+  public joinText: string = this.isJoinCommunity ? 'Joined' : 'Join';
   public saved: boolean = false;
   public savedText: string = this.saved ? 'Unsave' : "Save";
 
@@ -111,7 +111,7 @@ export class PostLinkComponent {
     this.communityService.checkJoinCommunityStatus(uid, this.post.community_id).subscribe({
       next: (response: JoinCommunityResponse) => {
         this.isJoinCommunity = response.join_community == 0 ? false : true;
-        this.joinText = this.isJoinCommunity ? 'Leave' : 'Join';
+        this.joinText = this.isJoinCommunity ? 'Joined' : 'Join';
       }
     })
     if(this.post.type == "editor") {
@@ -139,7 +139,7 @@ export class PostLinkComponent {
     this.communityService.checkJoinCommunityStatus(uid, this.post.community_id).subscribe({
       next: (response: JoinCommunityResponse) => {
         this.isJoinCommunity = response.join_community == 0 ? false : true;
-        this.joinText = this.isJoinCommunity ? 'Leave' : 'Join';
+        this.joinText = this.isJoinCommunity ? 'Joined' : 'Join';
       }
     })
     this.communityService.getCommunityInfoById(this.post.community_id.toString()).subscribe({
@@ -255,7 +255,7 @@ export class PostLinkComponent {
     this.communityService.joinCommunity(uid, this.post.community_id, this.isJoinCommunity == false ? 1 : 0).subscribe({
       next: (response: JoinCommunityResponse) => {
         this.isJoinCommunity = response.join_community == 0 ? false : true;
-        this.joinText = this.isJoinCommunity ? 'Leave' : 'Join';
+        this.joinText = this.isJoinCommunity ? 'Joined' : 'Join';
         this.joinCommunityEvent.emit(this.isJoinCommunity);
       },
       error: (e: HttpErrorResponse) => {
