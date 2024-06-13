@@ -1,6 +1,6 @@
 :host {
     --btn_width: 100px;
-    --btn_height: 50px;
+    --btn_height: 40px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -15,7 +15,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: rgb(235, 181, 234);
+    background-color: var(--neutral);
     border: 1px solid black;
 }
 
@@ -49,7 +49,7 @@
     width: 100px;
     height: 100px;
     display: inline-block;
-    background-color: rgb(168, 136, 244);
+    background-color: var(--select_btn);
     border: 2px solid black;
     border-radius: 5px;
     vertical-align: bottom;
@@ -65,19 +65,19 @@
 }
 
 #btn_comment_block > button {
-    width: var(--btn_width);
+    width: 100px;
     height: var(--btn_height);
-    border-radius: 5px;
-    font-size: large;
+    border-radius: 20px;
+    font-size: 16px;
 }
 
 #btn_cancel_comment {
-    background-color: rgb(169, 190, 190);
+    background-color: var(--neutral);
     margin-right: 20px;
 }
 
 #btn_edit_comment {
-    background-color: rgb(39, 71, 167);
+    background-color: var(--select_btn);
 }
 
 

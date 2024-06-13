@@ -37,10 +37,13 @@
 .container > button {
     width: 40px;
     height: 40px;
-    background-color: rgb(241, 201, 152);
+    background-color: var(--neutral);
     border-radius: 50%;
     position: absolute;
     opacity: 0.6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 i {
@@ -62,12 +65,12 @@ i {
 #caption, #link {
     text-overflow: ellipsis;
     overflow-wrap:break-word;
-    color: #ffffff;
+    color: var(--primary_background_color);
 }
 
 #link {
     text-decoration: underline;
-    color: #3090da;
+    color: var(--allow);
 }
 
 .zoom_block {
