@@ -57,6 +57,9 @@ export class EditCommunityComponent {
           let check = this.scope === 0 ? "public" : "protect";
           let found = <HTMLInputElement>document.getElementById(check);
           found.checked = true;
+          const title = (<HTMLInputElement>document.getElementById("input_post_title"));
+          title.value = response.description;
+          title.style.height = `${title.scrollHeight}px`;
         }
       })
     }
@@ -64,7 +67,7 @@ export class EditCommunityComponent {
 
 
   AllowSubmit() {
-    this.allowSubmit = this.description.length >= 0 && 
+    this.allowSubmit = this.description.length > 0 && 
                        this.avatar_url.length != 0 && 
                        this.banner_url.length != 0;
   }
@@ -170,6 +173,10 @@ export class EditCommunityComponent {
         })
       }
     });
+  }
+
+  goBack() {
+    window.history.back();
   }
 }
 

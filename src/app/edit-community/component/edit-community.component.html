@@ -1,7 +1,10 @@
 <div id="container">
     <div id="form" *ngIf="isOwner">
+        <button id="btn_back">
+            <i class="pi pi-arrow-left" title="back" (click)="goBack()"></i>
+        </button>
         <div id="header">
-            <h2 style="width: 100%;; text-align: center;">Edit community r/{{communityInfo.name}}</h2>
+            <h2 style="width: 100%;; text-align: center; color: var(--secondary_color);">Edit community r/{{communityInfo.name}}</h2>
         </div>
         <input id="input_name" type="text" placeholder="Name" maxlength="21" #community_name [disabled]="true" [value]="communityInfo.name">
         <div id="post_title_block">
@@ -25,7 +28,7 @@
             <button id="btn_upload_banner" type="button" (click)="input_banner.click()">Upload your community banner</button>
         </div>
         <div id="scope_block">
-            <b>Select your community scope</b>
+            <b style="font-size: 20px;">Select your community scope</b>
             <div class="radio_block">
                 <input id="public" type="radio" name="scope" value="0" (click)="selectScope(0)">
                 <label for="public"><p> <b>Public</b> (Everyone can post)</p></label>

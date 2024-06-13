@@ -1,5 +1,5 @@
 :host {
-    width: 40vw;
+    width: 100vw;
     min-width: 500px;
     --avatar_width: 100px;
     --banner_width: 100%;
@@ -11,7 +11,7 @@
     justify-content: center;
     align-items: center;
     border-radius: 10px;
-    background-color: rgb(218, 138, 255);
+    background-color: transparent;
 }
 
 #header {
@@ -21,10 +21,16 @@
     align-items: center;
 }
 
-#header_icon, #btn_close > img {
+#header > img {
+    margin-right: 10px;
+}
+
+#header_icon, #btn_close > i {
     width: 50px;
     height: 50px;
     border-radius: 50%;
+    font-size: 40px;
+    color: var(--secondary_color);
 }
 
 #btn_close, #btn_close > img {
@@ -36,11 +42,12 @@
 #btn_close {
     position: absolute;
     top: 20px;
-    right: 10px;
+    right: 30px;
 }
 
 form {
-    width: 100%;
+    width: 50%;
+    min-width: 450px;
     height: auto;
     display: flex;
     flex-direction: column;
@@ -49,17 +56,22 @@ form {
     // background-color: rgb(181, 211, 244);
     padding: 20px 10px;
     position: relative;
+    background-color: var(--neutral);
 }
 
 p {
     white-space: initial;
 }
 
+input:focus {
+    border: 2px solid black;
+}
+
 input, textarea {
     width: 100%;
     height: 40px;
     border-radius: 5px;
-    border: 2px solid black;
+    border: 1px solid black;
     padding-left: 10px;
     margin-top: 10px;
 }
@@ -102,28 +114,18 @@ input, textarea {
     display: none;
 }
 
-#btn_upload_img {
-    width: 200px;
+#btn_upload_img, #btn_upload_banner  {
+    width: auto;
     height: 40px;
     text-align: center;
     display: inline-block;
-    background-color: rgb(168, 136, 244);
-    border: 2px solid black;
-    border-radius: 5px;
+    background-color: var(--downvote);
+    border: 1px solid black;
+    border-radius: 20px;
     vertical-align: bottom;
-    margin: 10px 0;
-}
-
-#btn_upload_banner {
-    width: 200px;
-    height: 40px;
-    text-align: center;
-    display: inline-block;
-    background-color: rgb(168, 136, 244);
-    border: 2px solid black;
-    border-radius: 5px;
-    vertical-align: bottom;
-    margin: 10px 0;
+    margin: 10px 0 30px 0;
+    padding: 0 20px;
+    font-size: 14px;
 }
 
 #upload_img_container, #upload_banner_container {
@@ -163,13 +165,13 @@ input, textarea {
 #avatar_container {
     width: calc(var(--avatar_width) + 5px);
     aspect-ratio: 1/1;
-    border: 4px solid black;
+    border: 3px solid black;
     border-radius: 50%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: rgba($color: #000000, $alpha: 0.8);
+    background-color: rgba($color: #000000, $alpha: 0.7);
 }
 
 #avatar_display {
@@ -185,7 +187,7 @@ input, textarea {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 4px solid black;
+    border: 3px solid black;
 }
 
 #banner_display {
@@ -204,21 +206,21 @@ input, textarea {
 #btn_cancel {
     width: auto;
     height: 40px;
-    padding: 0 10px;
+    padding: 0 20px;
     margin-right: 20px;
     font-size: 16px;
-    border-radius: 5px;
-    border: 2px solid black;
+    border-radius: 20px;
+    border: 1px solid black;
 }
 
 #btn_submit {
     width: auto;
     height: 40px;
-    background-color: rgb(29, 145, 27);
+    background-color: var(--allow);
     align-self: flex-end;
     margin-top: 20px;
-    padding: 0 10px;
+    padding: 0 20px;
     font-size: 16px;
-    border-radius: 5px;
-    border: 2px solid black;
+    border-radius: 20px;
+    border: 1px solid black;
 }
