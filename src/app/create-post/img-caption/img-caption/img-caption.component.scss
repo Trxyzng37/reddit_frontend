@@ -42,10 +42,14 @@
     width: 100%;
     height: 30px;
     text-align: left;
-    border: 2px solid black;
+    border: 1px solid black;
     padding: 0 10px;
     margin-bottom: 10px;
     resize: none;
+}
+
+.txt_link:focus, #txt_caption:focus {
+    border: 2px solid black;
 }
 
 #txt_caption {

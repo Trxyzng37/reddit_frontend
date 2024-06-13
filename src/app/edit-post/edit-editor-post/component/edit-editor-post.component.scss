@@ -1,7 +1,7 @@
 
 :host {
     --btn_width: 100px;
-    --btn_height: 50px;
+    --btn_height: 40px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -21,6 +21,7 @@
 #editor {
     width: 50%;
     height: auto;
+    min-width: 450px;
 }
 
 #btn_comment_block {
@@ -29,21 +30,22 @@
 }
 
 #btn_comment_block > button {
-    width: var(--btn_width);
+    width: 100px;
     height: var(--btn_height);
-    border-radius: 5px;
-    font-size: large;
+    padding: 0 20px;
+    border-radius: 20px;
+    font-size: 16px;
 }
 
 #btn_cancel_comment {
-    background-color: rgb(169, 190, 190);
+    background-color: var(--neutral);
     margin-right: 20px;
 }
 
 #btn_edit_comment {
-    background-color: rgb(39, 71, 167);
+    background-color: var(--select_btn);
+    padding: 0 30px;
 }
-
 
 //title
 #post_title_block {

@@ -24,6 +24,7 @@
     --delete: #fb3030;
     --upvote:	orange;
     --downvote:	#9494FF;
+    --select_btn: #9494FF;
 }
 
 html, body, * {
@@ -61,7 +62,7 @@ button:disabled {
 
 a, a:visited {
     text-decoration: none;
-    color: black
+    color: black;
 }
 
 .swal2-container {
