@@ -4,7 +4,7 @@
             <img id="header_icon" src="../../../assets/icon/create_community_header_icon.png">
             <h2>Create community</h2>
             <button id="btn_close" (click)="closeForm()">
-                <img src="../../../assets/icon/close.png">
+                <i class="pi pi-times-circle"></i>
             </button>
         </div>
         <p>Build and grow a community about something you care about.</p>
@@ -35,11 +35,11 @@
             <b>Select your community scope</b>
             <div class="radio_block">
                 <input id="input_public" type="radio" name="scope" value="0" checked="checked" (click)="selectScope(0)">
-                <label for="input_public"><p>Public (Everyone can post)</p></label>
+                <label for="input_public"><p><b>Public</b> (Everyone can post)</p></label>
             </div>
             <div class="radio_block">
                 <input id="input_moderate" type="radio" name="scope" value="1" (click)="selectScope(1)">
-                <label for="input_moderate"><p>Protected (Moderator need to accept post before it can be view)</p></label>
+                <label for="input_moderate"><p><b>Protected</b> (Moderator need to accept post before it can be view)</p></label>
             </div>
         </div>
         <div id="button_container">
