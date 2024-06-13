@@ -52,6 +52,7 @@ import { EditUserInfoComponent } from './edit-user-profile/edit-user-info/edit-u
 import { CommentViewComponent } from './user-profile/comment-view/comment-view/comment-view.component';
 import { VideoViewComponent } from './post-link/video-view/video-view/video-view.component';
 import { EditVideoViewComponent } from './edit-post/edit-video-post/edit-video-view/edit-video-view.component';
+import { BackButtonComponent } from './shared/component/back-button/back-button.component';
 
 @NgModule({
   declarations: [
@@ -96,7 +97,8 @@ import { EditVideoViewComponent } from './edit-post/edit-video-post/edit-video-v
     EditUserInfoComponent,
     CommentViewComponent,
     VideoViewComponent,
-    EditVideoViewComponent
+    EditVideoViewComponent,
+    BackButtonComponent
   ],
   imports: [
     BrowserModule,
