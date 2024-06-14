@@ -13,7 +13,7 @@
     <button type="button" *ngIf="isOwner" [ngClass]="{'selected_btn': searchOption == 'wait_for_approve'}" (click)="selectSearchOption('wait_for_approve')">Wait for approve</button>
 </div>
 
-<div id="sort_container" *ngIf="searchOption == 'comments'">
+<!-- <div id="sort_container" *ngIf="searchOption == 'comments'">
     <button id="btn_sort" (click)="showSortOption()">{{sort_option}}<i class="pi pi-chevron-down"></i></button>
     <div id="sort_option_block" *ngIf="isSortOptionShow">
         <b>Sort by</b>
@@ -24,7 +24,7 @@
         <button (click)="selectSort('Top this year')">Top this year</button>
         <button (click)="selectSort('Top all time')">Top all time</button>
     </div>
-</div>
+</div> -->
 
 <app-post-link-list [ngStyle]="{'display': searchOption == 'posts' ? 'block' : 'none'}"></app-post-link-list>
 <app-post-link-list [searchOption]="searchOption" (isLoadEvent)="loadApprove($event)" [ngStyle]="{'display': searchOption == 'wait_for_approve' ? 'block' : 'none'}"></app-post-link-list>
@@ -38,5 +38,6 @@
 </div>
 
 <div id="loading_block" *ngIf="isLoad">
+    <i class="pi pi-spin pi-spinner" style="font-size: 40px; color: var(--select_btn); margin-bottom: 10px;"></i>
     <b>Loading data. Please wait...</b>
 </div>

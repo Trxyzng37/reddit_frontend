@@ -10,9 +10,9 @@
 #btn_sort {
     width: auto;
     height: 30px;
-    padding: 0 10px;
+    padding: 0 20px;
     background-color: var(--primary_background_color);
-    border-radius: 10px;
+    border-radius: 20px;
     font-weight: 500;
     display: flex;
     flex-direction: row;
@@ -23,7 +23,7 @@
 }
 
 #btn_sort:hover {
-    background-color: rgb(32, 220, 95);
+    background-color: var(--neutral);
 }
 
 #btn_sort > i {
@@ -32,24 +32,26 @@
 }
 
 #sort_option_block {
-    width: 110px;
+    width: 140px;
     height: auto;
     position: absolute;
     top: 35px;
     left: 0;
     z-index: 999;
+    box-shadow: var(--box_shadow);
 }
 
 #sort_option_block > button {
     height: 40px;
     width: 100%;
     text-align: left;
-    padding: 0 10px;
-    background-color: var(--primary_background_color_hover);
+    padding-left: 20px;
+    background-color: var(--primary_background_color);
+    font-weight: 500;
 }
 
 #sort_option_block > button:hover {
-    background-color: rgb(140, 235, 145);
+    background-color: var(--neutral);
 }
 
 #sort_option_block > b {
@@ -57,8 +59,9 @@
     height: 40px;
     width: 100%;
     text-align: left;
-    padding: 10px 10px;
-    background-color: var(--primary_background_color_hover);
+    padding: 10px 20px;
+    background-color: var(--primary_background_color);
+
 }
 
 #community_block {
@@ -74,8 +77,8 @@
 #empty_block {
     width: 100%;
     height: auto;
-    background-color: aqua;
+    background-color: var(--neutral);
     text-align: center;
-    font-size: 30px;
+    font-size: 40px;
     padding: 25vh 10px;
 }
