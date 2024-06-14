@@ -34,7 +34,6 @@ app-recent-visited-post {
     height: calc(100vh - var(--header_size));
     top: calc(var(--header_size) + 10px);
     background-color: var(--neutral);
-    // border-radius: 10px;
     overflow: hidden;
     scrollbar-gutter: stable;
     background-clip: content-box;
@@ -57,8 +56,6 @@ app-recent-visited-post {
     display: block;
     width: 100%;
     height: auto;
-    // margin-left: calc(var(--margin_home) + 2vw);
-    // margin-bottom: 10px;
     border-radius: 5px;
     position: relative;
 }
@@ -144,11 +141,11 @@ app-recent-visited-post {
 
 
 #control_block {
-    width: 50vw;
+    width: calc(100% - 380px);
     height: auto;
     text-align: center;
     margin-top: 20px;
-    margin-left: calc(var(--margin_home) + 2vw);
+    margin-left: calc(2vw);
 }
 
 app-recent-visited-post, #community_info_block, #user_info_block {
@@ -163,6 +160,11 @@ app-recent-visited-post, #community_info_block, #user_info_block {
         left: calc(80px + 2.5vw);
     }
     #control_block {
+        position: relative;
+        top: 30px;
+    }
+
+    #outlet {
         position: relative;
         top: 30px;
     }
