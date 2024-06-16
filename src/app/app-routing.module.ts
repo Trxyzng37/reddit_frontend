@@ -40,15 +40,15 @@ const routes: Routes = [
         {path: 'post/:post_id', title: 'view-post', component: ViewDetailPostComponent},
         {path: 'control-posts/:community_id', component: PostLinkListComponent},
         {path: 'search/:text', component: SearchResultsComponent},
-        {path: 'user/:username', component: UserProfileComponent}
+        {path: 'user/:username', component: UserProfileComponent},
+        {path: 'setting/:username', component: EditUserInfoComponent},
+        {path: 'edit-community/:community_id', component: EditCommunityComponent},
       ]
       }
     ]
   },
   {path: 'create-post', component: CreatePostComponent},
   {path: 'create-post?cid=:community_id', component: CreatePostComponent},
-  {path: 'edit-community/:community_id', component: EditCommunityComponent},
-  {path: 'setting/:username', component: EditUserInfoComponent},
   { path: 'error', title:'error', component: ErrorComponent },
   // {path: '', redirectTo: 'home', pathMatch: 'full'},
   { path: '**', component: ErrorComponent }
