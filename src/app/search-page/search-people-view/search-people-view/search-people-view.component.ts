@@ -29,8 +29,7 @@ export class SearchPeopleViewComponent {
     })
   }
 
-  navigateToUserProfile(event: Event, uid: number) {
-    event.stopPropagation();
-    window.location.href = "/r/" + uid;
+  navigateToUserProfile(username: string) {
+    window.location.href = "/user/" + username;
   }
 }

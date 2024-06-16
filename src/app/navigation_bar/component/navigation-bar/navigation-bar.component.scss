@@ -34,6 +34,7 @@
     justify-content: flex-start;
     align-items: center;
     font-size: 16px;
+    color: var(--secondary_color) !important;
 }
 
 #navigation_bar a:hover, button:hover {
@@ -73,12 +74,19 @@ span {
     text-align: center;
 }
 
-#img_community_icon, #img_create_community {
+#img_community_icon, button i {
     width: 30px;
     height: 30px;
     border-radius: 50%;
     margin-left: 20px;
     margin-right: 5px;
+}
+
+button i {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
 }
 
 @media only screen and (max-width: 1200px) {  

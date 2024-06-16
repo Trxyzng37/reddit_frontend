@@ -6,6 +6,7 @@ import { StorageService } from 'src/app/shared/storage/storage.service';
 import { EditUserInfoService } from '../service/update-user-info/edit-user-info.service';
 import { DefaultResponse } from 'src/app/shared/pojo/default-response';
 import Swal from 'sweetalert2';
+import { DarkModeService } from 'src/app/shared/services/dark-mode/dark-mode.service';
 
 @Component({
   selector: 'app-edit-user-info',
@@ -16,7 +17,8 @@ export class EditUserInfoComponent {
   public constructor(
     private searchUserProfileService: SearchUserProfileService,
     private storageService: StorageService,
-    private editUserInfoService: EditUserInfoService
+    private editUserInfoService: EditUserInfoService,
+    private darkmodeSerive: DarkModeService
   ) {}
 
   public userInfo: UserProfile = new UserProfile(0,'','','',0,0,'');
@@ -25,6 +27,7 @@ export class EditUserInfoComponent {
   public allowSubmit: boolean = false;
 
   ngOnInit() {
+    this.darkmodeSerive.useDarkMode();
     const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
     const found = window.location.href.match('/setting/([A-Za-z0-9]+)')
     let username = "";

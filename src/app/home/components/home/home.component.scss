@@ -20,7 +20,7 @@ app-navigation-bar {
     width: 300px;
     top: var(--header_size);
     left: var(--margin_home);
-    border-right: 1px solid black;
+    border-right: 1px solid var(--secondary_color);
 }
 
 app-recent-visited-post {

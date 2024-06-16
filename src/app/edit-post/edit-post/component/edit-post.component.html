@@ -1,14 +1,15 @@
 <nav id="community_bar">
 <div id="community_block">
-    <a id="community_link" href="/a">
-        <img id="community_icon" src="../../../../assets/icon/logo.png" alt="community_icon"/>
+    <back-button></back-button>
+    <a id="community_link" href="/r/{{postData.community_id}}">
+        <img id="community_icon" src="{{postData.community_icon}}" alt="community_icon"/>
     </a>
     <div id="link_date_block"> 
-        <span id="community_name" style="font-weight: bold;" >r/test </span>
+        <span id="community_name" style="font-weight: bold;" (click)="navigateToCommunity()">r/{{postData.community_name}} </span>
         <i style="font-weight: bold;">·</i>
-        <span style="font-size: 13px;"> 10 minute ago</span>
+        <span style="font-size: 13px;"> {{dateTimeService.getTimeByCompareCreatedAtAndCurrentDate(postData.created_at)}}</span>
     </div>
-    <a id="username" href="" style="font-size: 15px;">trxyzng</a>
+    <a id="username" href="/user/{{postData.username}}" style="font-size: 15px;">{{postData.username}}</a>
     <button id="btn_delete" *ngIf="true" (click)="deletePost()"><i class="pi pi-trash"></i><pre> Delete</pre></button>
 </div>
 </nav>

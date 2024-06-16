@@ -16,6 +16,7 @@ import { RecentVisitService } from 'src/app/shared/services/recent-visit/recent-
 import { DefaultResponse } from 'src/app/shared/pojo/default-response';
 import { CommunityService } from 'src/app/shared/services/search-communites/community.service';
 import { Communities } from 'src/app/shared/pojo/pojo/communities';
+import { DarkModeService } from 'src/app/shared/services/dark-mode/dark-mode.service';
 
 @Component({
   selector: 'app-view-detail-post',
@@ -32,7 +33,8 @@ export class ViewDetailPostComponent {
     private createCommentService: CreateCommentService,
     private storageService: StorageService,
     private recentVisitPostService: RecentVisitService,
-    private communityService: CommunityService
+    private communityService: CommunityService,
+    private darkmodeSerive: DarkModeService
   ) {}
 
   public postId: number = 0;
@@ -45,6 +47,7 @@ export class ViewDetailPostComponent {
   public isCommunityOwner: boolean = false;
 
   ngOnInit() {
+    this.darkmodeSerive.useDarkMode();
      this.postId = this.route.snapshot.params['post_id'];
      const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
      this.getPostService.getPostByPostId(this.postId).subscribe({

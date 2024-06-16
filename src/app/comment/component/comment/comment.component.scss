@@ -1,6 +1,6 @@
 
 :host {
-    --btn_width: 75px;
+    --btn_width: 90px;
     --btn_height: 30px;
 }
 
@@ -33,10 +33,24 @@
     margin-left: 10px;
 }
 
-img {
+textarea#input_post_title {
+    background-color: var(--neutral);
+    color: black;
+}
+
+i, img {
     height: 30px;
     aspect-ratio: 1/1;
     border-radius: 50%;
+    color: var(--secondary_color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+}
+
+pre {
+    color: var(--secondary_color);
 }
 
 #img_close_comment {
@@ -46,7 +60,7 @@ img {
 }
 
 #comment_content {
-    margin-left: 43px;
+    margin-left: 48px;
     box-sizing: border-box;
 }
 
@@ -58,6 +72,7 @@ img {
     position: relative;
     margin-left: 37px;
     box-sizing: border-box;
+    
 }
 
 #footer > * {
@@ -74,6 +89,9 @@ img {
     height: 100%;
     padding: 0 7px;
     margin: 0 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #comment_content {
@@ -128,38 +146,44 @@ img {
     width: fit-content;
     height: auto;
     position: absolute;
-    bottom: calc(-var(--btn_height));
+    bottom: -35px;
     right: 0px;
 }
 
 #btn_comment_block > * {
     text-align: center;
-    border-radius: 5px;
     margin-left: 10px;
 }
 
 #btn_cancel_comment {
-    width: 50px;
+    width: auto;
     height: var(--btn_height);
-    background-color: rgb(169, 190, 190);
+    padding: 0 20px;
+    background-color: var(--primary_background_color);
+    border-radius: 20px;
+    border: 1px solid var(--secondary_color);
+    color: var(--secondary_color);
 }
 
 #btn_submit_comment, #btn_edit_comment {
     width: var(--btn_width);
     height: var(--btn_height);
-    background-color: rgb(39, 71, 167);
+    background-color: var(--allow);
+    border-radius: 20px;
+    border: 1px solid var(--secondary_color);
+    color: var(--secondary_color);
 }
 
 .user_comment {
-    background-color: var(--primary_background_color_hover);
+    background-color: var(--neutral);
 }
 
 .user_comment  .footer_btn, .user_comment #block_vote, .user_comment #btn_downvote, .user_comment #btn_upvote {
-    background-color: var(--primary_background_color_hover);
+    background-color: var(--neutral);
 }
 
 .user_comment  .footer_btn:hover, .user_comment #btn_downvote:hover, .user_comment #btn_upvote:hover {
-    background-color: var(--primary_background_color);
+    background-color: var(--neutral);
 }
 
 .upvote {
@@ -170,13 +194,13 @@ img {
     background-color: var(--downvote);
 }
 
-// #btn_upvote:hover {
-//     background-color: var(--upvote)
-// }
+#btn_upvote:hover {
+    background-color: var(--neutral)
+}
 
-// #btn_downvote:hover {
-//     background-color: var(--downvote)
-// }
+#btn_downvote:hover {
+    background-color: var(--neutral)
+}
 
 .footer_btn:hover {
     background-color: var(--neutral);

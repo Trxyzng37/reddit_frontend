@@ -20,6 +20,10 @@
     align-items: center;
 }
 
+#community_link {
+    margin-left: 10px;
+}
+
 #community_block > *, #community_link > * {
     margin-right: 5px;
 }
@@ -48,8 +52,8 @@
 
 #username {
     position: absolute;
-    top: 13px;
-    left: 45px;
+    top: 15px;
+    left: 95px;
 }
 
 #btn_delete {
@@ -64,10 +68,11 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    color: var(--secondary_color);
 }
 
 #btn_delete:hover {
-    background-color: var(--primary_background_color_hover);
+    background-color: var(--neutral);
 }
 
 #edit_block {

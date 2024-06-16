@@ -30,7 +30,7 @@ iframe, video {
 #link_container a {
     display: block;
     width: 100%;
-    color: blue;
+    color: var(--secondary_color);
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;

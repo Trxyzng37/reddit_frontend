@@ -20,7 +20,7 @@ app-editor-view {
 }
 
 #post_block:hover {
-    background-color: var(--primary_background_color_hover);
+    background-color: var(--neutral);
 }
 
 #post_block > *:not(:last-child)  {
@@ -29,7 +29,7 @@ app-editor-view {
 }
 
 hr {
-    border-top: 1px solid black;
+    border-top: 1px solid var(--secondary_color);
     width: 100%;
 }
 
@@ -138,11 +138,11 @@ a:hover {
     height: 100%;
     padding: 0 15px;
     background-color: var(--primary_background_color);
-    border: 1px solid var(--neutral);
+    border: 1px solid var(--secondary_color);
     border-radius: 20px;
     margin-right: 10px;
     font-size: 14px;
-    color: var(--primary_background_color);
+    color: var(--secondary_color);
 }
 
 #btn_join:hover {
@@ -166,10 +166,11 @@ a:hover {
     aspect-ratio: 1/1;
     border-radius: 50%;
     background-color: var(--primary_background_color);
+    color: var(--secondary_color);
 }
 
 #post_block:hover #btn_option {
-    background-color: var(--primary_background_color_hover);
+    background-color: var(--neutral);
 }
 
 #post_block:hover #btn_option:hover {
@@ -184,6 +185,7 @@ a:hover {
     box-shadow: var(--menu_box_shadow);
     background-color: transparent;
     border-radius: 10px;
+    color: var(--secondary_color);
 }
 
 #dropdown_option_block > * {
@@ -195,10 +197,12 @@ a:hover {
     justify-content: flex-start;
     align-items: center;
     padding-left: 5px;
+    color: var(--secondary_color);
 }
 #dropdown_option_block i {
     margin-left: 15px;
     margin-right: 10px;
+    color: var(--secondary_color);
 }
 
 #dropdown_option_block p {
@@ -227,21 +231,21 @@ a:hover {
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
-    background-color: var(--primary_background_color_hover);
+    background-color: var(--neutral);
     margin-right: 10px;
     border-radius: 20px;
 }
 
 // #post_block #footer #block_vote.normal, #btn_upvote.normal, #btn_downvote.normal {
-//     background-color: var(--primary_background_color_hover);
+//     background-color: var(--neutral);
 // }
 
 #post_block #footer #btn_upvote.normal {
-    background-color: var(--primary_background_color_hover);
+    background-color: var(--neutral);
 }
 
 #post_block #footer #btn_downvote.normal {
-    background-color: var(--primary_background_color_hover);
+    background-color: var(--neutral);
 }
 
 #post_block:hover #footer > *:not(.block_vote) {
@@ -311,6 +315,10 @@ a:hover {
 
 #btn_comment > p, #btn_share > p {
     padding: 0px 5px;
+}
+
+#btn_comment {
+    color: var(--secondary_color);
 }
 
 #post_block #footer #block_vote > #btn_upvote.upvote:hover,

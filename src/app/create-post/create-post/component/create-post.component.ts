@@ -11,6 +11,7 @@ import { CreatePostResponse } from '../../pojo/create-post-response';
 import tinymce from 'tinymce';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { DarkModeService } from 'src/app/shared/services/dark-mode/dark-mode.service';
 
 @Component({
   selector: 'app-test',
@@ -24,7 +25,8 @@ export class CreatePostComponent {
     private storageService: StorageService,
     private dateTimeService: DateTimeService,
     private communityService: CommunityService,
-    private route: Router
+    private route: Router,
+    private darkmodeService: DarkModeService
   ) {
   }
 
@@ -57,6 +59,7 @@ export class CreatePostComponent {
   public linkAllowed: boolean = true;
 
   ngOnInit() {
+    this.darkmodeService.useDarkMode();
     const found = window.location.href.match('cid=([0-9]+)');
     if(found != null) {
       this.communityService.getCommunityInfoById(found[1]).subscribe({

@@ -12,6 +12,7 @@ import { SearchUserProfileService } from 'src/app/shared/services/search-user-pr
 import { UserProfile } from 'src/app/shared/pojo/pojo/user-profile';
 import Swal from 'sweetalert2';
 import { SavePostService } from 'src/app/shared/services/save-post/save-post.service';
+import { DarkModeService } from 'src/app/shared/services/dark-mode/dark-mode.service';
 @Component({
   selector: 'app-post-link-list',
   templateUrl: './post-link-list.component.html',
@@ -26,7 +27,8 @@ export class PostLinkListComponent {
     private storageService: StorageService,
     private recentVisitService: RecentVisitService,
     private savePostService: SavePostService,
-    private searchUserProfileService: SearchUserProfileService
+    private searchUserProfileService: SearchUserProfileService,
+    private darkmodeSerive: DarkModeService
   ) {}
 
   @Input() searchOption: string = "posts";
@@ -45,6 +47,7 @@ export class PostLinkListComponent {
   public joinCommunityEventCount: number = 0;
 
   ngOnInit() {
+    this.darkmodeSerive.useDarkMode();
     const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
     this.isCommunityPage = window.location.href.includes("/r/");
     this.isHomePage = window.location.href.includes("/home");
@@ -82,6 +85,10 @@ export class PostLinkListComponent {
       })
     }
   }
+
+  ngAfterViewInit() {
+    this.darkmodeSerive.useDarkMode();
+    }
 
   ngOnChanges() {
     if(this.user_id != 0 && this.searchOption == "wait_for_approve")

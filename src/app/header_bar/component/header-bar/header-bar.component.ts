@@ -8,6 +8,7 @@ import { UserProfile } from '../../../shared/pojo/pojo/user-profile';
 import { SearchUserProfileService } from '../../../shared/services/search-user-profile/search-user-profile.service';
 import { Router } from '@angular/router';
 import { PresentationService } from 'src/app/shared/services/presentation/presentation.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-header-bar',
@@ -48,6 +49,17 @@ export class HeaderBarComponent {
       this.openNavigationEvent.emit({
         data: this.isOpen
       });
+    }
+    let isSearchPage = window.location.href.includes("/search/");
+    if(isSearchPage) {
+      let regex = '/search/([^*]+)';
+      const a = window.location.href.match(regex);
+      if(a != null) {
+        let search_value = a[1];
+        const search_box = <HTMLInputElement>document.getElementById("search_box");
+        search_box.value = search_value;
+        this.onChange(search_value);
+      }
     }
   }
 
@@ -95,20 +107,35 @@ export class HeaderBarComponent {
     event.stopPropagation();
   }
 
-  // @HostListener('document:click', ['$event'])
-  // closeProfileMenu(event: Event) {
-  //     this.isProfileMenuOpen = false;
-  //     console.log("profile meneu close")
-  //     const cellText = document.getSelection();
-  //     if (cellText?.type === 'Range') 
-  //       event.stopPropagation();
+  @HostListener('document:click', ['$event'])
+  closeProfileMenu(event: Event) {
+      this.isProfileMenuOpen = false;
+      console.log("profile meneu close")
+      const cellText = document.getSelection();
+      if (cellText?.type === 'Range') 
+        event.stopPropagation();
     
-  // }
+  }
 
   logOut() {
-    this.router.navigate(["/signin"])
-    this.storageService.removeItem("uid");
-    this.storageService.removeItem("username");
+    Swal.fire({
+      'text': 'Are you sure you want to log out ?',
+      icon: 'warning',
+      showCancelButton: true,
+      showConfirmButton: true,
+      focusCancel: false,
+      focusConfirm: false,
+    }).then((result)=>{
+      if(result.isConfirmed) {
+        this.router.navigate(["/signin"])
+        this.storageService.removeItem("uid");
+        this.storageService.removeItem("username");
+      }
+      else {
+        this.isProfileMenuOpen = false;
+      }
+    })
+
   }
 
   navigateToUserProfile() {
@@ -128,14 +155,29 @@ export class HeaderBarComponent {
   }
 
   useDarkMode() {
-    const current_background = getComputedStyle(document.body).getPropertyValue('--primary_background_color');
-    if(current_background == "#EFF7FF") {
-      document.body.style.setProperty("--primary_background_color", "#121212");
+    const mode = this.storageService.getItem("mode") == "1" ? 1 : 0;
+    if(mode == 0) {
+      document.body.style.setProperty("--primary_background_color", "#222831");
+      document.body.style.setProperty("--neutral", "#31363F");
+      document.body.style.setProperty("--secondary_color", "#ffffff");
+      let el = document.querySelectorAll<HTMLElement>('*');
+      for(var i=0;i<el.length;i++){
+        el[i].style.color = '#ffffff';
+      }
       this.background_mode = "Light mode";
+      this.storageService.setItem('mode', "1");
     }
     else {
-      document.body.style.setProperty("--primary_background_color", "#EFF7FF");
-      this.background_mode = "Dark mode"
+      document.body.style.setProperty("--primary_background_color", "#ffffff");
+      document.body.style.setProperty("--neutral", "#efefef");
+      document.body.style.setProperty("--secondary_color", "#000000");
+      let el = document.querySelectorAll<HTMLElement>('*');
+      for(var i=0;i<el.length;i++){
+        el[i].style.color = '#000000';
+      }
+      this.background_mode = "Dark mode";
+      this.storageService.setItem('mode', "0");
     }
+    this.isProfileMenuOpen = false;
   }
 }

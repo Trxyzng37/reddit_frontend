@@ -27,6 +27,7 @@ export class PostMainComponent {
   public isViewPostPage: boolean = false;
   public isJoinCommunity: boolean = false;
   public isControlPage: boolean = false;
+  public isEditCommunityPage: boolean = false;
   public isUserPage: boolean = false;
   public isOwner: boolean = false;
 
@@ -42,8 +43,9 @@ export class PostMainComponent {
     this.isViewPostPage = window.location.href.includes("/post/");
     this.isControlPage = window.location.href.includes("/control-posts/");
     this.isUserPage = window.location.href.includes("/user/");
-    if(this.isCommunityPage) {
-      let regex = '/r/([0-9]+)';
+    this.isEditCommunityPage = window.location.href.includes("/edit-community/");
+    if(this.isCommunityPage || this.isEditCommunityPage) {
+      let regex = this.isCommunityPage ? '/r/([0-9]+)' : '/edit-community/([0-9]+)';
       const a = window.location.href.match(regex);
       if(a != null) {
         this.community_id = Number.parseInt(a[1]);

@@ -1,6 +1,6 @@
 :host {
     display: block;
-    width: 50vw;
+    width: 100%;
     // background-color: aqua;
 }
 
@@ -21,11 +21,12 @@
     padding: 10px 20px;
     border-radius: 20px;
     margin-left: 10px;
-    // background-color: var(--primary_background_color);
+    background-color: var(--primary_background_color);
+    border: 1px solid var(--secondary_color);
 }
 
 .selected_btn {
-    background-color: var(--primary_background_color_hover);
+    background-color: var(--neutral) !important;
 }
 
 //sort button
@@ -52,7 +53,7 @@
 }
 
 #btn_sort:hover {
-    background-color: rgb(32, 220, 95);
+    background-color: var(--neutral);
 }
 
 #btn_sort > i {
@@ -67,6 +68,7 @@
     top: 35px;
     left: 0;
     z-index: 999;
+    box-shadow: var(--box_shadow_menu);
 }
 
 #sort_option_block > button {
@@ -74,11 +76,12 @@
     width: 100%;
     text-align: left;
     padding: 0 10px;
-    background-color: var(--primary_background_color_hover);
+    background-color: var(--neutral);
+    color: var(--secondary_color);
 }
 
 #sort_option_block > button:hover {
-    background-color: rgb(140, 235, 145);
+    background-color: var(--primary_background_color);
 }
 
 #sort_option_block > b {
@@ -87,5 +90,5 @@
     width: 100%;
     text-align: left;
     padding: 10px 10px;
-    background-color: var(--primary_background_color_hover);
+    background-color: var(--neutral);
 }

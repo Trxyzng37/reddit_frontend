@@ -1,8 +1,8 @@
 
-<div class="container" [style.margin-left]="margin" [ngClass]="{'user_comment': isUserComment == true}" [ngStyle]="{'margin-top': commentData.level === 0 ? '10px' : '0'}">
+<div class="container" [style.margin-left]="margin" [ngStyle]="{'margin-top': commentData.level === 0 ? '10px' : '0'}">
     <div id="header" (click)="showComment($event)">
         <img *ngIf="isShown" [attr.src]="commentData.user_icon" />
-        <img id="img_close_comment" *ngIf="!isShown" src="../../../../assets/icon/plus-circle.svg" />
+        <i class="pi pi-plus-circle" id="img_close_comment" *ngIf="!isShown"></i>
         <div id="info_block">
             <p>{{commentData.username}}</p>
             <pre> • </pre>
@@ -21,15 +21,15 @@
         </div>
         <button class="footer_btn" type="button" (click)="reply()" *ngIf="isReplyAllowed && !isDeleted">
             <i class="pi pi-comment"></i>
-            <pre> Reply</pre>
+            <pre>Reply</pre>
         </button>
         <button class="footer_btn" id="btn_edit" type="button" (click)="showEditComment()" *ngIf="isEditAllowed && !isDeleted">
             <i class="pi pi-pencil"> </i>
-            <pre> Edit</pre>
+            <pre>Edit</pre>
         </button>
-        <button class="footer_btn" type="button" (click)="deleteComment()" *ngIf="(isDeleteAllowed && !isDeleted) || (isCommunityOwner)">
+        <button class="footer_btn" type="button" (click)="deleteComment()" *ngIf="(isDeleteAllowed && !isDeleted) || (isCommunityOwner && !isDeleted)">
             <i class="pi pi-trash"> </i>
-            <pre> Delete</pre>
+            <pre>Delete</pre>
         </button>
     </div>
 

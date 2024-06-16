@@ -1,15 +1,18 @@
 
 :host {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    // height: 100%;
+    // width: 100%;
+    // display: flex;
+    // flex-direction: column;
+    // justify-content: center;
+    // align-items: center;
+    // background-color: var(--primary_background_color);
 }
 
 #container {
-    width: 40vw;
-    background-color: rgb(96, 96, 233);
+    width: 100%;
+    min-width: 450px;
+    background-color: var(--neutral);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -34,10 +37,14 @@
 label {
     align-self: flex-start;
     margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: 500;
 }
 
 input, textarea {
     margin-bottom: 20px;
+    border: 1px solid black;
+    color: black;
 }
 
 #input_username {
@@ -45,6 +52,10 @@ input, textarea {
     height: auto;
     padding: 5px 10px;
     font-size: 16px;
+}
+
+#input_username:hover {
+    cursor: not-allowed;
 }
 
 //description
@@ -68,6 +79,7 @@ input, textarea {
     resize: none;
 }
 
+
 #character_count {
     position: relative;
     bottom: 42px;
@@ -75,6 +87,7 @@ input, textarea {
     align-self: flex-end;
     font-size: 11px;
     font-weight: 400;
+    color: var(--secondary_color) !important;
 }
 
 #img_avatar {
@@ -92,13 +105,14 @@ input, textarea {
 }
 
 #btn_upload_img {
-    width: 200px;
+    width: auto;
     height: 40px;
     text-align: center;
     display: inline-block;
-    background-color: rgb(168, 136, 244);
-    border: 2px solid black;
-    border-radius: 5px;
+    background-color: var(--allow);
+    border: 2px solid var(--secondary_color);
+    padding: 0 20px;
+    border-radius: 20px;
     vertical-align: bottom;
     margin: 10px 0;
     margin-bottom: 30px;
@@ -114,16 +128,17 @@ input, textarea {
 
 .btn_submit {
     width: auto;
-    padding: 10px 20px;
+    padding: 5px 20px;
     border-radius: 20px;
     font-size: 16px;
+    border: 1px solid var(--secondary_color);
 }
 
 .btn_submit:first-child {
     margin-right: 10px;
-    background-color: red;
+    background-color: var(--neutral);
 }
 
 .btn_submit:last-child {
-    background-color: green;
+    background-color: var(--allow);
 }
