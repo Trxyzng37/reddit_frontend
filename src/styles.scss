@@ -27,6 +27,7 @@
     --select_btn: #9494FF;
     // --secondary: #3d2f2f;
     --secondary_color: #000000;
+    --link: #648EFC;
 }
 
 html, body, * {
@@ -72,7 +73,7 @@ button:disabled {
 
 a, a:visited {
     text-decoration: none;
-    color: var(--secondary_color);
+    color: var(--link) !important;
 }
 
 .swal2-container {
@@ -203,8 +204,8 @@ input:focus {
 }
 
 .loader {
-  border: 16px solid var(--secondary_color); /* Light grey */
-  border-top: 16px solid var(--secondary_color); /* Blue */
+  border: 16px solid var(--neutral); /* Light grey */
+  border-top: 16px solid var(--allow); /* Blue */
   border-radius: 50%;
   width: 60px;
   height: 60px;

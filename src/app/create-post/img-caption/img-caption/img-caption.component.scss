@@ -38,7 +38,7 @@
     margin-right: 10px;
 }
 
-.txt_link, #txt_caption {
+#txt_link, #txt_caption {
     width: 100%;
     height: 30px;
     text-align: left;
@@ -51,11 +51,11 @@
     font-size: 14px !important;
 }
 
-.txt_link:focus, #txt_caption:focus {
+#txt_link:focus, #txt_caption:focus {
     border: 1px solid var(--secondary_color) !important;
 }
 
-#txt_caption {
+#txt_caption, #txt_link {
     width: 100%;
     height: 30px;
     text-align: left;
@@ -69,7 +69,7 @@
     resize: none;
 }
 
-#character_count {
+.character_count {
     position: relative;
     bottom: 32px;
     right: 8px;

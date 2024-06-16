@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { GetPostResponse } from '../../pojo/get-post-response';
 import { GetPostsService } from '../../service/get-posts.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -86,9 +86,13 @@ export class PostLinkListComponent {
     }
   }
 
-  ngAfterViewInit() {
-    this.darkmodeSerive.useDarkMode();
-    }
+  @HostListener('document:click', ['$event'])
+  closeProfileMenu(event: Event) {
+      this.isSortOptionShow = false;
+      const cellText = document.getSelection();
+      if (cellText?.type === 'Range') 
+        event.stopPropagation();
+  }
 
   ngOnChanges() {
     if(this.user_id != 0 && this.searchOption == "wait_for_approve")
@@ -139,7 +143,8 @@ export class PostLinkListComponent {
       this.getUserPost(sort_option);
   }
 
-  showSortOption() {
+  showSortOption(event: any) {
+    event.stopPropagation();
     this.isSortOptionShow = !this.isSortOptionShow;
   }
 

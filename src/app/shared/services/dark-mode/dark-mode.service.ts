@@ -17,6 +17,7 @@ export class DarkModeService {
       document.body.style.setProperty("--primary_background_color", "#222831");
       document.body.style.setProperty("--neutral", "#31363F");
       document.body.style.setProperty("--secondary_color", "#ffffff");
+      document.body.style.setProperty("--link", "#648EFC");
       let el = document.querySelectorAll<HTMLElement>('*');
       for(var i=0;i<el.length;i++){
         el[i].style.color = '#ffffff';
@@ -26,6 +27,7 @@ export class DarkModeService {
       document.body.style.setProperty("--primary_background_color", "#ffffff");
       document.body.style.setProperty("--neutral", "#efefef");
       document.body.style.setProperty("--secondary_color", "#000000");
+      document.body.style.setProperty("--link", "#01255c");
       let el = document.querySelectorAll<HTMLElement>('*');
       for(var i=0;i<el.length;i++){
         el[i].style.color = '#000000';

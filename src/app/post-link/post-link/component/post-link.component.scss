@@ -7,6 +7,10 @@ app-editor-view {
     max-height: 20vh;
 }
 
+a {
+    color: var(--secondary_color) !important;
+}
+
 #post_block {
     width: 100%;
     height: auto;

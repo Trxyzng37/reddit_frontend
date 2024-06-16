@@ -11,6 +11,10 @@
     padding-right: 10px;
 }
 
+a {
+    color: var(--secondary_color) !important;
+}
+
 #recent_visited_post_bar:hover {
     overflow-y: auto;
 }
