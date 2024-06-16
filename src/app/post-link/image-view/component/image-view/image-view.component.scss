@@ -1,38 +1,25 @@
 
-.item-text {
-    z-index: 99999;
-    // background-color: green;
-    position: absolute;
-    bottom: 50px;
-}
-
 .container {
     width: 100%;
     height: 50vh;
     min-height: 300px;
-    background-color: rgba($color: #000000, $alpha: 0.3);
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: rgba($color: #000000, $alpha: 0.3);
 }
 
 .container img {
     width: 100%;
     height: 100%;
     object-fit: contain;
+    background-color: rgba($color: #000000, $alpha: 0.7);
 }
 
-#caption_link {
-    height: auto;
-    width: 100%;
-    text-align: center;
-    background-color: rgba($color: #000000, $alpha: 0.4);
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    color: var(--secondary_color);
+.container img:hover {
+    cursor: pointer;
 }
 
 .container > button {
@@ -52,6 +39,10 @@ i {
     color: var(--secondary_color);
 }
 
+i:hover {
+    cursor: pointer;
+}
+
 .container > button:hover {
     opacity: 1;
 }
@@ -64,15 +55,30 @@ i {
     right: 10px;
 }
 
-#caption, #link {
-    text-overflow: ellipsis;
-    overflow-wrap:break-word;
-    color: var(--secondary_color) !important;
+#caption_link {
+    height: auto;
+    width: 100%;
+    // text-align: center;
+    background-color: rgba($color: #000000, $alpha: 0.7);
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    color: var(--secondary_color);
 }
 
-#link {
+#caption, #link {
+    width: 100%;
+    color: #ffffff !important;
+    font-size: 13px;
+}
+
+#link, #link_post {
+    color: #648EFC !important;
     text-decoration: underline;
-    color: var(--allow);
+}
+
+#link:hover, #link_post:hover {
+    color: #003686 !important;
 }
 
 .zoom_block {
@@ -98,10 +104,6 @@ i {
     color: #ffffff;
 }
 
-#btn_close_zoom:hover {
-    cursor: pointer;
-}
-
 #btn_caption {
     position: absolute;
     top: 23px;
@@ -111,3 +113,42 @@ i {
     font-size: 45px;
     color: #ffffff;
 }
+
+#btn_hide_caption {
+    width: 25px;
+    aspect-ratio: 1/1;
+    font-size: 28px;
+    position: absolute;
+    bottom: calc(100% - 35px);
+    right: 10px;
+    color: var(--secondary_color);
+    background-color: var(--primary_background_color);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#btn_hide_caption, #btn_caption, #btn_close_zoom {
+    opacity: 0.2;
+}
+
+#btn_hide_caption:hover, #btn_caption:hover, #btn_close_zoom:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+
+#caption_link_block {
+    background-color: var(--neutral);
+}
+
+#caption_post {
+    color: var(--secondary_color) !important;
+}
+
+#link_post, #caption_post {
+    font-size: 14px;
+}
+
+ 

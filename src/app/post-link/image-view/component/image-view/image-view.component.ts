@@ -13,9 +13,11 @@ export class ImageViewComponent {
   public arr!: Img[];
   public isZoom: boolean = false;
   public isCaptionOn: boolean = true;
+  public isViewPostPage:boolean = false;
 
   ngOnInit() {
     this.arr = JSON.parse(this.content);
+    this.isViewPostPage = window.location.href.includes("/post/");
   }
 
   index: number = 0;
@@ -64,12 +66,24 @@ export class ImageViewComponent {
   zoomImage(event: Event) {
     event.stopPropagation();
     this.isZoom = true;
+    // const caption_link = document.getElementById("caption_link")!;
+    // caption_link.style.paddingBottom = "20px";
+    // const caption = document.getElementById("caption")!;
+    // caption.style.fontSize = "16px";
+    // const link = document.getElementById("link")!;
+    // link.style.fontSize = "16px";
   }
 
   closeImg(event: Event) {
     event.stopPropagation();
     this.isZoom = false;
     this.isCaptionOn = true;
+    const caption_link = document.getElementById("caption_link")!;
+    caption_link.style.paddingBottom = "10px";
+    const caption = document.getElementById("caption")!;
+    caption.style.fontSize = "13px";
+    const link = document.getElementById("link")!;
+    link.style.fontSize = "13px";
   }
 
   showCaption(event: Event) {

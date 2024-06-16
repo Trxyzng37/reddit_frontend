@@ -1,7 +1,7 @@
 <!-- <div [innerHTML]="trustedHtml"></div> -->
 
 <div id="sort_container" *ngIf="isHomePage && this.searchOption != 'wait_for_approve' && this.searchOption != 'saved'">
-    <button id="btn_sort" (click)="showSortOption()">{{sort_option}}<i class="pi pi-chevron-down"></i></button>
+    <button id="btn_sort" (click)="showSortOption($event)">{{sort_option}}<i class="pi pi-chevron-down"></i></button>
     <div id="sort_option_block" *ngIf="isSortOptionShow">
         <b>Sort by</b>
         <button (click)="selectSort('Hot')">Hot</button>
@@ -15,7 +15,7 @@
 </div>
 
 <div id="sort_container" *ngIf="isPopularPage && this.searchOption != 'wait_for_approve' && this.searchOption != 'saved'">
-    <button id="btn_sort" (click)="showSortOption()">{{sort_option}}<i class="pi pi-chevron-down"></i></button>
+    <button id="btn_sort" (click)="showSortOption($event)">{{sort_option}}<i class="pi pi-chevron-down"></i></button>
     <div id="sort_option_block" *ngIf="isSortOptionShow">
         <b>Sort by</b>
         <button (click)="selectSort('Hot')">Hot</button>
@@ -29,7 +29,7 @@
 </div>
 
 <div id="sort_container" *ngIf="isCommunityPage && this.searchOption != 'wait_for_approve' && this.searchOption != 'saved'">
-    <button id="btn_sort" (click)="showSortOption()">{{sort_option}}<i class="pi pi-chevron-down"></i></button>
+    <button id="btn_sort" (click)="showSortOption($event)">{{sort_option}}<i class="pi pi-chevron-down"></i></button>
     <div id="sort_option_block" *ngIf="isSortOptionShow">
         <b>Sort by</b>
         <button (click)="selectSort('Hot')">Hot</button>
@@ -43,7 +43,7 @@
 </div>
 
 <div id="sort_container" *ngIf="isUserPage && this.searchOption != 'wait_for_approve' && this.searchOption != 'saved'">
-    <button id="btn_sort" (click)="showSortOption()">{{sort_option}}<i class="pi pi-chevron-down"></i></button>
+    <button id="btn_sort" (click)="showSortOption($event)">{{sort_option}}<i class="pi pi-chevron-down"></i></button>
     <div id="sort_option_block" *ngIf="isSortOptionShow">
         <b>Sort by</b>
         <button (click)="selectSort('New')">New</button>
