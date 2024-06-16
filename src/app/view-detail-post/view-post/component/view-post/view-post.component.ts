@@ -21,6 +21,7 @@ import { DefaultResponse } from 'src/app/shared/pojo/default-response';
 import { PresentationService } from 'src/app/shared/services/presentation/presentation.service';
 import { SavePostService } from 'src/app/shared/services/save-post/save-post.service';
 import { SavedPostResponse } from 'src/app/shared/services/save-post/pojo/saved-post-response';
+import { DarkModeService } from 'src/app/shared/services/dark-mode/dark-mode.service';
   
   @Component({
     selector: 'app-post',
@@ -39,7 +40,8 @@ import { SavedPostResponse } from 'src/app/shared/services/save-post/pojo/saved-
       private communityService: CommunityService,
       private allowPostService: AllowPostService,
       public presentationService: PresentationService,
-      private savePostService: SavePostService
+      private savePostService: SavePostService,
+      private darkmodeSerive: DarkModeService
     ) {}
   
     @Input() post: GetPostResponse = new GetPostResponse(0,"",0,"","",0,"","","","","",0,0,0);
@@ -80,6 +82,7 @@ import { SavedPostResponse } from 'src/app/shared/services/save-post/pojo/saved-
     public savedText: string = this.saved ? 'Unsave' : "Save";
 
     ngOnInit() {
+      this.darkmodeSerive.useDarkMode();
       const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
       const found = window.location.href.match('/home');
       if(found != null) 

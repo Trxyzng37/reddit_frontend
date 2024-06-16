@@ -2,13 +2,13 @@
 #container {
     height: auto;
     width: 100%;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid var(--secondary_color);
     padding: 15px 0;
 }
 
 #container:hover {
     cursor: pointer;
-    background-color: var(--primary_background_color_hover);
+    background-color: var(--neutral);
 }
 
 #community_block {

@@ -5,6 +5,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: var(--neutral);
 }
 
 #post_img_block {
@@ -16,7 +17,7 @@
     justify-content: center;
     align-items: center;
     background-color: var(--neutral);
-    border: 1px solid black;
+    border: 1px solid var(--secondary_color);
 }
 
 #post_img_block > *:not(button) {
@@ -50,7 +51,7 @@
     height: 100px;
     display: inline-block;
     background-color: var(--select_btn);
-    border: 2px solid black;
+    border: 2px solid var(--secondary_color);
     border-radius: 5px;
     vertical-align: bottom;
     margin-left: 10px;
@@ -72,12 +73,14 @@
 }
 
 #btn_cancel_comment {
-    background-color: var(--neutral);
+    background-color: var(--primary_background_color);
     margin-right: 20px;
+    color: var(--secondary_color);
 }
 
 #btn_edit_comment {
     background-color: var(--select_btn);
+    color: var(--secondary_color);
 }
 
 
@@ -97,7 +100,7 @@
     padding-right: 55px;
     padding-bottom: 8px;
     padding-left: 10px;
-    border: 1px solid black;
+    border: 1px solid var(--secondary_color);
     // border-radius: 5px;
     box-sizing: border-box;
     overflow: hidden;
@@ -130,7 +133,7 @@
 
 // #load_block {
 //     padding: 60px 80px;
-//     background-color: var(--primary_background_color_hover);
+//     background-color: var(--neutral);
 //     border-radius: 10px;
 //     display: flex;
 //     flex-direction: column;

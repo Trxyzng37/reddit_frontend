@@ -25,7 +25,7 @@
     padding-right: 55px;
     padding-bottom: 8px;
     padding-left: 10px;
-    border: 1px solid black;
+    border: 1px solid var(--secondary_color);
     // border-radius: 5px;
     box-sizing: border-box;
     overflow: hidden;
@@ -51,7 +51,7 @@
 #post_link_block > textarea {
     width: 100%;
     padding: 10px 10px;
-    border: 1px solid black;
+    border: 1px solid var(--secondary_color);
     overflow: hidden;
 }
 
@@ -66,54 +66,15 @@
     height: var(--btn_height);
     border-radius: 20px;
     font-size: 16px;
+    color: var(--secondary_color);
+    border: 1px solid var(--secondary_color);
 }
 
 #btn_cancel_comment {
-    background-color: var(--neutral);
+    background-color: var(--primary_background_color);
     margin-right: 20px;
 }
 
 #btn_edit_comment {
     background-color: var(--select_btn);
 }
-
-//load
-// #load_container {
-//     width: 100vw;
-//     height: 120vh;
-//     background-color: rgba($color: #000000, $alpha: 0.3);
-//     position: fixed;
-//     display: flex;
-//     flex-direction: column;
-//     justify-content: center;
-//     align-items: center;
-//     top: -50px;
-//     left: 0;
-//     z-index: 9999;
-// }
-
-// #load_block {
-//     padding: 60px 80px;
-//     background-color: var(--primary_background_color_hover);
-//     border-radius: 10px;
-//     display: flex;
-//     flex-direction: column;
-//     justify-content: center;
-//     align-items: center;
-//     border: 2px solid black;
-//     border-radius: 10px;
-// }
-
-// .loader {
-//     border: 16px solid #f3f3f3; /* Light grey */
-//     border-top: 16px solid #3498db; /* Blue */
-//     border-radius: 50%;
-//     width: 60px;
-//     height: 60px;
-//     animation: spin 2s linear infinite;
-//   }
-  
-//   @keyframes spin {
-//     0% { transform: rotate(0deg); }
-//     100% { transform: rotate(360deg); }
-//   }

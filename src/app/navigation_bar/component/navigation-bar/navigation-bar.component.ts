@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Communities } from 'src/app/shared/pojo/pojo/communities';
+import { DarkModeService } from 'src/app/shared/services/dark-mode/dark-mode.service';
 import { RecentVisitService } from 'src/app/shared/services/recent-visit/recent-visit.service';
 import { CommunityService } from 'src/app/shared/services/search-communites/community.service';
 import { StorageService } from 'src/app/shared/storage/storage.service';
@@ -14,7 +15,8 @@ export class NavigationBarComponent {
   public constructor(
     private communityService: CommunityService,
     private storageService: StorageService,
-    private recentVisitService: RecentVisitService
+    private recentVisitService: RecentVisitService,
+    private darkmodeSerive: DarkModeService
   ) {}
 
   public isOpen: boolean = true;
@@ -29,6 +31,7 @@ export class NavigationBarComponent {
   public moderationCommunities: Communities[] = [];
 
   ngOnInit() {
+    this.darkmodeSerive.useDarkMode();
     const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
     this.communityService.getSubscribedCommunitiesByUid(uid).subscribe({
       next: (response: Communities[]) => {
@@ -45,6 +48,10 @@ export class NavigationBarComponent {
         this.moderationCommunities = response;
       }
     })
+  }
+
+  ngAfterViewInit() {
+    this.darkmodeSerive.useDarkMode();
   }
 
   change_recent_status() {

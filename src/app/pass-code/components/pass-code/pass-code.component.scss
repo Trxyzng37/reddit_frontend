@@ -61,7 +61,7 @@ input:focus {
 }
 
 #btn_submit {
-    background-color: var(--primary_background_color_hover);
+    background-color: var(--neutral);
     font-size: 16px;
     width: 150px;
     height: auto;
@@ -82,7 +82,7 @@ input:focus {
 }
 
 #btn_resend_passcode {
-    background-color: var(--primary_background_color_hover);
+    background-color: var(--neutral);
     font-size: 14px;
     font-weight: 500;
     padding: 5px 10px;
@@ -104,7 +104,7 @@ input:focus {
 
 // #load_block {
 //     padding: 60px 80px;
-//     background-color: var(--primary_background_color_hover);
+//     background-color: var(--neutral);
 //     border-radius: 10px;
 //     display: flex;
 //     flex-direction: column;

@@ -8,6 +8,7 @@ import { StorageService } from 'src/app/shared/storage/storage.service';
 import { JoinCommunityResponse } from 'src/app/shared/services/search-communites/pojo/join-community-response';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PresentationService } from 'src/app/shared/services/presentation/presentation.service';
+import { DarkModeService } from 'src/app/shared/services/dark-mode/dark-mode.service';
 
 @Component({
   selector: 'community-info',
@@ -20,7 +21,8 @@ export class CommunityInfoComponent {
     private userInfoService: UserInfoService,
     private communityService: CommunityService,
     private storageService: StorageService,
-    public presentationService: PresentationService
+    public presentationService: PresentationService,
+    private darkmodeSerive: DarkModeService
   ) {}
 
   @Input() community_info: Communities = new Communities(0, "", 0, "", "", 0, "", "", 0,0);
@@ -33,6 +35,7 @@ export class CommunityInfoComponent {
   public joinText: string = this.isJoinCommunity ? 'Joined' : 'Join';
 
   ngOnInit() {
+    this.darkmodeSerive.useDarkMode();
     this.isCommunityPage = window.location.href.includes("/r/");
     this.isControlPostPage = window.location.href.includes("/control-posts/");
   }

@@ -81,8 +81,8 @@
         <button id="btn_create_post_video" type="button" (click)="createVideoPost('video', this.videoContent)" [disabled]="videoAllowed" [ngStyle]="{'display': isPostVideoOpen ? 'block' : 'none'}">Post</button>
         <div id="post_link_block" [ngStyle]="{'display': isPostLinkOpen ? 'block' : 'none'}">
             <textarea (input)="inputLink($event)" placeholder="Enter a full link start with http or https"></textarea>
-            <p style="font-size: 13px; color: red;" *ngIf="linkAllowed">Incorrect link</p>
-            <p style="font-size: 13px; color: green;" *ngIf="!linkAllowed">Valid link</p>
+            <!-- <p style="font-size: 13px; color: red;" *ngIf="linkAllowed">Incorrect link</p>
+            <p style="font-size: 13px; color: green;" *ngIf="!linkAllowed">Valid link</p> -->
             <button id="btn_create_post_link" type="button" (click)="createLinkPost('link', this.linkContent)" [disabled]="linkAllowed">Post</button>
         </div>
     </div>

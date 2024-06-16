@@ -9,22 +9,24 @@
     --scrollbar_size: 10px;
     --primary_background_color: #ffffff;
     --secondary_color: #000000;
-    --primary_background_color_hover: #efefef;
+    --primary_background_color_hover: #f59e9e;
     --margin_home: 20px;
     --post_width: 50vw;
     --post-header-height: 30px;
-    --neutral: #efefef;
+    --neutral: #dddddd;
     --box_shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     --menu_box_shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
     --light_border: #b7b7b7;
     --scrollbar_track: #ffffff;
     --scrollbar_thumb: #c6c6c6;
-    --join: #ad2e00;
+    --join: #bc3200;
     --allow: #5959f9;
     --delete: #fb3030;
     --upvote:	orange;
     --downvote:	#9494FF;
     --select_btn: #9494FF;
+    // --secondary: #3d2f2f;
+    --secondary_color: #000000;
 }
 
 html, body, * {
@@ -43,6 +45,14 @@ body {
 
 textarea {
   resize: none;
+  color: var(--secondary_color) !important;
+  font-size: 16px !important;
+  background-color: var(--primary_background_color) !important;
+  border: 1px solid var(--secondary_color);
+}
+
+textarea:focus {
+  outline: var(--secondary_color) solid 1px !important;
 }
 
 app-root {
@@ -62,7 +72,7 @@ button:disabled {
 
 a, a:visited {
     text-decoration: none;
-    color: black;
+    color: var(--secondary_color);
 }
 
 .swal2-container {
@@ -131,7 +141,7 @@ a, a:visited {
 }
 
 .a {
-  color: blue;
+  color: var(--secondary_color) !important;
   text-decoration: none;
 }
 
@@ -140,7 +150,7 @@ a, a:visited {
 }
 
 .a:visited {
-  color: #629FFF;
+  color: var(--secondary_color) !important;
   text-decoration: none;
 }
 
@@ -182,19 +192,19 @@ input:focus {
 
 #load_block {
   padding: 60px 80px;
-  background-color: var(--primary_background_color_hover);
+  background-color: var(--primary_background_color);
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 2px solid black;
+  border: 2px solid var(--secondary_color);
   border-radius: 10px;
 }
 
 .loader {
-  border: 16px solid #f3f3f3; /* Light grey */
-  border-top: 16px solid #3498db; /* Blue */
+  border: 16px solid var(--secondary_color); /* Light grey */
+  border-top: 16px solid var(--secondary_color); /* Blue */
   border-radius: 50%;
   width: 60px;
   height: 60px;

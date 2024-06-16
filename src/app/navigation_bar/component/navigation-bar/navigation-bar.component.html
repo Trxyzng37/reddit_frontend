@@ -4,7 +4,7 @@
         <a id="btn_popular" href="/popular"><span class="icon pi pi-chart-line"></span><span>Popular</span></a>
     </nav>
 
-    <nav> 
+    <nav *ngIf="moderationCommunities.length > 0"> 
         <button class="btn_change_status" type="button" (click)="change_moderation_status()">
             <span>Moderation</span>
             <span class="pi btn_icon" [ngClass]="moderation_status ? 'pi-chevron-down':'pi-chevron-up'"></span>
@@ -28,7 +28,7 @@
             <span class="pi btn_icon" [ngClass]="favorite_status === 'up' ? 'pi-chevron-down':'pi-chevron-up'"></span>
         </button>
         <nav [ngStyle]="{'display': favorite_status === 'up' ? 'none':'block'}">
-            <button type="button" (click)="showCreateCommunityForm()"><img id="img_create_community" src="../../../../assets/icon/plus.png" alt=""/><pre>Create a community</pre></button>
+            <button type="button" (click)="showCreateCommunityForm()"><i class="pi pi-plus"></i><pre>Create a community</pre></button>
         </nav>
         <div [ngStyle]="{'display': favorite_status === 'up' ? 'none':'block'}">
             <a *ngFor="let favorite_community of favoriteCommunities" href="r/{{favorite_community.id}}"><img id="img_community_icon" src="{{favorite_community.avatar}}" alt=""/><pre>r/{{favorite_community.name}}</pre></a>

@@ -40,6 +40,7 @@ h2 {
 hr {
     margin-top: 10px;
     margin-bottom: 15px;
+    border: 1px solid var(--secondary_color) !important;
 }
 
 #form {
@@ -53,7 +54,7 @@ hr {
     padding-bottom: 50px;
     margin-bottom: 20px;
     height: auto;
-    border: 1px solid black;
+    border: 1px solid var(--secondary_color);
 }
 
 #form > * {
@@ -65,7 +66,7 @@ div.tox-menubar {
 }
 
 hr {
-    border: 1px solid black;
+    border: 1px solid var(--secondary_color);
 }
 
 #search_community_block {
@@ -82,10 +83,10 @@ hr {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: white;
-    border-top: 1px solid black;
-    border-left: 1px solid black;
-    border-bottom: 1px solid black;
+    background-color: var(--primary_background_color);
+    border-top: 1px solid var(--secondary_color);
+    border-left: 1px solid var(--secondary_color);
+    border-bottom: 1px solid var(--secondary_color);
 }
 
 #search_community_icon img {
@@ -98,8 +99,8 @@ hr {
     width: 40%;
     height: 100%;
     background-color: var(--primary_background_color);
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
+    border-top: 1px solid var(--secondary_color);
+    border-bottom: 1px solid var(--secondary_color);
     box-sizing: border-box;
     font-size: 16px;
 }
@@ -112,9 +113,9 @@ hr {
     width: 30px;
     height: 100%;
     background-color: var(--primary_background_color);
-    border-top: 1px solid black;
-    border-right: 1px solid black;
-    border-bottom: 1px solid black;
+    border-top: 1px solid var(--secondary_color);
+    border-right: 1px solid var(--secondary_color);
+    border-bottom: 1px solid var(--secondary_color);
     box-sizing: border-box;
 }
 
@@ -126,6 +127,12 @@ hr {
     position: absolute;
     top: 39px;
     box-sizing: border-box;
+    border: 1px solid var(--secondary_color);
+    box-shadow: var(--box_shadow_menu);
+}
+
+#search_community_result_block * {
+    color: var(--secondary_color);
 }
 
 #search_community_result_block > * {
@@ -134,8 +141,8 @@ hr {
     padding: 10px 5px;
     background-color: var(--primary_background_color);
     z-index: 100;
-    border-left: 1px solid black;
-    border-right: 1px solid black;
+    border-left: 1px solid var(--secondary_color);
+    border-right: 1px solid var(--secondary_color);
     text-align: left;
     display: flex;
     justify-content: flex-start;
@@ -171,8 +178,8 @@ hr {
 .btn_post_type {
     width: 33.33%;
     height: 50px;
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
+    border-top: 1px solid var(--secondary_color);
+    border-bottom: 1px solid var(--secondary_color);
     box-sizing: border-box;
     background-color: var(--primary_background_color);
 }
@@ -182,12 +189,12 @@ hr {
 }
 
 .btn_post_type:nth-child(even) {
-    border-left: 1px solid black;
-    border-right: 1px solid black;
+    border-left: 1px solid var(--secondary_color);
+    border-right: 1px solid var(--secondary_color);
 }
 
 #btn_select_last {
-    border-right: 1px solid black;
+    border-right: 1px solid var(--secondary_color);
 }
 
 .btn_post_type:hover {
@@ -196,7 +203,7 @@ hr {
 
 .btn_post_type_selected {
     background-color: var(--neutral);
-    border-bottom: 3px solid black;
+    border-bottom: 3px solid var(--secondary_color);
 }
 
 #post_title_block {
@@ -214,7 +221,7 @@ hr {
     padding-right: 55px;
     padding-bottom: 8px;
     padding-left: 10px;
-    border: 1px solid black;
+    border: 1px solid var(--secondary_color);
     // border-radius: 5px;
     box-sizing: border-box;
     overflow: hidden;
@@ -228,6 +235,7 @@ hr {
     align-self: flex-end;
     font-size: 11px;
     font-weight: 400;
+    color: var(--secondary_color) !important;
 }
 
 #post_content_block {
@@ -253,7 +261,7 @@ hr {
     justify-content: center;
     align-items: center;
     background-color: var(--primary_background_color);
-    border: 1px solid black;
+    border: 1px solid var(--secondary_color);
 }
 
 #post_img_block > *:not(button) {
@@ -288,7 +296,7 @@ hr {
     height: 100px;
     display: inline-block;
     background-color: var(--select_btn);
-    border: 2px solid black;
+    border: 2px solid var(--secondary_color);
     border-radius: 5px;
     vertical-align: bottom;
     margin-left: 10px;
@@ -305,7 +313,7 @@ hr {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    border: 1px solid black;
+    border: 1px solid var(--secondary_color);
 }
 
 #input_upload_video {
@@ -330,7 +338,7 @@ video {
     width: 100px;
     height: 100px;
     background-color: var(--select_btn);
-    border: 2px solid black;
+    border: 2px solid var(--secondary_color);
     border-radius: 5px;
 }
 
@@ -364,7 +372,7 @@ video {
 #post_link_block > textarea {
     width: 100%;
     padding: 10px 10px;
-    border: 1px solid black;
+    border: 1px solid var(--secondary_color);
     overflow: hidden;
 }
 
@@ -372,7 +380,7 @@ video {
     width: auto;
     height: 30px;
     padding: 0 20px;
-    border: 1px solid black;
+    border: 1px solid var(--secondary_color);
     border-radius: 20px;
     font-weight: 500;
     position: absolute;
@@ -388,7 +396,7 @@ video {
     width: auto;
     height: 30px;
     padding: 0 20px;
-    border: 1px solid black;
+    border: 1px solid var(--secondary_color);
     border-radius: 20px;
     font-weight: 500;
     position: relative;
@@ -400,7 +408,7 @@ video {
     width: auto;
     height: 30px;
     padding: 0 20px;
-    border: 1px solid black;
+    border: 1px solid var(--secondary_color);
     border-radius: 20px;
     font-weight: 500;
     position: relative;
@@ -411,44 +419,3 @@ video {
 .btn_create_post, #btn_create_post_link, #btn_create_post_video {
     background-color: var(--primary_background_color);
 }
-
-// //load
-// #load_container {
-//     width: 100vw;
-//     height: 120vh;
-//     background-color: rgba($color: #000000, $alpha: 0.3);
-//     position: fixed;
-//     display: flex;
-//     flex-direction: column;
-//     justify-content: center;
-//     align-items: center;
-//     left: 0;
-//     top: 0;
-//     z-index: 9999;
-// }
-
-// #load_block {
-//     padding: 60px 80px;
-//     background-color: var(--primary_background_color_hover);
-//     border-radius: 10px;
-//     display: flex;
-//     flex-direction: column;
-//     justify-content: center;
-//     align-items: center;
-//     border: 2px solid black;
-//     border-radius: 10px;
-// }
-
-// .loader {
-//     border: 16px solid #f3f3f3; /* Light grey */
-//     border-top: 16px solid #3498db; /* Blue */
-//     border-radius: 50%;
-//     width: 60px;
-//     height: 60px;
-//     animation: spin 2s linear infinite;
-// }
-  
-// @keyframes spin {
-//     0% { transform: rotate(0deg); }
-//     100% { transform: rotate(360deg); }
-// }

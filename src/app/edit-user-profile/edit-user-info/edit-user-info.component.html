@@ -6,7 +6,7 @@
     <label for="post_title_block">About</label>
     <div id="post_title_block">
         <textarea id="input_post_title" maxlength="200" required placeholder="Optional" (input)="onInputDescription($event)" [value]="userInfo.description"></textarea>
-        <span id="character_count">{{characterCount}}/200</span>
+        <span id="character_count" style="color: black;">{{characterCount}}/200</span>
     </div>  
     <label for="post_title_block">Avatar</label>
     <img id="img_avatar" [src]="userInfo.avatar">

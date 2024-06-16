@@ -1,5 +1,5 @@
 <div>
-    <div id="container" (click)="navigateToUserProfile()" *ngFor="let user of users">
+    <div id="container" (click)="navigateToUserProfile(user.username)" *ngFor="let user of users">
         <div id="community_block">
             <img id="img_avatar" src="{{user.avatar}}">
             <div id="name_block">

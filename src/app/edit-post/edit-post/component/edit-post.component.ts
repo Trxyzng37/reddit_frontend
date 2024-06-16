@@ -8,6 +8,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { DeletePostService } from '../../service/delete-post/delete-post.service';
 import { DeletePostResponse } from '../../pojo/delete-post-response';
 import { StorageService } from 'src/app/shared/storage/storage.service';
+import { DateTimeService } from 'src/app/shared/services/date-time/date-time.service';
 
 @Component({
   selector: 'app-edit-post',
@@ -21,9 +22,11 @@ export class EditPostComponent {
     private activeRoute: ActivatedRoute,
     private route: Router,
     private deletePostService: DeletePostService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    public dateTimeService: DateTimeService
   ) {}
 
+  public postData: GetPostResponse = new GetPostResponse(0,'',0,'','',0,'','','','','',0,0,0);
   public post_type: string = "";
   public post_id: number = 0;
   private community_id = 0;
@@ -32,6 +35,7 @@ export class EditPostComponent {
     this.post_id = this.activeRoute.snapshot.params['post_id'];
     this.getPostService.getPostByPostId(this.post_id).subscribe({
       next: (response: GetPostResponse) => {
+        this.postData = response;
           this.post_type = response.type;
           this.community_id = response.community_id;
       },
@@ -66,5 +70,9 @@ export class EditPostComponent {
         })
       }
     })
+  }
+
+  navigateToCommunity() {
+    window.location.href = '/r/' + this.postData.community_id;
   }
 }
