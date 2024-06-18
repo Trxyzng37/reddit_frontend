@@ -24,12 +24,24 @@ export class ConfirmEmailComponent {
   ) {}
 
   public isLoad: boolean = false;
+  public resend_count = 0;
 
   public confirmEmailPasscodeForm: any = new FormGroup({
     passcode: new FormControl('', [Validators.pattern("^[0-9]{6}$")])
   })
 
   public email: string = this.storageService.getItem("signup-email") as string || "xxx@xxx";
+
+  ngOnInit() {
+    setInterval(() => {
+      if(this.resend_count <= 0) {
+        this.resend_count = 0;
+      }
+      else {
+        this.resend_count--;
+      }
+    }, 1000);
+  }
 
   public confirmEmailPasscodeFormSubmit() {
     if (this.confirmEmailPasscodeForm.status === "VALID") {
@@ -63,6 +75,7 @@ export class ConfirmEmailComponent {
   }
 
   public reSendPasscode() {
+    this.resend_count = 60;
     this.isLoad = true;
     const observable: Observable<ResendEmailPasscodeResponse> = this.confirmEmailService.reSendPasscode("/resend-confirm-email-passcode", this.email);
     observable.subscribe({

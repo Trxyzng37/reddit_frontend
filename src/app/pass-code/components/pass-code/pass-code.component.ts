@@ -26,10 +26,22 @@ export class PassCodeComponent {
 
   public email: string = this.storageService.getItem("forgot-password-email");
   public isLoad: boolean = false;
+  public resend_count = 0;
 
   public PasscodeForm: any = new FormGroup({
     passcode: new FormControl('', [Validators.pattern("^[0-9]{6}$")])
   })
+
+  ngOnInit() {
+    setInterval(()=> {
+      if(this.resend_count <= 0) {
+        this.resend_count = 0;
+      }
+      else {
+        this.resend_count--;
+      }
+    }, 1000)
+  }
 
   onSubmit() {
     if (this.PasscodeForm.status === "VALID") {
@@ -60,6 +72,7 @@ export class PassCodeComponent {
   }
 
   public reSendPasscode() {
+    this.resend_count = 60;
     this.isLoad = true;
     const observable: Observable<ResendEmailPasscodeResponse> = this.confirmEmailService.reSendPasscode("/resend-change-password-passcode", this.email);
     observable.subscribe({

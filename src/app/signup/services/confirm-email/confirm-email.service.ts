@@ -27,8 +27,6 @@ export class ConfirmEmailService {
 
   public checkConfirmEmailPasscode(passcode: number): Observable<PasscodeResponse> {
     const email: string = this.storageService.getItem("signup-email");
-    if (email === "")
-      alert("Empty email for confirm email");
     const pascode: number = passcode;
     const sendAt: Date = this.dateTimeService.getCurrentDateTime();
     const passcodeData: PassCodeRequest = new PassCodeRequest(email, pascode, sendAt);
