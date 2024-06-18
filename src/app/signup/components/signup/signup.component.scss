@@ -13,9 +13,8 @@
     justify-content: center;
     align-items: center;
     border-radius: 10px;
-    overflow: hidden;
     position: relative;
-    top: 20px;
+    top: 15px;
 }
 
 #signup_container > * {
@@ -23,8 +22,8 @@
 }
 
 #main_logo {
-    width: 70px;
-    height: 70px;
+    height: 60px;
+    aspect-ratio: 1/1;
 }
 
 .p {
@@ -39,9 +38,9 @@ form {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border: 1px blue solid;
+    border: 1px black solid;
     border-radius: 5px;
-    background-color: aliceblue;
+    background-color: var(--primary_background_color);
 }
 
 form > p {
@@ -75,25 +74,24 @@ label {
 
 a {
     text-decoration: none;
-    color: blue;
+    color: blue !important;
     margin-left: 5px;
 }
 
 #btnSignUp {
-    background-color: #92e596;
     font-size: medium;
     width: auto;
     height: auto;
-    padding: 5px 10px;
-    border: 2px black solid;
-    border-radius: 5px;
-    // position: relative;
+    padding: 5px 20px;
+    border: 1px black solid;
+    border-radius: 20px;
     margin-top: 5px;
     margin-bottom: 10px;
+    background-color: var(--allow);
 }
 
 #txt_GoogleSignUp {
-    font-size: medium;
+    font-size: 18px;
 }
 
 #google_login {
@@ -103,9 +101,9 @@ a {
     height: 50px;
     justify-content: center;
     align-items: center;
-    border: 1px blue solid;
+    border: 1px black solid;
     border-radius: 5px;
-    background-color: aliceblue;
+    background-color: var(--primary_background_color);
 }
 
 #google_login > * {
@@ -113,7 +111,7 @@ a {
 }
 
 #google_login:hover {
-    background-color: aqua;
+    background-color: var(--allow);
 }
 
 #google_logo {
@@ -139,40 +137,3 @@ a {
     display: block;
     color: red;
 }
-
-// #load_container {
-//     width: 100vw;
-//     height: 100vh;
-//     background-color: rgba($color: #000000, $alpha: 0.3);
-//     position: absolute;
-//     display: flex;
-//     flex-direction: column;
-//     justify-content: center;
-//     align-items: center;
-// }
-
-// #load_block {
-//     padding: 60px 80px;
-//     background-color: var(--neutral);
-//     border-radius: 10px;
-//     display: flex;
-//     flex-direction: column;
-//     justify-content: center;
-//     align-items: center;
-//     border: 2px solid black;
-//     border-radius: 10px;
-// }
-
-// .loader {
-//     border: 16px solid #f3f3f3; /* Light grey */
-//     border-top: 16px solid #3498db; /* Blue */
-//     border-radius: 50%;
-//     width: 60px;
-//     height: 60px;
-//     animation: spin 2s linear infinite;
-//   }
-  
-//   @keyframes spin {
-//     0% { transform: rotate(0deg); }
-//     100% { transform: rotate(360deg); }
-//   }

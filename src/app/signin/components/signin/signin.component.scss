@@ -24,8 +24,8 @@
 }
 
 #main_logo {
-    width: 70px;
-    height: 70px;
+    width: 60px;
+    aspect-ratio: 1/1;
 }
 
 .p {
@@ -40,9 +40,9 @@ form {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border: 1px blue solid;
+    border: 1px solid black;
     border-radius: 5px;
-    background-color: aliceblue;
+    background-color: var(--primary_background_color);
 }
 
 form > * {
@@ -80,21 +80,22 @@ input[type=password]:focus, #username:focus {
 a {
     text-decoration: none;
     padding-left: 5px;
-    color: blue;
+    color: blue !important;
+    font-size: 16px;
 }
 
 p {
-    font-size: medium;
+    font-size: 16px !important;
 }
 
 #btnSignIn {
-    background-color: #92e596;
+    background-color: var(--allow);
     font-size: 16px;
     width: auto;
     height: auto;
-    padding: 5px 10px;
-    border: 2px black solid;
-    border-radius: 5px;
+    padding: 5px 20px;
+    border: 1px black solid;
+    border-radius: 20px;
     margin-bottom: 10px;
 }
 
@@ -105,22 +106,26 @@ p {
     height: 50px;
     justify-content: center;
     align-items: center;
-    border: 1px blue solid;
+    border: 1px black solid;
     border-radius: 5px;
-    background-color: aliceblue;
+    background-color: var(--primary_background_color);
 }
 
 #google_login > * {
     padding: 5px 5px;
 }
 
+#google_login > p {
+    font-size: 18px !important;
+}
+
 #google_login:hover {
-    background-color: aqua;
+    background-color: var(--allow);
 }
 
 #google_logo {
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    aspect-ratio: 1/1;
 }
 
 #create_account {
@@ -137,7 +142,7 @@ button {
 
 #login-success {
     position: absolute;
-    background-color: #42A948;
+    background-color: var(--allow);
     z-index: 10;
 }
 
@@ -148,7 +153,7 @@ button {
     align-items: center;
     width: 200px;
     height: 200px;
-    background-color: #42A948;
+    background-color: var(--allow);
     position: absolute;
 }
 
