@@ -8,7 +8,7 @@ import { ForgotPasswordComponent } from './forgot-password/components/forgot-pas
 import { PassCodeComponent } from './pass-code/components/pass-code/pass-code.component';
 import { ChangePasswordComponent } from './change-password/components/change-password/change-password.component';
 import { ConfirmEmailComponent } from './signup/components/confirm-email/confirm-email.component';
-// import { signinGuard } from './signin/guards/signin.guard';
+import { signinGuard } from './signin/guards/signin.guard';
 import { CreatePostComponent } from './create-post/create-post/component/create-post.component';
 import { PostMainComponent } from './post-main/component/post-main/post-main.component';
 import { PostLinkListComponent } from './post-link-list/component/post-link-list/post-link-list.component';
@@ -20,10 +20,12 @@ import { EditCommunityComponent } from './edit-community/component/edit-communit
 import { SearchResultsComponent } from './search-page/search-results/search-results.component';
 import { UserProfileComponent } from './user-profile/user-profile/user-profile.component';
 import { EditUserInfoComponent } from './edit-user-profile/edit-user-info/edit-user-info.component';
+import { ChooseUsernameComponent } from './choose-username/choose-username/choose-username.component';
 
 const routes: Routes = [
-  // { path: 'signin', component: SigninComponent, canActivate: mapToCanActivate([signinGuard])},
-  { path: 'signin', title: 'sign-in', component: SigninComponent},
+  { path: 'signin', component: SigninComponent, canActivate: mapToCanActivate([signinGuard])},
+  // { path: 'signin', title: 'sign-in', component: SigninComponent},
+  {path: '', redirectTo: 'home', pathMatch: 'full'},
   { path: 'signup', title: 'sign-up', component: SignupComponent},
   { path: 'forgot-password', title: 'forgot-password', component: ForgotPasswordComponent},
   { path: 'pass-code', title: 'enter-passcode', component: PassCodeComponent},
@@ -48,9 +50,9 @@ const routes: Routes = [
     ]
   },
   {path: 'create-post', component: CreatePostComponent},
+  {path: 'choose-username', component: ChooseUsernameComponent},
   {path: 'create-post?cid=:community_id', component: CreatePostComponent},
   { path: 'error', title:'error', component: ErrorComponent },
-  // {path: '', redirectTo: 'home', pathMatch: 'full'},
   { path: '**', component: ErrorComponent }
 ];
 

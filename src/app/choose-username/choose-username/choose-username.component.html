@@ -1,0 +1,8 @@
+<img id="main_logo" src="assets/icon/logo.png" alt="logo"/>
+<div id="container">
+    <b><h2><label for="username">Choose your username</label></h2></b>
+    <input id="username" type="text" maxlength="16" [value]="username" (input)="checkUserName($event)"/>
+    <p style="font-size: 13px; text-align: center;" [ngStyle]="{'color': isUsernameAllow ? 'green' : 'red'}">Username should be between 3 and 16 characters, including only alphabet characters and number</p>
+    <p style="font-size: 13px; color: red;" *ngIf="isUsernameTaken">Username already exist</p>
+    <button type="button" (click)="selectUsername()" [disabled]="!isUsernameAllow && isUsernameTaken">Choose</button>
+</div>

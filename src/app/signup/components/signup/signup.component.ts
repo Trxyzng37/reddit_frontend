@@ -69,8 +69,15 @@ export class SignupComponent implements OnInit {
     else {
       try {
         const signup: GoogleSignUpResponse = JSON.parse(cookie);
-        if (signup.isSignUp)
-          Swal.fire('Sign up using google successfully','','success')
+        if (signup.isSignUp) {
+          Swal.fire('Sign up using google successfully','','success').then(result => {
+            if(result.isConfirmed) {
+              this.storageService.setItem("signup_email", getCookie("signup_email")!);
+              window.location.href = "/choose-username";
+            }
+          })
+
+        }
         else
           Swal.fire('A user with this email has already exist. \nPlease use a different email','','error')
       }
