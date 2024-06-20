@@ -45,7 +45,11 @@ export class SigninComponent implements OnInit {
           this.router.navigate(['/home']);
         }
         else
-          Swal.fire("signin using google fail. Please try again.",'','error')
+          Swal.fire({
+            title: "No account with this email",
+            icon: "error",
+            footer: "<b><a href='/signup'>Click here to create an account</a></b>"
+          })
       }
         catch (e) {
           Swal.fire("Error signin using google. Please try again.",'','error')

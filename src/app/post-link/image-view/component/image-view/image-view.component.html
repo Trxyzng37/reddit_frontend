@@ -6,7 +6,7 @@
   <img src="{{arr[index].data}}" (click)="zoomImage($event)"/>
   <i id="btn_close_zoom" class="pi pi-times-circle" title="Close" (click)="closeImg($event)" *ngIf="isZoom"></i>
   <i class="pi pi-info-circle" id="btn_caption"(click)="showCaption($event)" *ngIf="isZoom" title="Turn caption on or off"></i>
-  <div id="caption_link" *ngIf="((isCaptionOn && isZoom) || (isCaptionOn && !isViewPostPage)) && (!isViewPostPage || (isViewPostPage && isCaptionOn))" (click)="preventClick($event)" [ngStyle]="{'padding': arr[index].caption.length > 0 || arr[index].link.length > 0 ? '5px 10px' : '0', 'padding-bottom': isViewPostPage || isZoom ? '20px':'5px'}">
+  <div id="caption_link" *ngIf="((isCaptionOn && isZoom) || (isCaptionOn && !isViewPostPage)) && (!isViewPostPage || (isViewPostPage && isCaptionOn))" (click)="preventClick($event)" [ngStyle]="{'padding': isViewPostPage || isZoom || arr[index].caption.length > 0 || arr[index].link.length > 0 ? '5px 10px' : '0 10px'}">
     <p id="caption" [ngStyle]="{'font-size': isViewPostPage || isZoom ? '16px':'13px'}">{{arr[index].caption}}</p>
     <a id="link" href="{{arr[index].link}}" target="_blank" [ngStyle]="{'font-size': isViewPostPage || isZoom ? '16px':'13px', 'padding-bottom': isViewPostPage || isZoom ? '30px':'10px'}">{{arr[index].link}}</a>
   </div>
