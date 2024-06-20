@@ -5,6 +5,7 @@
     width: 100vw;
     overflow-x: hidden;
     overflow-y: auto;
+    background-color: #ffffff;
 }
 
 #signin_container {
@@ -42,7 +43,7 @@ form {
     justify-content: center;
     border: 1px solid black;
     border-radius: 5px;
-    background-color: var(--primary_background_color);
+    background-color: #ffffff;
 }
 
 form > * {
@@ -108,7 +109,7 @@ p {
     align-items: center;
     border: 1px black solid;
     border-radius: 5px;
-    background-color: var(--primary_background_color);
+    background-color: #ffffff;
 }
 
 #google_login > * {
