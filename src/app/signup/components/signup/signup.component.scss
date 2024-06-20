@@ -5,6 +5,7 @@
     overflow-y: auto;
     overflow-x: hidden;
     padding-bottom: 30px;
+    background-color: #ffffff;
 }
 
 #signup_container {
@@ -40,7 +41,7 @@ form {
     justify-content: center;
     border: 1px black solid;
     border-radius: 5px;
-    background-color: var(--primary_background_color);
+    background-color: #ffffff;
 }
 
 form > p {
@@ -103,7 +104,7 @@ a {
     align-items: center;
     border: 1px black solid;
     border-radius: 5px;
-    background-color: var(--primary_background_color);
+    background-color: #ffffff;
 }
 
 #google_login > * {
@@ -122,6 +123,7 @@ a {
 #signin {
     display: flex;
     justify-content: center;
+    align-items: flex-start;
 }
 
 #lbl_email {
