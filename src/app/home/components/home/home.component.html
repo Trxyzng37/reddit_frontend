@@ -1,7 +1,7 @@
 <app-header-bar
     (openNavigationEvent)="openNavigation($event)"
 ></app-header-bar>
-<app-navigation-bar [ngStyle]="{'display': isNavigationOpen ? 'block' : 'none'}"
+<app-navigation-bar [ngStyle]="{'display': isNavigationOpen ? 'block' : 'none'}"  *ngIf="isUser"
     (showCommunityFormEvent)="openCreateCommunityForm()"
 >
 </app-navigation-bar>

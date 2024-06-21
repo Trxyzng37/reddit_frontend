@@ -17,6 +17,7 @@ import Swal, { SweetAlertResult } from 'sweetalert2';
 import { DeleteCommentService } from '../../service/delete-comment/delete-comment.service';
 import { DeleteCommentResponse } from '../../pojo/delete-comment-response';
 import { PresentationService } from 'src/app/shared/services/presentation/presentation.service';
+import { VoteImgService } from 'src/app/shared/services/vote-img/vote-img.service';
 
 @Component({
   selector: 'app-comment',
@@ -34,7 +35,8 @@ export class CommentComponent {
     private getCommentStatusService: GetCommentStatusService,
     private editCommentService: EditCommentService,
     private deleteCommentService: DeleteCommentService,
-    public presentationService: PresentationService
+    public presentationService: PresentationService,
+    public voteImgService: VoteImgService
   ) {}
 
 
@@ -72,6 +74,8 @@ export class CommentComponent {
   public  downvote_fill = "../../../../../assets/icon/downvote-comment-fill.png"
   
   ngOnInit() {
+    this.voteImgService.selectDownVoteImg();
+    this.voteImgService.selectUpVoteImg();
     this.commentData.content = this.commentData.content.replace("<img src=", "<img class='img_comment' src=");
     this.isDeleted = this.commentData.deleted;
     this.isUserPage = window.location.href.includes("/user/");

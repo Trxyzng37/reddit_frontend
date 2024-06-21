@@ -4,6 +4,7 @@ import { UserProfile } from 'src/app/shared/pojo/pojo/user-profile';
 import { UserInfoService } from 'src/app/shared/services/user-info/user-info.service';
 import { SearchUserProfileService } from 'src/app/shared/services/search-user-profile/search-user-profile.service';
 import { ActivatedRoute } from '@angular/router';
+import { PresentationService } from 'src/app/shared/services/presentation/presentation.service';
 
 @Component({
   selector: 'app-search-people-view',
@@ -14,7 +15,8 @@ export class SearchPeopleViewComponent {
 
   public constructor(
     private searchUserProfileService: SearchUserProfileService,
-    private activeRoute: ActivatedRoute
+    private activeRoute: ActivatedRoute,
+    public presentationService: PresentationService
   ) {}
 
   public users: UserProfile[] = [];

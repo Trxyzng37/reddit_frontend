@@ -4,6 +4,7 @@ import { GetPostResponse } from 'src/app/post-link-list/pojo/get-post-response';
 import { Communities } from 'src/app/shared/pojo/pojo/communities';
 import { CommunityService } from 'src/app/shared/services/search-communites/community.service';
 import { ActivatedRoute } from '@angular/router';
+import { PresentationService } from 'src/app/shared/services/presentation/presentation.service';
 
 @Component({
   selector: 'app-search-community-view',
@@ -14,7 +15,8 @@ export class SearchCommunityViewComponent {
 
   public constructor(
     private communityService: CommunityService,
-    private activeRoute: ActivatedRoute
+    private activeRoute: ActivatedRoute,
+    public presentationService: PresentationService
   ) {}
 
   public communities: Communities[] = [];

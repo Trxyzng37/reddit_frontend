@@ -20,7 +20,7 @@
     <p>Cake day</p>
 </div>
 
-<div id="edit_block">
+<div id="edit_block" *ngIf="isUser">
     <p style="margin: 10px 0 10px 0">Settings</p>
     <div class="setting_block">
         <div>
@@ -39,7 +39,7 @@
     <a class="community_block" href="r/{{community.id}}" *ngFor="let community of communities">
         <div class="community_info">
             <img src="{{community.avatar}}">
-            <pre> r/{{community.name}}</pre>
+            <pre style="color: var(--secondary_color) !important;"> r/{{community.name}}</pre>
         </div>
     </a>
 </div>

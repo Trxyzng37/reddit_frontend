@@ -9,6 +9,7 @@ import { SearchUserProfileService } from '../../../shared/services/search-user-p
 import { Router } from '@angular/router';
 import { PresentationService } from 'src/app/shared/services/presentation/presentation.service';
 import Swal from 'sweetalert2';
+import { VoteImgService } from 'src/app/shared/services/vote-img/vote-img.service';
 
 @Component({
   selector: 'app-header-bar',
@@ -23,7 +24,8 @@ export class HeaderBarComponent {
     private searchUserProfileService: SearchUserProfileService,
     private userProfileService: SearchUserProfileService,
     private router: Router,
-    public presentationService: PresentationService 
+    public presentationService: PresentationService,
+    public voteImgService: VoteImgService 
   ) {}
 
   @Output() openNavigationEvent = new EventEmitter<Object>;
@@ -182,5 +184,7 @@ export class HeaderBarComponent {
       this.storageService.setItem('mode', "0");
     }
     this.isProfileMenuOpen = false;
+    this.voteImgService.selectDownVoteImg();
+    this.voteImgService.selectUpVoteImg();
   }
 }

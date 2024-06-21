@@ -23,6 +23,7 @@
     margin-left: 10px;
     background-color: var(--primary_background_color);
     border: 1px solid var(--secondary_color);
+    color: var(--secondary_color) !important;
 }
 
 .selected_btn {
@@ -50,6 +51,7 @@
     align-items: center;
     text-wrap: nowrap;
     margin-bottom: 10px;
+    color: var(--secondary_color) !important;
 }
 
 #btn_sort:hover {

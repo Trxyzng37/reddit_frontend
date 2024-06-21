@@ -4,7 +4,7 @@
             <img id="img_avatar" src="{{user.avatar}}">
             <div id="name_block">
                 <h3>u/{{user.username}}</h3>
-                <p style="font-size: 13px;">{{user.post_karma + user.comment_karma}} karma</p>
+                <p style="font-size: 13px;">{{presentationService.transformNumber(user.post_karma + user.comment_karma)}} karma</p>
             </div>
         </div>
         <p id="txt_description">{{user.description}}</p>
