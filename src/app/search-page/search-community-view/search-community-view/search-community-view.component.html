@@ -5,7 +5,7 @@
             <img id="img_avatar" src="{{community.avatar}}">
             <div id="name_block">
                 <h3>r/{{community.name}}</h3>
-                <p style="font-size: 13px;">{{community.subscriber_count}} members</p>
+                <p style="font-size: 13px;">{{presentationService.transformNumber(community.subscriber_count)}} members</p>
             </div>
         </div>
         <p id="txt_description">{{community.description}}</p>

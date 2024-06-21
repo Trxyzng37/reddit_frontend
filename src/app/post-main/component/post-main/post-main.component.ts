@@ -28,8 +28,10 @@ export class PostMainComponent {
   public isJoinCommunity: boolean = false;
   public isControlPage: boolean = false;
   public isEditCommunityPage: boolean = false;
+  public isUserSettingPage: boolean = false;
   public isUserPage: boolean = false;
   public isOwner: boolean = false;
+  public isUser: boolean = false;
 
   public community_id: number = 0;
   public community: Communities = new Communities(0, "", 0, "", "", 0, "", "", 0, 0);
@@ -39,7 +41,9 @@ export class PostMainComponent {
 
   ngOnInit() {
     const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
+    this.isUser = uid != 0;
     this.isCommunityPage = window.location.href.includes("/r/");
+    this.isUserSettingPage = window.location.href.includes("/setting/");
     this.isViewPostPage = window.location.href.includes("/post/");
     this.isControlPage = window.location.href.includes("/control-posts/");
     this.isUserPage = window.location.href.includes("/user/");

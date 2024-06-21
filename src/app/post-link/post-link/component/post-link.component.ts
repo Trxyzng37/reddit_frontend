@@ -23,6 +23,7 @@ import { PresentationService } from 'src/app/shared/services/presentation/presen
 import { SavePostService } from 'src/app/shared/services/save-post/save-post.service';
 import { SavedPostResponse } from 'src/app/shared/services/save-post/pojo/saved-post-response';
 import Swal from 'sweetalert2';
+import { VoteImgService } from 'src/app/shared/services/vote-img/vote-img.service';
 
 @Component({
   selector: 'app-post-link',
@@ -42,7 +43,8 @@ export class PostLinkComponent {
     private allowPostService: AllowPostService,
     private deletePostService: DeletePostService,
     public presentationService: PresentationService,
-    private savePostService: SavePostService
+    private savePostService: SavePostService,
+    public voteImgService: VoteImgService 
   ) {}
 
   @Input() post!: GetPostResponse;
@@ -77,12 +79,14 @@ export class PostLinkComponent {
   public saved: boolean = false;
   public savedText: string = this.saved ? 'Unsave' : "Save";
 
-  public  upvote = "../../../../../assets/icon/upvote.png"
-  public  upvote_fill = "../../../../../assets/icon/upvote-fill.png"
-  public  downvote = "../../../../../assets/icon/downvote.png"
-  public  downvote_fill = "../../../../../assets/icon/downvote-fill.png"
+  public  upvote = "../../../../../assets/icon/upvote.png";
+  public  upvote_fill = "../../../../../assets/icon/upvote-fill.png";
+  public  downvote = "../../../../../assets/icon/downvote.png";
+  public  downvote_fill = "../../../../../assets/icon/downvote-fill.png";
 
   ngOnInit() {
+    this.voteImgService.selectDownVoteImg();
+    this.voteImgService.selectUpVoteImg();
     const found = window.location.href.match('/home');
     if(found != null) 
       this.isHomePage = true;

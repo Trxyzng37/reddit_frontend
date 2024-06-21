@@ -22,6 +22,7 @@ import { PresentationService } from 'src/app/shared/services/presentation/presen
 import { SavePostService } from 'src/app/shared/services/save-post/save-post.service';
 import { SavedPostResponse } from 'src/app/shared/services/save-post/pojo/saved-post-response';
 import { DarkModeService } from 'src/app/shared/services/dark-mode/dark-mode.service';
+import { VoteImgService } from 'src/app/shared/services/vote-img/vote-img.service';
   
   @Component({
     selector: 'app-post',
@@ -41,7 +42,8 @@ import { DarkModeService } from 'src/app/shared/services/dark-mode/dark-mode.ser
       private allowPostService: AllowPostService,
       public presentationService: PresentationService,
       private savePostService: SavePostService,
-      private darkmodeSerive: DarkModeService
+      private darkmodeSerive: DarkModeService,
+      public voteImgService: VoteImgService
     ) {}
   
     @Input() post: GetPostResponse = new GetPostResponse(0,"",0,"","",0,"","","","","",0,0,0);
@@ -83,6 +85,8 @@ import { DarkModeService } from 'src/app/shared/services/dark-mode/dark-mode.ser
 
     ngOnInit() {
       this.darkmodeSerive.useDarkMode();
+      this.voteImgService.selectDownVoteImg();
+      this.voteImgService.selectUpVoteImg();
       const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
       const found = window.location.href.match('/home');
       if(found != null) 
