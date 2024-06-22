@@ -32,7 +32,7 @@ export class ConfirmEmailService {
     const passcodeData: PassCodeRequest = new PassCodeRequest(email, pascode, sendAt);
     const body: string = JSON.stringify(passcodeData);
     const header: HttpHeaders = new HttpHeaders();
-    return this.postService.post(this.endpoint, header, body, false);
+    return this.postService.post(this.endpoint, header, body, true);
   }
 
   public reSendPasscode(enpoint: string, email: string): Observable<ResendEmailPasscodeResponse> {
@@ -42,6 +42,6 @@ export class ConfirmEmailService {
     let header: HttpHeaders = new HttpHeaders();
     header = header.append("Accept", 'application/json');
     header = header.append('Content-Type', 'application/json');
-    return this.postService.post(enpoint, header, requestBody, false);
+    return this.postService.post(enpoint, header, requestBody, true);
   }
 }

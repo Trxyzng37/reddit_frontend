@@ -18,12 +18,12 @@ export class GetCommentsService {
   getComments(post_id: number): Observable<Comment[]> {
     const fullUrl: string = this.endpoint + "?id=" + post_id;
     let header: HttpHeaders = new HttpHeaders();
-    return this.getService.get<Comment[]>(fullUrl, header, false);
+    return this.getService.get(fullUrl, header, true);
   }
 
   getCommentsByUser(uid: number, sort: string): Observable<Comment[]> {
     const fullUrl: string = this.getCommentsByUserEndPoint + "?uid=" + uid + "&" + "sort=" + sort;
     let header: HttpHeaders = new HttpHeaders();
-    return this.getService.get<Comment[]>(fullUrl, header, false);
+    return this.getService.get(fullUrl, header, true);
   }
 }

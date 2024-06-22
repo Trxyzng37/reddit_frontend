@@ -18,7 +18,7 @@ export class UserInfoService {
   public getUserInfo(uid: number): Observable<UserProfile> {
     const parameter: string ="uid=" + uid; 
     const endpointWithParameter: string = this.endpoint + "?" + parameter;
-    const header: HttpHeaders = new HttpHeaders();
-    return this.getService.get(endpointWithParameter, header, false);
+    const header: HttpHeaders = new HttpHeaders();true
+    return this.getService.get(endpointWithParameter, header, true);
   }
 }

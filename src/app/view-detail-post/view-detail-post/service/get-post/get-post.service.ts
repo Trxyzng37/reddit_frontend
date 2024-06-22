@@ -19,6 +19,6 @@ export class GetPostService {
     const fullUrl = this.endpoint + "?pid=" + post_id;
     console.log(fullUrl);
     const header: HttpHeaders = new HttpHeaders();
-    return this.getService.get(fullUrl, header, false);
+    return this.getService.get(fullUrl, header, true);
   }
 }

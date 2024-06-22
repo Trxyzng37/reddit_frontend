@@ -25,6 +25,6 @@ export class CheckPasscodeService {
     const passcodeRequest: PassCodeRequest = new PassCodeRequest(email, passcode, sendAt);
     const requestBody: string = JSON.stringify(passcodeRequest);
     const header: HttpHeaders = new HttpHeaders();
-    return this.postService.post(this.endpoint, header, requestBody, false);
+    return this.postService.post(this.endpoint, header, requestBody, true);
   }
 }

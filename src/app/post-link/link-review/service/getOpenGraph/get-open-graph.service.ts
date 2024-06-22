@@ -19,7 +19,7 @@ export class GetOpenGraphService {
     let header: HttpHeaders = new HttpHeaders();
     header = header.append("Accept", 'application/json');
     header = header.append('Content-Type', 'application/json');
-    return this.getService.get<OpenGraphResponse>(this.endpoint, header, false);
+    return this.getService.get(this.endpoint, header, true);
   }
 
 }

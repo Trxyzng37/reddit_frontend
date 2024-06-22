@@ -20,20 +20,20 @@ export class SearchUserProfileService {
     const parameter: string ="name=" + name; 
     const endpointWithParameter: string = this.endpoint + "?" + parameter;
     const header: HttpHeaders = new HttpHeaders();
-    return this.getService.get(endpointWithParameter, header, false);
+    return this.getService.get(endpointWithParameter, header, true);
   }
 
   public getUserProfileByName(endpoint: string, name: string): Observable<UserProfile> {
     const parameter: string ="username=" + name; 
     const endpointWithParameter: string = endpoint + "?" + parameter;
     const header: HttpHeaders = new HttpHeaders();
-    return this.getService.get(endpointWithParameter, header, false);
+    return this.getService.get(endpointWithParameter, header, true);
   }
 
   public getUserProfileByUid(uid: number): Observable<UserProfile> {
     const parameter: string ="uid=" + uid; 
     const endpointWithParameter: string = this.uid_endpoint + "?" + parameter;
     const header: HttpHeaders = new HttpHeaders();
-    return this.getService.get(endpointWithParameter, header, false);
+    return this.getService.get(endpointWithParameter, header, true);
   }
 }

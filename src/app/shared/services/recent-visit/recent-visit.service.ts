@@ -23,18 +23,18 @@ export class RecentVisitService {
     let header: HttpHeaders = new HttpHeaders();
     header = header.append("Accept", 'application/json');
     header = header.append('Content-Type', 'application/json');
-    return this.postService.post(endpoint, header, body, false);
+    return this.postService.post(endpoint, header, body, true);
   }
 
   public getRecentVisitCommunity(uid: number): Observable<Communities[]> {
     const endpointWithParameter: string = "/get-recent-visit-community?" + "uid=" + uid;
     const header: HttpHeaders = new HttpHeaders();
-    return this.getService.get(endpointWithParameter, header, false);
+    return this.getService.get(endpointWithParameter, header, true);
   }
 
   public getRecentVisitPost(uid: number): Observable<GetPostResponse[]> {
     const endpointWithParameter: string = "/get-recent-visit-post?" + "uid=" + uid;
     const header: HttpHeaders = new HttpHeaders();
-    return this.getService.get(endpointWithParameter, header, false);
+    return this.getService.get(endpointWithParameter, header, true);
   }
 }
