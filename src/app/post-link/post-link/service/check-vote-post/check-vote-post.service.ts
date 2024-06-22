@@ -20,6 +20,6 @@ export class CheckVotePostService {
     let header: HttpHeaders = new HttpHeaders();
     header = header.append("Accept", 'application/json');
     header = header.append('Content-Type', 'application/json');
-    return this.getService.get<CheckVotePostResponse>(fullUrl, header, false);
+    return this.getService.get(fullUrl, header, true);
   }
 }

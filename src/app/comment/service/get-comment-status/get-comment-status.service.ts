@@ -18,6 +18,6 @@ export class GetCommentStatusService {
   getCommentStatus(_id: number, uid: number): Observable<CommentStatusResponse> {
     const fullUrl: string = this.endpoint + "?_id=" + _id + "&uid=" + uid;
     let header: HttpHeaders = new HttpHeaders();
-    return this.getService.get<CommentStatusResponse>(fullUrl, header, false);
+    return this.getService.get(fullUrl, header, true);
   }
 }

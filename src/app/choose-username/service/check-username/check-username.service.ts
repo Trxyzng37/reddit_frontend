@@ -25,7 +25,7 @@ export class CheckUsernameService {
   isUsernameExist(username: string): Observable<UsernameExistResponse> {
     const fullUrl: string = this.checkUsernameEndpoint + "?username=" + username;
     let header: HttpHeaders = new HttpHeaders();
-    return this.getService.get<UsernameExistResponse>(fullUrl, header, false);
+    return this.getService.get(fullUrl, header, true);
   }
 
   selectUsername(username: string): Observable<DefaultResponse> {
@@ -35,6 +35,6 @@ export class CheckUsernameService {
     let header: HttpHeaders = new HttpHeaders();
     header = header.append("Accept", 'application/json');
     header = header.append('Content-Type', 'application/json');
-    return this.postService.post<DefaultResponse>(this.selectUsernameEndpoint, header, body, false);
+    return this.postService.post(this.selectUsernameEndpoint, header, body, true);
   }
 }

@@ -22,6 +22,6 @@ export class VotePostService {
     const body: string = JSON.stringify(votePostRequest);
     header = header.append("Accept", 'application/json');
     header = header.append('Content-Type', 'application/json');
-    return this.postService.post<VotePostResponse>(this.endpoint, header, body, false);
+    return this.postService.post(this.endpoint, header, body, true);
   }
 }

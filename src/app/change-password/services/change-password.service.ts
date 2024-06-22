@@ -24,6 +24,6 @@ export class ChangePasswordService {
     const changePasswordRequest: ChangePasswordRequest = new ChangePasswordRequest(email, newPassword);
     const requestBody = JSON.stringify(changePasswordRequest);
     const header: HttpHeaders = new HttpHeaders();
-    return this.postService.post(this.endpoint, header, requestBody, false);
+    return this.postService.post(this.endpoint, header, requestBody, true);
   }
 }

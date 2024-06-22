@@ -22,6 +22,6 @@ export class DeletePostService {
     let header: HttpHeaders = new HttpHeaders();
     header = header.append("Accept", 'application/json');
     header = header.append('Content-Type', 'application/json');
-    return this.postService.post<DeletePostResponse>(endpoint, header, body, false);
+    return this.postService.post(endpoint, header, body, true);
   }
 }

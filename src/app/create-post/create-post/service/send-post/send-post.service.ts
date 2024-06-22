@@ -27,6 +27,6 @@ export class SendPostService {
     header = header.append("Accept", 'application/json');
     header = header.append('Content-Type', 'application/json');
     // header = header.append('Access-Control-Allow-Origin', '*');
-    return this.postService.post<CreatePostResponse>(this.endpoint, header, body, false);
+    return this.postService.post(this.endpoint, header, body, true);
   }
 }

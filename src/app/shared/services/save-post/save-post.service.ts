@@ -28,14 +28,14 @@ export class SavePostService {
     let header: HttpHeaders = new HttpHeaders();
     header = header.append("Accept", 'application/json');
     header = header.append('Content-Type', 'application/json');
-    return this.postService.post(this.savedEndpoint, header, body, false);
+    return this.postService.post(this.savedEndpoint, header, body, true);
   }
 
   public getSavedPostsByUid(uid: number): Observable<GetPostResponse[]> {
     const parameter: string ="uid=" + uid; 
     const endpointWithParameter: string = this.getSavedEndpoint + "?" + parameter;
     const header: HttpHeaders = new HttpHeaders();
-    return this.getService.get(endpointWithParameter, header, false);
+    return this.getService.get(endpointWithParameter, header, true);
   }
 
   public getSavedPostStatusByUid(uid: number, post_id: number): Observable<SavedPostResponse> {
@@ -43,6 +43,6 @@ export class SavePostService {
     const parameter2: string ="pid=" + post_id; 
     const endpointWithParameter: string = this.getSavePostStatusEndpoint + "?" + parameter1 + "&" + parameter2;
     const header: HttpHeaders = new HttpHeaders();
-    return this.getService.get(endpointWithParameter, header, false);
+    return this.getService.get(endpointWithParameter, header, true);
   }
 }
