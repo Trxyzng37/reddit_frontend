@@ -8,7 +8,6 @@ import { ForgotPasswordComponent } from './forgot-password/components/forgot-pas
 import { PassCodeComponent } from './pass-code/components/pass-code/pass-code.component';
 import { ChangePasswordComponent } from './change-password/components/change-password/change-password.component';
 import { ConfirmEmailComponent } from './signup/components/confirm-email/confirm-email.component';
-import { signinGuard } from './signin/guards/signin.guard';
 import { CreatePostComponent } from './create-post/create-post/component/create-post.component';
 import { PostMainComponent } from './post-main/component/post-main/post-main.component';
 import { PostLinkListComponent } from './post-link-list/component/post-link-list/post-link-list.component';
@@ -21,9 +20,11 @@ import { SearchResultsComponent } from './search-page/search-results/search-resu
 import { UserProfileComponent } from './user-profile/user-profile/user-profile.component';
 import { EditUserInfoComponent } from './edit-user-profile/edit-user-info/edit-user-info.component';
 import { ChooseUsernameComponent } from './choose-username/choose-username/choose-username.component';
+import { SignInGuard } from './shared/guard/Signin.guard';
+import { UserGuard } from './shared/guard/user.guard';
 
 const routes: Routes = [
-  { path: 'signin', component: SigninComponent, canActivate: mapToCanActivate([signinGuard])},
+  { path: 'signin', component: SigninComponent, canActivate: mapToCanActivate([SignInGuard])},
   // { path: 'signin', title: 'sign-in', component: SigninComponent},
   {path: '', redirectTo: 'home', pathMatch: 'full'},
   { path: 'signup', title: 'sign-up', component: SignupComponent},
@@ -35,23 +36,23 @@ const routes: Routes = [
     children: [
       { path: '', component: PostMainComponent,
       children: [
-        {path: 'home', title: 'home', component: PostLinkListComponent},
+        {path: 'home', title: 'home', component: PostLinkListComponent, canActivate: mapToCanActivate([UserGuard])},
         {path: 'popular', title: 'popular', component: PostLinkListComponent},
         {path: 'r/:community_id', title: 'trxyzng', component: PostLinkListComponent},
-        {path: 'edit-post/:post_id', component: EditPostComponent},
+        {path: 'edit-post/:post_id', component: EditPostComponent, canActivate: mapToCanActivate([UserGuard])},
         {path: 'post/:post_id', title: 'view-post', component: ViewDetailPostComponent},
-        {path: 'control-posts/:community_id', component: PostLinkListComponent},
+        {path: 'control-posts/:community_id', component: PostLinkListComponent, canActivate: mapToCanActivate([UserGuard])},
         {path: 'search/:text', component: SearchResultsComponent},
         {path: 'user/:username', component: UserProfileComponent},
-        {path: 'setting/:username', component: EditUserInfoComponent},
-        {path: 'edit-community/:community_id', component: EditCommunityComponent},
+        {path: 'setting/:username', component: EditUserInfoComponent, canActivate: mapToCanActivate([UserGuard])},
+        {path: 'edit-community/:community_id', component: EditCommunityComponent, canActivate: mapToCanActivate([UserGuard])},
       ]
       }
     ]
   },
-  {path: 'create-post', component: CreatePostComponent},
+  {path: 'create-post', component: CreatePostComponent, canActivate: mapToCanActivate([UserGuard])},
   {path: 'choose-username', component: ChooseUsernameComponent},
-  {path: 'create-post?cid=:community_id', component: CreatePostComponent},
+  {path: 'create-post?cid=:community_id', component: CreatePostComponent, canActivate: mapToCanActivate([UserGuard])},
   { path: 'error', title:'error', component: ErrorComponent },
   { path: '**', component: ErrorComponent }
 ];
