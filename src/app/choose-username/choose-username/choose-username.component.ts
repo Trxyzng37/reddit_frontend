@@ -53,9 +53,9 @@ export class ChooseUsernameComponent {
         this.checkUsernameService.selectUsername(this.username).subscribe({
           next: (response: DefaultResponse) => {
             if(response.error_code == 0) {
-              this.storageService.removeItem("signup_email")
+              this.storageService.removeItem("signup_google_email")
               Swal.fire({
-                title: "Sign-up successfully.",
+                title: "Choose username successfully.",
                 icon: 'success'
               }).then(result => {
                 if(result.isConfirmed) {

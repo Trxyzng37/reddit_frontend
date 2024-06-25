@@ -35,15 +35,17 @@ export class ForgotPasswordComponent implements OnInit {
       const observable: Observable<EmailExistResponse> = this.emailExistService.isEmailExist(email);
       observable.subscribe({
         next: (response: EmailExistResponse) => {
-          if (response.emailExist) {
-            this.isLoad = false;
+          if (response.emailExist && response.googleEmail == false) {
             this.storageService.setItem("forgot-password-email", email)
-            this.router.navigate(["/pass-code"]);
+            this.router.navigate(["/forgot-password-pass-code"]);
           }
-          else {
-            this.isLoad = false;
+          if (response.emailExist && response.googleEmail) {
+            Swal.fire("This email sign-up using goole email. Can not change password",'','error');
+          }
+          if (!response.emailExist) {
             Swal.fire("No user with this email exist",'','warning');
           }
+          this.isLoad = false;
         },
         error: (e: HttpErrorResponse) => {
           this.isLoad = false;
