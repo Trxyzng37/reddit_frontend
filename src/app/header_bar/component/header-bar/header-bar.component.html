@@ -31,8 +31,8 @@
     </div>
 
     <div id="signin_signup_block" [ngStyle]="{'display': isSignIn === true ? 'none':'flex'}">
-        <a routerLink="/signin" title="login">login</a>
-        <a routerLink="/signup" title="register">register</a>
+        <a href="/signin" title="login">login</a>
+        <a href="/signup" title="register">register</a>
     </div>
 
     <div id="logged_in_block" [ngStyle]="{'display': isSignIn === true ? 'flex':'none'}">
@@ -42,7 +42,7 @@
             <p id="txt_username">{{userInfo.username}}</p>
             <button id="btn_1" class="btn_profile_menu" type="button" (click)="navigateToUserProfile()" title="View your profile info"><i class="pi pi-user"></i>View profile</button>
             <button class="btn_profile_menu" type="button" (click)="useDarkMode()" title="Switch to {{background_mode}}"><i class="pi pi-moon"></i>{{background_mode}}</button>
-            <button id="btn_3" class="btn_profile_menu" type="button" (click)="logOut()" title="Log out of this account"><i class="pi pi-upload logout" style="transform: rotate(90deg);"></i>Log Out</button>
+            <button id="btn_3" class="btn_profile_menu" type="button" (click)="logOut($event)" title="Log out of this account"><i class="pi pi-upload logout" style="transform: rotate(90deg);"></i>Log Out</button>
         </div>
     </div>
 </header> 
