@@ -10,6 +10,8 @@ import { Router } from '@angular/router';
 import { PresentationService } from 'src/app/shared/services/presentation/presentation.service';
 import Swal from 'sweetalert2';
 import { VoteImgService } from 'src/app/shared/services/vote-img/vote-img.service';
+import { getCookie } from 'typescript-cookie';
+import { RemoveRefreshTokenService } from 'src/app/shared/services/remove-refresh-token/remove-refresh-token.service';
 
 @Component({
   selector: 'app-header-bar',
@@ -25,7 +27,8 @@ export class HeaderBarComponent {
     private userProfileService: SearchUserProfileService,
     private router: Router,
     public presentationService: PresentationService,
-    public voteImgService: VoteImgService 
+    public voteImgService: VoteImgService,
+    private removeRefreshTokenService: RemoveRefreshTokenService
   ) {}
 
   @Output() openNavigationEvent = new EventEmitter<Object>;
@@ -120,19 +123,28 @@ export class HeaderBarComponent {
         event.stopPropagation();
   }
 
-  logOut() {
+  logOut(event: any) {
+    event.stopPropagation();
     Swal.fire({
-      'text': 'Are you sure you want to log out ?',
+      title: 'Are you sure you want to log out?',
       icon: 'warning',
       showCancelButton: true,
       showConfirmButton: true,
-      focusCancel: false,
-      focusConfirm: false,
+      confirmButtonText: "Log out"
     }).then((result)=>{
       if(result.isConfirmed) {
-        this.router.navigate(["/signin"])
-        this.storageService.removeItem("uid");
-        this.storageService.removeItem("username");
+        this.removeRefreshTokenService.removeRefreshToken().subscribe({
+          next: (response: any) => {
+            this.storageService.removeItem("uid");
+            this.storageService.removeItem("username");
+            window.location.href = "/signin";
+          },
+          error: (e: HttpErrorResponse) => {
+            this.storageService.removeItem("uid");
+            this.storageService.removeItem("username");
+            window.location.href = "/signin";
+          }
+        })
       }
       else {
         this.isProfileMenuOpen = false;
