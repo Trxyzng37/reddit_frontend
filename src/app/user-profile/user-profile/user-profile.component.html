@@ -34,7 +34,7 @@
         *ngFor="let comment of comments"
         [commentData]="comment"
     ></app-comment-view>
-    <div *ngIf="comments.length == 0" style="width: 100%; padding: 50px 0; text-align: center;">This user has no comment</div>
+    <div *ngIf="comments.length == 0" id="empty_block">No comment found</div>
 </div>
 
 <div id="loading_block" *ngIf="isLoad">

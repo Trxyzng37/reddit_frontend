@@ -30,11 +30,11 @@
                 <p>Customize your profile</p>
             </div>
         </div>
-        <button id="btn_edit_profile" type="button" (click)="editProfile()">Edit profile</button>
+        <button id="btn_edit_profile" type="button" style="color: var(--secondary_color) !important;" (click)="editProfile()">Edit profile</button>
     </div>
 </div>
 
-<div id="moderator_block">
+<div id="moderator_block" *ngIf="communities.length != 0">
     <p style="padding:10px 0;">Moderator of these communities</p>
     <a class="community_block" href="r/{{community.id}}" *ngFor="let community of communities">
         <div class="community_info">

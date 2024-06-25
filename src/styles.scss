@@ -142,7 +142,7 @@ a, a:visited {
 }
 
 .a {
-  color: var(--secondary_color) !important;
+  color: var(--link) !important;
   text-decoration: none;
 }
 
@@ -151,8 +151,12 @@ a, a:visited {
 }
 
 .a:visited {
-  color: var(--secondary_color) !important;
+  color: var(--link) !important;
   text-decoration: none;
+}
+
+.link {
+  text-decoration: underline !important; 
 }
 
 .blockquote {
