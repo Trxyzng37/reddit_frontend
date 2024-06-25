@@ -91,7 +91,7 @@ export class CommentComponent {
     this.commentData.content = this.commentData.content.replace(/<ul/g, '<ul style="margin-left:30px;" ');
     this.commentData.content = this.commentData.content.replace(/<pre/g, '<pre class="pre_code" style="width:fit-content" ');
     this.commentData.content = this.commentData.content.replace(/<code/g, '<code class="code" ');
-    this.commentData.content = this.commentData.content.replace(/<a/g, '<a class="a" ');
+    this.commentData.content = this.commentData.content.replace(/<a/g, '<a class="a link" ');
     this.previousContent = this.commentData.content;
     this.editCommentData = this.commentData.content;
     this.getCommentStatusService.getCommentStatus(this.commentData._id, this.uid).subscribe({
