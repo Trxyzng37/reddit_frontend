@@ -21,38 +21,43 @@ import { UserProfileComponent } from './user-profile/user-profile/user-profile.c
 import { EditUserInfoComponent } from './edit-user-profile/edit-user-info/edit-user-info.component';
 import { ChooseUsernameComponent } from './choose-username/choose-username/choose-username.component';
 import { SignInGuard } from './shared/guard/Signin.guard';
-import { UserGuard } from './shared/guard/user.guard';
+import { RefreshTokenGuard } from './shared/guard/refresh-token.guard';
+import { SignUpGuard } from './shared/guard/Signup.guard';
+import { ConfirmEmailGuard } from './shared/guard/confirm-email.guard';
+import { ChooseUsernameGuard } from './shared/guard/choose-username.guard';
+import { ChangePasswordGuard } from './shared/guard/change-password.guard';
+import { ChangePasswordEmailGuard } from './shared/guard/change-password-email.guard';
 
 const routes: Routes = [
   { path: 'signin', component: SigninComponent, canActivate: mapToCanActivate([SignInGuard])},
-  // { path: 'signin', title: 'sign-in', component: SigninComponent},
-  {path: '', redirectTo: 'home', pathMatch: 'full'},
-  { path: 'signup', title: 'sign-up', component: SignupComponent},
+  {path: '', redirectTo: 'popular', pathMatch: 'full'},
+  { path: 'signup', title: 'sign-up', component: SignupComponent, canActivate: mapToCanActivate([SignUpGuard])},
+  { path: 'check-sign-up-passcode', title: 'check-sign-up-passcode', component: ConfirmEmailComponent, canActivate: mapToCanActivate([ConfirmEmailGuard])},
+  { path: 'choose-username', component: ChooseUsernameComponent, canActivate: mapToCanActivate([ChooseUsernameGuard])},
   { path: 'forgot-password', title: 'forgot-password', component: ForgotPasswordComponent},
-  { path: 'pass-code', title: 'enter-passcode', component: PassCodeComponent},
-  { path: 'change-password', title: 'change-password', component: ChangePasswordComponent},
-  { path: 'check-confirm-email-passcode', title: 'check-confirm-email-passcode', component: ConfirmEmailComponent },
+  { path: 'forgot-password-pass-code', title: 'enter-passcode', component: PassCodeComponent, canActivate: mapToCanActivate([ChangePasswordEmailGuard])},
+  { path: 'change-password', title: 'change-password', component: ChangePasswordComponent, canActivate: mapToCanActivate([ChangePasswordGuard])},
+  { path: 'create-post', component: CreatePostComponent, canActivate: mapToCanActivate([RefreshTokenGuard])},
+  { path: 'create-post?cid=:community_id', component: CreatePostComponent, canActivate: mapToCanActivate([RefreshTokenGuard])},
   { path: '', title: 'home', component: HomeComponent, 
     children: [
       { path: '', component: PostMainComponent,
       children: [
-        {path: 'home', title: 'home', component: PostLinkListComponent, canActivate: mapToCanActivate([UserGuard])},
+        {path: 'home', title: 'home', component: PostLinkListComponent, canActivate: mapToCanActivate([RefreshTokenGuard])},
         {path: 'popular', title: 'popular', component: PostLinkListComponent},
         {path: 'r/:community_id', title: 'trxyzng', component: PostLinkListComponent},
-        {path: 'edit-post/:post_id', component: EditPostComponent, canActivate: mapToCanActivate([UserGuard])},
+        {path: 'edit-post/:post_id', component: EditPostComponent, canActivate: mapToCanActivate([RefreshTokenGuard])},
         {path: 'post/:post_id', title: 'view-post', component: ViewDetailPostComponent},
-        {path: 'control-posts/:community_id', component: PostLinkListComponent, canActivate: mapToCanActivate([UserGuard])},
+        {path: 'control-posts/:community_id', component: PostLinkListComponent, canActivate: mapToCanActivate([RefreshTokenGuard])},
         {path: 'search/:text', component: SearchResultsComponent},
         {path: 'user/:username', component: UserProfileComponent},
-        {path: 'setting/:username', component: EditUserInfoComponent, canActivate: mapToCanActivate([UserGuard])},
-        {path: 'edit-community/:community_id', component: EditCommunityComponent, canActivate: mapToCanActivate([UserGuard])},
+        {path: 'setting/:username', component: EditUserInfoComponent, canActivate: mapToCanActivate([RefreshTokenGuard])},
+        {path: 'edit-community/:community_id', component: EditCommunityComponent, canActivate: mapToCanActivate([RefreshTokenGuard])},
       ]
       }
     ]
   },
-  {path: 'create-post', component: CreatePostComponent, canActivate: mapToCanActivate([UserGuard])},
-  {path: 'choose-username', component: ChooseUsernameComponent},
-  {path: 'create-post?cid=:community_id', component: CreatePostComponent, canActivate: mapToCanActivate([UserGuard])},
+
   { path: 'error', title:'error', component: ErrorComponent },
   { path: '**', component: ErrorComponent }
 ];

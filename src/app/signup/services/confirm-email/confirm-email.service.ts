@@ -31,7 +31,9 @@ export class ConfirmEmailService {
     const sendAt: Date = this.dateTimeService.getCurrentDateTime();
     const passcodeData: PassCodeRequest = new PassCodeRequest(email, pascode, sendAt);
     const body: string = JSON.stringify(passcodeData);
-    const header: HttpHeaders = new HttpHeaders();
+    let header: HttpHeaders = new HttpHeaders();
+    header = header.append("Accept", 'application/json');
+    header = header.append('Content-Type', 'application/json');
     return this.postService.post(this.endpoint, header, body, true);
   }
 

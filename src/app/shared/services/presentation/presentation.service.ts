@@ -33,6 +33,8 @@ export class PresentationService {
   }
 
   public formatKarma(n: number): string {
+    if(n == 0)
+      return "0";
     const num = n.toString();
     const parts = [];
     for (let i = 0; i < num.length; i += 3) {

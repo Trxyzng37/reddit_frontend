@@ -72,7 +72,7 @@ export class SignupComponent implements OnInit {
         if (signup.isSignUp) {
           Swal.fire('Sign up using google successfully','','success').then(result => {
             if(result.isConfirmed) {
-              this.storageService.setItem("signup_email", getCookie("signup_email")!);
+              this.storageService.setItem("signup_google_email", getCookie("signup_google_email")!);
               window.location.href = "/choose-username";
             }
           })
@@ -82,7 +82,7 @@ export class SignupComponent implements OnInit {
           Swal.fire('A user with this email has already exist. \nPlease use a different email','','error')
       }
         catch (e) {
-          Swal.fire("Error signup using goolge. Please try again",'','error')
+          Swal.fire("Error signup using goolge. Please try to sign-up again",'','error')
         }
       }
   }
@@ -107,7 +107,7 @@ export class SignupComponent implements OnInit {
             //   }
             // })
             this.storageService.setItem("signup-email", email);
-            this.router.navigate(["/check-confirm-email-passcode"])
+            this.router.navigate(["/check-sign-up-passcode"])
           }
           else {
             if (response.emailError == 1) {

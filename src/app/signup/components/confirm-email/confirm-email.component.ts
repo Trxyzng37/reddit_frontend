@@ -68,7 +68,7 @@ export class ConfirmEmailComponent {
           }
         },
         error: (e: HttpErrorResponse) => {
-          Swal.fire("An unknown error has happen. Please try again",'','error')
+          Swal.fire("An unknown error has happen. Please try to sign-up again",'','error')
         }
       })
     }

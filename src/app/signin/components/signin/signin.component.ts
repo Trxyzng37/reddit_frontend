@@ -42,7 +42,7 @@ export class SigninComponent implements OnInit {
         const signin: GoogleSignInResponse = JSON.parse(cookie);
         if (signin.isGoogleSignIn) {
           this.storageService.setItem("uid", uid.toString());
-          this.router.navigate(['/home']);
+          window.location.href = "/home";
         }
         else
           Swal.fire({

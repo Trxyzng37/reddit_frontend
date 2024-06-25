@@ -57,6 +57,7 @@ export class PassCodeComponent {
           }
           else if (response.isPasscodeMatch) {
             this.PasscodeForm.reset();
+            this.storageService.setItem("change-password", "true");
             this.router.navigate(["/change-password"]);
           }
           else {
