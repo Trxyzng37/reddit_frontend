@@ -71,7 +71,7 @@ a {
 
 .search_box:focus {
     background-color: var(--neutral);
-    box-shadow: var(--box_shadow_menu);
+    box-shadow: var(--box_shadow);
 }
 
 .search_box:not(:focus-within) {

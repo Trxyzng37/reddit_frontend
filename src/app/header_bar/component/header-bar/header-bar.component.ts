@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 import { VoteImgService } from 'src/app/shared/services/vote-img/vote-img.service';
 import { getCookie } from 'typescript-cookie';
 import { RemoveRefreshTokenService } from 'src/app/shared/services/remove-refresh-token/remove-refresh-token.service';
+import { CheckRefreshTokenService } from 'src/app/shared/services/check-refresh-token/check-refresh-token.service';
 
 @Component({
   selector: 'app-header-bar',
@@ -28,7 +29,8 @@ export class HeaderBarComponent {
     private router: Router,
     public presentationService: PresentationService,
     public voteImgService: VoteImgService,
-    private removeRefreshTokenService: RemoveRefreshTokenService
+    private removeRefreshTokenService: RemoveRefreshTokenService,
+    private checkRefreshToken: CheckRefreshTokenService
   ) {}
 
   @Output() openNavigationEvent = new EventEmitter<Object>;
@@ -42,15 +44,23 @@ export class HeaderBarComponent {
   public isSearch: boolean = false;
 
   ngOnInit() {
+    this.checkRefreshToken.checkRefreshToken().subscribe({
+      next: (response: any) => {
+        this.isSignIn = true;
+        this.isSignIn = (this.storageService.getItem("uid") != "" && this.storageService.getItem("uid") != "0") ? true:false;
+        const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid")); 
+        this.userProfileService.getUserProfileByUid(uid).subscribe({
+          next: (response: UserProfile) => {
+            this.userInfo = response;
+          }
+        })
+      },
+      error: (e: HttpErrorResponse) => {
+        this.isSignIn = false;
+      }
+    })
     document.getElementById("txt_username")?.addEventListener('click', (event)=>{
       event.stopPropagation();
-    })
-    this.isSignIn = (this.storageService.getItem("uid") != "" && this.storageService.getItem("uid") != "0") ? true:false;
-    const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid")); 
-    this.userProfileService.getUserProfileByUid(uid).subscribe({
-      next: (response: UserProfile) => {
-        this.userInfo = response;
-      }
     })
     if (window.innerWidth < 900) {
       this.isOpen = false;
