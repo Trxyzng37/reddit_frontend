@@ -75,4 +75,9 @@
 >
 </app-post-link>
 
-<p id="empty_block" *ngIf="post_result.length == 0">No post found</p>
+<h2 id="empty_block" style="font-size: 40px;" *ngIf="post_result.length == 0 && !isHomePage">No post found</h2>
+<div id="empty_block" *ngIf="post_result.length == 0 && isHomePage">
+    <h2>Look like it empty</h2>
+    <p style="margin-top: 10px;">Why don't you explore and join some communities</p>
+    <a href="/popular">To popular page</a>
+</div>

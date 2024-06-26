@@ -81,6 +81,16 @@
     height: auto;
     background-color: var(--neutral);
     text-align: center;
-    font-size: 40px;
+    font-size: 20px;
     padding: 25vh 10px;
+}
+
+#empty_block > a {
+    padding: 10px 20px;
+    border-radius: 20px;
+    background-color: var(--primary_background_color);
+    position: relative;
+    top: 30px;
+    color: var(--secondary_color) !important;
+    box-shadow: var(--menu_box_shadow);
 }

@@ -13,7 +13,7 @@
             <a *ngFor="let moderation_community of moderationCommunities" href="r/{{moderation_community.id}}"><img id="img_community_icon" src="{{moderation_community.avatar}}" alt=""/><pre>r/{{moderation_community.name}}</pre></a>
         </div>
     </nav>
-    <nav>
+    <nav *ngIf="recentVisitCommunities.length > 0">
         <button class="btn_change_status" type="button" (click)="change_recent_status()">
             <span>Recent</span>
             <span class="pi btn_icon" [ngClass]="recent_status === 'up' ? 'pi-chevron-down':'pi-chevron-up'"></span>
@@ -28,7 +28,7 @@
             <span class="pi btn_icon" [ngClass]="favorite_status === 'up' ? 'pi-chevron-down':'pi-chevron-up'"></span>
         </button>
         <nav [ngStyle]="{'display': favorite_status === 'up' ? 'none':'block'}">
-            <button type="button" (click)="showCreateCommunityForm()"><i class="pi pi-plus"></i><pre>Create a community</pre></button>
+            <button style="margin-bottom: 10px;" type="button" (click)="showCreateCommunityForm()"><i class="pi pi-plus"></i><pre>Create a community</pre></button>
         </nav>
         <div [ngStyle]="{'display': favorite_status === 'up' ? 'none':'block'}">
             <a *ngFor="let favorite_community of favoriteCommunities" href="r/{{favorite_community.id}}"><img id="img_community_icon" src="{{favorite_community.avatar}}" alt=""/><pre>r/{{favorite_community.name}}</pre></a>
