@@ -23,9 +23,9 @@ export class SignupComponent implements OnInit {
     username: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(16), 
       Validators.pattern("^[0-9a-zA-Z]{2,16}$")]),
     password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(20), 
-      Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$")]),
+      Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[`~!@#$%^&*()_\\-+=\\[\\]{};:'\",.<>?/\\\\|])[A-Za-z\\d`~!@#$%^&*()_\\-+=\\[\\]{};:'\",.<>?/\\\\|]{8,20}$")]),
     confirm_password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(20), 
-      Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$")])
+      Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[`~!@#$%^&*()_\\-+=\\[\\]{};:'\",.<>?/\\\\|])[A-Za-z\\d`~!@#$%^&*()_\\-+=\\[\\]{};:'\",.<>?/\\\\|]{8,20}$")])
   }, {validators: SamePasswordValidator('password', 'confirm_password')})
 
   constructor (
