@@ -37,7 +37,7 @@ export class ChangePasswordComponent implements OnInit{
   inputPassword(event: any) {
     const input_value: string = event.target.value;
     this.password = input_value;
-    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_\-+=\[\]{};:'",.<>?\/\\|])[A-Za-z\d!@#$%^&*()_\-+=\[\]{};:'",.<>?\/\\|]{8,20}$/;
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[`~!@#$%^&*()_\-+=\[\]{};:'",.<>?\/\\|])[A-Za-z\d!`~@#$%^&*()_\-+=\[\]{};:'",.<>?\/\\|]{8,20}$/;
     console.log(this.password)
     this.password_status = regex.test(input_value);
     console.log(this.password_status)
