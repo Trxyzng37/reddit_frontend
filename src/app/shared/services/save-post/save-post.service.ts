@@ -7,6 +7,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { SavedPostRequest } from './pojo/saved-post-request';
 import { GetPostResponse } from 'src/app/post-link-list/pojo/get-post-response';
 import { SavedPostResponse } from './pojo/saved-post-response';
+import { CheckRefreshTokenService } from '../check-refresh-token/check-refresh-token.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class SavePostService {
 
   constructor(
     private getService: GetService,
-    private postService: PostService
+    private postService: PostService,
+    private checkRefreshToken: CheckRefreshTokenService
   ) { }
 
   private savedEndpoint: string = "/save-post";
@@ -23,6 +25,7 @@ export class SavePostService {
   public getSavePostStatusEndpoint: string = "/get-save-post-status";
 
   public savePostByUid(uid: number, post_id: number, saved: number): Observable<DefaultResponse> {
+    this.checkRefreshToken.runCheckRefreshToken();
     const data = new SavedPostRequest(uid, post_id, saved);
     const body = JSON.stringify(data);
     let header: HttpHeaders = new HttpHeaders();

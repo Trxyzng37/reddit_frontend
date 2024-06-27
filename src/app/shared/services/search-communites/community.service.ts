@@ -8,6 +8,7 @@ import { JoinCommunityRequest } from './pojo/join-community-request';
 import { JoinCommunityResponse } from './pojo/join-community-response';
 import { DefaultResponse } from '../../pojo/default-response';
 import { DeleteCommunityRequest } from './pojo/delete-community-request';
+import { CheckRefreshTokenService } from '../check-refresh-token/check-refresh-token.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,8 @@ export class CommunityService {
 
   constructor(
     private getService: GetService,
-    private postService: PostService
+    private postService: PostService,
+    private checkRefreshToken: CheckRefreshTokenService
   ) { }
 
   private endpoint: string = "/find-community"
@@ -50,6 +52,7 @@ export class CommunityService {
   }
 
   public joinCommunity(uid: number, community_id: number, subscribed: number): Observable<JoinCommunityResponse> {
+    this.checkRefreshToken.runCheckRefreshToken();
     const endpoint: string = "/join-community";
     const body = JSON.stringify(new JoinCommunityRequest(uid, community_id, subscribed));
     let header: HttpHeaders = new HttpHeaders();
@@ -65,6 +68,7 @@ export class CommunityService {
   }
 
   public deleteCommunity(community_id: number, uid: number, deleted: number): Observable<DefaultResponse> {
+    this.checkRefreshToken.runCheckRefreshToken();
     const endpoint: string = "/delete-community";
     const body = JSON.stringify(new DeleteCommunityRequest(community_id, uid, deleted));
     let header: HttpHeaders = new HttpHeaders();

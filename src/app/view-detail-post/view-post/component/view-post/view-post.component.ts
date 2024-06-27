@@ -10,19 +10,20 @@
   import { CheckVotePostResponse } from '../../../../post-link/post-link/service/check-vote-post/pojo/check-vote-post-response';
   import { VotePostResponse } from '../../../../post-link/post-link/service/vote-post/pojo/vote-post-response';
   import { DateTimeService } from 'src/app/shared/services/date-time/date-time.service';
-import Swal from 'sweetalert2';
-import { DeletePostService } from 'src/app/edit-post/service/delete-post/delete-post.service';
-import { DeletePostResponse } from 'src/app/edit-post/pojo/delete-post-response';
-import { CommunityService } from 'src/app/shared/services/search-communites/community.service';
-import { JoinCommunityResponse } from 'src/app/shared/services/search-communites/pojo/join-community-response';
-import { Communities } from 'src/app/shared/pojo/pojo/communities';
-import { AllowPostService } from 'src/app/post-link/post-link/service/allow-post/allow-post.service';
-import { DefaultResponse } from 'src/app/shared/pojo/default-response';
-import { PresentationService } from 'src/app/shared/services/presentation/presentation.service';
-import { SavePostService } from 'src/app/shared/services/save-post/save-post.service';
-import { SavedPostResponse } from 'src/app/shared/services/save-post/pojo/saved-post-response';
-import { DarkModeService } from 'src/app/shared/services/dark-mode/dark-mode.service';
-import { VoteImgService } from 'src/app/shared/services/vote-img/vote-img.service';
+  import Swal from 'sweetalert2';
+  import { DeletePostService } from 'src/app/edit-post/service/delete-post/delete-post.service';
+  import { DeletePostResponse } from 'src/app/edit-post/pojo/delete-post-response';
+  import { CommunityService } from 'src/app/shared/services/search-communites/community.service';
+  import { JoinCommunityResponse } from 'src/app/shared/services/search-communites/pojo/join-community-response';
+  import { Communities } from 'src/app/shared/pojo/pojo/communities';
+  import { AllowPostService } from 'src/app/post-link/post-link/service/allow-post/allow-post.service';
+  import { DefaultResponse } from 'src/app/shared/pojo/default-response';
+  import { PresentationService } from 'src/app/shared/services/presentation/presentation.service';
+  import { SavePostService } from 'src/app/shared/services/save-post/save-post.service';
+  import { SavedPostResponse } from 'src/app/shared/services/save-post/pojo/saved-post-response';
+  import { DarkModeService } from 'src/app/shared/services/dark-mode/dark-mode.service';
+  import { VoteImgService } from 'src/app/shared/services/vote-img/vote-img.service';
+import { CheckRefreshTokenService } from 'src/app/shared/services/check-refresh-token/check-refresh-token.service';
   
   @Component({
     selector: 'app-post',
@@ -43,7 +44,8 @@ import { VoteImgService } from 'src/app/shared/services/vote-img/vote-img.servic
       public presentationService: PresentationService,
       private savePostService: SavePostService,
       private darkmodeSerive: DarkModeService,
-      public voteImgService: VoteImgService
+      public voteImgService: VoteImgService,
+      private checkRefreshToken: CheckRefreshTokenService
     ) {}
   
     @Input() post: GetPostResponse = new GetPostResponse(0,"",0,"","",0,"","","","","",0,0,0);

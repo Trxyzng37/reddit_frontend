@@ -181,29 +181,20 @@ export class ViewDetailPostComponent {
   }
 
   createComment(event: Event) {
-    const uid = this.storageService.getItem("uid") == null ? 0 : parseInt(this.storageService.getItem("uid"));
+    const uid = this.storageService.getItem("uid") == "" ? 0 : parseInt(this.storageService.getItem("uid"));
     if(uid === 0) {
       Swal.fire({
-        titleText: "You need to login to comment",
-        icon: "warning",
-        heightAuto: true,
+        title: "Authentication fail",
+        text: "Please sign-in to do this action",
+        icon: "error",
         showConfirmButton: true,
-        focusCancel: false,
-        focusConfirm: false,
-        footer: '<a href="signin" style="color:red"><b>Click to go to login page<b/></a>'
+        confirmButtonText: "Confirm",
+        footer: '<a href="signin" style="color:red;font-size: 18px"><b>Click here to go to sign-in page<b/></a>'
       })
     }
     else {
       this.createCommentService.createComment(this.postId, 0, this.content, 0).subscribe({
         next: (response: CreateCommentResponse) => {
-          // Swal.fire({
-          //   titleText: "Create comment successfully",
-          //   icon: "success",
-          //   heightAuto: true,
-          //   showConfirmButton: true,
-          //   focusCancel: false,
-          //   focusConfirm: false
-          // })
           tinymce.activeEditor?.setContent("");
           this.reloadComment(event);
         },
