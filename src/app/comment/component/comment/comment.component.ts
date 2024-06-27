@@ -112,15 +112,14 @@ export class CommentComponent {
 
   voteComment(event: Event, type: string) {
     event.stopPropagation();
+    this.uid = this.storageService.getItem("uid") === "" ? 0 : Number(this.storageService.getItem("uid"));
     if(this.uid === 0) {
       Swal.fire({
-        titleText: "You need to login to vote",
-        icon: "warning",
-        heightAuto: true,
+        title: "You need to sign-in to do this action",
+        icon: "error",
         showConfirmButton: true,
-        focusCancel: false,
-        focusConfirm: false,
-        footer: '<a href="signin" style="color:red"><b>Click to go to login page<b/></a>'
+        confirmButtonText: "OK",
+        footer: '<a href="signin" style="color:red;font-size: 18px"><b>Click here to go to sign-in page<b/></a>'
       })
     }
     else {
@@ -175,15 +174,14 @@ export class CommentComponent {
   }
 
   reply() {
+    this.uid = this.storageService.getItem("uid") === "" ? 0 : Number(this.storageService.getItem("uid"));
     if(this.uid === 0) {
       Swal.fire({
-        titleText: "You need to login to comment",
-        icon: "warning",
-        heightAuto: true,
+        title: "You need to sign-in to do this action",
+        icon: "error",
         showConfirmButton: true,
-        focusCancel: false,
-        focusConfirm: false,
-        footer: '<a href="signin" style="color:red"><b>Click to go to login page<b/></a>'
+        confirmButtonText: "OK",
+        footer: '<a href="signin" style="color:red;font-size: 18px"><b>Click here to go to sign-in page<b/></a>'
       })
     }
     else {
@@ -307,15 +305,14 @@ export class CommentComponent {
   }
 
   createComment() {
+    this.uid = this.storageService.getItem("uid") === "" ? 0 : Number(this.storageService.getItem("uid"));
     if(this.uid == 0) {
       Swal.fire({
-        titleText: "You need to login to comment",
-        icon: "warning",
-        heightAuto: true,
+        title: "You need to sign-in to do this action",
+        icon: "error",
         showConfirmButton: true,
-        focusCancel: false,
-        focusConfirm: false,
-        footer: '<a href="signin" style="color:red"><b>Click to go to login page<b/></a>'
+        confirmButtonText: "OK",
+        footer: '<a href="signin" style="color:red;font-size: 18px"><b>Click here to go to sign-in page<b/></a>'
       })
     }
     else {
@@ -349,26 +346,73 @@ export class CommentComponent {
   }
 
   sendEditComment() {
-    if(this.commentData.content != this.editCommentData && this.editCommentData != "") {
-      this.editCommentService.editComment(this.postId, this.commentData._id, this.editCommentData).subscribe({
-        next: (response: Comment) => {
-          // Swal.fire({
-          //   titleText: "Edit comment successfully",
-          //   icon: "success",
-          //   heightAuto: true,
-          //   showConfirmButton: true,
-          //   focusCancel: false,
-          //   focusConfirm: false
-          // })
-          this.commentData.content = response.content;
-          this.previousContent = response.content;
-          this.isEditorShow = !this.isEditorShow;
+    this.uid = this.storageService.getItem("uid") === "" ? 0 : Number(this.storageService.getItem("uid"));
+    if(this.uid == 0) {
+      Swal.fire({
+        title: "You need to sign-in to do this action",
+        icon: "error",
+        showConfirmButton: true,
+        confirmButtonText: "OK",
+        footer: '<a href="signin" style="color:red;font-size: 18px"><b>Click here to go to sign-in page<b/></a>'
+      })
+    }
+    else {
+      if(this.commentData.content != this.editCommentData && this.editCommentData != "") {
+        this.editCommentService.editComment(this.postId, this.commentData._id, this.editCommentData).subscribe({
+          next: (response: Comment) => {
+            this.commentData.content = response.content;
+            this.previousContent = response.content;
+            this.isEditorShow = !this.isEditorShow;
+          },
+          error: (e: HttpErrorResponse) => {
+            console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
+            if(this.uid == 0) {
+              Swal.fire({
+                titleText: "Error edit comment. Please try again",
+                icon: "error",
+                heightAuto: true,
+                showConfirmButton: true,
+                focusCancel: false,
+                focusConfirm: false
+              })
+            }
+          }
+        })
+      }
+      else {
+        Swal.fire({
+          titleText: "Please edit your comment",
+          icon: "info",
+          heightAuto: true,
+          showConfirmButton: true,
+          focusCancel: false,
+          focusConfirm: false
+        })
+      }
+    }
+  }
+
+  deleteComment() {
+    this.uid = this.storageService.getItem("uid") === "" ? 0 : Number(this.storageService.getItem("uid"));
+    if(this.uid == 0) {
+      Swal.fire({
+        title: "You need to sign-in to do this action",
+        icon: "error",
+        showConfirmButton: true,
+        confirmButtonText: "OK",
+        footer: '<a href="signin" style="color:red;font-size: 18px"><b>Click here to go to sign-in page<b/></a>'
+      })
+    }
+    else {
+      this.deleteCommentService.deleteComment(this.postId, this.commentData._id).subscribe({
+        next: (response: DeleteCommentResponse) => {
+          this.commentModified.emit(true);
         },
         error: (e: HttpErrorResponse) => {
           console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
           if(this.uid == 0) {
             Swal.fire({
-              titleText: "Error edit comment. Please try again",
+              titleText: "Error delete comment. Please try again",
               icon: "error",
               heightAuto: true,
               showConfirmButton: true,
@@ -379,57 +423,38 @@ export class CommentComponent {
         }
       })
     }
-    else {
-      Swal.fire({
-        titleText: "Please edit your comment",
-        icon: "info",
-        heightAuto: true,
-        showConfirmButton: true,
-        focusCancel: false,
-        focusConfirm: false
-      })
-    }
-  }
-
-  deleteComment() {
-    this.deleteCommentService.deleteComment(this.postId, this.commentData._id).subscribe({
-      next: (response: DeleteCommentResponse) => {
-        this.commentModified.emit(true);
-      },
-      error: (e: HttpErrorResponse) => {
-        console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
-        if(this.uid == 0) {
-          Swal.fire({
-            titleText: "Error delete comment. Please try again",
-            icon: "error",
-            heightAuto: true,
-            showConfirmButton: true,
-            focusCancel: false,
-            focusConfirm: false
-          })
-        }
-      }
-    })
   }
 
   deleteCommentByCommunityOwner() {
-    this.deleteCommentService.deleteComment(this.postId, this.commentData._id).subscribe({
-      next: (response: DeleteCommentResponse) => {
-        this.commentModified.emit(true);
-      },
-      error: (e: HttpErrorResponse) => {
-        console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
-        if(this.uid == 0) {
-          Swal.fire({
-            titleText: "Error delete comment. Please try again",
-            icon: "error",
-            heightAuto: true,
-            showConfirmButton: true,
-            focusCancel: false,
-            focusConfirm: false
-          })
+    this.uid = this.storageService.getItem("uid") === "" ? 0 : Number(this.storageService.getItem("uid"));
+    if(this.uid == 0) {
+      Swal.fire({
+        title: "You need to sign-in to do this action",
+        icon: "error",
+        showConfirmButton: true,
+        confirmButtonText: "OK",
+        footer: '<a href="signin" style="color:red;font-size: 18px"><b>Click here to go to sign-in page<b/></a>'
+      })
+    }
+    else {
+      this.deleteCommentService.deleteComment(this.postId, this.commentData._id).subscribe({
+        next: (response: DeleteCommentResponse) => {
+          this.commentModified.emit(true);
+        },
+        error: (e: HttpErrorResponse) => {
+          console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
+          if(this.uid == 0) {
+            Swal.fire({
+              titleText: "Error delete comment. Please try again",
+              icon: "error",
+              heightAuto: true,
+              showConfirmButton: true,
+              focusCancel: false,
+              focusConfirm: false
+            })
+          }
         }
-      }
-    })
+      })
+    }
   }
 }
