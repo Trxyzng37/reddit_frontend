@@ -35,6 +35,10 @@ a {
     margin-left: var(--margin_home);
 }
 
+#main_logo_block:hover {
+    cursor: pointer;
+}
+
 #main_logo_block > :nth-child(2) {
     font-size: 30px;
 }

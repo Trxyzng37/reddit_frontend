@@ -99,4 +99,8 @@ button i {
 
 ::-webkit-scrollbar {
     width: 8px;
-  }
+}
+
+nav > div > a:last-child {
+    margin-bottom: 10px;
+}

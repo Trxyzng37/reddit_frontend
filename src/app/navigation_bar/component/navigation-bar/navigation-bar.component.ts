@@ -38,16 +38,28 @@ export class NavigationBarComponent {
         this.favoriteCommunities = response;
       }
     })
-    this.recentVisitService.getRecentVisitCommunity(uid).subscribe({
-      next: (response: Communities[]) => {
-        this.recentVisitCommunities = response;
-      }
-    })
     this.communityService.getCommunityInfoByUid(uid).subscribe({
       next: (response: Communities[]) => {
         this.moderationCommunities = response;
       }
     })
+    if(uid != 0) {
+      this.recentVisitService.getRecentVisitCommunity(uid).subscribe({
+        next: (response: Communities[]) => {
+          this.recentVisitCommunities = response;
+        }
+      })
+    }
+    else {
+      let recent_communities_array: number[] = this.storageService.getItem("recent_communities") == "" ? [] : JSON.parse("[" + this.storageService.getItem("recent_communities") + "]");
+      for(let community of recent_communities_array) {
+        this.communityService.getCommunityInfoById(community.toString()).subscribe({
+          next: (response: Communities) => {
+            this.recentVisitCommunities.push(response);
+          }
+        })
+      }
+    }
   }
 
   ngAfterViewInit() {
