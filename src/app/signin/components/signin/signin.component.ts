@@ -10,6 +10,7 @@ import { GoogleSignInResponse } from '../../pojo/google-signin-response';
 import { UsernamePasswordSignInResponse } from '../../pojo/username-password-signin-response';
 import { StorageService } from 'src/app/shared/storage/storage.service';
 import Swal from 'sweetalert2';
+import { RecentVisitService } from 'src/app/shared/services/recent-visit/recent-visit.service';
 
 @Component({
   selector: 'app-signin',
@@ -22,7 +23,8 @@ export class SigninComponent implements OnInit {
     private usernamePasswordService: UsernamePasswordService, 
     private serverUrlService: ServerUrlService,
     private router: Router,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private recentVisitService: RecentVisitService
   ) {}
 
   private serverUrl: string = this.serverUrlService.getUrl();
@@ -42,7 +44,7 @@ export class SigninComponent implements OnInit {
         const signin: GoogleSignInResponse = JSON.parse(cookie);
         if (signin.isGoogleSignIn) {
           this.storageService.setItem("uid", uid.toString());
-          window.location.href = "/home";
+          this.onSignIn();
         }
         else
           Swal.fire({
@@ -74,7 +76,7 @@ export class SigninComponent implements OnInit {
           if (response.isSignIn) {
             // this.storageService.setItem("username", this.signInForm.value.username);
             this.storageService.setItem('uid', response.uid.toString());
-            this.router.navigate(['/home'])
+            this.onSignIn();
           }
           if (response.passwordError) {
             Swal.fire("Wrong username or password",'','warning');
@@ -85,6 +87,21 @@ export class SigninComponent implements OnInit {
         }
       })
     }
+  }
+
+  onSignIn() {
+    const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
+    const recent_posts: number[] = this.storageService.getItem("recent_posts") == "" ? [] : JSON.parse("[" + this.storageService.getItem("recent_posts") + "]");
+    for(let post of recent_posts) {
+      this.recentVisitService.setRecentVisit("/set-recent-visit-post", uid, post).subscribe();
+    }
+    this.storageService.removeItem("recent_posts");
+    const recent_communities: number[] = this.storageService.getItem("recent_communities") == "" ? [] : JSON.parse("[" + this.storageService.getItem("recent_communities") + "]");
+    for(let community of recent_communities) {
+      this.recentVisitService.setRecentVisit("/set-recent-visit-community", uid, community).subscribe();
+    }
+    this.storageService.removeItem("recent_communities");
+    window.location.href = "/home";
   }
 }
 

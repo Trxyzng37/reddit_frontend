@@ -63,9 +63,19 @@ export class PostLinkListComponent {
       if(a!=null) {
         this.community_id = Number.parseInt(a[1]);
         this.getCommunityPost("hot");
-        this.recentVisitService.setRecentVisit("/set-recent-visit-community", uid, this.community_id).subscribe({
-          next: (response: DefaultResponse) => {},
-        })
+        if(uid != 0) {
+          this.recentVisitService.setRecentVisit("/set-recent-visit-community", uid, this.community_id).subscribe({
+            next: (response: DefaultResponse) => {}
+          })
+        }
+        else {
+          let recent_communities_array: number[] = this.storageService.getItem("recent_communities") == "" ? [] : JSON.parse("[" + this.storageService.getItem("recent_communities") + "]");
+          recent_communities_array = recent_communities_array.filter(
+            (id) => {return id != this.community_id;}
+          )
+          let t = recent_communities_array.unshift(this.community_id);
+          this.storageService.setItem("recent_communities", recent_communities_array.toString());
+        }
       }
     }
     if(this.isPopularPage) {
