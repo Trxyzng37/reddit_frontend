@@ -77,9 +77,20 @@ export class ViewDetailPostComponent {
       }
      })
      if(!this.isDeleted) {
-      this.recentVisitPostService.setRecentVisit("/set-recent-visit-post", uid, this.postId).subscribe({
-        next: (response: DefaultResponse) => {}
-       })
+      const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
+      if(uid != 0) {
+        this.recentVisitPostService.setRecentVisit("/set-recent-visit-post", uid, this.postId).subscribe({
+          next: (response: DefaultResponse) => {}
+         })
+      }
+      else {
+        let recent_post_array: number[] = this.storageService.getItem("recent_posts") == "" ? [] : JSON.parse("[" + this.storageService.getItem("recent_posts") + "]");
+        recent_post_array = recent_post_array.filter(
+          (id) => {return id != this.postId;}
+        )
+        let t = recent_post_array.unshift(this.postId);
+        this.storageService.setItem("recent_posts", recent_post_array.toString());
+      }
      }
   }
 
