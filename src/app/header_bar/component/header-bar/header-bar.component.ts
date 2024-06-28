@@ -172,7 +172,8 @@ export class HeaderBarComponent {
   }
 
   isOpen = false;
-  opeNavigation() {
+  opeNavigation(event: any) {
+    event.stopPropagation();
     this.isOpen = !this.isOpen;
     this.openNavigationEvent.emit({
       data: this.isOpen
@@ -208,5 +209,12 @@ export class HeaderBarComponent {
     this.isProfileMenuOpen = false;
     this.voteImgService.selectDownVoteImg();
     this.voteImgService.selectUpVoteImg();
+  }
+
+  goToMainPage() {
+    if(this.isSignIn) 
+      window.location.href = "/home";
+    else 
+    window.location.href = "/popular";
   }
 }

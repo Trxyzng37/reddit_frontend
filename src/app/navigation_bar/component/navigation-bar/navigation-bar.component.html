@@ -28,7 +28,7 @@
             <span class="pi btn_icon" [ngClass]="favorite_status === 'up' ? 'pi-chevron-down':'pi-chevron-up'"></span>
         </button>
         <nav [ngStyle]="{'display': favorite_status === 'up' ? 'none':'block'}">
-            <button style="margin-bottom: 10px;" type="button" (click)="showCreateCommunityForm()"><i class="pi pi-plus"></i><pre>Create a community</pre></button>
+            <button type="button" [ngStyle]="{'margin-bottom': favoriteCommunities.length > 0 ? '0' : '10px'}" (click)="showCreateCommunityForm()"><i class="pi pi-plus"></i><pre>Create a community</pre></button>
         </nav>
         <div [ngStyle]="{'display': favorite_status === 'up' ? 'none':'block'}">
             <a *ngFor="let favorite_community of favoriteCommunities" href="r/{{favorite_community.id}}"><img id="img_community_icon" src="{{favorite_community.avatar}}" alt=""/><pre>r/{{favorite_community.name}}</pre></a>
