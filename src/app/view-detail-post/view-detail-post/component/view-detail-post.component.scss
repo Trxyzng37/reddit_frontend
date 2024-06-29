@@ -80,3 +80,21 @@ app-comment {
     height: auto;
     text-align: center;
 }
+
+#not_allow_block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top: 150px;
+    text-align: center;
+}
+
+#not_allow_block > button {
+    padding: 10px 20px;
+    border-radius: 20px;
+    background-color: var(--neutral);
+    box-shadow: var(--box_shadow);
+    margin-top: 20px;
+}

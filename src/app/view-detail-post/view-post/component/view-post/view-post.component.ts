@@ -113,8 +113,8 @@ import { CheckRefreshTokenService } from 'src/app/shared/services/check-refresh-
         this.communityService.getCommunityInfoById(this.post.community_id.toString()).subscribe({
           next: (response: Communities) => {
             this.communityInfo = response;
-            this.isCommunityOwner = uid == (this.communityInfo.uid != null ? this.communityInfo.uid : 0);
-            this.isAllow = this.post.allow == 0 ? true : false;
+            this.isCommunityOwner = uid == (this.communityInfo.uid != 0 ? this.communityInfo.uid : 0);
+            this.isAllow = this.post.allow == 1 ? true : false;
           }
         })
       }

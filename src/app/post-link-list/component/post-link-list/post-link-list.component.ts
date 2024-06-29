@@ -13,6 +13,7 @@ import { UserProfile } from 'src/app/shared/pojo/pojo/user-profile';
 import Swal from 'sweetalert2';
 import { SavePostService } from 'src/app/shared/services/save-post/save-post.service';
 import { DarkModeService } from 'src/app/shared/services/dark-mode/dark-mode.service';
+import { CheckRefreshTokenService } from 'src/app/shared/services/check-refresh-token/check-refresh-token.service';
 @Component({
   selector: 'app-post-link-list',
   templateUrl: './post-link-list.component.html',
@@ -28,7 +29,8 @@ export class PostLinkListComponent {
     private recentVisitService: RecentVisitService,
     private savePostService: SavePostService,
     private searchUserProfileService: SearchUserProfileService,
-    private darkmodeSerive: DarkModeService
+    private darkmodeSerive: DarkModeService,
+    private checkRefreshToken: CheckRefreshTokenService
   ) {}
 
   @Input() searchOption: string = "posts";
@@ -47,6 +49,18 @@ export class PostLinkListComponent {
   public joinCommunityEventCount: number = 0;
 
   ngOnInit() {
+    this.checkRefreshToken.checkRefreshToken().subscribe({
+      next: (response: any) => {
+
+      },
+      error: (e: HttpErrorResponse) => {
+        const uid_exist: boolean = this.storageService.getItem("uid") == "" ? false : true;
+        if(uid_exist) {
+          this.storageService.removeItem("uid");
+          window.location.reload();
+        }
+      }
+    })
     this.darkmodeSerive.useDarkMode();
     const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
     this.isCommunityPage = window.location.href.includes("/r/");

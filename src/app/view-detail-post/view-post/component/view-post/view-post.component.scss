@@ -296,7 +296,6 @@ app-editor-view {
     background-color: rgba(0, 0, 0, 0.4);
 }
 
-
 button {
     background-color: var(--primary_background_color);
 }
@@ -307,4 +306,8 @@ app-editor-view {
 
 app-editor-view > * {
     height: auto;
+}
+
+#comment_count, button > i {
+    color: var(--secondary_color) !important;
 }
