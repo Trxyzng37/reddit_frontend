@@ -1,5 +1,5 @@
 
-<div id="post_block"           
+<div id="post_block" *ngIf="isAllow || isAuthor || isCommunityOwner || isDeleted"          
 >
     <nav id="community_bar">
         <div id="community_block">
@@ -15,9 +15,9 @@
             <a id="username" href="/user/{{username}}">{{username}}</a>
         </div>
         <div id="option_block">
-            <button class="btn" id="btn_join" style="background-color: var(--allow);" *ngIf="isCommunityOwner && isAllow && !isDeleted" (click)="allowPost($event)">Allow</button>
-            <button class="btn" id="btn_join" style="background-color: var(--delete);" *ngIf="isCommunityOwner && !isDeleted" (click)="notAllowPost($event)">Delete</button>
-            <button id="btn_option" type="button" (click)="openOptionMenu($event)"><i class="pi pi-ellipsis-h"></i></button>
+            <button class="btn" id="btn_join" type="button" style="background-color: var(--allow);" *ngIf="isCommunityOwner && !isAllow && !isDeleted" (click)="allowPost($event)">Allow</button>
+            <button class="btn" id="btn_join" type="button" style="background-color: var(--delete);" *ngIf="isCommunityOwner && !isDeleted" (click)="notAllowPost($event)">Delete</button>
+            <button id="btn_option" type="button" title="Options" (click)="openOptionMenu($event)"><i class="pi pi-ellipsis-h"></i></button>
         </div>
         <div id="dropdown_option_block" [ngStyle]="{'display': isOptionMenuOpen ? 'block':'none'}">
             <button id="btn_edit" *ngIf="isAuthor" (click)="editPost($event)"><i class="pi pi-pencil"></i><p>Edit</p></button>

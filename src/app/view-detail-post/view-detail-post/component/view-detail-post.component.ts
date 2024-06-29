@@ -45,6 +45,8 @@ export class ViewDetailPostComponent {
   public isDeleted: boolean = false;
   public width: string[] = [];
   public isCommunityOwner: boolean = false;
+  public isAuthor: boolean = false;
+  public isAllow: boolean = false;
 
   ngOnInit() {
     this.darkmodeSerive.useDarkMode();
@@ -53,6 +55,8 @@ export class ViewDetailPostComponent {
      this.getPostService.getPostByPostId(this.postId).subscribe({
       next: (response: GetPostResponse) => {
         this.post = response;
+        this.isAuthor = uid == this.post.uid;
+        this.isAllow = this.post.allow == 1 ? true : false;
         this.isDeleted = this.post.deleted == 1 ? true : false;
         this.communityService.getCommunityInfoById(this.post.community_id.toString()).subscribe({
           next: (response: Communities) => {
@@ -76,7 +80,7 @@ export class ViewDetailPostComponent {
         console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
       }
      })
-     if(!this.isDeleted) {
+     if(!this.isDeleted && this.isAllow) {
       const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
       if(uid != 0) {
         this.recentVisitPostService.setRecentVisit("/set-recent-visit-post", uid, this.postId).subscribe({

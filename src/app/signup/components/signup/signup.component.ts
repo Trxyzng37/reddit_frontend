@@ -111,7 +111,10 @@ export class SignupComponent implements OnInit {
           }
           else {
             if (response.emailError == 1) {
-              Swal.fire("Email already exist",'','warning')
+              Swal.fire({
+                icon: "warning",
+                title: "An account with this email has already exist",
+              })
             }
             if (response.usernameError == 1) {
               Swal.fire("Username already exist",'','warning')
