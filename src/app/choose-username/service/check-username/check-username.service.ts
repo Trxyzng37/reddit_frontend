@@ -29,7 +29,7 @@ export class CheckUsernameService {
   }
 
   selectUsername(username: string): Observable<DefaultResponse> {
-    const email = this.storageService.getItem("signup_email");
+    const email = this.storageService.getItem("signup_google_email");
     const request = new SelectUsernameRequest(email, username);
     const body: string = JSON.stringify(request);
     let header: HttpHeaders = new HttpHeaders();

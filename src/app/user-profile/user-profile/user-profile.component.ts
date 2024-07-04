@@ -7,6 +7,7 @@ import { Comment } from 'src/app/view-detail-post/view-detail-post/pojo/comment'
 import { HttpErrorResponse } from '@angular/common/http';
 import { StorageService } from 'src/app/shared/storage/storage.service';
 import { DarkModeService } from 'src/app/shared/services/dark-mode/dark-mode.service';
+import { CheckRefreshTokenService } from 'src/app/shared/services/check-refresh-token/check-refresh-token.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -19,7 +20,8 @@ export class UserProfileComponent {
     private storageService: StorageService,
     private getCommentService: GetCommentsService,
     private activeRoute: ActivatedRoute,
-    private darkmodeSerive: DarkModeService
+    private darkmodeSerive: DarkModeService,
+    private checkRefreshTokenService: CheckRefreshTokenService
   ) {}
 
   public userInfo: UserProfile = new UserProfile(0,'','','',0,0,'');
@@ -32,6 +34,7 @@ export class UserProfileComponent {
 
   ngOnInit() {
     this.darkmodeSerive.useDarkMode();
+    this.checkRefreshTokenService.runCheckRefreshTokenWithoutNotification();
     const username = this.activeRoute.snapshot.params['username'];
     const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
     this.searchUserProfileService.getUserProfileByName("/get-user-info-by-username", username).subscribe({

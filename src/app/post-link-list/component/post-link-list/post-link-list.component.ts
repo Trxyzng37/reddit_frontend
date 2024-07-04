@@ -49,18 +49,19 @@ export class PostLinkListComponent {
   public joinCommunityEventCount: number = 0;
 
   ngOnInit() {
-    this.checkRefreshToken.checkRefreshToken().subscribe({
-      next: (response: any) => {
+    // this.checkRefreshToken.checkRefreshToken().subscribe({
+    //   next: (response: any) => {
 
-      },
-      error: (e: HttpErrorResponse) => {
-        const uid_exist: boolean = this.storageService.getItem("uid") == "" ? false : true;
-        if(uid_exist) {
-          this.storageService.removeItem("uid");
-          window.location.reload();
-        }
-      }
-    })
+    //   },
+    //   error: (e: HttpErrorResponse) => {
+    //     const uid_exist: boolean = this.storageService.getItem("uid") == "" ? false : true;
+    //     if(uid_exist) {
+    //       this.storageService.removeItem("uid");
+    //       window.location.reload();
+    //     }
+    //   }
+    // })
+    this.checkRefreshToken.runCheckRefreshTokenWithoutNotification();
     this.darkmodeSerive.useDarkMode();
     const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
     this.isCommunityPage = window.location.href.includes("/r/");

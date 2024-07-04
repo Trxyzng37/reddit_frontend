@@ -13,8 +13,8 @@ export class ChooseUsernameGuard {
   ) {}
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    const uid: number = this.storageService.getItem("signup_google_email") == "" ? 0 : parseInt(this.storageService.getItem("signup_google_email"));
-    if(uid==1) {
+    const uid: string = this.storageService.getItem("signup_google_email");
+    if(uid.length >= 3) {
       return true;
     }
     else {

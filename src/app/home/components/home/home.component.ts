@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { AccessTokenService } from '../../../shared/services/access-token/access-token.service';
 import { StorageService } from 'src/app/shared/storage/storage.service';
+import { CheckRefreshTokenService } from 'src/app/shared/services/check-refresh-token/check-refresh-token.service';
 
 @Component({
   selector: 'app-home',
@@ -14,15 +15,14 @@ export class HomeComponent implements OnInit {
   public favorite_status: string = 'down';
   public isCreateCommunityFormShow: boolean = false;
   public isNavigationOpen: boolean = true;
-  public isUser: boolean = false;
 
   constructor ( 
-    private storageService: StorageService
+    private storageService: StorageService,
+    private checkRefreshTokenService: CheckRefreshTokenService
   ) {}
 
   ngOnInit(): void {
-    const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
-    this.isUser = uid != 0;
+    this.checkRefreshTokenService.runCheckRefreshTokenWithoutNotification();
     if(window.innerWidth > 1200) {
       this.isNavigationOpen = true;
     }
