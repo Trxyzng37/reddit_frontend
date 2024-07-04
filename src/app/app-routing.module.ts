@@ -29,9 +29,9 @@ import { ChangePasswordGuard } from './shared/guard/change-password.guard';
 import { ChangePasswordEmailGuard } from './shared/guard/change-password-email.guard';
 
 const routes: Routes = [
+  {path: '', redirectTo: 'popular', pathMatch: 'full'},
   { path: 'goole-authentication-callback', component: SigninComponent},
   { path: 'signin', component: SigninComponent, canActivate: mapToCanActivate([SignInGuard])},
-  {path: '', redirectTo: 'popular', pathMatch: 'full'},
   { path: 'signup', title: 'sign-up', component: SignupComponent, canActivate: mapToCanActivate([SignUpGuard])},
   { path: 'check-sign-up-passcode', title: 'check-sign-up-passcode', component: ConfirmEmailComponent, canActivate: mapToCanActivate([ConfirmEmailGuard])},
   { path: 'choose-username', component: ChooseUsernameComponent, canActivate: mapToCanActivate([ChooseUsernameGuard])},

@@ -17,6 +17,7 @@ import { DefaultResponse } from 'src/app/shared/pojo/default-response';
 import { CommunityService } from 'src/app/shared/services/search-communites/community.service';
 import { Communities } from 'src/app/shared/pojo/pojo/communities';
 import { DarkModeService } from 'src/app/shared/services/dark-mode/dark-mode.service';
+import { CheckRefreshTokenService } from 'src/app/shared/services/check-refresh-token/check-refresh-token.service';
 
 @Component({
   selector: 'app-view-detail-post',
@@ -34,7 +35,8 @@ export class ViewDetailPostComponent {
     private storageService: StorageService,
     private recentVisitPostService: RecentVisitService,
     private communityService: CommunityService,
-    private darkmodeSerive: DarkModeService
+    private darkmodeSerive: DarkModeService,
+    private checkRefreshTokenService: CheckRefreshTokenService
   ) {}
 
   public postId: number = 0;
@@ -49,7 +51,8 @@ export class ViewDetailPostComponent {
   public isAllow: boolean = false;
 
   ngOnInit() {
-    this.darkmodeSerive.useDarkMode();
+     this.darkmodeSerive.useDarkMode();
+     this.checkRefreshTokenService.runCheckRefreshTokenWithoutNotification();
      this.postId = this.route.snapshot.params['post_id'];
      const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
      this.getPostService.getPostByPostId(this.postId).subscribe({
@@ -63,6 +66,22 @@ export class ViewDetailPostComponent {
             this.isCommunityOwner = uid === response.uid;
           }
         })
+        if(!this.isDeleted && this.isAllow) {
+          const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
+          if(uid != 0) {
+            this.recentVisitPostService.setRecentVisit("/set-recent-visit-post", uid, this.postId).subscribe({
+              next: (response: DefaultResponse) => {}
+             })
+          }
+          else {
+            let recent_post_array: number[] = this.storageService.getItem("recent_posts") == "" ? [] : JSON.parse("[" + this.storageService.getItem("recent_posts") + "]");
+            recent_post_array = recent_post_array.filter(
+              (id) => {return id != this.postId;}
+            )
+            let t = recent_post_array.unshift(this.postId);
+            this.storageService.setItem("recent_posts", recent_post_array.toString());
+          }
+        }
       },
       error: (e: HttpErrorResponse) => {
         console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
@@ -82,6 +101,7 @@ export class ViewDetailPostComponent {
      })
      if(!this.isDeleted && this.isAllow) {
       const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
+      alert(uid)
       if(uid != 0) {
         this.recentVisitPostService.setRecentVisit("/set-recent-visit-post", uid, this.postId).subscribe({
           next: (response: DefaultResponse) => {}

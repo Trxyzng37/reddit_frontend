@@ -35,7 +35,22 @@ export class CheckRefreshTokenService {
           showConfirmButton: true,
           confirmButtonText: "OK",
           footer: '<a href="signin" style="color:red;font-size: 18px"><b>Click here to go to sign-in page<b/></a>'
+        }).then((result) => {
+          if(result.isDismissed) {
+            window.location.reload();
+          }
         })
+      }
+    })
+  }
+
+  public runCheckRefreshTokenWithoutNotification() {
+    this.checkRefreshToken().subscribe({
+      next: (response: any) => {
+      },
+      error: (e: HttpErrorResponse) => {
+        this.storageService.removeItem("uid");
+        this.storageService.removeItem("username");
       }
     })
   }

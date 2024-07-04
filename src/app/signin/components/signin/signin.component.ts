@@ -11,6 +11,7 @@ import { UsernamePasswordSignInResponse } from '../../pojo/username-password-sig
 import { StorageService } from 'src/app/shared/storage/storage.service';
 import Swal from 'sweetalert2';
 import { RecentVisitService } from 'src/app/shared/services/recent-visit/recent-visit.service';
+import { DarkModeService } from 'src/app/shared/services/dark-mode/dark-mode.service';
 
 @Component({
   selector: 'app-signin',
@@ -24,7 +25,8 @@ export class SigninComponent implements OnInit {
     private serverUrlService: ServerUrlService,
     private router: Router,
     private storageService: StorageService,
-    private recentVisitService: RecentVisitService
+    private recentVisitService: RecentVisitService,
+    private darkmodeService: DarkModeService
   ) {}
 
   private serverUrl: string = this.serverUrlService.getUrl();
@@ -91,6 +93,7 @@ export class SigninComponent implements OnInit {
 
   onSignIn() {
     const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
+    this.darkmodeService.useDarkMode();
     const recent_posts: number[] = this.storageService.getItem("recent_posts") == "" ? [] : JSON.parse("[" + this.storageService.getItem("recent_posts") + "]");
     for(let post of recent_posts) {
       this.recentVisitService.setRecentVisit("/set-recent-visit-post", uid, post).subscribe();

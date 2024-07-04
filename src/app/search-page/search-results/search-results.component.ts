@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { GetPostResponse } from 'src/app/post-link-list/pojo/get-post-response';
 import { Communities } from 'src/app/shared/pojo/pojo/communities';
 import { CommunityService } from 'src/app/shared/services/search-communites/community.service';
+import { CheckRefreshTokenService } from 'src/app/shared/services/check-refresh-token/check-refresh-token.service';
 
 @Component({
   selector: 'app-search-results',
@@ -15,7 +16,8 @@ export class SearchResultsComponent {
 
   public constructor(
     private getPostService: GetPostsService,
-    private activeRoute: ActivatedRoute
+    private activeRoute: ActivatedRoute,
+    private checkRefreshTokenService: CheckRefreshTokenService
   ) {}
 
   public search_text: string = "";
@@ -27,6 +29,7 @@ export class SearchResultsComponent {
   ngOnInit() {
     this.search_text = this.activeRoute.snapshot.params['text'];
     this.searchPosts("new");
+    this.checkRefreshTokenService.runCheckRefreshTokenWithoutNotification();
   }
 
   showSortOption() {
