@@ -177,7 +177,8 @@ export class PostLinkComponent {
       this.showCount++;
       if(this.showCount == 1) {
         const uid: number = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
-        this.showPostService.setShowPost(uid, this.post_id, 1).subscribe({})
+        if(uid != 0)
+          this.showPostService.setShowPost(uid, this.post_id, 1).subscribe({})
       }
 
       // console.log("count: "+this.count)

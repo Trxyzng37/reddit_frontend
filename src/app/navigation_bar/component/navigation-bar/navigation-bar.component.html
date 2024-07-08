@@ -22,7 +22,7 @@
             <a *ngFor="let recent_community of recentVisitCommunities" href="r/{{recent_community.id}}"><img id="img_community_icon" src="{{recent_community.avatar}}" alt=""/><pre>r/{{recent_community.name}}</pre></a>
         </div>
     </nav>
-    <nav> 
+    <nav *ngIf="isUser"> 
         <button class="btn_change_status" type="button" (click)="change_favorite_status()">
             <span>Communities</span>
             <span class="pi btn_icon" [ngClass]="favorite_status === 'up' ? 'pi-chevron-down':'pi-chevron-up'"></span>

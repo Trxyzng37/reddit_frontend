@@ -20,6 +20,7 @@ export class NavigationBarComponent {
   ) {}
 
   public isOpen: boolean = true;
+  public isUser: boolean = false;
   public recent_status: string = 'down';
   public favorite_status: string = 'down';
   public moderation_status:boolean = false;
@@ -33,6 +34,7 @@ export class NavigationBarComponent {
   ngOnInit() {
     this.darkmodeSerive.useDarkMode();
     const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
+    this.isUser = uid != 0;
     this.communityService.getSubscribedCommunitiesByUid(uid).subscribe({
       next: (response: Communities[]) => {
         this.favoriteCommunities = response;
