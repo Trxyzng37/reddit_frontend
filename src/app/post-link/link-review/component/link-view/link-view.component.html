@@ -1,10 +1,10 @@
 
 
-<div id="video_container" [ngStyle]="{'display': isYoutubeLink ? 'block' : 'none'}">
+<!-- <div id="video_container" *ngIf="isYoutubeLink">
     <h3>{{title}}</h3>
     <iframe [src]="sanitizer.bypassSecurityTrustResourceUrl(data.link)" allowfullscreen>
     </iframe>
-</div>
+</div> -->
 
 <div id="link_container" [ngStyle]="{'display': !isYoutubeLink ? 'flex' : 'none'}">
     <div [ngStyle]="{'width': data.image.length == 0 ? '100%':'calc(100% - 150px)'}">

@@ -26,15 +26,15 @@ export class LinkViewComponent {
   ngOnInit() {
     this.data = JSON.parse(this.content);
     // alert(this.data.link)
-    if (this.data?.link.match(this.regex)) {
-      this.isYoutubeLink = true;
-      const videoId = this.data.link.match(this.regex)
-      this.data.link = `https://www.youtube.com/embed/${videoId![1]}`;
-    }
-    else {
+    // if (this.data?.link.match(this.regex)) {
+    //   this.isYoutubeLink = true;
+    //   const videoId = this.data.link.match(this.regex)
+    //   this.data.link = `https://www.youtube.com/embed/${videoId![1]}`;
+    // }
+    // else {
       // if(this.data.image == "")
       //   this.data.image = "../../../../../assets/icon/logo.png";
-    }
+    // }
   }
 
   preventClick(event: Event) {
