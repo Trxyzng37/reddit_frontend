@@ -210,6 +210,13 @@ export class PostLinkListComponent {
     this.getPostService.getPostInCommunityNotAllow("/get-control-posts", this.community_id).subscribe({
       next: (response: GetPostResponse[]) => {
         this.post_result = response;
+        // let index = 0;
+        // setInterval(() => {
+        //   if(index < response.length) {
+        //     this.post_result.push(response[index]);
+        //     index++;
+        //   }
+        // }, 300);
       },
       error: (e: HttpErrorResponse) => {
         console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
