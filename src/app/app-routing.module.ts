@@ -46,7 +46,7 @@ const routes: Routes = [
       children: [
         {path: 'home', title: 'home', component: PostLinkListComponent, canActivate: mapToCanActivate([RefreshTokenGuard])},
         {path: 'popular', title: 'popular', component: PostLinkListComponent},
-        {path: 'r/:community_id', title: 'trxyzng', component: PostLinkListComponent},
+        {path: 'r/:community_id', title: 'Reddit', component: PostLinkListComponent},
         {path: 'edit-post/:post_id', component: EditPostComponent, canActivate: mapToCanActivate([RefreshTokenGuard])},
         {path: 'post/:post_id', title: 'view-post', component: ViewDetailPostComponent},
         {path: 'control-posts/:community_id', component: PostLinkListComponent, canActivate: mapToCanActivate([RefreshTokenGuard])},
