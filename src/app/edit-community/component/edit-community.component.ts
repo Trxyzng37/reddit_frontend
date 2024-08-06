@@ -39,6 +39,7 @@ export class EditCommunityComponent {
   public community_id: number = 0;
   public scope: number = 0;
   public isOwner: boolean = true;
+  public isLoad: boolean = false;
 
   ngOnInit() {
     const uid = this.storageService.getItem("uid") === "" ? 0 :  Number.parseInt(this.storageService.getItem("uid"));
@@ -68,7 +69,7 @@ export class EditCommunityComponent {
 
   AllowSubmit() {
     this.allowSubmit = this.description.length > 0 && 
-                       this.avatar_url.length != 0 && 
+                       this.avatar_url.length != 0 
                        this.banner_url.length != 0;
   }
 
@@ -137,16 +138,19 @@ export class EditCommunityComponent {
   }
 
   submit() {
+    this.isLoad = true;
     const uid = this.storageService.getItem("uid") === "" ? 0 :  Number.parseInt(this.storageService.getItem("uid"));
     this.editCommunityService.editCommunity(this.community_id, uid, this.description, this.avatar_url, this.banner_url, this.scope).subscribe({
       next: (response: EditCommunityResponse) => {
         this.isNameTaken = false;
+        this.isLoad= false;
         Swal.fire('Edit community successfully', '', 'success').then((result) => {
           if (result.isConfirmed)
-            this.route.navigate(["/r/"+this.community_id]);
+            window.location.href = "/r/"+this.community_id;
         })
       },
       error: (e: HttpErrorResponse) => {
+        this.isLoad= false;
         if(e.error.error_code == 1) {
           this.isNameTaken = true;
         }
