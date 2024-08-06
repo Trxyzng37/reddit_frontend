@@ -60,6 +60,7 @@
     border-radius: 20px;
     font-size: 13px;
     background-color: var(--primary_background_color);
+    border: 1px solid var(--secondary_color) !important;
 }
 
 #edit_block > button {

@@ -29,7 +29,7 @@ export class UserInfoComponent {
 
   ngOnInit() {
     const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
-    const found = window.location.href.match('/user/([A-Za-z0-9]+)')
+    const found = window.location.href.match('/setting/([A-Za-z0-9]+)')
     let username = "";
     if(found != null) {
       username = found[1];

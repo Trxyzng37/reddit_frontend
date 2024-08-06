@@ -25,6 +25,7 @@ export class EditUserInfoComponent {
   public isUser: boolean = false;
   public characterCount: number = 0;
   public allowSubmit: boolean = false;
+  public isLoad: boolean = false;
 
   ngOnInit() {
     this.darkmodeSerive.useDarkMode();
@@ -38,6 +39,9 @@ export class EditUserInfoComponent {
       next: (response: UserProfile) => {
         this.userInfo = response;
         this.isUser = uid === this.userInfo.uid;
+        if(!this.isUser) {
+          window.location.href = "/error";
+        }
         this.characterCount = this.userInfo.description.length;
       }
     })
@@ -80,8 +84,10 @@ export class EditUserInfoComponent {
 
   submit() {
     const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
+    this.isLoad = true;
     this.editUserInfoService.updateUserInfoByUid(uid, this.userInfo.description, this.userInfo.avatar).subscribe({
       next: (response: DefaultResponse) => {
+        this.isLoad = false;
         Swal.fire({
           title: "Edit info successfully",
           icon: 'success'
