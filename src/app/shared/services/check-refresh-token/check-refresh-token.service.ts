@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { StorageService } from '../../storage/storage.service';
+import { RemoveRefreshTokenService } from '../remove-refresh-token/remove-refresh-token.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ export class CheckRefreshTokenService {
 
   constructor(
     private getService: GetService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private removeRefreshTokenService: RemoveRefreshTokenService
   ) { }
 
   private checkRefreshTokenEndpoint: string = "/check-refresh-token";
@@ -29,6 +31,7 @@ export class CheckRefreshTokenService {
       error: (e: HttpErrorResponse) => {
         this.storageService.removeItem("uid");
         this.storageService.removeItem("username");
+        this.removeRefreshTokenService.removeRefreshToken().subscribe();
         Swal.fire({
           title: "You need to sign-in to do this action",
           icon: "error",
@@ -51,6 +54,7 @@ export class CheckRefreshTokenService {
       error: (e: HttpErrorResponse) => {
         this.storageService.removeItem("uid");
         this.storageService.removeItem("username");
+        this.removeRefreshTokenService.removeRefreshToken().subscribe();
       }
     })
   }

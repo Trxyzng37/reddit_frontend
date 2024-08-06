@@ -33,7 +33,6 @@ export class RefreshTokenGuard {
             this.removeRefreshTokenService.removeRefreshToken().subscribe();
             Swal.fire({
                 title: "Authentication fail",
-                text: "Please sign-in again",
                 icon: "error",
                 showConfirmButton: true,
                 confirmButtonText: "Go to sign-in page"
