@@ -30,7 +30,7 @@
         </div>
     </div>
 
-    <div id="signin_signup_block" [ngStyle]="{'display': isSignIn === true ? 'none':'flex'}">
+    <div id="signin_signup_block" *ngIf="!isSignIn" [ngStyle]="{'display': isSignIn === true ? 'none':'flex'}">
         <a href="/signin" title="login">login</a>
         <a href="/signup" title="register">register</a>
     </div>

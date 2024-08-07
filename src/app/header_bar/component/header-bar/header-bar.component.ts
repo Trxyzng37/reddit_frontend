@@ -86,36 +86,42 @@ export class HeaderBarComponent {
     console.log(this.storageService.getItem("isSignIn"))
   }
 
+  public searchTimeout: any;
   onChange(value: string) {
-    if (value !== " " && value !== "") {
-      this.searchCommunitiesService.searchCommunities(value).subscribe({
-        next: (response: Communities[]) => {
-          console.log(response)
-          this.communities_result = response.slice(0,4);
-          const search = <HTMLInputElement>document.getElementById("search_box");
-          this.isSearch = search.value.length > 0;
-        },
-        error: (e: HttpErrorResponse) => {
-          console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
-        }
-      })
-      this.searchUserProfileService.searchUserProfile(value).subscribe({
-        next: (response: UserProfile[]) => {
-          console.log(response)
-          this.user_profile_result = response.slice(0,4);
-          const search = <HTMLInputElement>document.getElementById("search_box");
-          this.isSearch = search.value.length > 0;
-        },
-        error: (e: HttpErrorResponse) => {
-          console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
-        }
-      })
+    console.log(value.replace(" ",""));
+    this.isSearch = value.length > 0;
+    if(value.replace(" ","") != "") {
+      if(this.searchTimeout != undefined)
+        clearTimeout(this.searchTimeout);
+      this.searchTimeout = setTimeout(() => {
+        this.searchCommunitiesService.searchCommunities(value).subscribe({
+          next: (response: Communities[]) => {
+            this.communities_result = response.slice(0,4);
+            // const search = <HTMLInputElement>document.getElementById("search_box");
+            // this.isSearch = search.value.length > 0;
+          },
+          error: (e: HttpErrorResponse) => {
+            console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
+          }
+        })
+        this.searchUserProfileService.searchUserProfile(value).subscribe({
+          next: (response: UserProfile[]) => {
+            console.log(response)
+            this.user_profile_result = response.slice(0,4);
+            // const search = <HTMLInputElement>document.getElementById("search_box");
+            // this.isSearch = search.value.length > 0;
+          },
+          error: (e: HttpErrorResponse) => {
+            console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
+          }
+        })
+      }, 250);
     }
     else {
       this.communities_result = [];
       this.user_profile_result = [];
-      const search = <HTMLInputElement>document.getElementById("search_box");
-      this.isSearch = search.value.length > 0;
+      // const search = <HTMLInputElement>document.getElementById("search_box");
+      // this.isSearch = search.value.length > 0;
     }
   }
 
