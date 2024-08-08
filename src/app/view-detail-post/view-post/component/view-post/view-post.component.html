@@ -5,14 +5,14 @@
         <div id="community_block">
             <back-button></back-button>
             <a id="community_link" href="r/{{post.community_id}}">
-                <img id="community_icon" src="{{communityIcon}}" alt="community_icon"/>
+                <img id="community_icon" src="{{post.community_icon}}" alt="community_icon"/>
             </a>
             <div id="link_date_block"> 
-                <a id="community_name" style="font-weight: bold;" href="r/{{post.community_id}}">r/{{communityName}}  </a>
+                <a id="community_name" style="font-weight: bold;" href="r/{{post.community_id}}">r/{{post.community_name}}  </a>
                 <i style="font-weight: bold;">·</i>
                 <span style="font-size: 13px;"> {{shownDate}}</span>
             </div>
-            <a id="username" href="/user/{{username}}">{{username}}</a>
+            <a id="username" href="/user/{{post.username}}">{{post.username}}</a>
         </div>
         <div id="option_block">
             <button class="btn" id="btn_join" type="button" style="background-color: var(--allow);" *ngIf="isCommunityOwner && !isAllow && !isDeleted" (click)="allowPost($event)">Allow</button>
@@ -27,17 +27,18 @@
     </nav>
 
     <nav id="main_content">
-        <h2 style="margin-bottom: 16px;" [ngStyle]="{'display': type=='link'?'none':'block'}">{{title}}</h2>
-        <app-editor-view *ngIf="type=='editor'"  [content]="content"></app-editor-view>
-        <app-image-view *ngIf="type=='img'" [content]="content"></app-image-view>
-        <app-link-view *ngIf="type=='link'" [title]="title" [content]="content"></app-link-view>
-        <app-video-view *ngIf="type=='video'" [content]="content"></app-video-view>
+        <h2 style="margin-bottom: 16px;" [ngStyle]="{'display': type=='link'?'none':'block'}">{{post.title}}</h2>
+        <!-- <app-editor-view *ngIf="type=='editor'"  [content]="post.content"></app-editor-view> -->
+        <div id="post_container" *ngIf="post.type=='editor'"></div>
+        <app-image-view *ngIf="post.type=='img'" [content]="post.content"></app-image-view>
+        <app-link-view *ngIf="post.type=='link'" [title]="post.title" [content]="post.content"></app-link-view>
+        <app-video-view *ngIf="post.type=='video'" [content]="post.content"></app-video-view>
     </nav>
 
     <nav id="footer">
         <div id="block_vote" class="block_vote" [ngClass]="{'upvote': voteType === 'upvote', 'downvote': voteType === 'downvote', 'normal': voteType === 'none'}" [ngStyle]="{'opacity': isDeleted ? '0.6' : '1'}">
             <button id="btn_upvote" type="button" (click)="votePost($event, 'upvote')" [ngClass]="{'upvote': voteType === 'upvote', 'downvote': voteType === 'downvote', 'normal': voteType === 'none'}" [disabled]="isDeleted"><img [attr.src]="voteType === 'upvote' ? upvote_fill : voteImgService.upvote" /></button>
-            <p id="vote_count">{{presentationService.transformNumber(vote)}}</p>
+            <p id="vote_count">{{presentationService.transformNumber(post.vote)}}</p>
             <button id="btn_downvote" type="button" (click)="votePost($event, 'downvote')" [ngClass]="{'upvote': voteType === 'upvote', 'downvote': voteType === 'downvote', 'normal': voteType === 'none'}" [disabled]="isDeleted"><img [attr.src]="voteType === 'downvote' ? downvote_fill : voteImgService.downvote" /></button>
         </div>
         <button id="btn_comment" type="button" onclick="document.getElementById('comment').scrollIntoView();" [disabled]="isDeleted">

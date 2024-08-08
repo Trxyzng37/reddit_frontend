@@ -1,20 +1,10 @@
 
 <app-post
-    [post]="post"
-    [post_id]="post.post_id"
-    [type]="post.type"
-    [communityName]="post.community_name"
-    [uid]="post.uid"
-    [username]="post.username"
-    [title]="post.title"
-    [content]="post.content"
-    [created_at]="post.created_at"
-    [vote]="post.vote"
-    [communityIcon]="post.community_icon"
     [commentCount]="commentResults.length"
 >
 </app-post>
 
+<!-- //// -->
 <div id="comment_editor_block" *ngIf="!isDeleted && (isAllow || isAuthor || isCommunityOwner)"> 
     <editor
         [init]="editorSettings"
@@ -32,7 +22,7 @@
 
 <div class="comment_container" *ngIf="!isDeleted && (isAllow || isAuthor || isCommunityOwner)">
     <div class="comment_container" *ngFor="let comment of commentResults; let i=index">
-        <app-comment id="comment"
+        <app-comment id="{{comment._id}}" class="comment"
         *ngIf="!isDeleted"
         [commentData]="comment"
         [postId]="postId"

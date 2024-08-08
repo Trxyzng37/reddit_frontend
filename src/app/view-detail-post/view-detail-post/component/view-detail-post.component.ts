@@ -36,7 +36,8 @@ export class ViewDetailPostComponent {
     private recentVisitPostService: RecentVisitService,
     private communityService: CommunityService,
     private darkmodeSerive: DarkModeService,
-    private checkRefreshTokenService: CheckRefreshTokenService
+    private checkRefreshTokenService: CheckRefreshTokenService,
+    private activeRoute: ActivatedRoute
   ) {}
 
   public postId: number = 0;
@@ -51,71 +52,64 @@ export class ViewDetailPostComponent {
   public isAllow: boolean = false;
 
   ngOnInit() {
-     this.darkmodeSerive.useDarkMode();
-     this.checkRefreshTokenService.runCheckRefreshTokenWithoutNotification();
-     this.postId = this.route.snapshot.params['post_id'];
-     const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
-     this.getPostService.getPostByPostId(this.postId).subscribe({
-      next: (response: GetPostResponse) => {
-        this.post = response;
-        this.isAuthor = uid == this.post.uid;
-        this.isAllow = this.post.allow == 1 ? true : false;
-        this.isDeleted = this.post.deleted == 1 ? true : false;
-        this.communityService.getCommunityInfoById(this.post.community_id.toString()).subscribe({
-          next: (response: Communities) => {
-            this.isCommunityOwner = uid === response.uid;
-          }
-        })
-        if(!this.isDeleted && this.isAllow) {
-          const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
-          if(uid != 0) {
-            this.recentVisitPostService.setRecentVisit("/set-recent-visit-post", uid, this.postId).subscribe({
-              next: (response: DefaultResponse) => {}
-             })
-          }
-          else {
-            let recent_post_array: number[] = this.storageService.getItem("recent_posts") == "" ? [] : JSON.parse("[" + this.storageService.getItem("recent_posts") + "]");
-            recent_post_array = recent_post_array.filter(
-              (id) => {return id != this.postId;}
-            )
-            let t = recent_post_array.unshift(this.postId);
-            this.storageService.setItem("recent_posts", recent_post_array.toString());
-          }
-        }
-      },
-      error: (e: HttpErrorResponse) => {
-        console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
-        this.isDeleted = true;
+    this.darkmodeSerive.useDarkMode();
+    this.checkRefreshTokenService.runCheckRefreshTokenWithoutNotification();
+    this.postId = this.route.snapshot.params['post_id'];
+    const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
+    const post_arr: GetPostResponse[] = this.storageService.getItem("posts") == "" ? [] : JSON.parse(this.storageService.getItem("posts"));
+    let is_post_exist: boolean = false;
+    for(let post of post_arr) {
+      if(post.post_id == Number.parseInt(this.activeRoute.snapshot.params['post_id'])) {
+        this.post = post;
+        this.getInfo(post);
+        is_post_exist = true;
       }
-     })
-     this.getCommentService.getComments(this.postId).subscribe({
-      next: (response: Comment[]) => {
-        this.commentResults = response;
-        // for(let comment of this.commentResults) {
-        //   // this.width.push("calc(100% - " + comment.level*30 + "px)");
-        // }
-      },
-      error: (e: HttpErrorResponse) => {
-        console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
-      }
-     })
-     if(!this.isDeleted && this.isAllow) {
-      const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
-      alert(uid)
-      if(uid != 0) {
-        this.recentVisitPostService.setRecentVisit("/set-recent-visit-post", uid, this.postId).subscribe({
-          next: (response: DefaultResponse) => {}
-         })
+    }
+    if(!is_post_exist) {
+      this.getPostService.getPostByPostId(this.postId).subscribe({
+        next: (response: GetPostResponse) => {
+          this.post = response;
+          this.getInfo(response);
+        },
+         error: (e: HttpErrorResponse) => {
+           console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
+           this.isDeleted = true;
+         }
+      })
+    }     
+  }
+
+  getInfo(post: GetPostResponse) {
+    const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
+    this.isAuthor = uid === post.uid;
+    this.isAllow = post.allow === 0 ? false : true;
+    this.isDeleted = post.deleted === 1 ? true : false;
+    this.communityService.getCommunityInfoById(post.community_id.toString()).subscribe({
+      next: (response: Communities) => {
+        this.isCommunityOwner = uid === response.uid;
+      }  
+    });
+    if(!this.isDeleted && this.isAllow) {
+      if(uid !== 0) {
+        this.recentVisitPostService.setRecentVisit("/set-recent-visit-post", uid, post.post_id).subscribe();
       }
       else {
         let recent_post_array: number[] = this.storageService.getItem("recent_posts") == "" ? [] : JSON.parse("[" + this.storageService.getItem("recent_posts") + "]");
         recent_post_array = recent_post_array.filter(
-          (id) => {return id != this.postId;}
+          (id) => {return id != post.post_id;}
         )
-        let t = recent_post_array.unshift(this.postId);
+        let t = recent_post_array.unshift(post.post_id);
         this.storageService.setItem("recent_posts", recent_post_array.toString());
       }
-     }
+    }
+    this.getCommentService.getComments(post.post_id).subscribe({
+      next: (response: Comment[]) => {
+        this.commentResults = response;
+      },
+      error: (e: HttpErrorResponse) => {
+        console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
+      }
+    })
   }
 
   img_count = 0;
@@ -192,7 +186,6 @@ export class ViewDetailPostComponent {
 
   onContentChanged = (event: any) =>{
     this.content = event.editor.getContent({ format: 'html' });
-    console.log(this.content)
   }
 
   cancelComment() {
@@ -207,7 +200,7 @@ export class ViewDetailPostComponent {
         focusConfirm: false,
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire('Clear comment successfully', '', 'success')
+          // Swal.fire('Clear comment successfully', '', 'success')
           this.content = "";
           tinymce.activeEditor?.setContent(this.content);
         } 

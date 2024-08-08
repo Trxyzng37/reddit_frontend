@@ -1,7 +1,6 @@
 
   import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
-  import { Router } from '@angular/router';
-  import { GalleryItem } from 'ng-gallery';
+  import { ActivatedRoute } from '@angular/router';
   import { GetPostResponse } from 'src/app/post-link-list/pojo/get-post-response';
   import { StorageService } from 'src/app/shared/storage/storage.service';
   import { HttpErrorResponse } from '@angular/common/http';
@@ -23,8 +22,12 @@
   import { SavedPostResponse } from 'src/app/shared/services/save-post/pojo/saved-post-response';
   import { DarkModeService } from 'src/app/shared/services/dark-mode/dark-mode.service';
   import { VoteImgService } from 'src/app/shared/services/vote-img/vote-img.service';
-import { CheckRefreshTokenService } from 'src/app/shared/services/check-refresh-token/check-refresh-token.service';
-  
+  import { CheckRefreshTokenService } from 'src/app/shared/services/check-refresh-token/check-refresh-token.service';
+  import { DomSanitizer } from '@angular/platform-browser';
+  import { GetPostService } from 'src/app/view-detail-post/view-detail-post/service/get-post/get-post.service';
+  import { GetCommentsService } from 'src/app/view-detail-post/view-detail-post/service/get-comments/get-comments.service';
+  import { Comment } from '../../../view-detail-post/pojo/comment';
+
   @Component({
     selector: 'app-post',
     templateUrl: './view-post.component.html',
@@ -32,40 +35,32 @@ import { CheckRefreshTokenService } from 'src/app/shared/services/check-refresh-
   })
   export class PostComponent {
     constructor (
-      private router: Router,
       private votePostServie: VotePostService,
       private storageService: StorageService,
       private dateTimeService: DateTimeService,
       private checkVotePostService: CheckVotePostService,
       private deletePostService: DeletePostService,
-      private route: Router,
+      private activeRoute: ActivatedRoute,
       private communityService: CommunityService,
       private allowPostService: AllowPostService,
       public presentationService: PresentationService,
       private savePostService: SavePostService,
       private darkmodeSerive: DarkModeService,
       public voteImgService: VoteImgService,
-      private checkRefreshToken: CheckRefreshTokenService
+      private checkRefreshToken: CheckRefreshTokenService,
+      public sanitizer: DomSanitizer,
+      private getPostService: GetPostService,
+      private getCommentService: GetCommentsService
     ) {}
-  
-    @Input() post: GetPostResponse = new GetPostResponse(0,"",0,"","",0,"","","","","",0,0,0);
-    @Input() post_id: number = 0;
-    @Input() type: string = "";
-    @Input() communityName: string = "";
-    @Input() uid: number = 0;
-    @Input() username: string = "";
-    @Input() title: string = "";
-    @Input() content: string = "";
-    @Input() created_at: string = "";
-    @Input() vote: number = 1;
-    @Input() communityIcon: string = "";
-    @Input() index: number = 0;
+
     @Input() commentCount: number = 0;
   
-    @Output() event = new EventEmitter<GetPostResponse>();
+     post: GetPostResponse = new GetPostResponse(0,"",0,"","",0,"","","","","",0,0,0);
+     post_id: number = 0;
       
     public voteType: string = 'none'; //none upvote downvote
-    public previousVote: number = this.vote;
+    public previousVoteType: string = "";
+    public previousVote: number = this.post.vote;
     public shownDate: string = "";
     public isOptionMenuOpen: boolean = false;
     public isAuthor: boolean = false;
@@ -89,41 +84,80 @@ import { CheckRefreshTokenService } from 'src/app/shared/services/check-refresh-
       this.darkmodeSerive.useDarkMode();
       this.voteImgService.selectDownVoteImg();
       this.voteImgService.selectUpVoteImg();
+      this.post_id = this.activeRoute.snapshot.params['post_id'];
       const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
-      const found = window.location.href.match('/home');
-      if(found != null) 
-        this.isHomePage = true;
-      this.shownDate = this.dateTimeService.getTimeByCompareCreatedAtAndCurrentDate(this.created_at);
-    }  
-
-    ngOnChanges() {
-      this.shownDate = this.dateTimeService.getTimeByCompareCreatedAtAndCurrentDate(this.created_at);
-      const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
-      this.isAuthor = uid == this.uid;
-      this.checkVotePostService.checkVotePost(this.post_id, uid).subscribe({
-        next: (response: CheckVotePostResponse) => {
-          this.voteType  = response.vote_type;
-        },
-        error: (e: HttpErrorResponse) => {
-          console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
+      const post_arr: GetPostResponse[] = this.storageService.getItem("posts") == "" ? [] : JSON.parse(this.storageService.getItem("posts"));
+      let is_post_exist: boolean = false;
+      for(let post of post_arr) {
+        if(post.post_id == Number.parseInt(this.activeRoute.snapshot.params['post_id'])) {
+          is_post_exist = true;
+          this.post = post;
+          this.getInfo(post);
+          this.timer();
         }
-      })
-      if(this.post.post_id != 0) {
-        this.isDeleted = this.post.deleted == 1 ? true : false;
-        this.communityService.getCommunityInfoById(this.post.community_id.toString()).subscribe({
-          next: (response: Communities) => {
-            this.communityInfo = response;
-            this.isCommunityOwner = uid == (this.communityInfo.uid != 0 ? this.communityInfo.uid : 0);
-            this.isAllow = this.post.allow == 1 ? true : false;
+      }
+      if(!is_post_exist) {
+        this.getPostService.getPostByPostId(this.post_id).subscribe({
+          next: (response: GetPostResponse) => {
+            this.post = response;
+            this.getInfo(response);
+            post_arr.push(response);
+            this.storageService.setItem("posts", JSON.stringify(post_arr));
+            this.timer();
           }
         })
       }
-      this.savePostService.getSavedPostStatusByUid(uid, this.post_id).subscribe({
-        next: (response: SavedPostResponse) => {
-          this.saved = response.saved == 1 ? true : false;
-          this.savedText = response.saved == 1 ? 'Unsave' : "Save";
+    }  
+
+    getInfo(post: GetPostResponse) {
+      const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
+      this.shownDate = this.dateTimeService.getTimeByCompareCreatedAtAndCurrentDate(post.created_at);
+      this.isAllow = post.allow == 1 ? true : false;
+      this.isDeleted = post.deleted == 0 ? false : true;
+      this.isAuthor = post.uid === uid;
+      if(uid != 0) {
+        this.communityService.getCommunityInfoById(post.community_id.toString()).subscribe({
+          next: (response: Communities) => {
+            this.communityInfo = response;
+            this.isCommunityOwner = uid == this.communityInfo.uid;
+          }
+        })
+        this.savePostService.getSavedPostStatusByUid(uid, post.post_id).subscribe({
+          next: (response: SavedPostResponse) => {
+            this.saved = response.saved == 1 ? true : false;
+            this.savedText = response.saved == 1 ? 'Unsave' : "Save";
+          }
+        })
+        this.checkVotePostService.checkVotePost(post.post_id, uid).subscribe({
+          next: (response: CheckVotePostResponse) => {
+            this.voteType  = response.vote_type;
+          },
+          error: (e: HttpErrorResponse) => {
+            console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
+          }
+        })
+      }
+      post.content = post.content.replace(/<img/g, '<img class="img" ');
+      post.content = post.content.replace(/<figure/g, '<figure class="figure" ');
+      post.content = post.content.replace(/<figcaption/g, '<figcaption class="figcaption" ');
+      post.content = post.content.replace(/<pre/g, '<pre class="pre_code" ');
+      post.content = post.content.replace(/<code/g, '<code class="code" ');
+      post.content = post.content.replace(/<ol/g, '<ol class="ol" ');
+      post.content = post.content.replace(/<ul/g, '<ul class="ul" ');
+      post.content = post.content.replace(/<a/g, '<a class="a" ');
+      post.content = post.content.replace(/<p/g, '<p class="p" ');
+      post.content = post.content.replace(/<blockquote/g, '<blockquote class="blockquote" ');
+    }
+
+    timer() {
+      setTimeout(() => {
+        const e = document.getElementById("post_container") == null ? null : document.getElementById("post_container");
+        if(e == null)
+          this.timer();
+        else {
+          e.innerHTML = this.post.content;
         }
-      })
+      }, 100);
     }
   
     preventClick(event: Event) {
@@ -136,61 +170,66 @@ import { CheckRefreshTokenService } from 'src/app/shared/services/check-refresh-
     }
 
     editPost(event: Event) {
-      this.router.navigate(["/edit-post/" + this.post_id]);
+      window.location.href = "/edit-post/" + this.post_id;
     }
   
     navigateToCommunity() {
-      this.router.navigate(["/r/" + this.communityName]);
+      window.location.href = "/r/" + this.post.community_id;
     }
   
     votePost(event: Event, type: string) {
       event.stopPropagation();
+      this.previousVoteType = this.voteType;
       if (this.voteType === 'none' && type === 'upvote') {
-        this.previousVote = this.vote;
-        this.vote += 1;
+        this.previousVote = this.post.vote;
+        this.post.vote += 1;
         this.voteType = 'upvote';
       }
       else if (this.voteType === 'none' && type === 'downvote') {
-        this.previousVote = this.vote;
-        this.vote -= 1;
+        this.previousVote = this.post.vote;
+        this.post.vote -= 1;
         this.voteType = 'downvote';
       }
       else if (this.voteType === 'upvote' && type === 'upvote') {
-        this.previousVote = this.vote;
-        this.vote -= 1;
+        this.previousVote = this.post.vote;
+        this.post.vote -= 1;
         this.voteType = 'none';
       }
       else if (this.voteType === 'upvote' && type === 'downvote') {
-        this.previousVote = this.vote;
-        this.vote -= 2;
+        this.previousVote = this.post.vote;
+        this.post.vote -= 2;
         this.voteType = 'downvote';
       }
       else if (this.voteType === 'downvote' && type === 'upvote') {
-        this.previousVote = this.vote;
-        this.vote += 2;
+        this.previousVote = this.post.vote;
+        this.post.vote += 2;
         this.voteType = 'upvote';
       }
       else if (this.voteType === 'downvote' && type === 'downvote') {
-        this.previousVote = this.vote;
-        this.vote += 1;
+        this.previousVote = this.post.vote;
+        this.post.vote += 1;
         this.voteType = 'none';
       }
-      console.log(this.post_id + ": " + this.vote);
+      console.log(this.post_id + ": " + this.post.vote);
       this.sendVotePostToServer();
     }
   
     sendVotePostToServer() {
       const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
-      this.votePostServie.votePost(this.post_id, this.vote, uid, this.voteType).subscribe({
+      this.votePostServie.votePost(this.post_id, this.post.vote, uid, this.voteType).subscribe({
         next: (response: VotePostResponse) => {
-          console.log("Vote post_id: "+response.post_id);
+          const post_arr: GetPostResponse[] = this.storageService.getItem("posts") == "" ? [] : JSON.parse(this.storageService.getItem("posts"));
+          for(let post of post_arr) {
+            if(post.post_id == Number.parseInt(this.activeRoute.snapshot.params['post_id'])) {
+              post.vote = this.post.vote;
+              this.storageService.setItem("posts", JSON.stringify(post_arr));
+            }
+          }
         },
         error: (e: HttpErrorResponse) => {
           console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
-          this.vote = this.previousVote;
-          this.voteType = 'none';
-          console.log("Error vote post");
-          console.log("vote when error: "+this.vote);
+          this.post.vote = this.previousVote;
+          this.voteType = this.previousVoteType;
         }
       })
     }
@@ -209,9 +248,15 @@ import { CheckRefreshTokenService } from 'src/app/shared/services/check-refresh-
           const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
           this.deletePostService.deletePost("/delete-post", this.post_id, uid, 'user').subscribe({
             next: (response: DeletePostResponse) => {
+              let post_arr: GetPostResponse[] = this.storageService.getItem("posts") == "" ? [] : JSON.parse(this.storageService.getItem("posts"));
+              post_arr = post_arr.filter(
+                (id) => {return id.post_id != this.post_id;}
+              )
+              this.storageService.setItem("posts", JSON.stringify(post_arr));
               Swal.fire('Delete post successfully', '', 'success').then((result) => {
-                if (result.isConfirmed)
-                  window.location.href = "r/" + this.post.community_id;
+                if (result.isConfirmed) {
+                  window.history.back();
+                }
               })
             },
             error: (e: HttpErrorResponse) => {
@@ -239,7 +284,15 @@ import { CheckRefreshTokenService } from 'src/app/shared/services/check-refresh-
     allowPost(event: Event) {
       this.allowPostService.setAllowPost(this.post_id, 1).subscribe({
         next: (response: DefaultResponse) => {
-          this.isAllow = false;
+          this.isAllow = true;
+          const post_arr: GetPostResponse[] = this.storageService.getItem("posts") == "" ? [] : JSON.parse(this.storageService.getItem("posts"));
+          for(let post of post_arr) {
+            if(post.post_id == Number.parseInt(this.activeRoute.snapshot.params['post_id'])) {
+              post.allow = 1;
+              this.storageService.setItem("posts", JSON.stringify(post_arr));
+              break;
+            }
+          }
         }
       })
     }
@@ -258,9 +311,9 @@ import { CheckRefreshTokenService } from 'src/app/shared/services/check-refresh-
           this.deletePostService.deletePost("/delete-post", this.post_id, this.post.uid, 'moderator').subscribe({
             next: (response: DeletePostResponse) => {
               this.isDeleted = true;
-              this.title = "[Deleted by moderator]"
-              this.content = "[Deleted by moderator]";
-              this.type = "editor";
+              this.post.title = "[Deleted by moderator]"
+              this.post.content = "[Deleted by moderator]";
+              this.post.type = "editor";
             },
             error: (e: HttpErrorResponse) => {
             }
