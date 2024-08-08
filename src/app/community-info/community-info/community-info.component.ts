@@ -42,18 +42,22 @@ export class CommunityInfoComponent {
 
   ngOnChanges() {
     const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
-    this.isOwner = uid == this.community_info.uid;
-    this.userInfoService.getUserInfo(this.community_info.uid).subscribe({
-      next: (response: UserProfile) => {
-        this.userInfo = response;
-      }
-    })
-    this.communityService.checkJoinCommunityStatus(uid, this.community_info.id).subscribe({
-      next: (response: JoinCommunityResponse) => {
-        this.isJoinCommunity = response.join_community == 0 ? false : true;
-        this.joinText = this.isJoinCommunity ? 'Joined' : 'Join';
-      }
-    })
+    if(this.community_info.uid !== 0) {
+      this.isOwner = uid == this.community_info.uid;
+      this.userInfoService.getUserInfo(this.community_info.uid).subscribe({
+        next: (response: UserProfile) => {
+          this.userInfo = response;
+        }
+      })
+    }
+    if(uid !== 0) {
+      this.communityService.checkJoinCommunityStatus(uid, this.community_info.id).subscribe({
+        next: (response: JoinCommunityResponse) => {
+          this.isJoinCommunity = response.join_community == 0 ? false : true;
+          this.joinText = this.isJoinCommunity ? 'Joined' : 'Join';
+        }
+      })
+    }
   }
 
   joinCommunity(event: Event) {

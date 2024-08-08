@@ -1,7 +1,7 @@
 <div class="info_block">
     <div id="join_block">
         <b id="txt_community_name">r/{{community_info.name}}</b>
-        <button id="btn_join" id="btn_join" *ngIf="!isCommunityPage && !isControlPostPage" (click)="joinCommunity($event)" [ngStyle]="{'background-color': isJoinCommunity ? 'var(--neutral)' : 'var(--join)', 'border': isJoinCommunity ? '1px solid var(--secondary_color)' : 'none'}">{{joinText}}</button>
+        <button id="btn_join" id="btn_join" *ngIf="!isCommunityPage && !isControlPostPage" (click)="joinCommunity($event)" [ngStyle]="{'background-color': isJoinCommunity ? 'var(--primary_background_color)' : 'var(--join)', 'border': isJoinCommunity ? '1px solid var(--secondary_color)' : 'none', 'color': isJoinCommunity ? 'var(--secondary_color)' : 'var(--primary_background_color)'}">{{joinText}}</button>
     </div>
     <p id="description">{{community_info.description}}</p>
     <div id="block_container" style="padding-top: 10px;">
