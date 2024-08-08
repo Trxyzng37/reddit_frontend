@@ -4,8 +4,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   selector: 'app-editor-view',
   templateUrl: './editor-view.component.html',
-  styleUrl: './editor-view.component.scss',
-  encapsulation: ViewEncapsulation.None
+  styleUrl: './editor-view.component.scss'
 })
 export class EditorViewComponent {
 
@@ -27,7 +26,7 @@ export class EditorViewComponent {
     this.content = this.content.replace(/<p/g, '<p class="p" ');
     this.content = this.content.replace(/<blockquote/g, '<blockquote class="blockquote" ');
     if(window.location.href.includes("/post/")) {
-      const container = document.getElementById("container");
+      const container = document.getElementById("post_container");
       container!.style.height = "auto";
       container!.removeAttribute("id");
     }
