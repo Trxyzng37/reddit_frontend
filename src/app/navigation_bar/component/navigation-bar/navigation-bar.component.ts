@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { JoinCommunity } from 'src/app/shared/pojo/join-community';
 import { Communities } from 'src/app/shared/pojo/pojo/communities';
 import { DarkModeService } from 'src/app/shared/services/dark-mode/dark-mode.service';
 import { RecentVisitService } from 'src/app/shared/services/recent-visit/recent-visit.service';
@@ -35,20 +36,26 @@ export class NavigationBarComponent {
     this.darkmodeSerive.useDarkMode();
     const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
     this.isUser = uid != 0;
-    this.communityService.getSubscribedCommunitiesByUid(uid).subscribe({
-      next: (response: Communities[]) => {
-        this.favoriteCommunities = response;
-      }
-    })
-    this.communityService.getCommunityInfoByUid(uid).subscribe({
-      next: (response: Communities[]) => {
-        this.moderationCommunities = response;
-      }
-    })
     if(uid != 0) {
+      this.communityService.getCommunityInfoByUid(uid).subscribe({
+        next: (response: Communities[]) => {
+          this.moderationCommunities = response;
+        }
+      })
       this.recentVisitService.getRecentVisitCommunity(uid).subscribe({
         next: (response: Communities[]) => {
           this.recentVisitCommunities = response;
+        }
+      })
+      this.storageService.removeItem("join_community");
+      this.communityService.getSubscribedCommunitiesByUid(uid).subscribe({
+        next: (response: Communities[]) => {
+          this.favoriteCommunities = response;
+          let join_community_arr: JoinCommunity[] = [];
+          for(let community of response) {
+            join_community_arr.push(new JoinCommunity(community.id, true));
+          }
+          this.storageService.setItem("join_community", JSON.stringify(join_community_arr));
         }
       })
     }
