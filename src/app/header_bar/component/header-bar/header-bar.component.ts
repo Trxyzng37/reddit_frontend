@@ -158,6 +158,7 @@ export class HeaderBarComponent {
           error: (e: HttpErrorResponse) => {
             this.storageService.removeItem("uid");
             this.storageService.removeItem("username");
+            this.storageService.removeItem("join_community");
             window.location.href = "/signin";
           }
         })
