@@ -1,20 +1,18 @@
 
-
-<!-- <div id="video_container" *ngIf="isYoutubeLink">
-    <h3>{{title}}</h3>
-    <iframe [src]="sanitizer.bypassSecurityTrustResourceUrl(data.link)" allowfullscreen>
-    </iframe>
-</div> -->
-
-<div id="link_container" [ngStyle]="{'display': !isYoutubeLink ? 'flex' : 'none'}">
-    <div [ngStyle]="{'width': data.image.length == 0 ? '100%':'calc(100% - 150px)'}">
+<div id="link_container" [ngStyle]="{'flex-direction': isViewPostPage ? 'column' : 'row'}">
+    <div *ngIf="!isViewPostPage" [ngStyle]="{'width': data.image.length == 0 ? '100%':'calc(100% - 150px)'}">
         <h3>{{title}}</h3>
         <a [ngStyle]="{'text-overflow': data.image.length == 0 ? 'string':'ellipsis', 'white-space': data.image.length == 0 ? 'normal':'nowrap', 'word-wrap': data.image.length == 0 ? 'break-word':'hidden'}"  [href]="data.link" target="_blank">{{data.link}}</a>
     </div>
-    <a id="link_img" [href]="data.link" target="_blank" (click)="preventClick($event)" *ngIf="data.image.length != 0">
+    <!-- <a id="content_link" *ngIf="isViewPostPage" [href]="data.link" target="_blank">{{data.link}}</a> -->
+    <a id="link_img" [ngStyle]="{'border-bottom-left-radius': isViewPostPage ? '0' : '10px', 'border-bottom-right-radius': isViewPostPage ? '0' : '10px'}" [ngClass]="{'post_page': isViewPostPage}" [href]="data.link" target="_blank" title="{{data.link}}" (click)="preventClick($event)" *ngIf="data.image.length != 0">
         <img [src]="data.image">
-        <div>
-            <i class="pi pi-external-link"></i>
+        <div *ngIf="!isViewPostPage">
+            <i class="pi pi-external-link" [ngStyle]="{'font-size': isViewPostPage ? '40px' : '20px'}"></i>
         </div>
     </a>
+    <div id="domain_block" (click)="openLink()" *ngIf="isViewPostPage">
+        <a id="link_domain" [href]="data.link" target="_blank">{{link_domain}}</a>
+        <button id="btn_open" (click)="openLink()">Open</button>
+    </div>
 </div>

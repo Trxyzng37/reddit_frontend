@@ -54,7 +54,7 @@ iframe, video {
 
 #link_container > a > div {
     width: 22px;
-    height: 22px;
+    aspect-ratio: 1/1;
     position: absolute;
     bottom: 10px;
     left: 10px;
@@ -82,4 +82,42 @@ iframe, video {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.post_page {
+    width: 100% !important;
+    margin-left: 0 !important;
+    border: 1px solid var(--secondary_color);
+    border-radius: none !important;
+    // border-top-left-radius: 5px;
+    // border-top-right-radius: 5px;
+}
+
+#domain_block {
+    width: 100% !important;
+    border-radius: 0px;
+    padding: 15px;
+    border: 1px solid var(--secondary_color);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#domain_block:hover {
+    cursor: pointer;
+}
+
+#link_domain {
+    color:  var(--secondary_color) !important;
+}
+
+#btn_open {
+    padding: 7px 15px;
+    border-radius: 20px;
+    border: 1px solid var(--secondary_color) !important;
+    color: var(--secondary_color) !important;
+    background-color: var(--primary_background_color) !important;
 }
