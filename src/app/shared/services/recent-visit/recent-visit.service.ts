@@ -7,6 +7,7 @@ import { DefaultResponse } from '../../pojo/default-response';
 import { GetService } from '../get/get.service';
 import { Communities } from '../../pojo/pojo/communities';
 import { GetPostResponse } from 'src/app/post-link-list/pojo/get-post-response';
+import { DetailPost } from 'src/app/post-link-list/pojo/detail-post';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +33,7 @@ export class RecentVisitService {
     return this.getService.get(endpointWithParameter, header, true);
   }
 
-  public getRecentVisitPost(uid: number): Observable<GetPostResponse[]> {
+  public getRecentVisitPost(uid: number): Observable<DetailPost[]> {
     const endpointWithParameter: string = "/get-recent-visit-post?" + "uid=" + uid;
     const header: HttpHeaders = new HttpHeaders();
     return this.getService.get(endpointWithParameter, header, true);

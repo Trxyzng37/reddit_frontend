@@ -3,11 +3,13 @@ import { Observable } from 'rxjs';
 import { DefaultResponse } from '../../pojo/default-response';
 import { GetService } from '../get/get.service';
 import { PostService } from '../post/post.service';
-import { HttpHeaders } from '@angular/common/http';
+import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { SavedPostRequest } from './pojo/saved-post-request';
 import { GetPostResponse } from 'src/app/post-link-list/pojo/get-post-response';
 import { SavedPostResponse } from './pojo/saved-post-response';
 import { CheckRefreshTokenService } from '../check-refresh-token/check-refresh-token.service';
+import { DetailPost } from 'src/app/post-link-list/pojo/detail-post';
+import { StorageService } from '../../storage/storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +19,7 @@ export class SavePostService {
   constructor(
     private getService: GetService,
     private postService: PostService,
+    private storageService: StorageService,
     private checkRefreshToken: CheckRefreshTokenService
   ) { }
 
@@ -47,5 +50,18 @@ export class SavePostService {
     const endpointWithParameter: string = this.getSavePostStatusEndpoint + "?" + parameter1 + "&" + parameter2;
     const header: HttpHeaders = new HttpHeaders();
     return this.getService.get(endpointWithParameter, header, true);
+  }
+
+  public sendSavePostToServer(post: DetailPost, save: number) {
+    const uid: number = this.storageService.getItem("uid") == "" ? 0 :  Number.parseInt(this.storageService.getItem("uid"));
+    this.savePostByUid(uid, post.post_id, save).subscribe({
+      next: (response: DefaultResponse) => {
+        post.save = save;
+        this.storageService.setSaveStatusOfPostInStorage(post.post_id, save);
+      },
+      error: (e: HttpErrorResponse) => {
+        console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
+      }
+    })
   }
 }

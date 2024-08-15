@@ -78,4 +78,12 @@ export class DateTimeService {
 
     return `${month}, ${day}, ${year}`;
   }
+
+  CompareDateTime(date1: string, date2: string): boolean {
+    const datetime1 = new Date(date1);
+    const datetime2 = new Date(date2);
+    const differenceInMilliseconds = Math.abs(datetime1.getTime() - datetime2.getTime());
+    const differenceInMinutes = differenceInMilliseconds / (1000 * 60);
+    return differenceInMinutes > 1;
+  }
 }

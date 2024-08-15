@@ -24,6 +24,7 @@ export class DarkModeService {
       }
     }
     else {
+      this.storageService.setItem("mode", "0");
       document.body.style.setProperty("--primary_background_color", "#ffffff");
       document.body.style.setProperty("--neutral", "#efefef");
       document.body.style.setProperty("--secondary_color", "#000000");

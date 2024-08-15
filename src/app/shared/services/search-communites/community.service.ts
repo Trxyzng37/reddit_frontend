@@ -9,6 +9,8 @@ import { JoinCommunityResponse } from './pojo/join-community-response';
 import { DefaultResponse } from '../../pojo/default-response';
 import { DeleteCommunityRequest } from './pojo/delete-community-request';
 import { CheckRefreshTokenService } from '../check-refresh-token/check-refresh-token.service';
+import { DetailPost } from 'src/app/post-link-list/pojo/detail-post';
+import { StorageService } from '../../storage/storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +20,8 @@ export class CommunityService {
   constructor(
     private getService: GetService,
     private postService: PostService,
-    private checkRefreshToken: CheckRefreshTokenService
+    private checkRefreshToken: CheckRefreshTokenService,
+    private storageService: StorageService
   ) { }
 
   private endpoint: string = "/find-community"
@@ -42,7 +45,7 @@ export class CommunityService {
     return this.getService.get("/get-all-communities-info", header, true);
   }
 
-  public getCommunityInfoByUid(uid: number): Observable<Communities[]> {
+  public getCommunityModerateByUid(uid: number): Observable<Communities[]> {
     const parameter: string ="uid=" + uid; 
     const endpointWithParameter: string = "/get-community-info-by-uid" + "?" + parameter;
     const header: HttpHeaders = new HttpHeaders();
