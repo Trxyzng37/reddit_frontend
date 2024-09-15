@@ -1,7 +1,7 @@
-<nav id="navigation_bar">
+<nav id="navigation_bar" class="scrollbar_width">
     <nav id="main_navigation">
-        <a href="/home"><span class="icon pi pi-home"></span><span>Home</span></a>
-        <a id="btn_popular" href="/popular"><span class="icon pi pi-chart-line"></span><span>Popular</span></a>
+        <a routerLink="/home" (click)="goToHome()" [ngClass]="{'selected_page': isHomePage}"><span class="icon pi pi-home"></span><span>Home</span></a>
+        <a id="btn_popular" routerLink="/popular" (click)="goToPopular()" [ngClass]="{'selected_page': isPopularPage}"><span class="icon pi pi-chart-line"></span><span>Popular</span></a>
     </nav>
 
     <nav *ngIf="moderationCommunities.length > 0"> 
@@ -10,7 +10,7 @@
             <span class="pi btn_icon" [ngClass]="moderation_status ? 'pi-chevron-down':'pi-chevron-up'"></span>
         </button>
         <div [ngStyle]="{'display': moderation_status ? 'none':'block'}">
-            <a *ngFor="let moderation_community of moderationCommunities" href="r/{{moderation_community.id}}"><img id="img_community_icon" src="{{moderation_community.avatar}}" alt=""/><pre>r/{{moderation_community.name}}</pre></a>
+            <a *ngFor="let moderation_community of moderationCommunities" routerLink="r/{{moderation_community.id}}"><img id="img_community_icon" src="{{moderation_community.avatar}}" alt=""/><pre>r/{{moderation_community.name}}</pre></a>
         </div>
     </nav>
     <nav *ngIf="recentVisitCommunities.length > 0">
