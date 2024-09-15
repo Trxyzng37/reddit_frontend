@@ -26,6 +26,7 @@ export class PassCodeComponent {
 
   public email: string = this.storageService.getItem("forgot-password-email");
   public isLoad: boolean = false;
+  public isResendPasscode: boolean = false;
   public resend_count = 0;
 
   public PasscodeForm: any = new FormGroup({
@@ -45,10 +46,12 @@ export class PassCodeComponent {
 
   onSubmit() {
     if (this.PasscodeForm.status === "VALID") {
+      this.isLoad = true;
       const passcode: number = this.PasscodeForm.value.passcode;
       const observable: Observable<PasscodeResponse> = this.checkPasscodeService.checkPasscode(passcode);
       observable.subscribe({
         next: (response: PasscodeResponse) => {
+          this.isLoad = false;
           if(response.isPasscodeMatch == false) {
             Swal.fire("Incorrect passcode",'','warning')
           }
@@ -74,21 +77,20 @@ export class PassCodeComponent {
 
   public reSendPasscode() {
     this.resend_count = 60;
-    this.isLoad = true;
+    this.isResendPasscode = true;
     const observable: Observable<ResendEmailPasscodeResponse> = this.confirmEmailService.reSendPasscode("/resend-change-password-passcode", this.email);
     observable.subscribe({
       next: (response: ResendEmailPasscodeResponse) => {
+        this.isResendPasscode = false;
         if (response.createdNewPasscode) {
-          this.isLoad = false;
           Swal.fire("New Passcode has been sent to your email",'','success');
         }
         else {
-          this.isLoad = false;
           Swal.fire("Error create new passcode. Please try again",'','error');
         }
       },
       error: (e: HttpErrorResponse) => {
-        this.isLoad = false;
+        this.isResendPasscode = false;
         Swal.fire("Error create new passcode. Please try again",'','error');
       }
     })

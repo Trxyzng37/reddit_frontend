@@ -53,7 +53,7 @@ input {
     margin-bottom: 10px;
     text-align: center;
     font-size: 26px;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 input:focus {
@@ -61,7 +61,7 @@ input:focus {
 }
 
 #btn_submit {
-    background-color: var(--allow);
+    background-color: var(--main_color);
     font-size: 16px;
     width: auto;
     height: auto;
@@ -70,6 +70,7 @@ input:focus {
     border-radius: 20px;
     position: relative;
     margin-top: 20px;
+    color: black;
 }
 
 #div_resend {
@@ -83,13 +84,14 @@ input:focus {
 
 #btn_resend_passcode {
     width: auto;
-    background-color: var(--allow);
+    background-color: var(--primary_background_color);
     font-size: 14px;
     font-weight: 500;
     padding: 5px 20px;
     margin: 0px 10px;
     border: 1px solid black;
     border-radius: 20px;
+    color: black;
 }
 
 back-button {
