@@ -34,12 +34,16 @@ export class UserInfoComponent {
     if(found != null) {
       username = found[1];
     }
+    const found2 = window.location.href.match('/user/([A-Za-z0-9]+)')
+    if(found2 != null) {
+      username = found2[1];
+    }
     this.searchUserProfileService.getUserProfileByName("/get-user-info-by-username", username).subscribe({
       next: (response: UserProfile) => {
         this.userInfo = response;
         this.isUser = uid === this.userInfo.uid;
         this.shownDate = this.dateTimeService.getStringRepresentDateTime(this.userInfo.created_at);
-        this.communityService.getCommunityInfoByUid(this.userInfo.uid).subscribe({
+        this.communityService.getCommunityModerateByUid(this.userInfo.uid).subscribe({
           next: (response: Communities[]) => {
             this.communities = response;
           }
