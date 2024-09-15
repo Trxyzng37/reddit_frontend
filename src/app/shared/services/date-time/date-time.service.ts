@@ -35,36 +35,33 @@ export class DateTimeService {
   }
 
   getTimeByCompareCreatedAtAndCurrentDate(created_at: string): string {
-    const currentDateStr: string = this.getCurrentDateTime().toISOString();
-    // console.log("current date: "+currentDateStr);
-    // console.log("created_at: "+created_at);
-    const currentDate: number[] = this.findDateComponentFromDateString(currentDateStr);
-    const createdAtDate: number[] = this.findDateComponentFromDateString(created_at);
-    // console.log(currentDate)
-    // console.log(createdAtDate)
+    const currentDate = new Date();
+    const createdAtDate = new Date(created_at);
+    const timeDifferenceMs = currentDate.getTime() - createdAtDate.getTime();
+    // Convert the time difference into different time units
+    const minute = 60 * 1000;
+    const hour = 60 * minute;
+    const day = 24 * hour;
+    const month = 30 * day; // Approximation
+    const year = 12 * month; // Approximation
     let shownDate: string = "";
-    if (currentDate.length != 0 && createdAtDate.length != 0) {
-      if (currentDate[0] - createdAtDate[0] >= 1) {
-        shownDate = currentDate[0] - createdAtDate[0] + " year ago";
-        return shownDate;
-      }
-      if (currentDate[1] - createdAtDate[1] >= 1) {
-        shownDate = currentDate[1] - createdAtDate[1] + " month ago";
-        return shownDate;
-      }
-      if (currentDate[2] - createdAtDate[2] >= 1) {
-        shownDate = currentDate[2] - createdAtDate[2] + " day ago";
-        return shownDate;
-      }
-      if (currentDate[3] - createdAtDate[3] >= 1) {
-        shownDate = currentDate[3] - createdAtDate[3] + " hour ago";
-        return shownDate;
-      }
-      if (currentDate[4] - createdAtDate[4] >= 1) {
-        shownDate = currentDate[4] - createdAtDate[4] + " minute ago";
-        return shownDate;
-      }
-      shownDate = "1 minute ago"
+    if (timeDifferenceMs >= year) {
+      const years = Math.floor(timeDifferenceMs / year);
+      shownDate = `${years} year${years > 1 ? 's' : ''} ago`;
+    } else if (timeDifferenceMs >= month) {
+      const months = Math.floor(timeDifferenceMs / month);
+      shownDate = `${months} month${months > 1 ? 's' : ''} ago`;
+    } else if (timeDifferenceMs >= day) {
+      const days = Math.floor(timeDifferenceMs / day);
+      shownDate = `${days} day${days > 1 ? 's' : ''} ago`;
+    } else if (timeDifferenceMs >= hour) {
+      const hours = Math.floor(timeDifferenceMs / hour);
+      shownDate = `${hours} hour${hours > 1 ? 's' : ''} ago`;
+    } else if (timeDifferenceMs >= minute) {
+      const minutes = Math.floor(timeDifferenceMs / minute);
+      shownDate = `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+    } else {
+      shownDate = "1 minute ago";
     }
     return shownDate;
   }
@@ -83,7 +80,7 @@ export class DateTimeService {
     const datetime1 = new Date(date1);
     const datetime2 = new Date(date2);
     const differenceInMilliseconds = Math.abs(datetime1.getTime() - datetime2.getTime());
-    const differenceInMinutes = differenceInMilliseconds / (1000 * 60);
+    const differenceInMinutes = differenceInMilliseconds / (1000 * 30);
     return differenceInMinutes > 1;
   }
 }

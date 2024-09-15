@@ -29,7 +29,6 @@ export class RefreshTokenGuard {
         ),
         catchError((e) => {
             this.storageService.removeItem("uid");
-            this.storageService.removeItem("username");
             this.removeRefreshTokenService.removeRefreshToken().subscribe();
             Swal.fire({
                 title: "Authentication fail",

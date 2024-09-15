@@ -14,7 +14,7 @@ export class CheckRefreshTokenService {
   constructor(
     private getService: GetService,
     private storageService: StorageService,
-    private removeRefreshTokenService: RemoveRefreshTokenService
+    private removeRefreshTokenService: RemoveRefreshTokenService,
   ) { }
 
   private checkRefreshTokenEndpoint: string = "/check-refresh-token";
@@ -26,11 +26,14 @@ export class CheckRefreshTokenService {
 
   public runCheckRefreshToken() {
     this.checkRefreshToken().subscribe({
-      next: (response: any) => {
+      next: (response: number) => {
+        if(response != 0) {
+          this.storageService.setItem("uid", response.toString());
+        }
       },
       error: (e: HttpErrorResponse) => {
         this.storageService.removeItem("uid");
-        this.storageService.removeItem("username");
+        this.storageService.setItem("mode", "0");
         this.removeRefreshTokenService.removeRefreshToken().subscribe();
         Swal.fire({
           title: "You need to sign-in to do this action",
@@ -50,10 +53,13 @@ export class CheckRefreshTokenService {
   public runCheckRefreshTokenWithoutNotification() {
     this.checkRefreshToken().subscribe({
       next: (response: any) => {
+        if(response != 0) {
+          this.storageService.setItem("uid", response.toString());
+        }
       },
       error: (e: HttpErrorResponse) => {
         this.storageService.removeItem("uid");
-        this.storageService.removeItem("username");
+        this.storageService.setItem("mode", "0");
         this.removeRefreshTokenService.removeRefreshToken().subscribe();
       }
     })

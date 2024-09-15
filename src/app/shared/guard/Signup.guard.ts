@@ -25,7 +25,6 @@ export class SignUpGuard {
       ),
       catchError((e) => {
           this.storageService.removeItem("uid");
-          this.storageService.removeItem("username");
           this.removeRefreshTokenService.removeRefreshToken().subscribe();
           return of(true);
       })
