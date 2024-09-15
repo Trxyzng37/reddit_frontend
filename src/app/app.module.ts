@@ -54,6 +54,13 @@ import { VideoViewComponent } from './post-link/video-view/video-view/video-view
 import { EditVideoViewComponent } from './edit-post/edit-video-post/edit-video-view/edit-video-view.component';
 import { BackButtonComponent } from './shared/component/back-button/back-button.component';
 import { ChooseUsernameComponent } from './choose-username/choose-username/choose-username.component';
+import { PostInfoComponent } from './post-view/post-view.component';
+import { CommentViewListComponent } from './user-profile/comment-view-list/comment-view-list.component';
+import { LoadingComponent } from './shared/component/loading/loading/loading.component';
+import { ControlPostComponent } from './control-post/control-post/control-post.component';
+import { ModPostViewComponent } from './control-post/post-view/post-view/post-view.component';
+import { ModNavigationBarComponent } from './control-post/navigation-bar/navigation-bar/navigation-bar.component';
+import { ModeratePostComponent } from './control-post/moderate-post/moderate-post/moderate-post.component';
 
 @NgModule({
   declarations: [
@@ -100,7 +107,14 @@ import { ChooseUsernameComponent } from './choose-username/choose-username/choos
     VideoViewComponent,
     EditVideoViewComponent,
     BackButtonComponent,
-    ChooseUsernameComponent
+    ChooseUsernameComponent,
+    PostInfoComponent,
+    CommentViewListComponent,
+    LoadingComponent,
+    ControlPostComponent,
+    ModPostViewComponent,
+    ModNavigationBarComponent,
+    ModeratePostComponent
   ],
   imports: [
     BrowserModule,

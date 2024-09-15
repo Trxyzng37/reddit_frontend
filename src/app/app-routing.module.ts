@@ -27,39 +27,67 @@ import { ConfirmEmailGuard } from './shared/guard/confirm-email.guard';
 import { ChooseUsernameGuard } from './shared/guard/choose-username.guard';
 import { ChangePasswordGuard } from './shared/guard/change-password.guard';
 import { ChangePasswordEmailGuard } from './shared/guard/change-password-email.guard';
+import { PostInfoComponent } from './post-view/post-view.component';
+import { CommentViewListComponent } from './user-profile/comment-view-list/comment-view-list.component';
+import { ControlPostComponent } from './control-post/control-post/control-post.component';
+import { ModPostViewComponent } from './control-post/post-view/post-view/post-view.component';
+import { ModeratePostComponent } from './control-post/moderate-post/moderate-post/moderate-post.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'popular', pathMatch: 'full'},
-  { path: 'goole-authentication-callback', component: SigninComponent},
-  { path: 'signin', component: SigninComponent, canActivate: mapToCanActivate([SignInGuard])},
-  { path: 'signup', title: 'sign-up', component: SignupComponent, canActivate: mapToCanActivate([SignUpGuard])},
-  { path: 'check-sign-up-passcode', title: 'check-sign-up-passcode', component: ConfirmEmailComponent, canActivate: mapToCanActivate([ConfirmEmailGuard])},
-  { path: 'choose-username', component: ChooseUsernameComponent, canActivate: mapToCanActivate([ChooseUsernameGuard])},
-  { path: 'forgot-password', title: 'forgot-password', component: ForgotPasswordComponent},
-  { path: 'forgot-password-pass-code', title: 'enter-passcode', component: PassCodeComponent, canActivate: mapToCanActivate([ChangePasswordEmailGuard])},
-  { path: 'change-password', title: 'change-password', component: ChangePasswordComponent, canActivate: mapToCanActivate([ChangePasswordGuard])},
-  { path: 'create-post', component: CreatePostComponent, canActivate: mapToCanActivate([RefreshTokenGuard])},
-  { path: 'create-post?cid=:community_id', component: CreatePostComponent, canActivate: mapToCanActivate([RefreshTokenGuard])},
-  { path: '', title: 'home', component: HomeComponent, 
+  { path: 'goole-authentication-callback', title: 'Google-call-back', component: SigninComponent},
+  { path: 'signin', component: SigninComponent, title: 'Sign in', canActivate: mapToCanActivate([SignInGuard])},
+  { path: 'signup', title: 'Sign up', component: SignupComponent, canActivate: mapToCanActivate([SignUpGuard])},
+  { path: 'check-sign-up-passcode', title: 'Verify passcode', component: ConfirmEmailComponent, canActivate: mapToCanActivate([ConfirmEmailGuard])},
+  { path: 'choose-username', title: 'Choose username', component: ChooseUsernameComponent, canActivate: mapToCanActivate([ChooseUsernameGuard])},
+  { path: 'forgot-password', title: 'Forgot password', component: ForgotPasswordComponent},
+  { path: 'forgot-password-pass-code', title: 'Verify passcode', component: PassCodeComponent, canActivate: mapToCanActivate([ChangePasswordEmailGuard])},
+  { path: 'change-password', title: 'Change password', component: ChangePasswordComponent, canActivate: mapToCanActivate([ChangePasswordGuard])},
+  { path: '',  component: HomeComponent, 
     children: [
+      { path: 'create-post', title: 'Create post', component: CreatePostComponent, canActivate: mapToCanActivate([RefreshTokenGuard])},
+      { path: 'create-post?cid=:community_id', title: 'Create post', component: CreatePostComponent, canActivate: mapToCanActivate([RefreshTokenGuard])},
       { path: '', component: PostMainComponent,
-      children: [
-        {path: 'home', title: 'home', component: PostLinkListComponent, canActivate: mapToCanActivate([RefreshTokenGuard])},
-        {path: 'popular', title: 'popular', component: PostLinkListComponent},
-        {path: 'r/:community_id', title: 'Reddit', component: PostLinkListComponent},
-        {path: 'edit-post/:post_id', component: EditPostComponent, canActivate: mapToCanActivate([RefreshTokenGuard])},
-        {path: 'post/:post_id', title: 'view-post', component: ViewDetailPostComponent},
-        {path: 'control-posts/:community_id', component: PostLinkListComponent, canActivate: mapToCanActivate([RefreshTokenGuard])},
-        {path: 'search/:text', component: SearchResultsComponent},
-        {path: 'user/:username', component: UserProfileComponent},
-        {path: 'setting/:username', component: EditUserInfoComponent, canActivate: mapToCanActivate([RefreshTokenGuard])},
-        {path: 'edit-community/:community_id', component: EditCommunityComponent, canActivate: mapToCanActivate([RefreshTokenGuard])},
-      ]
+        children: [
+          {path: 'home', title: 'Reddit', component: PostLinkListComponent},
+          {path: 'popular', title: 'Reddit', component: PostLinkListComponent},
+          {path: 'r/:community_id', title: 'Community', component: PostLinkListComponent},
+          {path: 'edit-post/:post_id', title: 'Edit post', component: EditPostComponent, canActivate: mapToCanActivate([RefreshTokenGuard])},
+          {path: 'control-posts/:community_id', title: 'Control posts', component: PostLinkListComponent, canActivate: mapToCanActivate([RefreshTokenGuard])},
+          {path: 'search/:text', title: 'Search', component: SearchResultsComponent},
+          {path: 'setting/:username', title: 'User setting', component: EditUserInfoComponent, canActivate: mapToCanActivate([RefreshTokenGuard])},
+          {path: 'edit-community/:community_id', title: 'Edit community', component: EditCommunityComponent, canActivate: mapToCanActivate([RefreshTokenGuard])},
+        ]
+      },
+      { path: '', title: '', component: PostInfoComponent,
+        children: [
+          {path: 'post/:post_id', title: 'Post', component: ViewDetailPostComponent},
+          {path: 'post/:post_id/comment/:comment_id', title: 'Post', component: ViewDetailPostComponent},
+        ]
+      },
+      { path: 'user/:username', title: "User profile", component: UserProfileComponent,
+        children: [
+          {path: 'posts', component: PostLinkListComponent},
+          {path: 'saved', component: PostLinkListComponent, canActivate: mapToCanActivate([RefreshTokenGuard])},
+          {path: 'wait_for_approve', component: PostLinkListComponent, canActivate: mapToCanActivate([RefreshTokenGuard])},
+          {path: 'comments', component: CommentViewListComponent}
+        ]
+      },
+    ]
+  },
+  {path: 'mod', title: "Mod queue", component: ControlPostComponent,
+    children: [
+      { path: '', component: ModeratePostComponent,
+        children: [
+          {path: ':community_id/review', component: ModPostViewComponent, canActivate: mapToCanActivate([RefreshTokenGuard]), runGuardsAndResolvers: 'always'},
+          {path: ':community_id/approved', component: ModPostViewComponent, canActivate: mapToCanActivate([RefreshTokenGuard]), runGuardsAndResolvers: 'always'},
+          {path: ':community_id/removed', component: ModPostViewComponent, canActivate: mapToCanActivate([RefreshTokenGuard]), runGuardsAndResolvers: 'always'},
+          {path: ':community_id/editted', component: ModPostViewComponent, canActivate: mapToCanActivate([RefreshTokenGuard]), runGuardsAndResolvers: 'always'},
+        ]
       }
     ]
   },
-
-  { path: 'error', title:'error', component: ErrorComponent },
+  { path: 'error', title:'ERROR', component: ErrorComponent },
   { path: '**', component: ErrorComponent }
 ];
 
