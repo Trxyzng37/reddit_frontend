@@ -1,12 +1,12 @@
 
-<div class="container" [style.margin-left]="margin" [ngStyle]="{'margin-top': commentData.level === 0 ? '10px' : '0'}">
+<div class="comment_block" [style.margin-left]="margin" [ngStyle]="{'margin-top': commentData.level === 0 ? '10px' : '0'}">
     <div id="header" (click)="showComment($event)">
-        <img *ngIf="isShown" [attr.src]="commentData.user_icon" />
+        <img *ngIf="isShown" [attr.src]="commentData.user_icon" (click)="goToUserPage($event)" />
         <i class="pi pi-plus-circle" id="img_close_comment" *ngIf="!isShown"></i>
         <div id="info_block">
-            <p>{{commentData.username}}</p>
+            <a id="txt_username" style="color: var(--icon); font-size: 14px;" routerLink="/user/{{commentData.username}}/posts">{{commentData.username}}</a>
             <pre> • </pre>
-            <p>{{shownDate}}</p>
+            <p style="color: var(--txt); font-size: 13px;">{{shownDate}}</p>
         </div>
     </div>
     
@@ -15,19 +15,19 @@
 
     <div id="footer" *ngIf="isShown && !isUserPage">
         <div id="block_vote" class="block_vote" [ngClass]="{'upvote': voteType === 'upvote', 'downvote': voteType === 'downvote', 'normal': voteType === 'none'}">
-            <button id="btn_upvote" type="button" (click)="voteComment($event, 'upvote')" [ngClass]="{'upvote': voteType === 'upvote', 'downvote': voteType === 'downvote', 'normal': voteType === 'none'}" [disabled]="isDeleted"><img [attr.src]="voteType === 'upvote' ? upvote_fill : voteImgService.upvote" /></button>
-            <p id="vote_count">{{presentationService.transformNumber(commentData.vote)}}</p>
-            <button id="btn_downvote" type="button" (click)="voteComment($event, 'downvote')" [ngClass]="{'upvote': voteType === 'upvote', 'downvote': voteType === 'downvote', 'normal': voteType === 'none'}" [disabled]="isDeleted"><img [attr.src]="voteType === 'downvote' ? downvote_fill : voteImgService.downvote" /></button>
+            <button id="btn_upvote" type="button" (click)="voteComment($event, 'upvote')" [ngClass]="{'upvote': voteType === 'upvote', 'downvote': voteType === 'downvote', 'normal': voteType === 'none'}" [disabled]="isDeleted || isPostDeleted"><img [attr.src]="voteType === 'upvote' ? upvote_fill : voteImgService.upvote" /></button>
+            <p style="color: var(--icon);">{{presentationService.transformNumber(commentData.vote)}}</p>
+            <button id="btn_downvote" type="button" (click)="voteComment($event, 'downvote')" [ngClass]="{'upvote': voteType === 'upvote', 'downvote': voteType === 'downvote', 'normal': voteType === 'none'}" [disabled]="isDeleted || isPostDeleted"><img [attr.src]="voteType === 'downvote' ? downvote_fill : voteImgService.downvote" /></button>
         </div>
-        <button class="footer_btn" type="button" (click)="reply()" *ngIf="isReplyAllowed && !isDeleted">
+        <button class="footer_btn" type="button" (click)="reply()" *ngIf="isReplyAllowed && !isDeleted && !isPostDeleted">
             <i class="pi pi-comment"></i>
             <pre>Reply</pre>
         </button>
-        <button class="footer_btn" id="btn_edit" type="button" (click)="showEditComment()" *ngIf="isEditAllowed && !isDeleted">
+        <button class="footer_btn" id="btn_edit" type="button" (click)="showEditComment()" *ngIf="isEditAllowed && !isDeleted && !isPostDeleted">
             <i class="pi pi-pencil"> </i>
             <pre>Edit</pre>
         </button>
-        <button class="footer_btn" type="button" (click)="deleteComment()" *ngIf="(isDeleteAllowed && !isDeleted) || (isCommunityOwner && !isDeleted)">
+        <button class="footer_btn" type="button" (click)="deleteComment()" *ngIf="(isDeleteAllowed && !isDeleted && !isPostDeleted) || (isCommunityOwner && !isDeleted && !isPostDeleted)">
             <i class="pi pi-trash"> </i>
             <pre>Delete</pre>
         </button>
@@ -48,4 +48,6 @@
         </div>
     </div>
 </div>
+
+<!-- <loading [txt_load]="'Creating comment. Please wait'" *ngIf="isSendComment"></loading> -->
 

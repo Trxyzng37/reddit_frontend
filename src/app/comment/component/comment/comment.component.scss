@@ -4,17 +4,26 @@
     --btn_height: 30px;
 }
 
-.container {
+.comment_block {
     background-color: var(--primary_background_color);
     width: calc(100%);
     height: auto;
     // margin-bottom: 10px;
     padding: 5px 0;
     box-sizing: border-box;
-    border-radius: 10px;
+    // border-left: 1px solid var(--border);
+    // position: relative;
 }
 
-.container > *, #comment_editor_block {
+button:disabled:hover, #btn_downvote:disabled:hover, #btn_upvote:disabled:hover {
+    background-color: var(--primary_background_color);
+}
+
+button:disabled, #btn_downvote:disabled, #btn_upvote:disabled {
+    opacity: 0.5;
+}
+
+.comment_block > *, #comment_editor_block {
     margin: 0 7px;
 }
 
@@ -29,12 +38,16 @@
     width: 100%;
 }
 
+#header > img:hover {
+    cursor: pointer;
+}
+
 #info_block {
     margin-left: 10px;
 }
 
 textarea#input_post_title {
-    background-color: var(--neutral);
+    background-color: var(--search);
     color: black;
 }
 
@@ -59,9 +72,13 @@ pre {
     border-radius: 50%;
 }
 
-#comment_content {
-    margin-left: 48px;
-    box-sizing: border-box;
+#txt_username {
+    color: var(--icon) !important;
+    text-decoration: none;
+}
+
+#txt_username:hover {
+    text-decoration: underline !important;
 }
 
 #footer {
@@ -72,7 +89,6 @@ pre {
     position: relative;
     margin-left: 37px;
     box-sizing: border-box;
-    
 }
 
 #footer > * {
@@ -100,6 +116,8 @@ pre {
     margin-top: 5px;
     box-sizing: border-box;
     overflow-wrap:break-word;
+    margin-left: 48px;
+    box-sizing: border-box;
 }
 
 #btn_option {
@@ -110,7 +128,7 @@ pre {
 }
 
 #btn_option:hover, .footer_btn:hover {
-    background-color: var(--neutral);
+    background-color: var(--bg_hover);
 }
 
 #btn_upvote, #btn_downvote {
@@ -146,8 +164,8 @@ pre {
     width: fit-content;
     height: auto;
     position: absolute;
-    bottom: -35px;
-    right: 0px;
+    bottom: 7px;
+    right: 10px;
 }
 
 #btn_comment_block > * {
@@ -174,16 +192,12 @@ pre {
     color: var(--secondary_color);
 }
 
-.user_comment {
-    background-color: var(--neutral);
+.footer_btn,  #block_vote,  #btn_downvote,  #btn_upvote {
+    background-color: var(--primary_background_color);
 }
 
-.user_comment  .footer_btn, .user_comment #block_vote, .user_comment #btn_downvote, .user_comment #btn_upvote {
-    background-color: var(--neutral);
-}
-
-.user_comment  .footer_btn:hover, .user_comment #btn_downvote:hover, .user_comment #btn_upvote:hover {
-    background-color: var(--neutral);
+.footer_btn:hover,  #btn_downvote:hover, .user_comment #btn_upvote:hover {
+    background-color: var(--primary_background_color);
 }
 
 .upvote {
@@ -195,13 +209,13 @@ pre {
 }
 
 #btn_upvote:hover {
-    background-color: var(--neutral)
+    background-color: var(--search)
 }
 
 #btn_downvote:hover {
-    background-color: var(--neutral)
+    background-color: var(--search)
 }
 
 .footer_btn:hover {
-    background-color: var(--neutral);
+    background-color: var(--search);
 }

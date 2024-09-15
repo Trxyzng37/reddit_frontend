@@ -4,7 +4,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { VotePostService } from 'src/app/post-link/post-link/service/vote-post/vote-post.service';
 import { DateTimeService } from 'src/app/shared/services/date-time/date-time.service';
 import { StorageService } from 'src/app/shared/storage/storage.service';
-import { Comment } from 'src/app/view-detail-post/view-detail-post/pojo/comment';
+import { CommentInfo } from 'src/app/view-detail-post/view-detail-post/pojo/comment';
 import { CreateCommentResponse } from 'src/app/view-detail-post/view-detail-post/pojo/create-comment-response';
 import { CreateCommentService } from 'src/app/view-detail-post/view-detail-post/service/create-comment/create-comment.service';
 import tinymce from 'tinymce';
@@ -18,6 +18,8 @@ import { DeleteCommentService } from '../../service/delete-comment/delete-commen
 import { DeleteCommentResponse } from '../../pojo/delete-comment-response';
 import { PresentationService } from 'src/app/shared/services/presentation/presentation.service';
 import { VoteImgService } from 'src/app/shared/services/vote-img/vote-img.service';
+import { VoteInfo } from 'src/app/shared/pojo/vote-info';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-comment',
@@ -36,13 +38,14 @@ export class CommentComponent {
     private editCommentService: EditCommentService,
     private deleteCommentService: DeleteCommentService,
     public presentationService: PresentationService,
-    public voteImgService: VoteImgService
+    public voteImgService: VoteImgService,
+    private route: Router
   ) {}
 
 
-  @Input() commentData: Comment = new Comment(0,0,0,'','',0,'',0,'',0,false);
-  @Input() postId: number = 0;
+  @Input() commentData: CommentInfo = new CommentInfo(0,0,0,'','',0,'',0,'',0,false);
   @Input() isCommunityOwner: boolean = false;
+  @Input() isPostDeleted: boolean = false;
   @Output() commentModified = new EventEmitter<boolean>();
 
   public isShown: boolean = true;
@@ -54,6 +57,7 @@ export class CommentComponent {
   public isOptionShow: boolean = false;
   public isUserComment: boolean = false;
   public isUserPage: boolean = false;
+  public isSendComment: boolean = false;
 
   public replyCommentData: string = "";
   public editCommentData: string = "";
@@ -76,22 +80,25 @@ export class CommentComponent {
   ngOnInit() {
     this.voteImgService.selectDownVoteImg();
     this.voteImgService.selectUpVoteImg();
-    this.commentData.content = this.commentData.content.replace("<img src=", "<img class='img_comment' src=");
     this.isDeleted = this.commentData.deleted;
     this.isUserPage = window.location.href.includes("/user/");
     this.uid = this.storageService.getItem("uid") === "" ? 0 : Number(this.storageService.getItem("uid"));
     this.isUserComment = this.commentData.uid == this.uid ? true : false;
     this.isEditAllowed = this.commentData.uid == this.uid ? true : false;
     this.isDeleteAllowed = this.commentData.uid == this.uid ? true : false;
-    this.isReplyAllowed = this.commentData.uid != this.uid ? true : false;
+    //does not allow reply if deeper than 6
+    this.isReplyAllowed = (this.commentData.level <= 6) && (this.commentData.uid != this.uid) ? true : false;
     this.shownDate = this.dateTimeService.getTimeByCompareCreatedAtAndCurrentDate(this.commentData.created_at);
     // this.margin = this.commentData.level*30 + "px";
+    this.isShown = this.commentData.level > 0 ? false : true;
+    this.commentData.content = this.commentData.content.replace("<img src=", "<img class='img_comment' src=");
     this.commentData.content = this.commentData.content.replace(/<img/g, '<img style="display:block;" ');
     this.commentData.content = this.commentData.content.replace(/<ol/g, '<ol style="margin-left:20px;" ');
     this.commentData.content = this.commentData.content.replace(/<ul/g, '<ul style="margin-left:30px;" ');
     this.commentData.content = this.commentData.content.replace(/<pre/g, '<pre class="pre_code" style="width:fit-content" ');
     this.commentData.content = this.commentData.content.replace(/<code/g, '<code class="code" ');
     this.commentData.content = this.commentData.content.replace(/<a/g, '<a class="a link" ');
+    this.commentData.content = this.commentData.content.replace(/<p/g, '<p class="comment_content" ');
     this.previousContent = this.commentData.content;
     this.editCommentData = this.commentData.content;
     this.getCommentStatusService.getCommentStatus(this.commentData._id, this.uid).subscribe({
@@ -112,7 +119,7 @@ export class CommentComponent {
 
   voteComment(event: Event, type: string) {
     event.stopPropagation();
-    this.uid = this.storageService.getItem("uid") === "" ? 0 : Number(this.storageService.getItem("uid"));
+    this.uid = this.storageService.getItem("uid") === "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
     if(this.uid === 0) {
       Swal.fire({
         title: "You need to sign-in to do this action",
@@ -153,20 +160,21 @@ export class CommentComponent {
         this.commentData.vote += 1;
         this.voteType = 'none';
       }
-      this.sendVoteCommentToServer();
+      this.sendVoteCommentToServer(this.commentData.post_id, this.commentData._id, this.commentData.vote, this.voteType);
     }
   }
 
-  sendVoteCommentToServer() {
-    const username: string = this.storageService.getItem("username");
-    this.voteCommentService.updateVoteComment(this.postId, this.commentData._id, this.commentData.vote, this.voteType).subscribe({
+  sendVoteCommentToServer(post_id: number, comment_id: number, cur_vote: number, cur_vote_type: string) {
+    this.voteCommentService.updateVoteComment(post_id, comment_id, cur_vote, cur_vote_type).subscribe({
       next: (response: VoteCommentResponse) => {
         console.log("Vote comment: "+response.vote_updated);
+        this.commentData.vote = cur_vote;
+        this.voteType = cur_vote_type;
       },
       error: (e: HttpErrorResponse) => {
         console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
-        this.commentData.vote = this.previousVote;
-        this.voteType = 'none';
+        // this.commentData.vote = this.previousVote;
+        // this.voteType = 'none';
         console.log("Error vote post");
         console.log("vote when error: "+this.commentData.vote);
       }
@@ -195,7 +203,7 @@ export class CommentComponent {
     base_url: '/tinymce',
     suffix: '.min',
     plugins: 'link lists codesample image autoresize', 
-    toolbar: "bold italic underline strikethrough forecolor subscript superscript removeformat numlist bullist link blockquote codesample image",
+    toolbar: "bold italic underline strikethrough subscript superscript removeformat numlist bullist link blockquote codesample image",
     toolbar_mode: 'wrap',
     placeholder: 'Enter your comment',
     automatic_uploads: true,
@@ -232,10 +240,30 @@ export class CommentComponent {
     custom_colors: false,
     content_css: 'tinymce-5',
     content_style: 
+      'html body { overflow: auto !important; }' +
       'p { margin: 0; } ' + 
       'img { display: block; out-line: 0; max-width: 200px; max-height: 200px}' +
       'body {line-height: normal}' +
       'pre[class*=language-] {font-family: Consolas}',
+      setup: (editor: any) => {
+        editor.on('init', () => {
+          const backgroundColor = 'var(--neutral)';
+          const textColor = 'var(--secondary_color)';
+          // editor.getBody().style.backgroundColor = '#efefef';
+          const container = editor.getContainer();
+          let tox_tiny = container.parentElement.childNodes;
+          let  tox_tinymce = tox_tiny[2];
+          tox_tinymce.style.border = "1px solid var(--secondary_color)";
+          container.querySelector('.tox-editor-header').style.backgroundColor = backgroundColor;
+          container.querySelector('.tox-editor-container').style.backgroundColor = backgroundColor;
+          container.querySelector('.tox-toolbar').style.backgroundColor = backgroundColor;
+          container.querySelector('.tox-toolbar').style.color = textColor;
+          container.querySelector('.tox-statusbar').style.backgroundColor = backgroundColor;
+          container.querySelector('.tox-statusbar').style.height = '50px';
+          let resize_icon = container.querySelector('.tox-statusbar').querySelector('.tox-statusbar__resize-handle').querySelector('svg');
+          resize_icon.style.fill = 'var(--secondary_color)';
+        });
+      },
     file_picker_callback: (cb: any, value:any, meta:any) => {
       if(this.img_count == 0) {
         const input = document.createElement('input');
@@ -316,15 +344,18 @@ export class CommentComponent {
       })
     }
     else {
-      this.createCommentService.createComment(this.postId, this.commentData._id, this.replyCommentData, this.commentData.level+1).subscribe({
+      this.isSendComment = true;
+      this.createCommentService.createComment(this.commentData.post_id, this.commentData._id, this.replyCommentData, this.commentData.level+1).subscribe({
         next: (response: CreateCommentResponse) => {
           this.commentModified.emit(true);
+          this.isSendComment = false;
         },
         error: (e: HttpErrorResponse) => {
+          this.isSendComment = false;
           console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
           Swal.fire({
             titleText: "Error create comment. Please try again",
-            icon: "success",
+            icon: "error",
             heightAuto: true,
             showConfirmButton: true,
             focusCancel: false,
@@ -337,7 +368,7 @@ export class CommentComponent {
 
   public count = 0;
   showEditComment() {
-    this.isEditorShow = !this.isEditorShow;
+    this.isEditorShow = true;
     if(this.count < 2)
       tinymce.EditorManager.get(this.editor_id)?.setContent(this.editCommentData);
     this.count++;
@@ -358,13 +389,16 @@ export class CommentComponent {
     }
     else {
       if(this.commentData.content != this.editCommentData && this.editCommentData != "") {
-        this.editCommentService.editComment(this.postId, this.commentData._id, this.editCommentData).subscribe({
-          next: (response: Comment) => {
+        this.isSendComment = true;
+        this.editCommentService.editComment(this.commentData.post_id, this.commentData._id, this.editCommentData).subscribe({
+          next: (response: CommentInfo) => {
+            this.isSendComment = false;
             this.commentData.content = response.content;
             this.previousContent = response.content;
             this.isEditorShow = !this.isEditorShow;
           },
           error: (e: HttpErrorResponse) => {
+            this.isSendComment = false;
             console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
             if(this.uid == 0) {
               Swal.fire({
@@ -404,7 +438,7 @@ export class CommentComponent {
       })
     }
     else {
-      this.deleteCommentService.deleteComment(this.postId, this.commentData._id).subscribe({
+      this.deleteCommentService.deleteComment(this.commentData.post_id, this.commentData._id).subscribe({
         next: (response: DeleteCommentResponse) => {
           this.commentModified.emit(true);
         },
@@ -437,7 +471,7 @@ export class CommentComponent {
       })
     }
     else {
-      this.deleteCommentService.deleteComment(this.postId, this.commentData._id).subscribe({
+      this.deleteCommentService.deleteComment(this.commentData.post_id, this.commentData._id).subscribe({
         next: (response: DeleteCommentResponse) => {
           this.commentModified.emit(true);
         },
@@ -456,5 +490,9 @@ export class CommentComponent {
         }
       })
     }
+  }
+
+  goToUserPage(event: Event) {
+   this.route.navigate(["/user/" + this.commentData.username + "/posts"]);
   }
 }
