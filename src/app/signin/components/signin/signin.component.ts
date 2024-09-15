@@ -35,6 +35,8 @@ export class SigninComponent implements OnInit {
     password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(20), Validators.pattern("^[0-9a-zA-Z ~`!@#$%^&*()_+={[}]|\\:;\"'<,>.?/-]{8,20}$")])
   })
 
+  public isLoad: boolean = false;
+
   //when component first init
   ngOnInit(): void {
     const cookie: string = getCookie("GoogleSignIn") as string || "";
@@ -70,21 +72,24 @@ export class SigninComponent implements OnInit {
   //when username-password form is submitted
   SignInFormSubmit() {
     if (this.signInForm.status == "VALID") {
+      this.isLoad = true;
       const username: string = this.signInForm.value.username;
       const password: string = this.signInForm.value.password;
       const observable: Observable<UsernamePasswordSignInResponse> = this.usernamePasswordService.signinByUsernamePassword(username, password);
       observable.subscribe({
         next: (response: UsernamePasswordSignInResponse) => {
           if (response.isSignIn) {
-            // this.storageService.setItem("username", this.signInForm.value.username);
             this.storageService.setItem('uid', response.uid.toString());
             this.onSignIn();
+            this.isLoad = false;
           }
           if (response.passwordError) {
+            this.isLoad = false;
             Swal.fire("Wrong username or password",'','warning');
           }
         },
         error: (e: HttpErrorResponse) => {
+          this.isLoad = false;
           Swal.fire("Error sign in. Please try again",'','error');
         }
       })

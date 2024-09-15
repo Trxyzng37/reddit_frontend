@@ -27,11 +27,7 @@
     <p style="font-size: 20px !important; color: black !important;">Already have an account?</p>
     <a routerLink="/signin" style="font-size: 20px !important;">Sign in</a>
 </div>
+</div>
 
-<div id="load_container" *ngIf="isLoad">
-    <div id="load_block">
-        <div class="loader"></div>
-        <b style="padding-top: 10px;font-size: 20px;" style="color: black !important;">Signing up. Please wait...</b>
-    </div>
-</div>
-</div>
+<loading [txt_load]="'Signing up. Please wait'" *ngIf="isLoad"></loading>
+

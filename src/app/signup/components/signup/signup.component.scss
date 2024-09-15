@@ -75,7 +75,7 @@ label {
 
 a {
     text-decoration: none;
-    color: blue !important;
+    color: #0045AC !important;
     margin-left: 5px;
 }
 
@@ -88,7 +88,8 @@ a {
     border-radius: 20px;
     margin-top: 5px;
     margin-bottom: 10px;
-    background-color: var(--allow);
+    background-color: var(--main_color);
+    color: black;
 }
 
 #txt_GoogleSignUp {
@@ -112,7 +113,7 @@ a {
 }
 
 #google_login:hover {
-    background-color: var(--allow);
+    background-color: var(--main_color);
 }
 
 #google_logo {

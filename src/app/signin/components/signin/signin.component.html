@@ -6,7 +6,7 @@
     <input id="username" name="username" type="text" formControlName="username" required style="color: black !important;">
     <div id="forgot_pass">
         <label for="password" style="color: black !important;">Password</label>
-        <a routerLink="/forgot-password" style="color: var(--allow) !important;">Forgot password?</a>
+        <a routerLink="/forgot-password">Forgot password?</a>
     </div>
     <input id="password" name="password" type="password" formControlName="password" required style="color: black !important;">
     <button type="submit" id="btnSignIn" [disabled]="signInForm.status == 'INVALID'" style="color: black !important;">Login</button>
@@ -21,6 +21,8 @@
 
 <div id="create_account">
     <p style="font-size: 20px !important; color: black !important;">New user?</p>
-    <a routerLink="/signup" style="font-size: 20px !important; color: var(--allow) !important;">Create an account</a>
+    <a routerLink="/signup" style="font-size: 20px !important;">Create an account</a>
 </div>
 </div>
+
+<loading [txt_load]="'Signing in. Please wait'" *ngIf="isLoad"></loading>

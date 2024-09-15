@@ -81,7 +81,7 @@ input[type=password]:focus, #username:focus {
 a {
     text-decoration: none;
     padding-left: 5px;
-    color: blue !important;
+    color: #0045AC !important;
     font-size: 16px;
 }
 
@@ -90,7 +90,7 @@ p {
 }
 
 #btnSignIn {
-    background-color: var(--allow);
+    background-color: var(--main_color);
     font-size: 16px;
     width: auto;
     height: auto;
@@ -98,6 +98,7 @@ p {
     border: 1px black solid;
     border-radius: 20px;
     margin-bottom: 10px;
+    color: black;
 }
 
 #google_login {
@@ -121,7 +122,7 @@ p {
 }
 
 #google_login:hover {
-    background-color: var(--allow);
+    background-color: var(--main_color);
 }
 
 #google_logo {
