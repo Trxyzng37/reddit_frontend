@@ -8,6 +8,9 @@ import { CheckRefreshTokenService } from 'src/app/shared/services/check-refresh-
 import { VoteInfo } from 'src/app/shared/pojo/vote-info';
 import { DetailPost } from 'src/app/post-link-list/pojo/detail-post';
 import { StorageService } from 'src/app/shared/storage/storage.service';
+import { ShareDataService } from 'src/app/shared/services/share_data/share-data.service';
+import { VoteImgService } from 'src/app/shared/services/vote-img/vote-img.service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +20,9 @@ export class VotePostService {
   constructor(
     private postService: PostService,
     private checkRefreshToken: CheckRefreshTokenService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private shareDataService: ShareDataService,
+    private voteImgService: VoteImgService
   ) { }
 
   private endpoint: string = "/vote-post";
@@ -61,6 +66,14 @@ export class VotePostService {
       curVote += 1;
       curVoteType = 'none';
     }
+    else if (curVoteType == null && type === 'upvote') {
+      curVote += 1;
+      curVoteType = 'upvote';
+    }
+    else if (curVoteType == null && type === 'downvote') {
+      curVote -= 1;
+      curVoteType = 'downvote';
+    }
     return new VoteInfo(curVote, prevVote, curVoteType, prevVoteType);
   }
 
@@ -70,8 +83,16 @@ export class VotePostService {
         next: (response: VotePostResponse) => {
           post.vote = voteInfo.curVote;
           post.voteType = voteInfo.curVoteType;
-          this.storageService.setVoteOfPostInStorage(post.post_id, voteInfo.curVote);
-          this.storageService.setVoteTypeOfPostInStorage(post.post_id, voteInfo.curVoteType);
+          this.shareDataService.setVoteOfDetailPosts(post.post_id, voteInfo.curVote);
+          this.shareDataService.setVoteTypeOfDetailPosts(post.post_id, voteInfo.curVoteType);
+          // if(voteInfo.curVoteType != "none" && voteInfo.curVoteType != null) {
+          //   this.voteImgService.downvote = this.voteImgService.downvote_light;
+          //   this.voteImgService.upvote = this.voteImgService.upvote_light;
+          // }
+          // else {
+          //   this.voteImgService.downvote = this.voteImgService.downvote_dark;
+          //   this.voteImgService.upvote = this.voteImgService.upvote_dark;
+          // }
         },
         error: (e: HttpErrorResponse) => {
           console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);

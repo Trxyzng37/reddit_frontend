@@ -7,6 +7,7 @@ import { AllowPostRequest } from './pojo/allow-post-request';
 import { CheckRefreshTokenService } from 'src/app/shared/services/check-refresh-token/check-refresh-token.service';
 import { DetailPost } from 'src/app/post-link-list/pojo/detail-post';
 import { StorageService } from 'src/app/shared/storage/storage.service';
+import { ShareDataService } from 'src/app/shared/services/share_data/share-data.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,8 @@ export class AllowPostService {
   constructor(
     private postService: PostService,
     private checkRefreshToken: CheckRefreshTokenService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private shareDataService: ShareDataService
   ) { }
 
   private endpoint: string = "/set-allow-post";
@@ -31,11 +33,13 @@ export class AllowPostService {
     return this.postService.post(this.endpoint, header, body, true);
   }
 
-  sendAllowToServer(post: DetailPost, allow: number) {
+  sendAllowToServer(post: DetailPost, allow: number, allowEvent: any|null) {
     this.setAllowPost(post.post_id, allow).subscribe({
       next: (response: DefaultResponse) => {
+        if(allowEvent != null)
+          allowEvent.emit(post.post_id);
         post.allow = allow;
-        this.storageService.setAllowOfPostInStorage(post.post_id, allow);
+        this.shareDataService.setAllowOfDetailPosts(post.post_id, allow);
       },
       error: (e: HttpErrorResponse) => {
         console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
