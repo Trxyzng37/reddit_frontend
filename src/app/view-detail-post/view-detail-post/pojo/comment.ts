@@ -1,4 +1,4 @@
-export class Comment {
+export class CommentInfo {
     public _id: number;
     public post_id: number;
     public uid: number;

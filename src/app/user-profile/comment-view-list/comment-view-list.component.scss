@@ -1,0 +1,71 @@
+
+//sort
+#sort_container {
+    position: relative;
+    width: 100px;
+    height: auto;
+    align-self:flex-start;
+}
+
+b {
+    color: var(--icon);
+}
+
+#btn_sort {
+    width: auto;
+    height: 30px;
+    padding: 0 20px;
+    background-color: var(--primary_background_color);
+    border-radius: 20px;
+    font-weight: 500;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-wrap: nowrap;
+    margin-bottom: 10px;
+    color: var(--txt) !important;
+}
+
+#btn_sort:hover {
+    background-color: var(--bg_hover) !important;
+}
+
+#btn_sort > i {
+    margin-left: 10px;
+    font-size: 12px;
+}
+
+#sort_option_block {
+    width: 140px;
+    height: auto;
+    position: absolute;
+    top: 35px;
+    left: 0;
+    z-index: 999;
+    box-shadow: var(--menu_box_shadow);
+}
+
+#sort_option_block > button {
+    height: 40px;
+    width: 100%;
+    text-align: left;
+    padding-left: 20px;
+    background-color: var(--primary_background_color);
+    font-weight: 500;
+    color: var(--icon);
+}
+
+#sort_option_block > button:hover {
+    background-color: var(--bg_hover) !important;
+}
+
+#sort_option_block > b {
+    display: block;
+    height: 40px;
+    width: 100%;
+    text-align: left;
+    padding: 10px 20px;
+    background-color: var(--primary_background_color);
+
+}

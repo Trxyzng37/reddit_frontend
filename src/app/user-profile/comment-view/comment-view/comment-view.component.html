@@ -2,15 +2,32 @@
 <div id="comment_container" (click)="navigateToPost()">
     <div class="header">
         <div class="community_info">
-            <img [src]="postInfo.community_icon">
-            <b class="txt_community_name">r/{{postInfo.community_name}}</b>
+            <img [src]="postInfo.community_icon" (click)="navigateTocommunity($event)" title="{{postInfo.community_name}}">
+            <a class="txt_community_name" routerLink="/r/{{postInfo.community_id}}" title="{{postInfo.community_name}}">r/{{postInfo.community_name}}</a>
         </div>
         <p class="text_post_name">{{postInfo.title}}</p>
         <div class="username_block">
             <b class="txt_username">{{commentData.username}}</b>
-            <pre> commented </pre>
-            <p>{{commentData.created_at}}</p>
+            <pre style="color: var(--icon);"> commented </pre>
+            <p id="txt_created_at">{{dateTimeService.getTimeByCompareCreatedAtAndCurrentDate(commentData.created_at)}}</p>
         </div>
     </div>
+
     <div class="content" [innerHTML]=sanitizer.bypassSecurityTrustHtml(commentData.content)></div>
+
+    <div id="footer">
+        <div id="block_vote" class="block_vote">
+            <button class="btn_vote" id="btn_upvote" type="button" (click)="voteComment($event, 'upvote')"><img [attr.src]="voteType === 'upvote' ? upvote_fill : voteImgService.upvote" /></button>
+            <p style="color: var(--icon);">{{presentationService.transformNumber(commentData.vote)}}</p>
+            <button class="btn_vote" id="btn_downvote" type="button" (click)="voteComment($event, 'downvote')"><img [attr.src]="voteType === 'downvote' ? downvote_fill : voteImgService.downvote" /></button>
+        </div>
+        <button id="btn_reply" class="footer_btn" type="button" (click)="reply($event)" *ngIf="isReplyAllowed">
+            <i class="pi pi-comment" style="color: var(--icon);"></i>
+            <pre style="color: var(--icon);"> Reply</pre>
+        </button>
+        <button class="footer_btn" id="btn_edit" type="button" (click)="reply($event)" *ngIf="isEditAllowed">
+            <i class="pi pi-pencil" style="color: var(--icon);"> </i>
+            <pre style="color: var(--icon);"> Edit</pre>
+        </button>
+    </div>
 </div>

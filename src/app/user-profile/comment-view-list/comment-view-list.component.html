@@ -1,0 +1,27 @@
+
+<div id="sort_container">
+    <button id="btn_sort" [ngStyle]="{'background-color':isSortOptionShow?'var(--bg_hover)':'var(--primary_background_color)'}" (click)="showSortOption($event)">{{sort_text}}<i class="pi pi-chevron-down"></i></button>
+    <div id="sort_option_block" *ngIf="isSortOptionShow">
+        <b>Sort by</b>
+        <button [ngStyle]="{'background-color':sort_option=='hot'?'var(--search)':'var(--primary_background_color)'}" (click)="selectSort('hot')">Hot</button>
+        <button [ngStyle]="{'background-color':sort_option=='new'?'var(--search)':'var(--primary_background_color)'}" (click)="selectSort('new')">New</button>
+        <button [ngStyle]="{'background-color':sort_option=='top_day'?'var(--search)':'var(--primary_background_color)'}" (click)="selectSort('top_day')">Top today</button>
+        <button [ngStyle]="{'background-color':sort_option=='top_week'?'var(--search)':'var(--primary_background_color)'}" (click)="selectSort('top_week')">Top this week</button>
+        <button [ngStyle]="{'background-color':sort_option=='top_month'?'var(--search)':'var(--primary_background_color)'}" (click)="selectSort('top_month')">Top this month</button>
+        <button [ngStyle]="{'background-color':sort_option=='top_year'?'var(--search)':'var(--primary_background_color)'}" (click)="selectSort('top_year')">Top this year</button>
+        <button [ngStyle]="{'background-color':sort_option=='top_all_time'?'var(--search)':'var(--primary_background_color)'}" (click)="selectSort('top_all_time')">Top all time</button>
+    </div>
+</div>
+
+<div id="comment_container">
+    <app-comment-view
+        *ngFor="let comment of comments"
+        [commentData]="comment"
+    ></app-comment-view>
+    <div class="empty_block" *ngIf="comments.length == 0 && wait">No comment found</div>
+</div>
+
+<div class="load_data_block" *ngIf="isDataLoad">
+    <img class="img_load_data" src="../../../../assets/icon/logo.png">
+    <div class="data_loader"></div>
+</div>
