@@ -1,24 +1,29 @@
 <div id="main">
-
-
-<app-header-bar></app-header-bar>
+<!-- <app-header-bar></app-header-bar> -->
 <div id="container">
 <back-button></back-button>
-<h2 style="text-align: center;">Create a post</h2>
-<hr>
+<h2 style="color: var(--icon); margin-bottom: 10px; margin-top: 20px;">Create a post</h2>
+<!-- <hr> -->
 <div id="form">
-    <div id="search_community_block">
+    <div id="selected_community_block" *ngIf="!isShowSearchCommunity">
+        <div id="selected_community_icon">
+            <img [src]="selected_community.avatar">
+        </div>
+        <button id="btn_selected_community" (click)="openSearchCommunity()">{{selected_community.name}}</button>
+        <button id="btn_search_community_dropdown" type="button"><span class="pi pi-chevron-down" style="color: var(--icon);" (click)="onDropDownSearchClick($event)"></span></button>
+    </div>
+    <div id="search_community_block" *ngIf="isShowSearchCommunity">
         <div id="search_community_icon">
             <img src="{{avatar}}" />
         </div>
-        <input id="input_search_community" type="text" placeholder="Search communities" (focus)="onInputSearchComunityFocus($event)" #input_community (input)="searchCommunities(input_community.value)" [value]="this.community"/>
-        <button id="btn_search_community_dropdown" type="button"><span class="pi pi-chevron-down" (click)="onDropDownSearchClick($event)"></span></button>
+        <input id="input_search_community" *ngIf="isShowSearchCommunity" type="text" placeholder="Search communities" (focus)="onInputSearchComunityFocus($event)" #input_community (input)="searchCommunities(input_community.value)" [value]="this.community"/>
+        <button id="btn_search_community_dropdown" type="button"><span class="pi pi-chevron-down" style="color: var(--icon);" (click)="onDropDownSearchClick($event)"></span></button>
         <div id="search_community_result_block" [ngStyle]="{'display': isCommunitySearchDropdownOpen ? 'flex':'none'}">
-            <button type="button" *ngFor="let community of communities" (click)="selectCommunity(community)">
+            <button class="btn_select_community" type="button" *ngFor="let community of communities" (click)="selectCommunity(community)">
                 <img src="{{community.avatar}}"/>
                 <div>
                     <p id="community_name">r/{{community.name}}</p>
-                    <p id="member_count">{{community.subscriber_count}} members</p>
+                    <p style="color: var(--txt); font-size: 13px;">{{community.subscriber_count}} members</p>
                 </div>
             </button>
         </div>
@@ -51,7 +56,7 @@
             (dragleave)="onDragLeave($event)"
             >
             <div id="upload_img_block" [ngStyle]="{'justify-content': imgArr.length > 0 ? 'flex-start' : 'center'}">
-                <pre id="txt_drag_and_drop" [ngStyle]="{'display': imgArr.length > 0 ? 'none': 'block'}">  Drag and drop image or click the button </pre>
+                <pre style="color: var(--icon);" [ngStyle]="{'display': imgArr.length > 0 ? 'none': 'block'}">  Drag and drop image or click the button </pre>
                 <div id="img_uploaded_result">
                     <app-img-uploaded *ngFor="let i of imgArr; index as index" 
                         [img]="i.data" 
@@ -71,18 +76,18 @@
         </div>
         <div id="post_video_block" [ngStyle]="{'display': isPostVideoOpen ? 'flex' : 'none', 'background-color': videoContent.length == 0 ? 'var(--primary_background_color)':'transparent'}">
                 <input id="input_upload_video" type="file" accept=".mp4, .mov, .wmv, .WebM" (change)="onVideoUpload($event)" #input_video>
-                <p style="margin-right: 10px;" [ngStyle]="{'display': videoContent.length == 0 ? 'block':'none' }">Click button to upload video</p>
+                <p style="margin-right: 10px; color: var(--icon);" [ngStyle]="{'display': videoContent.length == 0 ? 'block':'none' }">Click button to upload video</p>
                 <button id="btn_upload_video" type="button" (click)="input_video.click()" [ngStyle]="{'display': videoContent.length == 0 ? 'block':'none' }"><img style="width: 50px; height: 50px" src="../../assets/icon/upload.png"/></button>
                 <div id="video_block" [ngStyle]="{'display': videoContent.length > 0 ? 'block':'none' }">
                     <video src="{{videoContent}}" preload="none" poster="" controls="true" disablepictureinpicture="true" style="align-self: flex-start;"></video>
-                    <button id="btn_delete_video" type="button" (click)="deleteVideo()" title="Delete video"><i class="pi pi-trash"></i></button>
+                    <button id="btn_delete_video" type="button" (click)="deleteVideo()" title="Delete video"><i class="pi pi-trash" style="color: var(--icon);"></i></button>
                 </div>
         </div>
         <button id="btn_create_post_video" type="button" (click)="createVideoPost('video', this.videoContent)" [disabled]="videoAllowed" [ngStyle]="{'display': isPostVideoOpen ? 'block' : 'none'}">Post</button>
         <div id="post_link_block" [ngStyle]="{'display': isPostLinkOpen ? 'block' : 'none'}">
-            <textarea (input)="inputLink($event)" placeholder="Enter a full link start with http or https"></textarea>
-            <!-- <p style="font-size: 13px; color: red;" *ngIf="linkAllowed">Incorrect link</p>
-            <p style="font-size: 13px; color: green;" *ngIf="!linkAllowed">Valid link</p> -->
+            <textarea style="border: 1px solid var(--icon);" (input)="inputLink($event)" placeholder="Enter a full link start with http or https"></textarea>
+            <p style="font-size: 13px; color: red; margin-top: 3px;" *ngIf="linkAllowed && linkContent.length != 0">Incorrect link</p>
+            <p style="font-size: 13px; color: green; margin-top: 3px;" *ngIf="!linkAllowed">Valid link</p>
             <button id="btn_create_post_link" type="button" (click)="createLinkPost('link', this.linkContent)" [disabled]="linkAllowed">Post</button>
         </div>
     </div>
@@ -90,11 +95,10 @@
 </div>
 
 </div>
-<div id="load_container" *ngIf="isLoad">
-    <div id="load_block">
-        <div class="loader"></div>
-        <b style="padding-top: 10px;font-size: 20px;">Create new post. Please wait...</b>
-    </div>
-</div>
 </div>
 
+<loading [txt_load]="'Create new post. Please wait'" *ngIf="isLoad"></loading>
+
+<div id="community_info_block" *ngIf="selected_community.id != 0">
+    <community-info [community_info]="selected_community"></community-info>
+</div>

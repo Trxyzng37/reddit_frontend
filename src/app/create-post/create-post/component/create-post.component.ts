@@ -33,7 +33,8 @@ export class CreatePostComponent {
   @Input() img: Img = new Img("");
   @Input() selected_id: number = 0;
 
-  communities: Communities[] = [];
+  public communities: Communities[] = [];
+  public selected_community: Communities = new Communities(0, "Select a community", 0, "", "", 0, "../../assets/icon/dashed_circle.png", "", 0, 0);
   public avatar: string = "../../assets/icon/dashed_circle.png";
   public isPostOpen: boolean = true;
   public isPostImageOpen: boolean = false;
@@ -43,6 +44,7 @@ export class CreatePostComponent {
   public isCommunitySearchDropdownOpen: boolean = false;
   public characterCount: number = 0;
   public isLoad: boolean = false;
+  public isShowSearchCommunity: boolean = false;
 
   public title: string = "";
   public community: string = "";
@@ -68,6 +70,7 @@ export class CreatePostComponent {
           this.community = response.name;
           this.avatar = response.avatar;
           this.allow = response.scope == 0 ? 1 : 0;
+          this.selected_community = response;
           this.AllowSubmit();
         }
       })
@@ -202,22 +205,36 @@ export class CreatePostComponent {
 
   onDropDownSearchClick(event: Event) {
     this.isCommunitySearchDropdownOpen = !this.isCommunitySearchDropdownOpen;
+    this.isShowSearchCommunity = !this.isShowSearchCommunity;
     event.stopPropagation();
   }
 
+  // @HostListener('document:click', ['$event'])
+  // closeCommunitySearch(event: Event) {
+  //     this.isCommunitySearchDropdownOpen = false;
+  //     const cellText = document.getSelection();
+  //     // if (cellText?.type === 'Range') 
+  //       // event.stopPropagation();
+  // }
+
+  public searchTimeout: any;
+  public isSearch: boolean = false;
   searchCommunities(value: string) {
-    if (value !== " " && value !== "") {
+    if(value.replace(" ","") != "") {
       this.community = value;
       console.log("community: " + value);
-      this.searchCommunitiesService.searchCommunities(value).subscribe({
-        next: (response: Communities[]) => {
-          // console.log(response)
-          this.communities = response;
-        },
-        error: (e: HttpErrorResponse) => {
-          console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
-        }
-      })
+      if(this.searchTimeout != undefined)
+        clearTimeout(this.searchTimeout);
+      this.searchTimeout = setTimeout(() => {
+        this.searchCommunitiesService.searchCommunities(value).subscribe({
+          next: (response: Communities[]) => {
+            this.communities = response;
+          },
+          error: (e: HttpErrorResponse) => {
+            console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
+          }
+        })
+      }, 250);
     }
     else {
       this.communities = [];
@@ -227,7 +244,16 @@ export class CreatePostComponent {
     this.AllowSubmit();
   }
 
+  openSearchCommunity() {
+    this.isShowSearchCommunity = !this.isShowSearchCommunity;
+    if(this.isShowSearchCommunity) {
+      document.getElementById("input_search_community")?.focus();
+    }
+  }
+
   selectCommunity(community: Communities) {
+    this.selected_community = community;
+    this.isShowSearchCommunity = !this.isShowSearchCommunity;
     this.isCommunitySearchDropdownOpen = false;
     this.community = community.name;
     this.avatar = community.avatar;
@@ -288,7 +314,7 @@ export class CreatePostComponent {
     base_url: '/tinymce',
     suffix: '.min',
     plugins: 'link lists codesample image', 
-    toolbar: "bold italic underline strikethrough forecolor subscript superscript removeformat numlist bullist alignleft aligncenter alignright alignjustify link blockquote codesample image",
+    toolbar: "bold italic underline strikethrough subscript superscript removeformat numlist bullist alignleft aligncenter alignright alignjustify link blockquote codesample image",
     toolbar_mode: 'wrap',
     placeholder: '(Optional)',
     automatic_uploads: true,
@@ -321,6 +347,7 @@ export class CreatePostComponent {
     custom_colors: false,
     content_css: 'tinymce-5',
     content_style: 
+      'html body { overflow: auto; }' +
       'p { margin: 0; } ' + 
       'img { display: block; margin: 0 auto; out-line: 0; max-width: 100%; max-height: 100%}' +
       'body {line-height: normal}' +
