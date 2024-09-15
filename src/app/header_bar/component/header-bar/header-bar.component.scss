@@ -7,10 +7,10 @@
     align-items: center;
     width: 100%;
     height: var(--header_size);
-    background-color: var(--primary_background_color);
+    background-color: var(--header);
     z-index: 100;
     box-sizing: border-box;
-    border-bottom: 1px solid var(--secondary_color);
+    border-bottom: 1px solid var(--border);
 }
 
 a {
@@ -44,11 +44,12 @@ a {
 }
 
 #main_logo {
-    width: 40px;
-    height: 40px;
-    margin-right: 5px;
+    width: 30px;
+    height: 30px;
+    // margin-right: 5px;
     position: relative;
     top: 2px;
+    left: 5px;
 }
 
 #search_block {
@@ -64,7 +65,8 @@ a {
     box-sizing: border-box;
     border-radius: 20px;
     font-size: 16px;
-    background-color: var(--neutral);
+    color: var(--icon);
+    background-color: var(--search);
     // background-image: url("../../../../assets/icon/search.png");
     // background-size: 20px 20px;
     // background-position: 15px 8px; 
@@ -74,12 +76,12 @@ a {
 }
 
 .search_box:focus {
-    background-color: var(--neutral);
+    background-color: var(--search);
     box-shadow: var(--box_shadow);
 }
 
 .search_box:not(:focus-within) {
-    background-color: var(--neutral);
+    background-color: var(--search);
     border-radius: 20px;
     box-shadow: none;
     height: 36px;
@@ -88,7 +90,7 @@ a {
 }
 
 .search_box:hover {
-    background-color: var(--neutral);
+    background-color: var(--search);
 }
 
 #search_block > i {
@@ -101,7 +103,7 @@ a {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
     height: calc(var(--header_size) - 6px);
-    border-bottom: 1px solid var(--secondary_color);
+    border-bottom: 1px solid var(--border);
     box-shadow: var(--box_shadow);
     background-position: 15px 12px; 
 }
@@ -121,24 +123,25 @@ a {
     max-height: 365px;
     position: relative;
     top: 0;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
     overflow: auto;
     box-sizing: border-box;
     box-shadow: var(--box_shadow);
+    background-color: var(--search);
 }
 
 #btn_search {
     padding: 15px 20px;
     width: auto;
     border-top: 1px solid var(--light_border);
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    background-color: var(--neutral);
+    background-color: var(--search);
 }
 
 #btn_search > i {
@@ -158,27 +161,28 @@ a {
   }
 
 .communities_id {
-    background-color: var(--neutral);
+    background-color: var(--search);
     height: auto;
     width: 100%;
     padding-left: 10px;
     padding: 10px;
     font-weight: 500;
     box-sizing: border-box;
+    color: var(--icon);
 }
 
 
-#community_name {
+.community_name {
     font-size: 16px;
     font-weight: 500;
 }
 
-#member_count {
+.member_count {
     font-size: 14px;
 }
 
 .search_result_link {
-    background-color: var(--neutral);
+    background-color: var(--search);
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -210,7 +214,7 @@ a {
 }
 
 #signin_signup_block > a:hover {
-    background-color: var(--neutral);
+    background-color: var(--search);
 }
 
 #logged_in_block {
@@ -239,7 +243,7 @@ a {
 }
 
 #btn_profile:hover {
-    background-color: var(--neutral) !important;
+    background-color: var(--search) !important;
 }
 
 #user_logo, .seach_result_icon {
@@ -265,8 +269,9 @@ a {
     top: 50px;
     right: 15px;
     box-shadow: var(--menu_box_shadow);
-    border: 1px solid var(--neutral);
+    border: 1px solid var(--search);
     border-radius: 10px;
+    z-index: 999;
 }
 
 #menu > p {
@@ -298,10 +303,11 @@ a {
     align-items: center;
     font-size: 16px;
     background-color: var(--primary_background_color);
+    color: var(--secondary_color) !important;
 }
 
 .btn_profile_menu:hover {
-    background-color: var(--neutral);
+    background-color: var(--search);
 }
 
 .btn_profile_menu i {
@@ -320,10 +326,11 @@ a {
     font-size: 16px;
     background-color: transparent;
     border-radius: 20px;
+    color: var(--secondary_color) !important;
 }
 
 #btn_create_post:hover {
-    background-color: var(--neutral);
+    background-color: var(--search);
 }
 
 #btn_create_post > i {
@@ -353,10 +360,11 @@ a {
     display: flex;
     justify-content: center;
     align-items: center;
+    color: var(--icon);
 }
 
 #icon_open_nav:hover {
-    background-color: var(--neutral);
+    background-color: var(--search);
 }
 
 @media only screen and (max-width: 1200px) {
@@ -384,6 +392,6 @@ a {
 
 
 ::-webkit-scrollbar-track {
-    background: var(--neutral); 
+    background: var(--search); 
   }
 

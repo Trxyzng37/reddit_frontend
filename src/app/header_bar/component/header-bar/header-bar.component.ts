@@ -13,6 +13,7 @@ import { VoteImgService } from 'src/app/shared/services/vote-img/vote-img.servic
 import { getCookie } from 'typescript-cookie';
 import { RemoveRefreshTokenService } from 'src/app/shared/services/remove-refresh-token/remove-refresh-token.service';
 import { CheckRefreshTokenService } from 'src/app/shared/services/check-refresh-token/check-refresh-token.service';
+import { DarkModeService } from 'src/app/shared/services/dark-mode/dark-mode.service';
 
 @Component({
   selector: 'app-header-bar',
@@ -30,33 +31,48 @@ export class HeaderBarComponent {
     public presentationService: PresentationService,
     public voteImgService: VoteImgService,
     private removeRefreshTokenService: RemoveRefreshTokenService,
-    private checkRefreshToken: CheckRefreshTokenService
+    private checkRefreshToken: CheckRefreshTokenService,
+    private darkmodeService: DarkModeService
   ) {}
 
   @Output() openNavigationEvent = new EventEmitter<Object>;
 
   public isSignIn: boolean = false;
+  public isModPage: boolean = window.location.href.includes('mod/');
   public isProfileMenuOpen: boolean = false;
   public communities_result: Communities[] = [];
   public user_profile_result: UserProfile[] = [];
   public userInfo: UserProfile = new UserProfile(0,'','','',0,0,'');
   public background_mode: string = "Dark mode"; 
   public isSearch: boolean = false;
+  public wait: boolean = false;
 
   ngOnInit() {
     this.checkRefreshToken.checkRefreshToken().subscribe({
       next: (response: any) => {
-        this.isSignIn = true;
         this.isSignIn = (this.storageService.getItem("uid") != "" && this.storageService.getItem("uid") != "0") ? true:false;
-        const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid")); 
+        const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
+        //recheck token every 30s
+        setInterval(() => {
+          this.checkRefreshToken.checkRefreshToken().subscribe({
+            next: (response: any) => {
+              this.isSignIn = (this.storageService.getItem("uid") != "" && this.storageService.getItem("uid") != "0") ? true:false;
+            },
+            error: (e: HttpErrorResponse) => {
+              window.location.reload();
+            }
+          });
+        }, 60000); 
         this.userProfileService.getUserProfileByUid(uid).subscribe({
           next: (response: UserProfile) => {
+            this.wait = true;
             this.userInfo = response;
           }
         })
       },
       error: (e: HttpErrorResponse) => {
         this.isSignIn = false;
+        this.wait = true;
       }
     })
     document.getElementById("txt_username")?.addEventListener('click', (event)=>{
@@ -97,8 +113,6 @@ export class HeaderBarComponent {
         this.searchCommunitiesService.searchCommunities(value).subscribe({
           next: (response: Communities[]) => {
             this.communities_result = response.slice(0,4);
-            // const search = <HTMLInputElement>document.getElementById("search_box");
-            // this.isSearch = search.value.length > 0;
           },
           error: (e: HttpErrorResponse) => {
             console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
@@ -152,13 +166,12 @@ export class HeaderBarComponent {
         this.removeRefreshTokenService.removeRefreshToken().subscribe({
           next: (response: any) => {
             this.storageService.removeItem("uid");
-            this.storageService.removeItem("username");
+            this.storageService.removeItem("mode");
             window.location.href = "/signin";
           },
           error: (e: HttpErrorResponse) => {
             this.storageService.removeItem("uid");
-            this.storageService.removeItem("username");
-            this.storageService.removeItem("join_community");
+            this.storageService.removeItem("mode");
             window.location.href = "/signin";
           }
         })
@@ -171,11 +184,12 @@ export class HeaderBarComponent {
   }
 
   navigateToUserProfile() {
-    window.location.href = "/user/" + this.userInfo.username;
+    window.location.href = "/user/" + this.userInfo.username + "/posts";
   }
 
   createPost() {
-    window.location.href = "/create-post";
+    // window.location.href = "/create-post";
+    this.router.navigate(['/create-post']);
   }
 
   isOpen = false;
@@ -189,30 +203,8 @@ export class HeaderBarComponent {
 
   useDarkMode() {
     const mode = this.storageService.getItem("mode") == "1" ? 1 : 0;
-    if(mode == 0) {
-      document.body.style.setProperty("--primary_background_color", "#222831");
-      document.body.style.setProperty("--neutral", "#31363F");
-      document.body.style.setProperty("--secondary_color", "#ffffff");
-      document.body.style.setProperty("--link", "#648EFC");
-      let el = document.querySelectorAll<HTMLElement>('*');
-      for(var i=0;i<el.length;i++){
-        el[i].style.color = '#ffffff';
-      }
-      this.background_mode = "Light mode";
-      this.storageService.setItem('mode', "1");
-    }
-    else {
-      document.body.style.setProperty("--primary_background_color", "#ffffff");
-      document.body.style.setProperty("--neutral", "#efefef");
-      document.body.style.setProperty("--secondary_color", "#000000");
-      document.body.style.setProperty("--link", "#01255c");
-      let el = document.querySelectorAll<HTMLElement>('*');
-      for(var i=0;i<el.length;i++){
-        el[i].style.color = '#000000';
-      }
-      this.background_mode = "Dark mode";
-      this.storageService.setItem('mode', "0");
-    }
+    this.storageService.setItem("mode", mode == 1 ? "0" : "1");
+    this.darkmodeService.useDarkMode();
     this.isProfileMenuOpen = false;
     this.voteImgService.selectDownVoteImg();
     this.voteImgService.selectUpVoteImg();
