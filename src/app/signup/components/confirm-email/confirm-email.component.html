@@ -14,10 +14,7 @@
         <button id="btn_resend_passcode" type="button" (click)="reSendPasscode()" [disabled]="resend_count > 0">Re-send <p style="display: inline;" *ngIf="resend_count > 0">({{resend_count}}s)</p></button>
     </div>
 </div>
-<div id="load_container" *ngIf="isLoad">
-    <div id="load_block">
-        <div class="loader"></div>
-        <b style="padding-top: 10px;font-size: 20px;">Create new passcode. Please wait...</b>
-    </div>
-</div>
+
+<loading [txt_load]="'Checking passcode. Please wait'" *ngIf="isLoad"></loading>
+<loading [txt_load]="'Creating new passcode. Please wait'" *ngIf="isResendPasscode"></loading>
 

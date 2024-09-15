@@ -53,11 +53,11 @@ input {
     margin-bottom: 10px;
     text-align: center;
     font-size: 26px;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 #btn_submit {
-    background-color: var(--allow);
+    background-color: var(--main_color);
     font-size: medium;
     width: auto;
     height: auto;
@@ -66,6 +66,7 @@ input {
     border-radius: 20px;
     position: relative;
     margin-bottom: 20px;
+    color: black;
 }
 
 #div_resend {
@@ -77,7 +78,7 @@ input {
 }
 
 #btn_resend_passcode {
-    background-color: var(--allow);
+    background-color: white;
     font-size: 14px;
     font-weight: 500;
     padding: 5px 20px;

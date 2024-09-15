@@ -24,6 +24,7 @@ export class ConfirmEmailComponent {
   ) {}
 
   public isLoad: boolean = false;
+  public isResendPasscode: boolean = false;
   public resend_count = 0;
 
   public confirmEmailPasscodeForm: any = new FormGroup({
@@ -45,10 +46,12 @@ export class ConfirmEmailComponent {
 
   public confirmEmailPasscodeFormSubmit() {
     if (this.confirmEmailPasscodeForm.status === "VALID") {
+      this.isLoad = true;
       const passcode: number = this.confirmEmailPasscodeForm.value.passcode;
       const observable: Observable<PasscodeResponse> = this.confirmEmailService.checkConfirmEmailPasscode(passcode);
       observable.subscribe({
         next: (response: PasscodeResponse) => {
+          this.isLoad = false;
           if (response.isPasscodeExpired) {
             Swal.fire("Passcode has expired",'','warning')
           }
@@ -59,7 +62,7 @@ export class ConfirmEmailComponent {
                 icon: 'success'
               }).then((result)=>{
                 this.storageService.removeItem("signup-email");
-                this.router.navigate(["/signin"])
+                window.location.href = "/signin";
               })
             }
             else {
@@ -68,6 +71,7 @@ export class ConfirmEmailComponent {
           }
         },
         error: (e: HttpErrorResponse) => {
+          this.isLoad = false;
           Swal.fire("An unknown error has happen. Please try to sign-up again",'','error')
         }
       })
@@ -76,21 +80,20 @@ export class ConfirmEmailComponent {
 
   public reSendPasscode() {
     this.resend_count = 60;
-    this.isLoad = true;
+    this.isResendPasscode = true;
     const observable: Observable<ResendEmailPasscodeResponse> = this.confirmEmailService.reSendPasscode("/resend-confirm-email-passcode", this.email);
     observable.subscribe({
       next: (response: ResendEmailPasscodeResponse) => {
+        this.isResendPasscode = false;
         if (response.createdNewPasscode) {
-          this.isLoad = false;
           Swal.fire("New Passcode has been sent to your email",'','success');
         }
         else {
-          this.isLoad = false;
           Swal.fire("Error create new passcode. Please try again",'','error');
         }
       },
       error: (e: HttpErrorResponse) => {
-        this.isLoad = false;
+        this.isResendPasscode = false;
         Swal.fire("Error create new passcode. Please try again",'','error');
       }
     })
