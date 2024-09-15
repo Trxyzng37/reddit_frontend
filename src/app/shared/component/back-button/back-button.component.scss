@@ -1,7 +1,7 @@
 #btn_back {
     width: 35px;
     aspect-ratio: 1/1;
-    background-color: var(--neutral);
+    background-color: var(--search);
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -10,6 +10,7 @@
 
 #btn_back > i {
     font-size: 20px;
+    color: var(--icon) !important;
 }
 
 #btn_back:hover {
