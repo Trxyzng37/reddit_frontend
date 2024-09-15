@@ -23,10 +23,10 @@ export class PostViewComponent {
   }
 
   ngOnChanges() {
-    this.getPostService.getPostByUser("/get-posts-by-uid", this.uid, "new").subscribe({
-      next: (response: GetPostResponse[]) => {
-        this.posts = response;
-      }
-    })
+    // this.getPostService.getPostByUser("/get-posts-by-uid", this.uid, "new").subscribe({
+    //   next: (response: GetPostResponse[]) => {
+    //     this.posts = response;
+    //   }
+    // })
   }
 }

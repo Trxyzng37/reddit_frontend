@@ -1,6 +1,5 @@
 import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
-import { Router } from '@angular/router';
-import { GalleryItem } from 'ng-gallery';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GetPostResponse } from 'src/app/post-link-list/pojo/get-post-response';
 import { StorageService } from 'src/app/shared/storage/storage.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -10,7 +9,7 @@ import { CheckVotePostResponse } from '../service/check-vote-post/pojo/check-vot
 import { VotePostResponse } from '../service/vote-post/pojo/vote-post-response';
 import { DateTimeService } from 'src/app/shared/services/date-time/date-time.service';
 import { GetCommentsService } from 'src/app/view-detail-post/view-detail-post/service/get-comments/get-comments.service';
-import { Comment } from 'src/app/view-detail-post/view-detail-post/pojo/comment';
+import { CommentInfo } from 'src/app/view-detail-post/view-detail-post/pojo/comment';
 import { CommunityService } from 'src/app/shared/services/search-communites/community.service';
 import { JoinCommunityResponse } from 'src/app/shared/services/search-communites/pojo/join-community-response';
 import { CheckShowPostService } from 'src/app/shared/services/check-show-post/check-show-post.service';
@@ -24,6 +23,9 @@ import { SavePostService } from 'src/app/shared/services/save-post/save-post.ser
 import { SavedPostResponse } from 'src/app/shared/services/save-post/pojo/saved-post-response';
 import Swal from 'sweetalert2';
 import { VoteImgService } from 'src/app/shared/services/vote-img/vote-img.service';
+import { JoinCommunity } from 'src/app/shared/pojo/join-community';
+import { DetailPost } from 'src/app/post-link-list/pojo/detail-post';
+import { ShareDataService } from 'src/app/shared/services/share_data/share-data.service';
 
 @Component({
   selector: 'app-post-link',
@@ -44,10 +46,12 @@ export class PostLinkComponent {
     private deletePostService: DeletePostService,
     public presentationService: PresentationService,
     private savePostService: SavePostService,
-    public voteImgService: VoteImgService 
+    public voteImgService: VoteImgService,
+    private shareDataService: ShareDataService,
+    private activeRoute: ActivatedRoute,
   ) {}
 
-  @Input() post!: GetPostResponse;
+  @Input() post!: DetailPost;
   @Input() post_id: number = 0;
   @Input() type: string = "";
   @Input() communityName: string = "";
@@ -59,25 +63,36 @@ export class PostLinkComponent {
   @Input() communityIcon: string = "";
   @Input() index: number = 0;
   @Input() arr_length: number = 0;
-  @Input() joinCommunityEventCount: number = 0;
+  @Input() joinCommunityInfo: JoinCommunity = new JoinCommunity(0, false);
+  // @Input() joinCommunityEventCount: number = 0;
 
   @Output() event = new EventEmitter<GetPostResponse>();
-  @Output() joinCommunityEvent = new EventEmitter<boolean>();
-  @Output() allowPostEvent = new EventEmitter<number>();
+  @Output() joinCommunityEvent = new EventEmitter<JoinCommunity>();
+  @Output() allowPostEvent = new EventEmitter<number>(); //emit post_id
     
   public voteType: string = 'none'; //none upvote downvote
   public previousVote: number = this.vote;
+  public previousVoteType: string = "";
   public shownDate: string = "";
   public comment_count: number = 0;
-  public isJoinCommunity: boolean = false;
   public isHomePage: boolean = false;
+  public isPopularPage: boolean = false;
   public isCommunityPage: boolean = false;
   public isControlPage: boolean = false;
-  public isCommunityOwner: boolean = false;
-  public communityInfo!: Communities;
-  public joinText: string = this.isJoinCommunity ? 'Joined' : 'Join';
+  public isUserPage: boolean = false;
+  public isUserPostPage: boolean = false;
+  public isSavedPostPage: boolean = false;
+  public isWaitApprovePostPage: boolean = false;
+  public isModPage: boolean = false;
+  public isReviewModPage: boolean = false;
+  public isReportModPage: boolean = false;
+  public isRemoveModPage: boolean = false;
+  public isEditModPage: boolean = false;
+
+  public communityInfo: Communities = new Communities(0,"",0,"","",0,"","",0,0);
   public saved: boolean = false;
   public savedText: string = this.saved ? 'Unsave' : "Save";
+  public subscribed_communities: Communities[] = [];
 
   public  upvote = "../../../../../assets/icon/upvote.png";
   public  upvote_fill = "../../../../../assets/icon/upvote-fill.png";
@@ -85,39 +100,65 @@ export class PostLinkComponent {
   public  downvote_fill = "../../../../../assets/icon/downvote-fill.png";
 
   ngOnInit() {
+    this.shareDataService.subscribed_communities$.subscribe(res => {
+      this.subscribed_communities = res;
+    })
+    this.getCommentService.countComments(this.post_id).subscribe({
+      next: (response: number) => {
+        this.comment_count = response;
+      }
+    })
     this.voteImgService.selectDownVoteImg();
     this.voteImgService.selectUpVoteImg();
-    const found = window.location.href.match('/home');
-    if(found != null) 
-      this.isHomePage = true;
-    const found1 = window.location.href.match('/r/');
-    if(found1 != null) 
-      this.isCommunityPage = true;
+    this.isHomePage = window.location.href.includes('/home');
+    this.isPopularPage = window.location.href.includes('/popular');
+    this.isCommunityPage = window.location.href.includes('/r/');
     this.isControlPage = window.location.href.includes("/control-posts/");
-    this.shownDate = this.dateTimeService.getTimeByCompareCreatedAtAndCurrentDate(this.created_at);
+    this.isUserPage = window.location.href.includes('/user/');
+    this.isModPage = window.location.href.includes("/mod/");
+    if(this.isUserPage) {
+      const username = this.activeRoute.parent?.snapshot.params['username'];
+      this.isUserPostPage = window.location.href.includes("/user/"+username+"/posts");
+      this.isSavedPostPage = window.location.href.includes("/user/"+username+"/saved");
+      this.isWaitApprovePostPage = window.location.href.includes("/user/"+username+"/wait_for_approve");
+    }
+    if(this.isModPage) {
+      this.isReviewModPage = window.location.href.includes("/review");
+      this.isReportModPage = window.location.href.includes("/report");
+      this.isRemoveModPage = window.location.href.includes("/remove");
+      this.isEditModPage = window.location.href.includes("/edit");
+    }
+    this.shownDate = this.dateTimeService.getTimeByCompareCreatedAtAndCurrentDate(this.post.created_at);
     const uid: number = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
-    this.checkVotePostService.checkVotePost(this.post_id, uid).subscribe({
-      next: (response: CheckVotePostResponse) => {
-        this.voteType  = response.vote_type;
-      },
-      error: (e: HttpErrorResponse) => {
-        console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
-      }
-    })
-    this.getCommentService.getComments(this.post_id).subscribe({
-      next: (response: Comment[]) => {
-        this.comment_count = response.length;
-      },
-      error: (e: HttpErrorResponse) => {
-        console.log("HttpServletResponse: " + e.error.message + "\n" + "Error: " + e.error);
-      }
-    })
-    this.communityService.checkJoinCommunityStatus(uid, this.post.community_id).subscribe({
-      next: (response: JoinCommunityResponse) => {
-        this.isJoinCommunity = response.join_community == 0 ? false : true;
-        this.joinText = this.isJoinCommunity ? 'Joined' : 'Join';
-      }
-    })
+    if(uid == 0) {
+      this.post.join = null;
+      this.post.save = null;
+      this.post.voteType = null;
+    }
+    if((this.post.join == null) && (uid != 0)) {
+      this.communityService.checkJoinCommunityStatus(uid, this.post.community_id).subscribe({
+        next: (response: JoinCommunityResponse) => {
+          this.post.join = response.join_community;
+          this.shareDataService.setJoinCommunityOfDetailPosts(this.post.community_id, response.join_community);
+        }
+      })
+    }
+    if((this.post.save == null) && (uid != 0)) {
+      this.savePostService.getSavedPostStatusByUid(uid, this.post.post_id).subscribe({
+        next: (response: SavedPostResponse) => {
+          this.post.save = response.saved;
+          this.shareDataService.setSaveStatusOfDetailPosts(this.post.post_id, response.saved);
+        }
+      })
+    }
+    if((this.post.voteType == null) && (uid != 0)) {
+      this.checkVotePostService.checkVotePost(this.post.post_id, uid).subscribe({
+        next: (response: CheckVotePostResponse) => {
+          this.post.voteType = response.vote_type;
+          this.shareDataService.setVoteTypeOfDetailPosts(this.post.post_id, this.voteType);
+        }
+      })
+    }
     if(this.post.type == "editor") {
         let figure_pattern = /<figure class="image">([\s\S]*?)<\/figure>/g;
         this.content = this.content.replace(figure_pattern, (match, url) => {
@@ -130,32 +171,63 @@ export class PostLinkComponent {
           return `<a>${s![1]}</a>`;
         });   
     }
-    this.savePostService.getSavedPostStatusByUid(uid, this.post_id).subscribe({
-      next: (response: SavedPostResponse) => {
-        this.saved = response.saved == 1 ? true : false;
-        this.savedText = response.saved == 1 ? 'Unsave' : "Save";
-      }
-    })
   }  
 
   ngOnChanges() {
-    const uid: number = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
-    this.communityService.checkJoinCommunityStatus(uid, this.post.community_id).subscribe({
-      next: (response: JoinCommunityResponse) => {
-        this.isJoinCommunity = response.join_community == 0 ? false : true;
-        this.joinText = this.isJoinCommunity ? 'Joined' : 'Join';
-      }
-    })
-    this.communityService.getCommunityInfoById(this.post.community_id.toString()).subscribe({
-      next: (response: Communities) => {
-        this.communityInfo = response;
-        this.isCommunityOwner = uid === this.communityInfo.uid;
-      }
-    })
+    if(this.joinCommunityInfo.community_id == this.post.community_id) {
+      this.post.join = this.joinCommunityInfo.join ? 1 : 0;
+      this.shareDataService.setJoinCommunityOfDetailPosts(this.post.post_id, this.joinCommunityInfo.join ? 1 : 0);
+    }
   }
 
-  on_click() {
-    window.location.href = "/post/" + this.post_id;
+  navigateToPost() {
+    const created_at: Date = this.dateTimeService.getCurrentDateTime();
+      this.shareDataService.setCurViewPostId(this.post_id);
+    if(this.isHomePage) {
+      this.shareDataService.setHomeCurViewPostId(this.post_id);
+      this.router.navigate(['post/'+this.post_id]);
+    }
+    if(this.isPopularPage) {
+      this.shareDataService.setPopularCurViewPostId(this.post_id);
+      this.router.navigate(['post/'+this.post_id]);
+    }
+    if(this.isCommunityPage) {
+      this.shareDataService.setCommunityCurViewPostId(this.post_id);
+      this.router.navigate(['post/'+this.post_id]);
+    }
+    if(this.isUserPostPage) {
+      this.shareDataService.setUserPostCurViewPostId(this.post_id);
+      this.router.navigate(['post/'+this.post_id]);
+    }
+    if(this.isSavedPostPage) {
+      this.shareDataService.setSavedCurViewPostId(this.post_id);
+      this.router.navigate(['post/'+this.post_id]);
+    }
+    if(this.isWaitApprovePostPage) {
+      this.shareDataService.setWaitForApproveCurViewPostId(this.post_id);
+      this.router.navigate(['post/'+this.post_id]);
+    }
+    if(this.isReviewModPage) {
+      this.router.navigate(['mod/'+this.post.community_id+"/review/"+this.post_id]);
+    }
+  }
+
+  navigateToCommunity() {
+    const created_at: Date = this.dateTimeService.getCurrentDateTime();
+    // this.storageService.setItem("time", created_at.toISOString());
+    // if(!this.isHomePage && !this.isPopularPage)
+    //   this.shareDataService.setCurViewPostId(this.post_id);
+    // if(this.isHomePage)
+    //   this.shareDataService.setHomeCurViewPostId(this.post_id);
+    // if(this.isPopularPage)
+    //   this.shareDataService.setPopularCurViewPostId(this.post_id);
+    // if(this.isCommunityPage)
+    //   this.shareDataService.setCommunityCurViewPostId(this.post_id);
+    this.router.navigate(['r/'+this.post.community_id]);
+  }
+
+  linkClick(event: Event) {
+    event.preventDefault();
   }
 
   stopPropagation(event: Event) {
@@ -163,10 +235,8 @@ export class PostLinkComponent {
   }
 
   public isOptionMenuOpen: boolean = false;
-
   openOptionMenu(event: Event) {
     this.isOptionMenuOpen = !this.isOptionMenuOpen;
-    // console.log("Option menu open")
     event.stopPropagation();
   }
 
@@ -177,8 +247,8 @@ export class PostLinkComponent {
       this.showCount++;
       if(this.showCount == 1) {
         const uid: number = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
-        if(uid != 0)
-          this.showPostService.setShowPost(uid, this.post_id, 1).subscribe({})
+        // if(uid != 0)
+          // this.showPostService.setShowPost(uid, this.post_id, 1).subscribe({})
       }
 
       // console.log("count: "+this.count)
@@ -198,84 +268,58 @@ export class PostLinkComponent {
     }
   }
 
-  addNewPost(o: GetPostResponse) {
-    this.event.emit(o);
-  }
+  // addNewPost(o: GetPostResponse) {
+  //   this.event.emit(o);
+  // }
 
   votePost(event: Event, type: string) {
     event.stopPropagation();
-    if (this.voteType === 'none' && type === 'upvote') {
-      this.previousVote = this.vote;
-      this.vote += 1;
-      this.voteType = 'upvote';
-    }
-    else if (this.voteType === 'none' && type === 'downvote') {
-      this.previousVote = this.vote;
-      this.vote -= 1;
-      this.voteType = 'downvote';
-    }
-    else if (this.voteType === 'upvote' && type === 'upvote') {
-      this.previousVote = this.vote;
-      this.vote -= 1;
-      this.voteType = 'none';
-    }
-    else if (this.voteType === 'upvote' && type === 'downvote') {
-      this.previousVote = this.vote;
-      this.vote -= 2;
-      this.voteType = 'downvote';
-    }
-    else if (this.voteType === 'downvote' && type === 'upvote') {
-      this.previousVote = this.vote;
-      this.vote += 2;
-      this.voteType = 'upvote';
-    }
-    else if (this.voteType === 'downvote' && type === 'downvote') {
-      this.previousVote = this.vote;
-      this.vote += 1;
-      this.voteType = 'none';
-    }
-    console.log(this.post_id + ": " + this.vote);
-    this.sendVotePostToServer();
+      const voteInfo = this.votePostServie.prepareVote(type, this.post);
+      this.votePostServie.sendVotePostToServer(this.post, voteInfo);
+      // if(voteInfo.curVoteType != "none" && voteInfo.curVoteType != null) {
+      //   this.upvote = this.voteImgService.upvote_light;
+      //   this.downvote = this.voteImgService.downvote_light;
+      //   this.voteImgService.downvote = this.voteImgService.downvote_light;
+      //   this.voteImgService.upvote = this.voteImgService.upvote_light;
+      // }
+      // else {
+      //   this.upvote = this.voteImgService.upvote_dark;
+      //   this.downvote = this.voteImgService.downvote_dark;
+      //   this.voteImgService.downvote = this.voteImgService.downvote_dark;
+      //   this.voteImgService.upvote = this.voteImgService.upvote_dark;
+      // }
   }
 
-  sendVotePostToServer() {
+  sendJoinCommunityFromPostToServer(post: DetailPost, join: number) {
     const uid: number = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
-    this.votePostServie.votePost(this.post_id, this.vote, uid, this.voteType).subscribe({
-      next: (response: VotePostResponse) => {
-        console.log("Vote post_id: "+response.post_id);
-      },
-      error: (e: HttpErrorResponse) => {
-        console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
-        this.vote = this.previousVote;
-        this.voteType = 'none';
-        console.log("Error vote post");
-        console.log("vote when error: "+this.vote);
+    this.communityService.joinCommunity(uid, post.community_id, join).subscribe({
+      next: (response: JoinCommunityResponse) => {
+        post.join = join;
+        this.communityService.getCommunityInfoById(post.community_id.toString()).subscribe({
+          next: (cresponse) => {
+            if(response.join_community == 1)
+              this.subscribed_communities.unshift(cresponse);
+            else
+              this.subscribed_communities = this.subscribed_communities.filter((community) => {
+                return community.id != cresponse.id;
+              })
+            this.shareDataService.setSubscribedCommunities(this.subscribed_communities);
+            this.shareDataService.setJoinCommunityOfDetailPosts(post.community_id, post.join);
+          }
+        })
+        this.joinCommunityEvent.emit(new JoinCommunity(this.post.community_id, this.post.join == 1 ? true : false));
       }
     })
   }
 
   joinCommunity(event: Event) {
     event.stopPropagation();
-    const uid: number = this.storageService.getItem("uid") == "" ? 0 :  Number.parseInt(this.storageService.getItem("uid"));
-    this.communityService.joinCommunity(uid, this.post.community_id, this.isJoinCommunity == false ? 1 : 0).subscribe({
-      next: (response: JoinCommunityResponse) => {
-        this.isJoinCommunity = response.join_community == 0 ? false : true;
-        this.joinText = this.isJoinCommunity ? 'Joined' : 'Join';
-        this.joinCommunityEvent.emit(this.isJoinCommunity);
-      },
-      error: (e: HttpErrorResponse) => {
-        console.log("error join community");
-      }
-    })
+    this.sendJoinCommunityFromPostToServer(this.post, this.post.join == 1 ? 0 : 1);
   }
 
   allowPost(event: Event) {
     event.stopPropagation();
-    this.allowPostService.setAllowPost(this.post_id, 1).subscribe({
-      next: (response: DefaultResponse) => {
-        this.allowPostEvent.emit(this.post_id);
-      }
-    })
+    this.allowPostService.sendAllowToServer(this.post, 1, this.allowPostEvent);
   }
 
   deletePost(event: Event) {
@@ -290,26 +334,13 @@ export class PostLinkComponent {
       showConfirmButton: true
     }).then((result) => {
       if(result.isConfirmed) {
-        this.deletePostService.deletePost("/delete-post", this.post_id, this.post.uid, 'moderator').subscribe({
-          next: (response: DeletePostResponse) => {
-            this.allowPostEvent.emit(this.post_id);
-          }
-        })
+        this.deletePostService.sendDeleteToServer(this.post, 2, this.allowPostEvent);
       }
     })
   }
 
-
   savePost(event: Event) {
     event.stopPropagation();
-    const uid: number = this.storageService.getItem("uid") == "" ? 0 :  Number.parseInt(this.storageService.getItem("uid"));
-    const saveStatus = !this.saved ? 1 : 0;
-    this.savePostService.savePostByUid(uid, this.post_id, saveStatus).subscribe({
-      next: (response: DefaultResponse) => {
-        this.saved = !this.saved;
-        this.savedText = this.saved ? "Unsave" : "Save";
-      },
-      error: (e: HttpErrorResponse) => {}
-    })
+    this.savePostService.sendSavePostToServer(this.post, this.post.save == 1 ? 0 : 1);
   }
 }

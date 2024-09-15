@@ -1,0 +1,38 @@
+
+:host {
+    width: 100%;
+    height: 100%;
+    display: block;
+    background-color: var(--primary_background_color);
+    overflow: hidden;
+    overflow-y: scroll;
+    scrollbar-gutter: stable;
+    box-sizing: border-box;
+}
+
+#outlet {
+    width: calc(100% - 380px);
+    margin-left: calc(2vw);
+    margin-top: 20px;
+    box-sizing: border-box;
+    margin-bottom: 50px;
+}
+
+#community_info_block {
+    position: fixed;
+    height: calc(100vh - var(--header_size));
+    top: calc(var(--header_size) + 10px);
+    overflow: auto;
+    width: 300px;
+    right: 40px;
+}
+
+@media only screen and (max-width: 850px) {
+    #community_info_block {
+        display: none;
+        right: calc(var(--margin_home));
+    }
+    #outlet {
+        width: calc(100% - 30px);
+    }
+}
