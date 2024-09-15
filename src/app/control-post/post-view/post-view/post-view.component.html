@@ -1,0 +1,50 @@
+<div class="scroll_container" >
+    <!-- [ngStyle]="{'width': selected_detail_post.post_id == 0 ? '100%' : '50%'}" -->
+    <div class="load_data_block" *ngIf="isDataLoad">
+        <img class="img_load_data" src="../../../../assets/icon/logo.png">
+        <div class="data_loader"></div>
+    </div>
+    <div class="block" id="{{post.post_id}}" *ngFor="let post of detail_post_arr; let i=index" (click)="selectDetailPost(post)" [ngClass]="{'selected_post': selected_detail_post.post_id == post.post_id}">
+        <div id="post_block">
+            <div id="info_block">
+                <div id="post_header_block">
+                    <a href="user/{{post.username}}/posts"><img src="{{post.username_icon}}"><b style="margin-left: 5px; color: var(--txt);">u/{{post.username}}</b></a>
+                    <pre style="font-size: 20px; color: var(--txt);"> · </pre>
+                    <p class="txt_header">{{dateTimeService.getTimeByCompareCreatedAtAndCurrentDate(post.created_at)}}</p>
+                    <pre style="font-size: 20px; color: var(--txt);"> · </pre>
+                    <p class="txt_header" *ngIf="post.vote == 1">1 upvote</p>
+                    <p class="txt_header" *ngIf="post.vote > 1">{{presentationService.transformNumber(post.vote)}} upvotes</p>
+                    <p class="txt_header" *ngIf="post.vote == 0">0 vote</p>
+                    <p class="txt_header" *ngIf="post.vote == -1">-1 downvote</p>
+                    <p class="txt_header" *ngIf="post.vote < -1">{{presentationService.transformNumber(post.vote)}} downvotes</p>
+                    <p class="txt_type" *ngIf="post.type == 'editor'">TEXT</p>
+                    <p class="txt_type" *ngIf="post.type == 'img'">IMAGE</p>
+                    <p class="txt_type" *ngIf="post.type == 'video'">VIDEO</p>
+                    <p class="txt_type" *ngIf="post.type == 'link'">LINK</p>
+                </div>
+                <p style="font-size: 14px; color: var(--icon); font-weight: 550;">{{post.title}}</p>
+            </div>
+        </div>
+        <div id="status_container">
+            <pre class="txt_status" *ngIf="post.allow == 1 && post.deleted == 0"><i class="pi pi-check" style="color: green;"></i>Approved <p *ngIf="post.allowed_at != null">{{dateTimeService.getTimeByCompareCreatedAtAndCurrentDate(post.allowed_at)}}</p></pre>
+            <pre class="txt_status" *ngIf="post.deleted == 1"><i class="pi pi-times" style="color: red;"></i>Removed <p *ngIf="post.deleted_at != null">{{dateTimeService.getTimeByCompareCreatedAtAndCurrentDate(post.deleted_at)}}</p></pre>
+        </div>
+        <nav id="moderate_block">
+            <!--review page-->
+            <button class="mod_btn" id="btn_allow" *ngIf="(post.allow == 0 || post.deleted == 1) && isReviewModPage" (click)="allowPost(post.post_id, $event)">Approve</button>
+            <button class="mod_btn" id="btn_delete" *ngIf="post.deleted == 0 && isReviewModPage" (click)="removePost(post.post_id, $event)">Remove</button>
+            <!--approved page-->
+            <button class="mod_btn" id="btn_allow" *ngIf="post.deleted == 1 && isApprovedModPage" (click)="allowPost(post.post_id, $event)">Approve</button>
+            <button class="mod_btn" id="btn_delete" *ngIf="post.deleted == 0 && isApprovedModPage" (click)="removePost(post.post_id, $event)">Remove</button>
+            <!--removed page-->
+            <button class="mod_btn" id="btn_allow" *ngIf="post.deleted == 1 && isRemoveModPage" (click)="allowPost(post.post_id, $event)">Approve</button>
+            <button class="mod_btn" id="btn_delete" *ngIf="post.deleted == 0 && isRemoveModPage" (click)="removePost(post.post_id, $event)">Remove</button>       
+            <!--editted page-->
+            <button class="mod_btn" id="btn_allow" *ngIf="post.deleted == 1 && isEditModPage" (click)="allowPost(post.post_id, $event)">Approve</button>
+            <button class="mod_btn" id="btn_delete" *ngIf="post.deleted == 0 && isEditModPage" (click)="removePost(post.post_id, $event)">Remove</button>                
+        </nav>
+    </div>
+    <div class="empty_block" *ngIf="detail_post_arr.length == 0 && wait" style="margin-left: 20px; width: calc(100% - 40px);">
+        <p>No post found</p>
+    </div>
+</div>

@@ -1,0 +1,7 @@
+
+<div id="navigation_bar" class="scrollbar_width">
+    <button id="btn_back" class="margin_left" (click)="goBackToCommunity()"><i class="pi pi-arrow-left"></i><p>Exit mod tools</p></button>
+
+    <p class="margin_left">Moderated communities</p>
+    <button *ngFor="let moderation_community of moderationCommunities" [ngStyle]="{'background-color': moderation_community.id == selected_community_id ? 'var(--btn_selected)':'var(--primary_background_color)'}"  (click)="goToCommunityModPage(moderation_community.id)" title="{{moderation_community.name}}"><img id="img_community_icon" src="{{moderation_community.avatar}}" alt=""/><p>r/{{moderation_community.name}}</p></button>
+</div>

@@ -1,0 +1,33 @@
+
+
+
+<div id="mod_container">
+    <div id="container" [ngStyle]="{'width': selected_detail_post.post_id == 0 ? '100%' : '50%'}">
+        <div id="header">
+            <h1 style="color: var(--icon);">Queue</h1>
+            <div id="community_info_block">
+                <button id="btn_selected_community" [ngStyle]="{'background-color': isDropDown ? 'var(--btn_selected)' : 'var(--primary_background_color)'}" (click)="openDropDown()"><img src="{{communityInfo.avatar}}"><i class="pi pi-angle-down"></i></button>
+                <div id="communities_dropdown" [ngStyle]="{'display': isDropDown ? 'block' : 'none'}">
+                    <button class="btn_community" (click)="selectCommunity(community.id)" *ngFor="let community of moderated_communities" [ngStyle]="{'background-color': community.id == communityInfo.id ? 'var(--btn_selected)' : 'var(--search)'}"><img src="{{community.avatar}}">{{community.name}}</button>
+                </div>
+            </div>
+        </div>
+        <div id="control_post_container">
+            <div id="btn_block">
+                <button class="btn_option" type="button" [ngClass]="{'selected_btn': searchOption == 'review'}" (click)="selectSearchOption('review')">Needs review</button>
+                <button class="btn_option" type="button" [ngClass]="{'selected_btn': searchOption == 'approved'}" (click)="selectSearchOption('approved')">Approved</button>
+                <button class="btn_option" type="button" [ngClass]="{'selected_btn': searchOption == 'removed'}" (click)="selectSearchOption('removed')">Removed</button>
+                <button class="btn_option" type="button" [ngClass]="{'selected_btn': searchOption == 'editted'}" (click)="selectSearchOption('editted')">Editted</button>
+            </div>
+        </div>
+        
+        <div id="outlet">
+            <router-outlet>
+            </router-outlet>
+        </div>
+    </div>
+    
+    <div id="view_post_container" [ngStyle]="{'width': selected_detail_post.post_id == 0 ? '0' : '50%', 'display': selected_detail_post.post_id == 0 ? 'none' : 'block'}">
+        <app-view-detail-post></app-view-detail-post>
+    </div>
+</div>
