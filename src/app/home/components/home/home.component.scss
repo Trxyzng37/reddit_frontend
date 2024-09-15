@@ -19,8 +19,8 @@ app-navigation-bar {
     left: 0;
     width: 300px;
     top: var(--header_size);
-    left: var(--margin_home);
-    border-right: 1px solid var(--secondary_color);
+    // left: var(--margin_home);
+    border-right: 1px solid var(--border);
 }
 
 app-recent-visited-post {

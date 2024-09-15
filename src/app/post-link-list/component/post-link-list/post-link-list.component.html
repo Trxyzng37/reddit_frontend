@@ -1,61 +1,70 @@
 <!-- <div [innerHTML]="trustedHtml"></div> -->
 
-<div id="sort_container" *ngIf="isHomePage && this.searchOption != 'wait_for_approve' && this.searchOption != 'saved'">
-    <button id="btn_sort" (click)="showSortOption($event)">{{sort_option}}<i class="pi pi-chevron-down"></i></button>
+<div *ngIf="isHomeRefresh" id="reload_block">
+    <button id="btn_reload" (click)="refreshPage()" title="Refresh page"><p>Refresh</p></button>
+</div>
+
+<div *ngIf="isPopularRefresh" id="reload_block">
+    <button id="btn_reload" (click)="refreshPage()" title="Refresh page"><p>Refresh</p></button>
+</div>
+
+<div id="sort_container" *ngIf="isHomePage">
+    <button id="btn_sort" [ngStyle]="{'background-color':isSortOptionShow?'var(--bg_hover)':'var(--primary_background_color)'}" (click)="showSortOption($event)">{{sort_text}}<i class="pi pi-chevron-down"></i></button>
     <div id="sort_option_block" *ngIf="isSortOptionShow">
         <b>Sort by</b>
-        <button (click)="selectSort('Hot')">Hot</button>
-        <button (click)="selectSort('New')">New</button>
-        <button (click)="selectSort('Top today')">Top today</button>
-        <button (click)="selectSort('Top this week')">Top this week</button>
-        <button (click)="selectSort('Top this month')">Top this month</button>
-        <button (click)="selectSort('Top this year')">Top this year</button>
-        <button (click)="selectSort('Top all time')">Top all time</button>
+        <button [ngStyle]="{'background-color':sort_option=='hot'?'var(--search)':'var(--primary_background_color)'}" (click)="selectSort('hot')">Hot</button>
+        <button [ngStyle]="{'background-color':sort_option=='new'?'var(--search)':'var(--primary_background_color)'}" (click)="selectSort('new')">New</button>
+        <button [ngStyle]="{'background-color':sort_option=='top_day'?'var(--search)':'var(--primary_background_color)'}" (click)="selectSort('top_day')">Top today</button>
+        <button [ngStyle]="{'background-color':sort_option=='top_week'?'var(--search)':'var(--primary_background_color)'}" (click)="selectSort('top_week')">Top this week</button>
+        <button [ngStyle]="{'background-color':sort_option=='top_month'?'var(--search)':'var(--primary_background_color)'}" (click)="selectSort('top_month')">Top this month</button>
+        <button [ngStyle]="{'background-color':sort_option=='top_year'?'var(--search)':'var(--primary_background_color)'}" (click)="selectSort('top_year')">Top this year</button>
+        <button [ngStyle]="{'background-color':sort_option=='top_all_time'?'var(--search)':'var(--primary_background_color)'}" (click)="selectSort('top_all_time')">Top all time</button>
     </div>
 </div>
 
-<div id="sort_container" *ngIf="isPopularPage && this.searchOption != 'wait_for_approve' && this.searchOption != 'saved'">
-    <button id="btn_sort" (click)="showSortOption($event)">{{sort_option}}<i class="pi pi-chevron-down"></i></button>
+<div id="sort_container" *ngIf="isPopularPage">
+    <button id="btn_sort" [ngStyle]="{'background-color':isSortOptionShow?'var(--bg_hover)':'var(--primary_background_color)'}" (click)="showSortOption($event)">{{sort_text}}<i class="pi pi-chevron-down"></i></button>
     <div id="sort_option_block" *ngIf="isSortOptionShow">
         <b>Sort by</b>
-        <button (click)="selectSort('Hot')">Hot</button>
-        <button (click)="selectSort('New')">New</button>
-        <button (click)="selectSort('Top today')">Top today</button>
-        <button (click)="selectSort('Top this week')">Top this week</button>
-        <button (click)="selectSort('Top this month')">Top this month</button>
-        <button (click)="selectSort('Top this year')">Top this year</button>
-        <button (click)="selectSort('Top all time')">Top all time</button>
+        <button [ngStyle]="{'background-color':sort_option=='hot'?'var(--search)':'var(--primary_background_color)'}" (click)="selectSort('hot')">Hot</button>
+        <button [ngStyle]="{'background-color':sort_option=='new'?'var(--search)':'var(--primary_background_color)'}" (click)="selectSort('new')">New</button>
+        <button [ngStyle]="{'background-color':sort_option=='top_day'?'var(--search)':'var(--primary_background_color)'}" (click)="selectSort('top_day')">Top today</button>
+        <button [ngStyle]="{'background-color':sort_option=='top_week'?'var(--search)':'var(--primary_background_color)'}" (click)="selectSort('top_week')">Top this week</button>
+        <button [ngStyle]="{'background-color':sort_option=='top_month'?'var(--search)':'var(--primary_background_color)'}" (click)="selectSort('top_month')">Top this month</button>
+        <button [ngStyle]="{'background-color':sort_option=='top_year'?'var(--search)':'var(--primary_background_color)'}" (click)="selectSort('top_year')">Top this year</button>
+        <button [ngStyle]="{'background-color':sort_option=='top_all_time'?'var(--search)':'var(--primary_background_color)'}" (click)="selectSort('top_all_time')">Top all time</button>
     </div>
 </div>
 
-<div id="sort_container" *ngIf="isCommunityPage && this.searchOption != 'wait_for_approve' && this.searchOption != 'saved'">
-    <button id="btn_sort" (click)="showSortOption($event)">{{sort_option}}<i class="pi pi-chevron-down"></i></button>
+<div id="sort_container" *ngIf="isCommunityPage">
+    <button id="btn_sort" [ngStyle]="{'background-color':isSortOptionShow?'var(--bg_hover)':'var(--primary_background_color)'}" (click)="showSortOption($event)">{{sort_text}}<i class="pi pi-chevron-down"></i></button>
     <div id="sort_option_block" *ngIf="isSortOptionShow">
         <b>Sort by</b>
-        <button (click)="selectSort('Hot')">Hot</button>
-        <button (click)="selectSort('New')">New</button>
-        <button (click)="selectSort('Top today')">Top today</button>
-        <button (click)="selectSort('Top this week')">Top this week</button>
-        <button (click)="selectSort('Top this month')">Top this month</button>
-        <button (click)="selectSort('Top this year')">Top this year</button>
-        <button (click)="selectSort('Top all time')">Top all time</button>
+        <button [ngStyle]="{'background-color':sort_option=='hot'?'var(--search)':'var(--primary_background_color)'}" (click)="selectSort('hot')">Hot</button>
+        <button [ngStyle]="{'background-color':sort_option=='new'?'var(--search)':'var(--primary_background_color)'}" (click)="selectSort('new')">New</button>
+        <button [ngStyle]="{'background-color':sort_option=='top_day'?'var(--search)':'var(--primary_background_color)'}" (click)="selectSort('top_day')">Top today</button>
+        <button [ngStyle]="{'background-color':sort_option=='top_week'?'var(--search)':'var(--primary_background_color)'}" (click)="selectSort('top_week')">Top this week</button>
+        <button [ngStyle]="{'background-color':sort_option=='top_month'?'var(--search)':'var(--primary_background_color)'}" (click)="selectSort('top_month')">Top this month</button>
+        <button [ngStyle]="{'background-color':sort_option=='top_year'?'var(--search)':'var(--primary_background_color)'}" (click)="selectSort('top_year')">Top this year</button>
+        <button [ngStyle]="{'background-color':sort_option=='top_all_time'?'var(--search)':'var(--primary_background_color)'}" (click)="selectSort('top_all_time')">Top all time</button>
     </div>
 </div>
 
-<div id="sort_container" *ngIf="isUserPage && this.searchOption != 'wait_for_approve' && this.searchOption != 'saved'">
-    <button id="btn_sort" (click)="showSortOption($event)">{{sort_option}}<i class="pi pi-chevron-down"></i></button>
+<div id="sort_container" *ngIf="isUserPage && isUserPostPage">
+    <button id="btn_sort" [ngStyle]="{'background-color':isSortOptionShow?'var(--bg_hover)':'var(--primary_background_color)'}" (click)="showSortOption($event)">{{sort_text}}<i class="pi pi-chevron-down"></i></button>
     <div id="sort_option_block" *ngIf="isSortOptionShow">
         <b>Sort by</b>
-        <button (click)="selectSort('New')">New</button>
-        <button (click)="selectSort('Top today')">Top today</button>
-        <button (click)="selectSort('Top this week')">Top this week</button>
-        <button (click)="selectSort('Top this month')">Top this month</button>
-        <button (click)="selectSort('Top this year')">Top this year</button>
-        <button (click)="selectSort('Top all time')">Top all time</button>
+        <button [ngStyle]="{'background-color':sort_option=='hot'?'var(--search)':'var(--primary_background_color)'}" (click)="selectSort('hot')">Hot</button>
+        <button [ngStyle]="{'background-color':sort_option=='new'?'var(--search)':'var(--primary_background_color)'}" (click)="selectSort('new')">New</button>
+        <button [ngStyle]="{'background-color':sort_option=='top_day'?'var(--search)':'var(--primary_background_color)'}" (click)="selectSort('top_day')">Top today</button>
+        <button [ngStyle]="{'background-color':sort_option=='top_week'?'var(--search)':'var(--primary_background_color)'}" (click)="selectSort('top_week')">Top this week</button>
+        <button [ngStyle]="{'background-color':sort_option=='top_month'?'var(--search)':'var(--primary_background_color)'}" (click)="selectSort('top_month')">Top this month</button>
+        <button [ngStyle]="{'background-color':sort_option=='top_year'?'var(--search)':'var(--primary_background_color)'}" (click)="selectSort('top_year')">Top this year</button>
+        <button [ngStyle]="{'background-color':sort_option=='top_all_time'?'var(--search)':'var(--primary_background_color)'}" (click)="selectSort('top_all_time')">Top all time</button>
     </div>
 </div>
 
-<app-post-link *ngFor="let post of post_result; let index = index;" 
+<app-post-link id="{{post.post_id}}" *ngFor="let post of detail_post_arr; let index = index;" 
                     [post]="post"
                     [post_id]="post.post_id"
                     [type]="post.type"
@@ -67,17 +76,26 @@
                     [vote]="post.vote"
                     [communityIcon]="post.community_icon"
                     [index]="index"
-                    [arr_length]="post_result.length"
+                    [arr_length]="detail_post_arr.length"
+                    [joinCommunityInfo]="joinCommunityInfo"
                     (event)="addPost($event)"
                     (joinCommunityEvent)="joinCommunityEvent($event)"
                     (allowPostEvent)="allowPostEvent($event)"
-                    [joinCommunityEventCount]="joinCommunityEventCount"
 >
 </app-post-link>
 
-<h2 id="empty_block" style="font-size: 40px;" *ngIf="post_result.length == 0 && !isHomePage">No post found</h2>
-<div id="empty_block" *ngIf="post_result.length == 0 && isHomePage">
-    <h2>Look like it empty</h2>
+<p class="empty_block" style="font-size: 40px; color: var(--icon);" *ngIf="post_id_arr.length == 0 && wait && !isHomePage">No post found</p>
+<div class="empty_block" *ngIf="detail_post_arr.length == 0 && wait && isHomePage">
+    <p>Look like it empty</p>
     <p style="margin-top: 10px;">Why don't you explore and join some communities</p>
     <a href="/popular">To popular page</a>
 </div>
+
+<div class="load_data_block" *ngIf="isDataLoad">
+    <img class="img_load_data" src="../../../../assets/icon/logo.png">
+    <div class="data_loader"></div>
+</div>
+
+
+
+

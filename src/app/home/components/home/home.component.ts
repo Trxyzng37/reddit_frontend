@@ -3,6 +3,7 @@ import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { AccessTokenService } from '../../../shared/services/access-token/access-token.service';
 import { StorageService } from 'src/app/shared/storage/storage.service';
 import { CheckRefreshTokenService } from 'src/app/shared/services/check-refresh-token/check-refresh-token.service';
+import { DarkModeService } from 'src/app/shared/services/dark-mode/dark-mode.service';
 
 @Component({
   selector: 'app-home',
@@ -18,10 +19,12 @@ export class HomeComponent implements OnInit {
 
   constructor ( 
     private storageService: StorageService,
-    private checkRefreshTokenService: CheckRefreshTokenService
+    private checkRefreshTokenService: CheckRefreshTokenService,
+    private darkmodeService: DarkModeService
   ) {}
 
   ngOnInit(): void {
+    this.darkmodeService.useDarkMode();
     this.checkRefreshTokenService.runCheckRefreshTokenWithoutNotification();
     if(window.innerWidth > 1200) {
       this.isNavigationOpen = true;
