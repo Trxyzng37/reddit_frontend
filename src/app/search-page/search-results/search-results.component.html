@@ -1,34 +1,39 @@
 
 <div id="select_block">
-    <p>Search results</p>
+    <p style="color: var(--icon);">Search results</p>
     <button type="button" [ngClass]="{'selected_btn': searchOption == 'posts'}" (click)="selectSearchOption('posts')">Posts</button>
     <button type="button" [ngClass]="{'selected_btn': searchOption == 'communities'}" (click)="selectSearchOption('communities')">Communities</button>
     <button type="button" [ngClass]="{'selected_btn': searchOption == 'people'}" (click)="selectSearchOption('people')">People</button>
 </div>
 
 <div id="sort_container" [ngStyle]="{'visibility': searchOption == 'posts' ? 'visible' : 'hidden'}">
-    <button id="btn_sort" (click)="showSortOption()">{{sort_option}}<i class="pi pi-chevron-down"></i></button>
+    <button id="btn_sort" (click)="showSortOption()">{{sort_text}}<i class="pi pi-chevron-down"></i></button>
     <div id="sort_option_block" *ngIf="isSortOptionShow">
-        <b>Sort by</b>
-        <button (click)="selectSort('New')">New</button>
-        <button (click)="selectSort('Top today')">Top today</button>
-        <button (click)="selectSort('Top this week')">Top this week</button>
-        <button (click)="selectSort('Top this month')">Top this month</button>
-        <button (click)="selectSort('Top this year')">Top this year</button>
-        <button (click)="selectSort('Top all time')">Top all time</button>
+        <b style="color: var(--icon); background-color: var(--primary_background_color);">Sort by</b>
+        <button [ngStyle]="{'background-color':sort_option=='hot'?'var(--search)':'var(--primary_background_color)'}" (click)="selectSort('hot')">Hot</button>
+        <button [ngStyle]="{'background-color':sort_option=='new'?'var(--search)':'var(--primary_background_color)'}" (click)="selectSort('new')">New</button>
+        <button [ngStyle]="{'background-color':sort_option=='top_day'?'var(--search)':'var(--primary_background_color)'}" (click)="selectSort('top_day')">Top today</button>
+        <button [ngStyle]="{'background-color':sort_option=='top_week'?'var(--search)':'var(--primary_background_color)'}" (click)="selectSort('top_week')">Top this week</button>
+        <button [ngStyle]="{'background-color':sort_option=='top_month'?'var(--search)':'var(--primary_background_color)'}" (click)="selectSort('top_month')">Top this month</button>
+        <button [ngStyle]="{'background-color':sort_option=='top_year'?'var(--search)':'var(--primary_background_color)'}" (click)="selectSort('top_year')">Top this year</button>
+        <button [ngStyle]="{'background-color':sort_option=='top_all_time'?'var(--search)':'var(--primary_background_color)'}" (click)="selectSort('top_all_time')">Top all time</button>
     </div>
 </div>
 
-<hr style="border-top: 1px solid var(--secondary_color);">
+<hr style="border-top: 1px solid var(--border);" *ngIf="searchOption == 'posts'">
 
 <ng-container *ngIf="searchOption == 'posts'">
-    <app-search-post-view
-    *ngFor="let post of posts"
+    <app-search-post-view id="{{post.post_id}}"
+    *ngFor="let post of detail_post_arr"
     [post]="post"
     >
     </app-search-post-view>
 </ng-container>
 
-<app-search-community-view *ngIf="searchOption == 'communities'"></app-search-community-view>
-<app-search-people-view *ngIf="searchOption == 'people'"></app-search-people-view>
+<app-search-community-view [ngStyle]="{'display': searchOption == 'communities' ? 'block': 'none'}"></app-search-community-view>
+<app-search-people-view [ngStyle]="{'display': searchOption == 'people' ? 'block': 'none'}"></app-search-people-view>
 
+<div class="load_data_block" *ngIf="isDataLoad && searchOption == 'posts'">
+    <img class="img_load_data" src="../../../../assets/icon/logo.png">
+    <div class="data_loader"></div>
+</div>

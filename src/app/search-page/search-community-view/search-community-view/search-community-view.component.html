@@ -1,14 +1,24 @@
 
+<hr style="border-top: 1px solid var(--border);" *ngIf="communities.length != 0">
+
 <div>
     <div id="container" (click)="navigateToCommunity($event, community.id)" *ngFor="let community of communities">
         <div id="community_block">
             <img id="img_avatar" src="{{community.avatar}}">
             <div id="name_block">
                 <h3>r/{{community.name}}</h3>
-                <p style="font-size: 13px;">{{presentationService.transformNumber(community.subscriber_count)}} members</p>
+                <p style="font-size: 13px; color: var(--txt) !important;">{{presentationService.transformNumber(community.subscriber_count)}} members</p>
             </div>
         </div>
         <p id="txt_description">{{community.description}}</p>
     </div>
 </div>
 
+<div class="load_data_block" *ngIf="isDataLoad">
+    <img class="img_load_data" src="../../../../assets/icon/logo.png">
+    <div class="data_loader"></div>
+</div>
+
+<div class="empty_block" *ngIf="communities.length == 0 && wait">
+    <p>No communities found</p>
+</div>

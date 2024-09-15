@@ -2,13 +2,17 @@
 #container {
     height: auto;
     width: 100%;
-    border-bottom: 1px solid var(--secondary_color);
+    border-bottom: 1px solid var(--border);
     padding: 15px 0;
+}
+
+#container * {
+    color: var(--icon);
 }
 
 #container:hover {
     cursor: pointer;
-    background-color: var(--neutral);
+    background-color: var(--bg_hover);
 }
 
 #community_block {
@@ -28,4 +32,6 @@
 
 #txt_description {
     margin-left: calc(50px + 10px);
+    font-size: 14px;
+    color: var(--txt) !important;
 }

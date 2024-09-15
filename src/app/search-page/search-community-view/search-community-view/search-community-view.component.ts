@@ -22,11 +22,17 @@ export class SearchCommunityViewComponent {
   public communities: Communities[] = [];
   public search_text: string = "";
 
+  public isDataLoad: boolean = false;
+  public wait: boolean = false;
+
   ngOnInit() {
     this.search_text = this.activeRoute.snapshot.params['text'];
+    this.isDataLoad = true;
     this.communityService.searchCommunities(this.search_text).subscribe({
       next: (response: Communities[]) => {
         this.communities = response;
+        this.isDataLoad = false;
+        this.wait = true;
       }
     })
   }

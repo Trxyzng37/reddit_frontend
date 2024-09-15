@@ -1,12 +1,24 @@
+
+<hr style="border-top: 1px solid var(--border);" *ngIf="users.length != 0">
+
 <div>
     <div id="container" (click)="navigateToUserProfile(user.username)" *ngFor="let user of users">
         <div id="community_block">
             <img id="img_avatar" src="{{user.avatar}}">
             <div id="name_block">
                 <h3>u/{{user.username}}</h3>
-                <p style="font-size: 13px;">{{presentationService.transformNumber(user.post_karma + user.comment_karma)}} karma</p>
+                <p style="font-size: 13px; color: var(--txt) !important;">{{presentationService.transformNumber(user.post_karma + user.comment_karma)}} karma</p>
             </div>
         </div>
         <p id="txt_description">{{user.description}}</p>
     </div>
+</div>
+
+<div class="load_data_block" *ngIf="isDataLoad">
+    <img class="img_load_data" src="../../../../assets/icon/logo.png">
+    <div class="data_loader"></div>
+</div>
+
+<div class="empty_block" *ngIf="users.length == 0 && wait">
+    <p>No people found</p>
 </div>

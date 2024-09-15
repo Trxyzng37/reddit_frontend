@@ -3,6 +3,7 @@
 
 a {
     display: block;
+    width: auto;
 }
 
 a:hover {
@@ -15,11 +16,15 @@ a:hover {
     width: 100%;
     height: auto;
     padding: 10px 10px;
-    border-bottom: 1px solid var(--secondary_color);
+    border-bottom: 1px solid var(--border);
+}
+
+#block * {
+    color: var(--icon);
 }
 
 #block:hover {
-    background-color: var(--neutral);
+    background-color: var(--bg_hover);
     cursor: pointer;
 }
 
@@ -34,26 +39,31 @@ a:hover {
 
 #info_lock {
     width: 70%;
+    align-items: stretch;
     height: auto;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    align-items: flex-start;
 }
 
-#info_lock > h3 {
+.txt_title {
     width: 100%;
     height: auto;
-    margin-top: 5px;
+    margin-top: 7px;
+    font-size: 17px;
+    font-weight: 600;
 }
 
 #community_block {
-    width: 100%;
+    width: auto;
     height: 25px;
 }
 
 #community_block > a {
-    width: 100%;
+    width: auto;
     height: 100%;
+    text-decoration: none;
 }
 
 #community_block img {
@@ -68,6 +78,14 @@ a:hover {
     justify-content: flex-start;
     align-items: flex-start;
     font-size: 14px;
+}
+
+.content_block {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
 }
 
 #img_block {

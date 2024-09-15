@@ -22,11 +22,17 @@ export class SearchPeopleViewComponent {
   public users: UserProfile[] = [];
   public search_text: string = "";
 
+  public isDataLoad: boolean = false;
+  public wait: boolean = false;
+
   ngOnInit() {
     this.search_text = this.activeRoute.snapshot.params['text'];
+    this.isDataLoad = true;
     this.searchUserProfileService.searchUserProfile(this.search_text).subscribe({
       next: (response: UserProfile[]) => {
         this.users = response;
+        this.isDataLoad = false;
+        this.wait = true;
       }
     })
   }

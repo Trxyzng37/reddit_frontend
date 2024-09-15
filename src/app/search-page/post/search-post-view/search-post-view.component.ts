@@ -5,8 +5,9 @@ import { GetPostResponse } from 'src/app/post-link-list/pojo/get-post-response';
 import { DateTimeService } from 'src/app/shared/services/date-time/date-time.service';
 import { PresentationService } from 'src/app/shared/services/presentation/presentation.service';
 import { CommunityService } from 'src/app/shared/services/search-communites/community.service';
+import { ShareDataService } from 'src/app/shared/services/share_data/share-data.service';
 import { StorageService } from 'src/app/shared/storage/storage.service';
-import { Comment } from 'src/app/view-detail-post/view-detail-post/pojo/comment';
+import { CommentInfo } from 'src/app/view-detail-post/view-detail-post/pojo/comment';
 import { GetCommentsService } from 'src/app/view-detail-post/view-detail-post/service/get-comments/get-comments.service';
 
 @Component({
@@ -20,7 +21,8 @@ export class SearchPostViewComponent {
     private storageService: StorageService,
     private dateTimeService: DateTimeService,
     private getCommentService: GetCommentsService,
-    public presentationService: PresentationService
+    public presentationService: PresentationService,
+    private shareDataService: ShareDataService
   ) {}
 
   @Input() post!: GetPostResponse;
@@ -34,7 +36,7 @@ export class SearchPostViewComponent {
     this.shownDate = this.dateTimeService.getTimeByCompareCreatedAtAndCurrentDate(this.post.created_at);
     const uid: number = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
     this.getCommentService.getComments(this.post.post_id).subscribe({
-      next: (response: Comment[]) => {
+      next: (response: CommentInfo[]) => {
         this.comment_count = response.length;
       }
     })
@@ -57,12 +59,13 @@ export class SearchPostViewComponent {
   }
 
   navigateToPostView() {
-    window.location.href = "/post/" + this.post.post_id;
+    this.shareDataService.setSearchPostsCurViewPostId(this.post.post_id);
+    this.router.navigate(["/post/" + this.post.post_id]);
   }
 
   navigateToCommunity(event: Event) {
     event.stopPropagation();
-    window.location.href = "/r/" + this.post.community_id;
+    this.router.navigate(["/r/" + this.post.community_id]);
   }
 
   stopPropagation(event: Event) {
