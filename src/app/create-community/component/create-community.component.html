@@ -2,15 +2,15 @@
     <form [formGroup]="createCommunityForm">
         <div id="header">
             <img id="header_icon" src="../../../assets/icon/create_community_header_icon.png">
-            <h2>Create community</h2>
+            <h2 style="color: var(--icon);">Create community</h2>
             <button id="btn_close" (click)="closeForm()">
                 <i class="pi pi-times-circle"></i>
             </button>
         </div>
-        <p>Build and grow a community about something you care about.</p>
+        <p style="color: var(--icon); margin-top: 10px;">Build and grow a community about something you care about.</p>
         <input type="text" placeholder="Name" maxlength="21" formControlName="name" #community_name (input)="onInputName()">
-        <p style="font-size: 14px;" *ngIf="!isNameTaken" [ngStyle]="{'color': name_status == 'VALID' ? 'green' : '#f2112f'}">Name should be between 3 and 21 characters</p>
-        <p style="font-size: 14px; color: rgb(216, 9, 9);" *ngIf="isNameTaken">r/{{community_name.value}} is already taken</p>
+        <p style="font-size: 13px;" *ngIf="!isNameTaken" [ngStyle]="{'color': name_status == 'VALID' ? 'green' : '#f2112f'}">Name should be between 3 and 21 characters</p>
+        <p style="font-size: 13px; color: rgb(216, 9, 9);" *ngIf="isNameTaken">r/{{community_name.value}} is already taken</p>
         <div id="post_title_block">
             <textarea id="input_post_title" maxlength="300" required placeholder="Enter description for your community" (input)="onInputDescription($event)"></textarea>
             <span id="character_count">{{characterCount}}/300</span>
@@ -32,14 +32,14 @@
             <button id="btn_upload_banner" type="button" (click)="input_banner.click()">Upload your community banner</button>
         </div>
         <div id="scope_block">
-            <b>Select your community scope</b>
+            <b style="color: var(--icon); font-size: 15px;">Select your community scope</b>
             <div class="radio_block">
                 <input id="input_public" type="radio" name="scope" value="0" checked="checked" (click)="selectScope(0)">
-                <label for="input_public"><p><b>Public</b> (Everyone can post)</p></label>
+                <label for="input_public"><p style="color: var(--icon);"><b style="color: var(--icon);">Public</b> (Everyone can post)</p></label>
             </div>
             <div class="radio_block">
                 <input id="input_moderate" type="radio" name="scope" value="1" (click)="selectScope(1)">
-                <label for="input_moderate"><p><b>Protected</b> (Moderator need to accept post before it can be view)</p></label>
+                <label for="input_moderate"><p style="color: var(--icon);"><b style="color: var(--icon);">Protected</b> (Moderator need to accept post before it can be view)</p></label>
             </div>
         </div>
         <div id="button_container">

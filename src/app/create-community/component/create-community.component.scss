@@ -10,7 +10,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-radius: 10px;
     background-color: transparent;
 }
 
@@ -60,10 +59,9 @@ form {
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    // background-color: rgb(181, 211, 244);
     padding: 20px 10px;
     position: relative;
-    background-color: var(--neutral);
+    background-color: var(--primary_background_color);
 }
 
 p {
@@ -119,6 +117,7 @@ input, textarea {
     align-self: flex-end;
     font-size: 11px;
     font-weight: 400;
+    color: var(--icon);
 }
 
 //upload img
@@ -133,13 +132,14 @@ input, textarea {
     height: 40px;
     text-align: center;
     display: inline-block;
-    background-color: var(--select_btn);
-    border: 1px solid var(--secondary_color);
+    background-color: var(--allow);
+    border: 1px solid var(--icon);
     border-radius: 20px;
     vertical-align: bottom;
     margin: 10px 0 30px 0;
     padding: 0 20px;
     font-size: 14px;
+    color: var(--icon);
 }
 
 #upload_img_container, #upload_banner_container {
@@ -149,6 +149,11 @@ input, textarea {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-bottom: 15px;
+}
+
+#upload_img_container {
+    margin-top: 20px;
 }
 
 #scope_block {
@@ -170,6 +175,7 @@ input, textarea {
     width: 20px;
     aspect-ratio: 1/1;
     margin: 0;
+    color: var(--icon);
 }
 
 .radio_block  p {
