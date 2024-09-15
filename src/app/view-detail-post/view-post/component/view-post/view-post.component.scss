@@ -29,7 +29,7 @@ hr {
 }
 
 #main_content {
-    margin-top: 5px;
+    padding-top: 7px !important;
 }
 
 #main_content > * {
@@ -38,10 +38,6 @@ hr {
     overflow: hidden;
     display: -webkit-box;
     -webkit-box-orient: vertical; 
-}
-
-#main_content > p {
-    -webkit-line-clamp: 3;
 }
 
 app-editor-view {
@@ -68,21 +64,6 @@ app-editor-view {
     align-items: center;
 }
 
-#btn_join {
-    width: auto;
-    height: 100%;
-    padding: 0 15px;
-    background-color: white;
-    border: 1px solid var(--neutral);
-    border-radius: 20px;
-    margin-right: 10px;
-    font-size: 14px;
-    color: var(--secondary_color);
-}
-
-// #btn_join:hover {
-//     background-color: rgb(231, 190, 136);
-// }
 
 #community_bar {
     display: flex;
@@ -92,6 +73,7 @@ app-editor-view {
     width: auto;
     height: var(--post-header-height);
     position: relative;
+    margin-bottom: 16px;
 }
 
 #community_block {
@@ -135,16 +117,29 @@ app-editor-view {
     left: 105px;
 }
 
-#btn_option {
+.btn_option {
     height: 100%;
     aspect-ratio: 1/1;
     border-radius: 50%;
     background-color: var(--primary_background_color);
     color: var(--secondary_color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-#btn_option:hover {
-    background-color: var(--neutral);
+.btn_option:hover {
+    background-color: var(--search);
+}
+
+button:disabled:hover {
+    background-color: var(--primary_background_color);
+    cursor: default;
+}
+
+button:disabled > i {
+    // color: var(--txt) !important;
+    opacity: 0.5;
 }
 
 #dropdown_option_block {
@@ -192,7 +187,13 @@ app-editor-view {
 }
 
 #dropdown_option_block > *:hover {
-    background-color: var(--neutral);
+    background-color: var(--bg_hover);
+}
+
+#txt_title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--icon);
 }
 
 #footer {
@@ -205,6 +206,7 @@ app-editor-view {
     box-sizing: border-box;
     padding: 0 10px;
     margin-top: 20px;
+    position: relative;
 }
 
 #footer > * {
@@ -214,21 +216,40 @@ app-editor-view {
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
-    background-color: var(--neutral);
+    background-color: var(--search);
     margin-right: 10px;
     border-radius: 20px;
 }
 
 #block_vote.normal, #btn_upvote.normal, #btn_downvote.normal {
-    background-color: var(--neutral);
+    background-color: var(--search);
 }
 
+#btn_upvote:disabled, #btn_downvote:disabled {
+    cursor: not-allowed;
+}
+
+// #btn_upvote.normal:disabled:hover, #btn_downvote.normal:disabled:hover {
+//     background-color: var(--search) !important;
+//     cursor: default !important;
+// }
+
+// #btn_upvote.upvote:disabled:hover {
+//     background-color: var(--upvote) !important;
+//     cursor: default !important;
+// }
+
+// #btn_upvote.downvote:disabled:hover {
+//     background-color: var(--downvote) !important;
+//     cursor: default !important;
+// }
+
 #btn_upvote.normal {
-    background-color: var(--neutral);
+    background-color: var(--search);
 }
 
 #btn_downvote.normal {
-    background-color: var(--neutral);
+    background-color: var(--search);
 }
 
 #btn_comment, #btn_share {
@@ -292,9 +313,9 @@ app-editor-view {
     background-color: rgba(0, 0, 0, 0.4);
 }
 
-button {
-    background-color: var(--primary_background_color);
-}
+// button {
+//     background-color: var(--primary_background_color);
+// }
 
 app-editor-view {
     height: auto;
@@ -307,3 +328,61 @@ app-editor-view > * {
 #comment_count, button > i {
     color: var(--secondary_color) !important;
 }
+
+#moderate_block{
+    width: auto;
+    display: block;
+    background-color: var(--primary_background_color) !important;
+    position: absolute;
+    right: 0;
+}
+
+#btn_allow, #btn_delete {
+    width: auto;
+    aspect-ratio: 1/1;
+    padding: 10px;
+    background-color: var(--search);
+    // border: 1px solid var(--neutral);
+    border-radius: 50%;
+    font-size: 16px;
+    color: #ffffff !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+// #btn_allow {
+//     margin-right: 10px;
+// }
+
+#deleted_block {
+    width: calc(100% - 20px);
+    position: relative;
+    left: 10px;
+    border: 1px solid var(--border);
+    padding: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 25px;
+    border-radius: 5px;
+}
+
+#deleted_block * {
+    color: var(--icon);
+}
+
+#deleted_block > pre > p {
+    display: inline;
+}
+
+#deleted_block i {
+    color: #FF4F40;
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+// #post_container.post_view {
+//     color: var(--icon) !important;
+// }

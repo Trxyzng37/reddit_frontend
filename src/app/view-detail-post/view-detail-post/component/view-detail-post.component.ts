@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GetPostResponse } from 'src/app/post-link-list/pojo/get-post-response';
 import { ActivatedRoute } from '@angular/router';
@@ -7,7 +7,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { DateTimeService } from 'src/app/shared/services/date-time/date-time.service';
 import tinymce from 'tinymce';
 import { GetCommentsService } from '../service/get-comments/get-comments.service';
-import { Comment } from '../pojo/comment';
+import { CommentInfo } from '../pojo/comment';
 import { CreateCommentService } from '../service/create-comment/create-comment.service';
 import { CreateCommentResponse } from '../pojo/create-comment-response';
 import { StorageService } from 'src/app/shared/storage/storage.service';
@@ -18,6 +18,8 @@ import { CommunityService } from 'src/app/shared/services/search-communites/comm
 import { Communities } from 'src/app/shared/pojo/pojo/communities';
 import { DarkModeService } from 'src/app/shared/services/dark-mode/dark-mode.service';
 import { CheckRefreshTokenService } from 'src/app/shared/services/check-refresh-token/check-refresh-token.service';
+import { DetailPost } from 'src/app/post-link-list/pojo/detail-post';
+import { ShareDataService } from 'src/app/shared/services/share_data/share-data.service';
 
 @Component({
   selector: 'app-view-detail-post',
@@ -37,60 +39,80 @@ export class ViewDetailPostComponent {
     private communityService: CommunityService,
     private darkmodeSerive: DarkModeService,
     private checkRefreshTokenService: CheckRefreshTokenService,
-    private activeRoute: ActivatedRoute
+    private activeRoute: ActivatedRoute,
+    private shareDataService: ShareDataService
   ) {}
 
-  public postId: number = 0;
-  public post: GetPostResponse = new GetPostResponse(0, "", 0, "", "", 0, "", "", "", "", "", 0,0,0);
+  public post: DetailPost = new DetailPost();
   public shownDate: string = "";
-  public commentResults: Comment[] = [];
+  public commentResults: CommentInfo[] = [];
   public content: string = "";
   public isDeleted: boolean = false;
   public width: string[] = [];
-  public isCommunityOwner: boolean = false;
-  public isAuthor: boolean = false;
-  public isAllow: boolean = false;
+  public isAuthor: boolean = true;
+  public isAllow: boolean = true;
+
+  public isDataLoad: boolean = false;
+  public wait: boolean = false;
+
+  public mode: number = 0;
+  public editorSettings: any;
+
+  public img_count = 0;
+
+  public isModPage: boolean = false;
+  public selected_mod_post: number = 0;
 
   ngOnInit() {
     this.darkmodeSerive.useDarkMode();
+    this.updateEditorStyle();
     this.checkRefreshTokenService.runCheckRefreshTokenWithoutNotification();
-    this.postId = this.route.snapshot.params['post_id'];
-    const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
-    const post_arr: GetPostResponse[] = this.storageService.getItem("posts") == "" ? [] : JSON.parse(this.storageService.getItem("posts"));
-    let is_post_exist: boolean = false;
-    for(let post of post_arr) {
-      if(post.post_id == Number.parseInt(this.activeRoute.snapshot.params['post_id'])) {
-        this.post = post;
-        this.getInfo(post);
-        is_post_exist = true;
-      }
+    this.isModPage = window.location.href.includes("/mod/");
+    if(this.isModPage) {
+      this.shareDataService.mod_detail_post$.subscribe(res => {
+        if(res != undefined) {
+          this.wait = false;
+          this.open = false;
+          this.commentResults = [];
+          if(res.post_id == 0) {
+            this.post = new DetailPost();
+          }
+          else {
+            this.post = res;
+            this.getInfo(res);
+            this.isDeleted = this.post.deleted == 1 ? true : false;
+            this.isAllow = this.post.allow == 1 ? true : false;
+          }
+        }
+        this.shareDataService.changed_post$.subscribe(res => {
+          this.isDeleted = res.deleted == 1 ? true : false;
+          this.isAllow = res.allow == 1 ? true : false;
+        })
+      });
     }
-    if(!is_post_exist) {
-      this.getPostService.getPostByPostId(this.postId).subscribe({
-        next: (response: GetPostResponse) => {
-          this.post = response;
+    if(!this.isModPage) {
+      const post_id = this.route.snapshot.params['post_id'];
+      const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
+      this.getPostService.getDetailPostByUidAndPostId(uid, post_id).subscribe({
+        next: (response: DetailPost) => {
           this.getInfo(response);
         },
          error: (e: HttpErrorResponse) => {
            console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
            this.isDeleted = true;
          }
-      })
-    }     
+      })  
+    }
   }
 
-  getInfo(post: GetPostResponse) {
+  getInfo(post: DetailPost) {
     const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
+    this.post = post;
     this.isAuthor = uid === post.uid;
     this.isAllow = post.allow === 0 ? false : true;
     this.isDeleted = post.deleted === 1 ? true : false;
-    this.communityService.getCommunityInfoById(post.community_id.toString()).subscribe({
-      next: (response: Communities) => {
-        this.isCommunityOwner = uid === response.uid;
-      }  
-    });
     if(!this.isDeleted && this.isAllow) {
-      if(uid !== 0) {
+      if(uid !== 0 && !this.isModPage) {
         this.recentVisitPostService.setRecentVisit("/set-recent-visit-post", uid, post.post_id).subscribe();
       }
       else {
@@ -102,9 +124,22 @@ export class ViewDetailPostComponent {
         this.storageService.setItem("recent_posts", recent_post_array.toString());
       }
     }
+    this.isDataLoad = true;
     this.getCommentService.getComments(post.post_id).subscribe({
-      next: (response: Comment[]) => {
+      next: (response: CommentInfo[]) => {
         this.commentResults = response;
+        this.isDataLoad = false;
+        this.wait = true;
+        const comment_id = this.route.snapshot.params['comment_id'];
+        if(comment_id != 0) {
+          const t = setInterval(() => {
+            let element = document.getElementById("c"+comment_id);
+            if(element != null) {
+              element.scrollIntoView();
+              clearInterval(t);
+            }
+          }, 50);
+        }
       },
       error: (e: HttpErrorResponse) => {
         console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
@@ -112,74 +147,98 @@ export class ViewDetailPostComponent {
     })
   }
 
-  img_count = 0;
-  public editorSettings = {
-    base_url: '/tinymce',
-    suffix: '.min',
-    plugins: 'link lists codesample image autoresize', 
-    toolbar: "bold italic underline strikethrough forecolor subscript superscript removeformat numlist bullist link blockquote codesample image",
-    toolbar_mode: 'wrap',
-    placeholder: 'Enter your comment',
-    automatic_uploads: true,
-    file_picker_types: 'image',
-    images_file_types: 'jpg,svg,webp,png,jpeg',
-    images_reuse_filename: true,
-    image_dimensions: false,
-    // image_caption: true,
-    image_description: false,
-    statusbar: true,
-    elementpath: false,
-    branding: false,
-    resize: true,
-    width: '100%',
-    min_height: 100,
-    // max_height:1000,
-    autoresize_min_height: 200,
-    // autoresize_max_height: 300,
-    // height: '100px', 
-    menubar: false, 
-    draggable_modal: false,
-    object_resizing: false,
-    inline_boundaries: false,
-    contenteditable: false,
-    paste_data_images: false,
-    paste_block_drop: false,
-    color_default_foreground: '#E03E2D',
-    color_default_background: '#000000',
-    color_map_background: [
-      '000000', 'Black'
-    ],
-    textcolor_map: ['#E03E2D', 'Red'],
-    custom_colors: false,
-    content_css: 'tinymce-5',
-    content_style: 
-      'p { margin: 0; } ' + 
-      'img { display: block; out-line: 0; max-width: 200px; max-height: 200px}' +
-      'body {line-height: normal}' +
-      'pre[class*=language-] {font-family: Consolas}',
-    file_picker_callback: (cb: any, value:any, meta:any) => {
-      if(this.img_count == 0) {
-        const input = document.createElement('input');
-        input.setAttribute('type', 'file');
-        input.setAttribute('accept', 'image/*');
-        input.addEventListener('change', (e:any) => {
-          const file = e.target.files[0];
-          const reader = new FileReader();
-          reader.addEventListener('load', () => {
-            const id = file.name;
-            const blobCache =  tinymce.activeEditor!.editorUpload.blobCache;
-            const base64 = (<string>reader.result).split(',')[1];
-            const blobInfo = blobCache.create(id, file, base64);
-            blobCache.add(blobInfo);
-            cb(blobInfo.blobUri(), { title: file.name });
+  open: boolean = false;
+  openEditor() {
+    this.open = !this.open;
+  }
+
+  updateEditorStyle(): void {
+    this.mode = this.storageService.getItem("mode") == "1" ? 1 : 0;
+    this.editorSettings = {
+      base_url: '/tinymce',
+      suffix: '.min',
+      plugins: 'link lists codesample image autoresize', 
+      toolbar: "bold italic underline strikethrough subscript superscript removeformat numlist bullist link blockquote codesample image",
+      toolbar_mode: 'wrap',
+      placeholder: 'Enter your comment',
+      automatic_uploads: true,
+      file_picker_types: 'image',
+      images_file_types: 'jpg,svg,webp,png,jpeg',
+      images_reuse_filename: true,
+      image_dimensions: false,
+      image_description: false,
+      statusbar: true,
+      menubar: false, 
+      elementpath: false,
+      branding: false,
+      resize: true,
+      width: '100%',
+      min_height: 130,
+      height: 130, 
+      draggable_modal: false,
+      object_resizing: false,
+      inline_boundaries: false,
+      contenteditable: false,
+      paste_data_images: false,
+      paste_block_drop: false,
+      license_key: 'gpl',
+      color_default_foreground: '#E03E2D',
+      color_default_background: '#000000',
+      color_map_background: [
+        '000000', 'Black'
+      ],
+      textcolor_map: ['#E03E2D', 'Red'],
+      custom_colors: false,
+      content_css: 'tinymce-5',
+      content_style: 
+        'html body { overflow: auto !important; }' +
+        'p { margin: 0; } ' + 
+        'img { display: block; out-line: 0; max-width: 200px; max-height: 200px}' +
+        'body {line-height: normal' +
+        'pre[class*=language-] {font-family: Consolas}',
+        setup: (editor: any) => {
+          editor.on('init', () => {
+            const backgroundColor = 'var(--neutral)';
+            const textColor = 'var(--secondary_color)';
+            // editor.getBody().style.backgroundColor = '#efefef';
+            const container = editor.getContainer();
+            let tox_tiny = container.parentElement.childNodes;
+            let  tox_tinymce = tox_tiny[2];
+            tox_tinymce.style.border = "1px solid var(--secondary_color)";
+            container.querySelector('.tox-editor-header').style.backgroundColor = backgroundColor;
+            container.querySelector('.tox-editor-container').style.backgroundColor = backgroundColor;
+            container.querySelector('.tox-toolbar').style.backgroundColor = backgroundColor;
+            container.querySelector('.tox-toolbar').style.color = textColor;
+            container.querySelector('.tox-statusbar').style.backgroundColor = backgroundColor;
+            container.querySelector('.tox-statusbar').style.height = '50px';
+            let resize_icon = container.querySelector('.tox-statusbar').querySelector('.tox-statusbar__resize-handle').querySelector('svg');
+            resize_icon.style.fill = 'var(--secondary_color)';
           });
-          reader.readAsDataURL(file);
-        })
-        this.img_count++;
-        input.click();
-      }
-      else {
-        Swal.fire("Only 1 image is allow in a comment",'','warning')
+        },
+      file_picker_callback: (cb: any, value:any, meta:any) => {
+        if(this.img_count == 0) {
+          const input = document.createElement('input');
+          input.setAttribute('type', 'file');
+          input.setAttribute('accept', 'image/*');
+          input.addEventListener('change', (e:any) => {
+            const file = e.target.files[0];
+            const reader = new FileReader();
+            reader.addEventListener('load', () => {
+              const id = file.name;
+              const blobCache =  tinymce.activeEditor!.editorUpload.blobCache;
+              const base64 = (<string>reader.result).split(',')[1];
+              const blobInfo = blobCache.create(id, file, base64);
+              blobCache.add(blobInfo);
+              cb(blobInfo.blobUri(), { title: file.name });
+            });
+            reader.readAsDataURL(file);
+          })
+          this.img_count++;
+          input.click();
+        }
+        else {
+          Swal.fire("Only 1 image is allow in a comment",'','warning')
+        }
       }
     }
   }
@@ -203,8 +262,12 @@ export class ViewDetailPostComponent {
           // Swal.fire('Clear comment successfully', '', 'success')
           this.content = "";
           tinymce.activeEditor?.setContent(this.content);
+          this.open = false;
         } 
       })
+    }
+    else {
+      this.open = false;
     }
   }
 
@@ -221,7 +284,8 @@ export class ViewDetailPostComponent {
       })
     }
     else {
-      this.createCommentService.createComment(this.postId, 0, this.content, 0).subscribe({
+      // const post_id = this.route.snapshot.params['post_id'];
+      this.createCommentService.createComment(this.post.post_id, 0, this.content, 0).subscribe({
         next: (response: CreateCommentResponse) => {
           tinymce.activeEditor?.setContent("");
           this.reloadComment(event);
@@ -242,8 +306,9 @@ export class ViewDetailPostComponent {
   }
 
   reloadComment(event: Event) {
-    this.getCommentService.getComments(this.postId).subscribe({
-      next: (response: Comment[]) => {
+    const post_id = this.post.post_id;
+    this.getCommentService.getComments(post_id).subscribe({
+      next: (response: CommentInfo[]) => {
         this.commentResults = response;
       },
       error: (e: HttpErrorResponse) => {
