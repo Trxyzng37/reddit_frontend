@@ -7,6 +7,8 @@ import { VotePostRequest } from 'src/app/post-link/post-link/service/vote-post/p
 import { voteCommentRequest } from '../../pojo/vote-comment-request';
 import { HttpHeaders } from '@angular/common/http';
 import { CheckRefreshTokenService } from 'src/app/shared/services/check-refresh-token/check-refresh-token.service';
+import { CommentInfo } from 'src/app/view-detail-post/view-detail-post/pojo/comment';
+import { VoteInfo } from 'src/app/shared/pojo/vote-info';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +25,7 @@ export class VoteCommentService {
 
   updateVoteComment(post_id: number, _id: number, vote: number, vote_type: string): Observable<VoteCommentResponse> {
     this.checkRefreshToken.runCheckRefreshToken();
-    const uid = parseInt(this.storageService.getItem("uid"));
+    const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
     const request = new voteCommentRequest(post_id, uid, _id, vote, vote_type);
     const body: string = JSON.stringify(request);
     let header: HttpHeaders = new HttpHeaders();

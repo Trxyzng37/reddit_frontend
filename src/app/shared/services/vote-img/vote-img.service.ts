@@ -13,6 +13,13 @@ export class VoteImgService {
   public upvote: string = "";
   public downvote: string = "";
 
+  public upvote_light = "../../../../assets/icon/upvote-light.svg";
+  public upvote_dark = "../../../../assets/icon/upvote-dark.svg";
+  public upvote_fill = "../../../../../assets/icon/upvote-fill.png";
+  public downvote_fill = "../../../../../assets/icon/downvote-fill.png";
+  public downvote_light = "../../../../assets/icon/downvote-light.svg";
+  public downvote_dark = "../../../../assets/icon/downvote-dark.svg";
+
   selectUpVoteImg(): void {
     const mode = this.storageService.getItem("mode") == "0" ? 0 : 1;
     if(mode == 0) {

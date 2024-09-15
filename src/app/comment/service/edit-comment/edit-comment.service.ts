@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PostService } from 'src/app/shared/services/post/post.service';
 import { StorageService } from 'src/app/shared/storage/storage.service';
-import { Comment } from 'src/app/view-detail-post/view-detail-post/pojo/comment';
+import { CommentInfo } from 'src/app/view-detail-post/view-detail-post/pojo/comment';
 import { EditCommentRequest } from '../../pojo/edit-comment-request';
 import { CheckRefreshTokenService } from 'src/app/shared/services/check-refresh-token/check-refresh-token.service';
 
@@ -20,7 +20,7 @@ export class EditCommentService {
 
   private endpoint: string = "/edit-comment";
 
-  editComment(post_id: number, _id: number, edit_content: string): Observable<Comment> {
+  editComment(post_id: number, _id: number, edit_content: string): Observable<CommentInfo> {
     this.checkRefreshToken.runCheckRefreshToken();
     const uid = parseInt(this.storageService.getItem("uid"));
     const request = new EditCommentRequest(post_id, uid, _id, edit_content);

@@ -10,6 +10,8 @@ import { SavedPostResponse } from './pojo/saved-post-response';
 import { CheckRefreshTokenService } from '../check-refresh-token/check-refresh-token.service';
 import { DetailPost } from 'src/app/post-link-list/pojo/detail-post';
 import { StorageService } from '../../storage/storage.service';
+import { ShareDataService } from 'src/app/shared/services/share_data/share-data.service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +22,8 @@ export class SavePostService {
     private getService: GetService,
     private postService: PostService,
     private storageService: StorageService,
-    private checkRefreshToken: CheckRefreshTokenService
+    private checkRefreshToken: CheckRefreshTokenService,
+    private shareDataService: ShareDataService
   ) { }
 
   private savedEndpoint: string = "/save-post";
@@ -37,7 +40,7 @@ export class SavePostService {
     return this.postService.post(this.savedEndpoint, header, body, true);
   }
 
-  public getSavedPostsByUid(uid: number): Observable<GetPostResponse[]> {
+  public getSavedPostsByUid(uid: number): Observable<number[]> {
     const parameter: string ="uid=" + uid; 
     const endpointWithParameter: string = this.getSavedEndpoint + "?" + parameter;
     const header: HttpHeaders = new HttpHeaders();
@@ -57,7 +60,8 @@ export class SavePostService {
     this.savePostByUid(uid, post.post_id, save).subscribe({
       next: (response: DefaultResponse) => {
         post.save = save;
-        this.storageService.setSaveStatusOfPostInStorage(post.post_id, save);
+        // this.storageService.setSaveStatusOfPostInStorage(post.post_id, save);
+        this.shareDataService.setSaveStatusOfDetailPosts(post.post_id, save);
       },
       error: (e: HttpErrorResponse) => {
         console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
