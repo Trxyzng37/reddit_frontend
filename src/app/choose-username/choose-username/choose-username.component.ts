@@ -22,6 +22,7 @@ export class ChooseUsernameComponent {
   public isUsernameAllow: boolean = false;
   public isUsernameTaken: boolean = true;
   public username: string = "";
+  public isLoad: boolean = false;
 
   checkUserName(event: any) {
     this.username = event.target.value;
@@ -50,8 +51,10 @@ export class ChooseUsernameComponent {
       cancelButtonText: "Cancel"
     }).then((result)=> {
       if(result.isConfirmed) {
+        this.isLoad = true;
         this.checkUsernameService.selectUsername(this.username).subscribe({
           next: (response: DefaultResponse) => {
+            this.isLoad = false;
             if(response.error_code == 0) {
               this.storageService.removeItem("signup_google_email")
               Swal.fire({
@@ -65,6 +68,7 @@ export class ChooseUsernameComponent {
             }
           },
           error: (e: HttpErrorResponse) => {
+            this.isLoad = false;
             Swal.fire("Error select username. Please try again",'','error')
           }
         })

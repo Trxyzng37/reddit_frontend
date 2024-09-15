@@ -32,6 +32,8 @@ export class ChangePasswordComponent implements OnInit{
   public re_enter_password: string = "";
   public allowSubmit: boolean = false;
 
+  public isLoad: boolean = false;
+
   ngOnInit() {}
 
   inputPassword(event: any) {
@@ -60,9 +62,11 @@ export class ChangePasswordComponent implements OnInit{
       if (email === "")
         Swal.fire("Error changing password. Please try again",'','error');
       else {
+        this.isLoad = true;
         const observable: Observable<ChangePasswordResponse> = this.changePasswordService.changePassword(email, this.password);
         observable.subscribe({
           next: (response: ChangePasswordResponse) => {
+            this.isLoad = false;
             if (response.isPasswordChange) {
               Swal.fire("Change password successfully",'','success').then(result=>{
                 if(result.isConfirmed) {
@@ -77,6 +81,7 @@ export class ChangePasswordComponent implements OnInit{
             }
           },
           error: (e: HttpErrorResponse) => {
+            this.isLoad = false;
             Swal.fire("Error changing password. Please try again",'','error');
             console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
           }
