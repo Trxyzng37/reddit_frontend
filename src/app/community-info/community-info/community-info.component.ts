@@ -9,6 +9,7 @@ import { JoinCommunityResponse } from 'src/app/shared/services/search-communites
 import { HttpErrorResponse } from '@angular/common/http';
 import { PresentationService } from 'src/app/shared/services/presentation/presentation.service';
 import { DarkModeService } from 'src/app/shared/services/dark-mode/dark-mode.service';
+import { ShareDataService } from 'src/app/shared/services/share_data/share-data.service';
 
 @Component({
   selector: 'community-info',
@@ -22,7 +23,8 @@ export class CommunityInfoComponent {
     private communityService: CommunityService,
     private storageService: StorageService,
     public presentationService: PresentationService,
-    private darkmodeSerive: DarkModeService
+    private darkmodeSerive: DarkModeService,
+    private shareDataService: ShareDataService
   ) {}
 
   @Input() community_info: Communities = new Communities(0, "", 0, "", "", 0, "", "", 0,0);
@@ -31,13 +33,19 @@ export class CommunityInfoComponent {
   public isJoinCommunity: boolean = false;
   public isCommunityPage: boolean = false;
   public isControlPostPage: boolean = false;
+  public isCreatePostPage: boolean = false;
   public isOwner: boolean = false;
   public joinText: string = this.isJoinCommunity ? 'Joined' : 'Join';
+  subscribed_communities: Communities[] = [];
 
   ngOnInit() {
     this.darkmodeSerive.useDarkMode();
     this.isCommunityPage = window.location.href.includes("/r/");
     this.isControlPostPage = window.location.href.includes("/control-posts/");
+    this.isCreatePostPage = window.location.href.includes("/create-post");
+    this.shareDataService.subscribed_communities$.subscribe(res => {
+      this.subscribed_communities = res;
+    })
   }
 
   ngOnChanges() {
@@ -67,6 +75,14 @@ export class CommunityInfoComponent {
       next: (response: JoinCommunityResponse) => {
         this.isJoinCommunity = response.join_community == 0 ? false : true;
         this.joinText = this.isJoinCommunity ? 'Joined' : 'Join';
+        if(response.join_community == 1)
+          this.subscribed_communities.unshift(this.community_info);
+        else
+          this.subscribed_communities = this.subscribed_communities.filter((community) => {
+            return community.id != this.community_info.id;
+          })
+        this.shareDataService.setSubscribedCommunities(this.subscribed_communities);
+        this.shareDataService.setJoinCommunityOfDetailPosts(this.community_info.id, response.join_community);
       },
       error: (e: HttpErrorResponse) => {
         console.log("error join community");
@@ -79,6 +95,6 @@ export class CommunityInfoComponent {
   }
 
   controlPosts() {
-    window.location.href = "/control-posts/"+this.community_info.id;
+    window.location.href = "/mod/"+this.community_info.id+"/review";
   }
 }
