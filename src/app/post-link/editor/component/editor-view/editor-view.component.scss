@@ -5,6 +5,10 @@
 //     overflow: hidden;
 // }
 
+:host {
+    position: relative;
+}
+
 #container {
     max-height: 155px;
     overflow: hidden;
@@ -28,3 +32,4 @@
 #container p {
     display: block;
 }
+

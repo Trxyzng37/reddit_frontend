@@ -1,17 +1,20 @@
 
-<div id="link_container" [ngStyle]="{'flex-direction': isViewPostPage ? 'column' : 'row'}">
-    <div *ngIf="!isViewPostPage" [ngStyle]="{'width': data.image.length == 0 ? '100%':'calc(100% - 150px)'}">
-        <h3>{{title}}</h3>
+<div id="link_container" [ngStyle]="{'flex-direction': isViewPostPage || isModPostPage ? 'column' : 'row'}">
+    <div *ngIf="!isViewPostPage && !isModPostPage" [ngStyle]="{'width': data.image.length == 0 ? '100%':'calc(100% - 150px)'}">
+        <p id="txt_title">{{title}}</p>
         <a [ngStyle]="{'text-overflow': data.image.length == 0 ? 'string':'ellipsis', 'white-space': data.image.length == 0 ? 'normal':'nowrap', 'word-wrap': data.image.length == 0 ? 'break-word':'hidden'}"  [href]="data.link" target="_blank">{{data.link}}</a>
     </div>
     <!-- <a id="content_link" *ngIf="isViewPostPage" [href]="data.link" target="_blank">{{data.link}}</a> -->
-    <a id="link_img" [ngStyle]="{'border-bottom-left-radius': isViewPostPage ? '0' : '10px', 'border-bottom-right-radius': isViewPostPage ? '0' : '10px'}" [ngClass]="{'post_page': isViewPostPage}" [href]="data.link" target="_blank" title="{{data.link}}" (click)="preventClick($event)" *ngIf="data.image.length != 0">
-        <img [src]="data.image">
-        <div *ngIf="!isViewPostPage">
-            <i class="pi pi-external-link" [ngStyle]="{'font-size': isViewPostPage ? '40px' : '20px'}"></i>
-        </div>
-    </a>
-    <div id="domain_block" (click)="openLink()" *ngIf="isViewPostPage">
+    <ng-container *ngIf="data.image.length != 0" >
+        <a id="link_img" [ngStyle]="{'border-bottom-left-radius': isViewPostPage || isModPostPage ? '0' : '10px', 'border-bottom-right-radius': isViewPostPage || isModPostPage ? '0' : '10px'}" [ngClass]="{'post_page': isViewPostPage || isModPostPage}" [href]="data.link" target="_blank" title="{{data.link}}" (click)="preventClick($event)" *ngIf="data.image.length != 0">
+            <img [src]="data.image">
+            <div *ngIf="!isViewPostPage && !isModPostPage">
+                <i class="pi pi-external-link" [ngStyle]="{'font-size': isViewPostPage || isModPostPage ? '40px' : '16px'}"></i>
+            </div>
+        </a>
+    </ng-container>
+
+    <div id="domain_block" (click)="openLink()" *ngIf="isViewPostPage || isModPostPage">
         <a id="link_domain" [href]="data.link" target="_blank">{{link_domain}}</a>
         <button id="btn_open" (click)="openLink()">Open</button>
     </div>

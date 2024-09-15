@@ -22,8 +22,18 @@ export class LinkViewComponent {
   public link_domain: string = "";
 
   isViewPostPage = window.location.href.match("/post/");
+  isModPostPage = window.location.href.match("/mod/");
   
   ngOnInit() {
+    this.data = JSON.parse(this.content);
+    let regex = /^(https?:\/\/[^\/]+)/;
+    const found = this.data.link.match(regex);
+    if(found != null && found != undefined) {
+      this.link_domain = found[0];
+    }
+  }
+
+  ngOnChanges() {
     this.data = JSON.parse(this.content);
     let regex = /^(https?:\/\/[^\/]+)/;
     const found = this.data.link.match(regex);

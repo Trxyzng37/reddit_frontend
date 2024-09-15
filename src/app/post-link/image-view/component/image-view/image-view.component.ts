@@ -20,6 +20,11 @@ export class ImageViewComponent {
     this.isViewPostPage = window.location.href.includes("/post/");
   }
 
+  ngOnChanges() {
+    this.arr = JSON.parse(this.content);
+    this.isViewPostPage = window.location.href.includes("/post/");
+  }
+
   index: number = 0;
   leftAllowed: boolean = false;
   rightAllowed: boolean = true;
