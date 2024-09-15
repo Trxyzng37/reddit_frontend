@@ -1,5 +1,13 @@
 :host {
     position: relative;
+    width: 100%;
+    height: 100%;
+    display: block;
+    background-color: var(--primary_background_color);
+    overflow: hidden;
+    overflow-y: scroll;
+    scrollbar-gutter: stable;
+    box-sizing: border-box;
 }
 
 #header, #btn_block {
@@ -10,7 +18,9 @@
 }
 
 #header {
+    margin-top: 20px;
     margin-bottom: 30px;
+    margin-left: calc(2vw);
 }
 
 #header > img {
@@ -22,6 +32,7 @@
 
 #btn_block {
     margin-bottom: 30px;
+    margin-left: calc(2vw);
 }
 
 .btn_option {
@@ -30,14 +41,20 @@
     padding: 10px 20px;
     margin-right: 10px;
     border-radius: 30px;
-    border: 1px solid var(--secondary_color);
+    // border: 1px solid var(--icon);
     background-color: var(--primary_background_color);
-    color: var(--secondary_color);
+    color: var(--icon);
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.btn_option:hover {
+    text-decoration: underline;
 }
 
 .selected_btn {
-    background-color: var(--neutral);
-    border: 1px solid var(--secondary_color);
+    background-color: var(--btn_selected);
+    // border: 1px solid var(--icon);
 }
 
 #comment_container {
@@ -93,7 +110,7 @@
     text-align: left;
     padding: 0 10px;
     background-color: var(--primary_background_color);
-    box-shadow: var(--box_shadow_menu);
+    box-shadow: var(--menu_box_shadow);
 }
 
 #sort_option_block > button:hover {
@@ -124,30 +141,42 @@ app-comment {
     padding: 25vh 10px;
 }
 
-#loading_block {
-    width: calc(100% - 320px - 2vw - 360px); 
-    height: 100vh;
-    position: fixed;
-    background-color: var(--neutral);
-    left: calc(320px + 2vw);
-    top: 60px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-size: 25px;
+#outlet, #comment_container {
+    width: calc(100% - 380px);
+    margin-left: calc(2vw);
+    margin-top: 20px;
+    box-sizing: border-box;
+    margin-bottom: 50px;
 }
 
-@media only screen and (max-width: 1200px) {
-    #loading_block {
-        left: 15px;
-        width: calc(100% - 380px + 5px);
-    }
+#txt_username {
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--icon);
+}
+
+#info_block {
+    position: fixed;
+    height: calc(100vh - var(--header_size));
+    top: calc(var(--header_size) + 10px);
+    width: 300px;
+    right: 40px;
+    overflow: hidden;
+    scrollbar-gutter: stable;
+    background-clip: content-box;
+    box-sizing: border-box;
+}
+
+#info_block:hover {
+    overflow-y: auto;
 }
 
 @media only screen and (max-width: 850px) {
-    #loading_block {
-        left: 10px;
+    #info_block {
+        display: none;
+        right: calc(var(--margin_home));
+    }
+    #outlet, #comment_container {
         width: calc(100% - 30px);
     }
 }

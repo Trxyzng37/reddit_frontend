@@ -3,11 +3,14 @@ import { SearchUserProfileService } from 'src/app/shared/services/search-user-pr
 import { UserProfile } from 'src/app/shared/pojo/pojo/user-profile';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GetCommentsService } from 'src/app/view-detail-post/view-detail-post/service/get-comments/get-comments.service';
-import { Comment } from 'src/app/view-detail-post/view-detail-post/pojo/comment';
+import { CommentInfo } from 'src/app/view-detail-post/view-detail-post/pojo/comment';
 import { HttpErrorResponse } from '@angular/common/http';
 import { StorageService } from 'src/app/shared/storage/storage.service';
 import { DarkModeService } from 'src/app/shared/services/dark-mode/dark-mode.service';
 import { CheckRefreshTokenService } from 'src/app/shared/services/check-refresh-token/check-refresh-token.service';
+import { SavePostService } from 'src/app/shared/services/save-post/save-post.service';
+import { GetPostResponse } from 'src/app/post-link-list/pojo/get-post-response';
+import { ShareDataService } from 'src/app/shared/services/share_data/share-data.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -21,16 +24,20 @@ export class UserProfileComponent {
     private getCommentService: GetCommentsService,
     private activeRoute: ActivatedRoute,
     private darkmodeSerive: DarkModeService,
-    private checkRefreshTokenService: CheckRefreshTokenService
+    private checkRefreshTokenService: CheckRefreshTokenService,
+    private route: Router,
+    private shareDataService: ShareDataService
   ) {}
 
   public userInfo: UserProfile = new UserProfile(0,'','','',0,0,'');
-  public comments: Comment[] = [];
+  public comments: CommentInfo[] = [];
   public searchOption: string = "posts";
   public sort_option: string = "New";
   public isSortOptionShow: boolean = false;
   public isOwner: boolean = false;
   public isLoad: boolean = false;
+
+  public profile_option: string = "";
 
   ngOnInit() {
     this.darkmodeSerive.useDarkMode();
@@ -41,62 +48,53 @@ export class UserProfileComponent {
       next: (response: UserProfile) => {
         this.userInfo = response;
         this.isOwner = uid == this.userInfo.uid;
-        this.getCommentsByUid("new");
       }
     })
+    this.shareDataService.profile_option$.subscribe(res => {
+      this.searchOption = res;
+    });
+    this.checkRoute();
   }
 
-  count=0;
+  checkRoute() {
+    const username = this.activeRoute.snapshot.params['username'];
+    if(window.location.href.includes(username+"/posts")) {
+      this.searchOption = "posts";
+      this.shareDataService.setProfileOption("posts");
+    }
+    if(window.location.href.includes(username+"/comments")) {
+      this.searchOption = "comments";
+      this.shareDataService.setProfileOption("comments");
+    }
+    if(window.location.href.includes(username+"/saved")) {
+      this.searchOption = "saved";
+      this.shareDataService.setProfileOption("saved");
+    }
+    if(window.location.href.includes(username+"/wait_for_approve")) {
+      this.searchOption = "wait_for_approve";
+      this.shareDataService.setProfileOption("wait_for_approve");
+    }
+  }
+
   selectSearchOption(option: string) {
     this.searchOption = option;
-    if(option == "wait_for_approve" || option == "saved") {
-        this.isLoad = true;
+    const username = this.activeRoute.snapshot.params['username'];
+    if(this.searchOption == "posts") {
+      this.shareDataService.setProfileOption("posts");
+      this.route.navigate(['user/'+username+'/posts']);
     }
-  }
-
-  loadApprove(event: Event) {
-    this.isLoad = false;
-  }
-
-  selectSort(sort_type: string) {
-    this.sort_option = sort_type;
-    this.isSortOptionShow = !this.isSortOptionShow;
-    let sort_option = "";
-    switch(sort_type) {
-      case "Hot":
-        sort_option = "hot";
-        break;
-      case "New":
-        sort_option = "new";
-        break;
-      case "Top today":
-        sort_option = "top_day";
-        break; 
-      case "Top this week":
-        sort_option = "top_week";
-        break;   
-      case "Top this month":
-        sort_option = "top_month";
-        break;
-      case "Top this year":
-        sort_option = "top_year";
-        break;
-      case "Top all time":
-        sort_option = "top_all_time";
-        break;                      
+    if(this.searchOption == "saved") {
+      this.shareDataService.setProfileOption("saved");
+      this.route.navigate(['user/'+username+'/saved']);
     }
-    this.getCommentsByUid(sort_option);
-  }
-
-  showSortOption() {
-    this.isSortOptionShow = !this.isSortOptionShow;
-  }
-
-  getCommentsByUid(sort_type: string) {
-    this.getCommentService.getCommentsByUser(this.userInfo.uid, sort_type).subscribe({
-      next: (response: Comment[]) => {
-        this.comments = response;
-      }
-    })
+    if(this.searchOption == "wait_for_approve") {
+      this.shareDataService.setProfileOption("wait_for_approve");
+      this.route.navigate(['user/'+username+'/wait_for_approve']);
+    }
+    if(this.searchOption == "comments") {
+      this.shareDataService.setProfileOption("comments");
+      this.route.navigate(['user/'+username+'/comments']);
+      
+    }
   }
 }
