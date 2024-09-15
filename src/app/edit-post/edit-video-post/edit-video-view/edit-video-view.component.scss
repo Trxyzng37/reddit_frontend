@@ -24,7 +24,7 @@
     padding-right: 55px;
     padding-bottom: 8px;
     padding-left: 10px;
-    border: 1px solid var(--secondary_color);
+    border: 1px solid var(--border);
     // border-radius: 5px;
     box-sizing: border-box;
     overflow: hidden;
@@ -38,6 +38,7 @@
     align-self: flex-end;
     font-size: 11px;
     font-weight: 400;
+    color: var(--icon);
 }
 
 //video
@@ -45,11 +46,12 @@
     min-height: 25vh;
     height: auto;
     width: 100%;
-    background-color: var(--neutral);
+    background-color: var(--primary_background_color) !important;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    border: 1px solid var(--border);
 }
 
 #input_upload_video {
@@ -73,8 +75,8 @@ video {
 #btn_upload_video {
     width: 100px;
     height: 100px;
-    background-color: rgb(168, 136, 244);
-    border: 2px solid black;
+    background-color: var(--primary_background_color);
+    border: 2px dashed var(--icon);
     border-radius: 5px;
 }
 
@@ -89,10 +91,11 @@ video {
     top: 10px;
     right: 10px;
     background-color: transparent;
+    color: var(--icon);
 }
 
 #btn_delete_video:hover {
-    background-color: var(--neutral);
+    background-color: var(--bg_hover);
 }
 
 #btn_delete_video > i {
@@ -116,10 +119,12 @@ video {
 }
 
 #btn_cancel_comment {
-    background-color: var(--primary_background_color);
+    background-color: var(--search);
     margin-right: 20px;
+    color: var(--icon);
 }
 
 #btn_edit_comment {
     background-color: var(--select_btn);
+    color: var(--icon);
 }

@@ -25,7 +25,7 @@
     padding-right: 55px;
     padding-bottom: 8px;
     padding-left: 10px;
-    border: 1px solid var(--secondary_color);
+    border: 1px solid var(--border);
     // border-radius: 5px;
     box-sizing: border-box;
     overflow: hidden;
@@ -39,6 +39,7 @@
     align-self: flex-end;
     font-size: 11px;
     font-weight: 400;
+    color: var(--icon);
 }
 
 
@@ -51,7 +52,7 @@
 #post_link_block > textarea {
     width: 100%;
     padding: 10px 10px;
-    border: 1px solid var(--secondary_color);
+    border: 1px solid var(--border);
     overflow: hidden;
 }
 
@@ -71,10 +72,12 @@
 }
 
 #btn_cancel_comment {
-    background-color: var(--primary_background_color);
+    background-color: var(--search);
     margin-right: 20px;
+    color: var(--icon);
 }
 
 #btn_edit_comment {
     background-color: var(--select_btn);
+    color: var(--icon);
 }

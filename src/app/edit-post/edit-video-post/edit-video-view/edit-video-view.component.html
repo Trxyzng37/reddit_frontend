@@ -6,7 +6,7 @@
 
 <div id="post_video_block" [ngStyle]="{'background-color': edit_content.length == 0 ? 'var(--neutral)':'transparent'}">
     <input id="input_upload_video" type="file" accept=".mp4, .mov, .wmv, .WebM" (change)="onVideoUpload($event)" #input_video>
-    <p style="margin-right: 10px;" [ngStyle]="{'display': edit_content.length == 0 ? 'block':'none' }">Click button to upload video</p>
+    <p style="margin-right: 10px; color: var(--icon);" [ngStyle]="{'display': edit_content.length == 0 ? 'block':'none' }">Click button to upload video</p>
     <button id="btn_upload_video" type="button" (click)="input_video.click()" [ngStyle]="{'display': edit_content.length == 0 ? 'block':'none' }"><img style="width: 50px; height: 50px" src="../../assets/icon/upload.png"/></button>
     <div id="video_block" [ngStyle]="{'display': edit_content.length > 0 ? 'block':'none' }">
         <video src="{{edit_content}}" preload="none" poster="" controls="true" disablepictureinpicture="true"></video>
@@ -19,9 +19,5 @@
     <button id="btn_edit_comment" type="button" (click)="editPost()" [disabled]="allowSubmit">Edit</button>
 </div>
 
-<div id="load_container" *ngIf="isLoad">
-    <div id="load_block">
-        <div class="loader"></div>
-        <b style="padding-top: 10px;font-size: 20px;">Edit post. Please wait...</b>
-    </div>
-</div>
+<loading [txt_load]="'Edit post. Please wait'" *ngIf="isLoad"></loading>
+

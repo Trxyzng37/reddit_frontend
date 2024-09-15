@@ -9,6 +9,7 @@ import { EditPostService } from '../../service/edit-post/edit-editor-post.servic
 import Swal from 'sweetalert2';
 import { EditPostResponse } from '../../pojo/edit-post-response';
 import { StorageService } from 'src/app/shared/storage/storage.service';
+import { DetailPost } from 'src/app/post-link-list/pojo/detail-post';
 
 @Component({
   selector: 'app-edit-img-post',
@@ -39,14 +40,18 @@ export class EditImgPostComponent {
   public isLoad: boolean = false;
 
   ngOnInit() {
-    const title = (<HTMLInputElement>document.getElementById("input_post_title"));
+    const uid: number = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
     this.post_id = this.activeRoute.snapshot.params['post_id'];
-    this.getPostService.getPostByPostId(this.post_id).subscribe({
-      next: (response: GetPostResponse) => {
+    this.getPostService.getDetailPostByUidAndPostId(uid, this.post_id).subscribe({
+      next: (response: DetailPost) => {
         this.imgArr = JSON.parse(response.content);
         this.img = this.imgArr[this.imgArr.length-1];
         this.selected_id = this.imgArr.length-1;
+        let title = (<HTMLInputElement>document.getElementById("input_post_title"));
         title.value = response.title;
+        title.value = title.value.replace(/\r?\n|\r/g, "");
+        title.style.height = 'auto';
+        title.style.height = title.scrollHeight < 30 ? '30px' : `${title.scrollHeight}px`;
         this.edit_title = response.title;
         this.characterCount = response.title.length;
         this.original_title = response.title;

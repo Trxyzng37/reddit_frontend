@@ -9,6 +9,7 @@ import { DeletePostService } from '../../service/delete-post/delete-post.service
 import { DeletePostResponse } from '../../pojo/delete-post-response';
 import { StorageService } from 'src/app/shared/storage/storage.service';
 import { DateTimeService } from 'src/app/shared/services/date-time/date-time.service';
+import { DetailPost } from 'src/app/post-link-list/pojo/detail-post';
 
 @Component({
   selector: 'app-edit-post',
@@ -26,15 +27,16 @@ export class EditPostComponent {
     public dateTimeService: DateTimeService
   ) {}
 
-  public postData: GetPostResponse = new GetPostResponse(0,'',0,'','',0,'','','','','',0,0,0);
+  public postData: DetailPost = new DetailPost();
   public post_type: string = "";
   public post_id: number = 0;
   private community_id = 0;
 
   ngOnInit() {
     this.post_id = this.activeRoute.snapshot.params['post_id'];
-    this.getPostService.getPostByPostId(this.post_id).subscribe({
-      next: (response: GetPostResponse) => {
+    const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
+    this.getPostService.getDetailPostByUidAndPostId(uid, this.post_id).subscribe({
+      next: (response: DetailPost) => {
         this.postData = response;
           this.post_type = response.type;
           this.community_id = response.community_id;
@@ -57,7 +59,7 @@ export class EditPostComponent {
     }).then((result) => {
       if (result.isConfirmed) {
         const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
-        this.deletePostService.deletePost("/delete-post", this.post_id, uid, 'user').subscribe({
+        this.deletePostService.deletePost(this.post_id, uid, 1).subscribe({
           next: (response: DeletePostResponse) => {
             Swal.fire('Delete post successfully', '', 'success').then((result) => {
               if (result.isConfirmed)

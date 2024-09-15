@@ -9,6 +9,7 @@ import tinymce from 'tinymce';
 import { EditPostService } from '../../service/edit-post/edit-editor-post.service';
 import { EditPostResponse } from '../../pojo/edit-post-response';
 import { StorageService } from 'src/app/shared/storage/storage.service';
+import { DetailPost } from 'src/app/post-link-list/pojo/detail-post';
 
 @Component({
   selector: 'app-edit-editor-post',
@@ -28,7 +29,7 @@ export class EditEditorPostComponent {
 
   public post_id: number = 0;
   public shownDate: string = "";
-  public postData: GetPostResponse = new GetPostResponse(0,"",0,"","",0,"","","","","",0,0,0);
+  public postData: DetailPost = new DetailPost();
   public edit_title: string = "";
   public edit_content: string = "";
   public characterCount: number = 0;
@@ -38,13 +39,17 @@ export class EditEditorPostComponent {
   public isLoad: boolean = false;
 
   ngOnInit() {
-    const title = (<HTMLInputElement>document.getElementById("input_post_title"));
     this.shownDate = this.dateTimeService.getTimeByCompareCreatedAtAndCurrentDate(this.postData.created_at);
     this.post_id = this.activeRoute.snapshot.params['post_id'];
-    this.getPostService.getPostByPostId(this.post_id).subscribe({
-      next: (response: GetPostResponse) => {
+    const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
+    this.getPostService.getDetailPostByUidAndPostId(uid, this.post_id).subscribe({
+      next: (response: DetailPost) => {
         this.postData = response;
+        const title = (<HTMLInputElement>document.getElementById("input_post_title"));
         title.value = this.postData.title;
+        title.value = title.value.replace(/\r?\n|\r/g, "");
+        title.style.height = 'auto';
+        title.style.height = title.scrollHeight < 30 ? '30px' : `${title.scrollHeight}px`;
         this.edit_title = this.postData.title;
         this.edit_content = this.postData.content;
         this.characterCount = this.postData.title.length;
@@ -83,7 +88,7 @@ export class EditEditorPostComponent {
     base_url: '/tinymce',
     suffix: '.min',
     plugins: 'link lists codesample image autoresize', 
-    toolbar: "bold italic underline strikethrough forecolor subscript superscript removeformat numlist bullist link blockquote codesample image",
+    toolbar: "bold italic underline strikethrough subscript superscript removeformat numlist bullist link blockquote codesample image",
     toolbar_mode: 'wrap',
     placeholder: '(Optional)',
     automatic_uploads: true,
@@ -98,11 +103,6 @@ export class EditEditorPostComponent {
     branding: false,
     resize: true,
     width: '100%',
-    min_height: 100,
-    // max_height:1000,
-    autoresize_min_height: 200,
-    // autoresize_max_height: 300,
-    // height: '100px', 
     menubar: false, 
     draggable_modal: false,
     object_resizing: false,
@@ -119,6 +119,7 @@ export class EditEditorPostComponent {
     custom_colors: false,
     content_css: 'tinymce-5',
     content_style: 
+      'html body { overflow-y: auto !important; }' +
       'p { margin: 0; } ' + 
       'img { display: block; margin: 0 auto; out-line: 0; max-width: 100%; max-height: 100%}' +
       'body {line-height: normal}' +
