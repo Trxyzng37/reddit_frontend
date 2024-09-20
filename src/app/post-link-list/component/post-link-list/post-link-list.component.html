@@ -85,11 +85,11 @@
 </app-post-link>
 
 <p class="empty_block" style="font-size: 40px; color: var(--icon);" *ngIf="post_id_arr.length == 0 && wait && !isHomePage">No post found</p>
-<div class="empty_block" *ngIf="detail_post_arr.length == 0 && wait && isHomePage">
+<!-- <div class="empty_block" *ngIf="detail_post_arr.length == 0 && wait && isHomePage">
     <p>Look like it empty</p>
     <p style="margin-top: 10px;">Why don't you explore and join some communities</p>
     <a href="/popular">To popular page</a>
-</div>
+</div> -->
 
 <div class="load_data_block" *ngIf="isDataLoad">
     <img class="img_load_data" src="../../../../assets/icon/logo.png">

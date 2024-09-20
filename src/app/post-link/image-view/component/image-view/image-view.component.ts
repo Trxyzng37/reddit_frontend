@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { GalleryItem, ImageItem } from 'ng-gallery';
 import { Img } from 'src/app/create-post/pojo/img';
 
 @Component({
