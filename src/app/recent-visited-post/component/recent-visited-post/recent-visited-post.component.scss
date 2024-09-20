@@ -108,7 +108,8 @@ a:hover {
 
 #img_block {
     width: 30%;
-    height: auto;
+    height: 75px;
+    // aspect-ratio: 2/1;
     display: flex;
     flex-direction: column;
     justify-content: center;
