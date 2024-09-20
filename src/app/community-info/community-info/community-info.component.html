@@ -16,15 +16,15 @@
     <b>Moderator</b>
     <div id="owner_block">
         <img id="avatar" src="{{userInfo.avatar}}">
-        <a href="/user/{{userInfo.username}}">u/{{userInfo.username}}</a>
+        <a href="/user/{{userInfo.username}}/posts">u/{{userInfo.username}}</a>
     </div>
 </div>
 
-<div class="btn_block" *ngIf="isOwner && !isCreatePostPage" (click)="editCommunity()">
+<div class="btn_block" *ngIf="isOwner && !isCreatePostPage && !isPostPage" (click)="editCommunity()">
     <button class="btn">Community management</button>
 </div>
 
-<div id="btn_control" class="btn_block" *ngIf="!isCreatePostPage && isOwner" (click)="controlPosts()">
+<div id="btn_control" class="btn_block" *ngIf="!isCreatePostPage && !isPostPage && isOwner" (click)="controlPosts()">
     <button class="btn" style="margin-bottom: 10px;">Control posts</button>
 </div>
 

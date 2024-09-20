@@ -34,6 +34,7 @@ export class CommunityInfoComponent {
   public isCommunityPage: boolean = false;
   public isControlPostPage: boolean = false;
   public isCreatePostPage: boolean = false;
+  public isPostPage: boolean = false;
   public isOwner: boolean = false;
   public joinText: string = this.isJoinCommunity ? 'Joined' : 'Join';
   subscribed_communities: Communities[] = [];
@@ -43,6 +44,7 @@ export class CommunityInfoComponent {
     this.isCommunityPage = window.location.href.includes("/r/");
     this.isControlPostPage = window.location.href.includes("/control-posts/");
     this.isCreatePostPage = window.location.href.includes("/create-post");
+    this.isPostPage = window.location.href.includes("/post/");
     this.shareDataService.subscribed_communities$.subscribe(res => {
       this.subscribed_communities = res;
     })
