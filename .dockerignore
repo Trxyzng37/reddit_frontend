@@ -1,0 +1,6 @@
+.git
+*.log
+.vscode
+.angular
+output
+node_modules
