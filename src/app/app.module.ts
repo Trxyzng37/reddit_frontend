@@ -21,8 +21,6 @@ import { PostMainComponent } from './post-main/component/post-main/post-main.com
 import { RecentVisitedPostComponent } from './recent-visited-post/component/recent-visited-post/recent-visited-post.component';
 import { NavigationBarComponent } from './navigation_bar/component/navigation-bar/navigation-bar.component';
 import { HeaderBarComponent } from './header_bar/component/header-bar/header-bar.component';
-import { QuillModule } from 'ngx-quill';
-import { InViewportModule } from 'ng-in-viewport';
 import { SafeHtmlPipe } from './shared/pipe/safe-html';
 import { ImgUploadedComponent } from './create-post/img_uploaded/component/img-uploaded/img-uploaded.component';
 import { ImgCaptionComponent } from './create-post/img-caption/img-caption/img-caption.component';
@@ -121,9 +119,7 @@ import { ModeratePostComponent } from './control-post/moderate-post/moderate-pos
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    QuillModule,
     BrowserAnimationsModule,
-    InViewportModule,
     SafeHtmlPipe,
     EditorModule,
     FormsModule,

@@ -35,7 +35,8 @@ export class RefreshTokenGuard {
                 icon: "error",
                 showConfirmButton: true,
                 confirmButtonText: "Go to sign-in page"
-            }).then((result)=>{
+            }).then((result) => {
+                this.storageService.removeItem("uid");
                 if(result.isConfirmed) {
                     window.location.href = "/signin";
                 }

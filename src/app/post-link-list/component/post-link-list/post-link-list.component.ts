@@ -84,7 +84,7 @@ export class PostLinkListComponent {
   private get_post_amount: number = 5;
 
   private timeout: any;
-  private refresh_timeout = 30000;
+  private refresh_timeout = 120000;
 
   ngAfterViewInit() {
     if(this.isHomePage) {

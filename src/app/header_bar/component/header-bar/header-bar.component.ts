@@ -59,10 +59,19 @@ export class HeaderBarComponent {
               this.isSignIn = (this.storageService.getItem("uid") != "" && this.storageService.getItem("uid") != "0") ? true:false;
             },
             error: (e: HttpErrorResponse) => {
-              window.location.reload();
+              this.isSignIn = false;
+              this.storageService.removeItem("uid");
+              Swal.fire({
+                title: 'Error checking refresh token',
+                icon: 'error'
+              }).then(result => {
+                if(result.isConfirmed) {
+                  window.location.reload();
+                }
+              })
             }
           });
-        }, 60000); 
+        }, 10000); 
         this.userProfileService.getUserProfileByUid(uid).subscribe({
           next: (response: UserProfile) => {
             this.wait = true;
