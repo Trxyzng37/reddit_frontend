@@ -8,6 +8,6 @@ RUN npm install
 
 COPY . .
 
-EXPOSE  4200
+EXPOSE  10000
 
-CMD ["npx", "ng", "serve", "--host", "0.0.0.0", "--disable-host-check"]
+ENTRYPOINT ["npx", "ng", "serve", "-c", "render", "--host", "0.0.0.0", "--port", "10000", "--disable-host-check"]
