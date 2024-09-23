@@ -128,9 +128,9 @@ export class SigninComponent implements OnInit {
     }).then((result) => {
       /* Read more about handling dismissals below */
       if (result.dismiss === Swal.DismissReason.timer) {
+        // console.log("I was closed by the timer");
         window.location.href = "/home";
       }
-      window.location.href = "/home";
     });
   }
 }
