@@ -130,6 +130,7 @@ export class SigninComponent implements OnInit {
       if (result.dismiss === Swal.DismissReason.timer) {
         window.location.href = "/home";
       }
+      window.location.href = "/home";
     });
   }
 }
