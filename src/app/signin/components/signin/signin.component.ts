@@ -109,14 +109,28 @@ export class SigninComponent implements OnInit {
       this.recentVisitService.setRecentVisit("/set-recent-visit-community", uid, community).subscribe();
     }
     this.storageService.removeItem("recent_communities");
+    let timerInterval: any;
     Swal.fire({
-      title: 'Login successfully',
-      text: 'Click button to go to home page'
-    }).then(result => {
-      if(result.isConfirmed) {
-        window.location.href = "/home";
+      title: "Login successfully",
+      html: "Redirecting to home page",
+      timer: 2000,
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading();
+        const timer = Swal.getPopup()?.querySelector("b");
+        timerInterval = setInterval(() => {
+          timer!.textContent = `${Swal.getTimerLeft()}`;
+        }, 100);
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
       }
-    })
+    }).then((result) => {
+      /* Read more about handling dismissals below */
+      if (result.dismiss === Swal.DismissReason.timer) {
+        // console.log("I was closed by the timer");
+      }
+    });
   }
 }
 
