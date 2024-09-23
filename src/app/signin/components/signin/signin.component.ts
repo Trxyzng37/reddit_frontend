@@ -109,7 +109,14 @@ export class SigninComponent implements OnInit {
       this.recentVisitService.setRecentVisit("/set-recent-visit-community", uid, community).subscribe();
     }
     this.storageService.removeItem("recent_communities");
-    window.location.href = "/home";
+    Swal.fire({
+      title: 'Login successfully',
+      text: 'Click button to go to home page'
+    }).then(result => {
+      if(result.isConfirmed) {
+        window.location.href = "/home";
+      }
+    })
   }
 }
 
