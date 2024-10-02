@@ -53,7 +53,7 @@ const routes: Routes = [
           {path: 'popular', title: 'Reddit', component: PostLinkListComponent},
           {path: 'r/:community_id', title: 'Community', component: PostLinkListComponent},
           {path: 'edit-post/:post_id', title: 'Edit post', component: EditPostComponent, canActivate: mapToCanActivate([RefreshTokenGuard])},
-          {path: 'control-posts/:community_id', title: 'Control posts', component: PostLinkListComponent, canActivate: mapToCanActivate([RefreshTokenGuard])},
+          // {path: 'control-posts/:community_id', title: 'Control posts', component: PostLinkListComponent, canActivate: mapToCanActivate([RefreshTokenGuard])},
           {path: 'search/:text', title: 'Search', component: SearchResultsComponent},
           {path: 'setting/:username', title: 'User setting', component: EditUserInfoComponent, canActivate: mapToCanActivate([RefreshTokenGuard])},
           {path: 'edit-community/:community_id', title: 'Edit community', component: EditCommunityComponent, canActivate: mapToCanActivate([RefreshTokenGuard])},
