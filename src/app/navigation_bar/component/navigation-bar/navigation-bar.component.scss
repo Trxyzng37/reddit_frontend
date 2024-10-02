@@ -3,6 +3,10 @@
     background-color: var(--header);
 }
 
+a:hover {
+    cursor: pointer !important;
+}
+
 .selected_page {
     background-color: var(--search) !important;
 }

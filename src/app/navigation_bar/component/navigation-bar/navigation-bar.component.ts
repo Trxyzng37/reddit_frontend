@@ -127,4 +127,11 @@ export class NavigationBarComponent {
     this.shareDataService.setHomeDetailPosts([]);
     this.shareDataService.setHomePostIdArr([]);
   }
+
+  navigateToCommunity(cid: number) {
+    this.shareDataService.setCommunityPostIdArr([]);
+    this.shareDataService.setCommunityDetailPosts([]);
+    this.shareDataService.setCommunityCurViewPostId(0);
+    this.route.navigate([`r/${cid}`]);
+  }
 }
