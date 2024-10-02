@@ -1,5 +1,5 @@
 
-<app-post [commentCount]="commentResults.length"></app-post>
+<app-post [commentCount]="commentResults.length" *ngIf="isPostExist"></app-post>
 <!-- && wait && !isDeleted && (isAllow || isAuthor || post.communityOwner == 1) -->
 <button id="btn_comment_editor" *ngIf="!post.deleted" [ngStyle]="{'display': !open && wait ? 'block' : 'none'}" (click)="openEditor()"><i class="pi pi-plus"></i> Create a comment</button>
 <div id="comment_editor_block" *ngIf="!post.deleted" [ngStyle]="{'display': open && wait ? 'block' : 'none'}">
@@ -35,4 +35,8 @@
 <div class="load_data_block" *ngIf="isDataLoad">
     <img class="img_load_data" src="../../../../assets/icon/logo.png">
     <div class="data_loader"></div>
+</div>
+
+<div class="empty_block" *ngIf="!isPostExist">
+    <p>This post does not exist</p>
 </div>

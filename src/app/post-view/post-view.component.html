@@ -3,7 +3,7 @@
     </router-outlet>
 </div>
 
-<div id="community_info_block">
+<div id="community_info_block" *ngIf="isPostExist">
     <community-info [community_info]="community"></community-info>
 </div>
 

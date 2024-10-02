@@ -63,6 +63,8 @@ export class ViewDetailPostComponent {
   public isModPage: boolean = false;
   public selected_mod_post: number = 0;
 
+  public isPostExist: boolean = false;
+
   ngOnInit() {
     this.darkmodeSerive.useDarkMode();
     this.updateEditorStyle();
@@ -95,7 +97,13 @@ export class ViewDetailPostComponent {
       const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
       this.getPostService.getDetailPostByUidAndPostId(uid, post_id).subscribe({
         next: (response: DetailPost) => {
-          this.getInfo(response);
+          if(response.post_id == 0) {
+            this.isPostExist = false;
+          }
+          else {
+            this.isPostExist = true;
+            this.getInfo(response);
+          }
         },
          error: (e: HttpErrorResponse) => {
            console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
