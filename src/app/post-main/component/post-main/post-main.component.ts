@@ -48,7 +48,10 @@ export class PostMainComponent {
   public avatar_url: string = "../../../assets/icon/tft.jpg";
   public joinText: string = this.isJoinCommunity ? 'Joined' : 'Join';
 
+  public isCommunityExist: boolean = true;
+
   ngOnInit() {
+    //run this when navigate
     this.route.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
@@ -59,6 +62,10 @@ export class PostMainComponent {
         this.community_id = Number.parseInt(a[1]);
         this.communityService.getCommunityInfoById(a[1]).subscribe({
           next: (response: Communities) => {
+            if(response.id == 0) 
+              this.isCommunityExist = false;
+            else {
+              this.isCommunityExist = true;
             //set title using community name
             this.activeRoute.paramMap.subscribe(params => {
               this.titleService.setTitle(response.name);
@@ -70,12 +77,13 @@ export class PostMainComponent {
                 if(result.isConfirmed) 
                   window.history.back();
               })
-          }
-        })
-        this.communityService.checkJoinCommunityStatus(uid, this.community_id).subscribe({
-          next: (response: JoinCommunityResponse) => {
-            this.isJoinCommunity = response.join_community == 0 ? false : true;
-            this.joinText = this.isJoinCommunity ? 'Joined' : 'Join';
+            }
+            this.communityService.checkJoinCommunityStatus(uid, this.community_id).subscribe({
+              next: (response: JoinCommunityResponse) => {
+                this.isJoinCommunity = response.join_community == 0 ? false : true;
+                this.joinText = this.isJoinCommunity ? 'Joined' : 'Join';
+              }
+            })
           }
         })
       }
@@ -103,17 +111,23 @@ export class PostMainComponent {
         this.community_id = Number.parseInt(a[1]);
         this.communityService.getCommunityInfoById(a[1]).subscribe({
           next: (response: Communities) => {
-            //set title using community name
-            this.activeRoute.paramMap.subscribe(params => {
-              this.titleService.setTitle(response.name);
-            });
-            this.community = response;
-            this.isOwner = uid == this.community.uid;
-            if(this.community.deleted == 1)
-              Swal.fire("The community\nr/"+this.community.name+"\nhas been deleted","","warning").then((result)=> {
-                if(result.isConfirmed) 
-                  window.history.back();
-              })
+            if(response.id == 0) {
+              this.isCommunityExist = false;
+            }
+            else {
+              this.isCommunityExist = true;
+              this.activeRoute.paramMap.subscribe(params => {
+                this.titleService.setTitle(response.name);
+              });
+              this.community = response;
+              this.isOwner = uid == this.community.uid;
+              if(this.community.deleted == 1) {
+                Swal.fire("The community\nr/"+this.community.name+"\nhas been deleted","","warning").then((result)=> {
+                  if(result.isConfirmed) 
+                    window.history.back();
+                })
+              }
+            }
           }
         })
         this.communityService.checkJoinCommunityStatus(uid, this.community_id).subscribe({

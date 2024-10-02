@@ -1,4 +1,4 @@
-<div id="h_container" *ngIf="isCommunityPage || isControlPage">
+<div id="h_container" *ngIf="(isCommunityPage && isCommunityExist) || isControlPage">
     <div id="header_container">
         <div id="banner_container">
             <img id="img_banner" src="{{community.banner}}" *ngIf="community.banner != null">
@@ -19,7 +19,7 @@
     <p id="txt_control_posts">Select which post you want to allow in your community</p>
 </div>
 
-<div id="outlet">
+<div id="outlet" *ngIf="(isCommunityPage && isCommunityExist) || !isCommunityPage">
     <router-outlet>
     </router-outlet>
 </div>
@@ -29,5 +29,9 @@
 </div>
 <div id="community_info_block" *ngIf="isCommunityPage || isViewPostPage || isControlPage || isEditCommunityPage || isEditPostPage" >
     <community-info [community_info]="community"></community-info>
+</div>
+
+<div class="empty_block" *ngIf="!isCommunityExist && isCommunityPage">
+    <p>Community does not exist</p>
 </div>
 

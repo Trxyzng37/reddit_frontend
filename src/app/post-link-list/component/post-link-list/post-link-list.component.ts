@@ -18,6 +18,7 @@ import { DetailPost } from '../../pojo/detail-post';
 import { ShareDataService } from 'src/app/shared/services/share_data/share-data.service';
 import { CommunityService } from 'src/app/shared/services/search-communites/community.service';
 import { Communities } from 'src/app/shared/pojo/pojo/communities';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-post-link-list',
@@ -85,6 +86,8 @@ export class PostLinkListComponent {
 
   private timeout: any;
   private refresh_timeout = 120000;
+
+  public isCommunityExist: boolean = false;
 
   ngAfterViewInit() {
     if(this.isHomePage) {
@@ -158,6 +161,15 @@ export class PostLinkListComponent {
   ngOnInit() {
     this.checkRefreshToken.runCheckRefreshTokenWithoutNotification();
     this.darkmodeSerive.useDarkMode();
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      this.run();
+    })
+    this.run();
+  }
+
+  run() {
     const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
     this.isCommunityPage = window.location.href.includes("/r/");
     this.isHomePage = window.location.href.includes("/home");
@@ -197,17 +209,29 @@ export class PostLinkListComponent {
         this.shareDataService.cur_community_view_post_id$.subscribe(res => this.cur_view_post_id = res);
         this.getCommunityPost(uid, this.sort_option);
         if(uid != 0) {
-          this.recentVisitService.setRecentVisit("/set-recent-visit-community", uid, this.community_id).subscribe({
-            next: (response: DefaultResponse) => {}
+          this.communityService.getCommunityInfoById(this.community_id.toString()).subscribe({
+            next: (res: Communities) => {
+              if(res.id != 0) {
+                this.recentVisitService.setRecentVisit("/set-recent-visit-community", uid, this.community_id).subscribe({
+                  next: (response: DefaultResponse) => {}
+                })
+              }
+            }
           })
         }
         else {
-          let recent_communities_array: number[] = this.storageService.getItem("recent_communities") == "" ? [] : JSON.parse("[" + this.storageService.getItem("recent_communities") + "]");
-          recent_communities_array = recent_communities_array.filter(
-            (id) => {return id != this.community_id;}
-          )
-          let t = recent_communities_array.unshift(this.community_id);
-          this.storageService.setItem("recent_communities", recent_communities_array.toString());
+          this.communityService.getCommunityInfoById(this.community_id.toString()).subscribe({
+            next: (res: Communities) => {
+              if(res.id != 0) {
+                let recent_communities_array: number[] = this.storageService.getItem("recent_communities") == "" ? [] : JSON.parse("[" + this.storageService.getItem("recent_communities") + "]");
+                recent_communities_array = recent_communities_array.filter(
+                  (id) => {return id != this.community_id;}
+                )
+                let t = recent_communities_array.unshift(this.community_id);
+                this.storageService.setItem("recent_communities", recent_communities_array.toString());
+              }
+            }
+          })
         }
       }
     }
@@ -279,22 +303,6 @@ export class PostLinkListComponent {
         }
       })
     }
-    // if(this.isModPage) {
-    //   this.activeRoute.parent!.paramMap.subscribe(params => {
-    //     this.community_id = Number.parseInt(params.get('community_id')!);
-    //   });
-      // this.isReviewModPage = window.location.href.includes("/review");
-      // this.isReportModPage = window.location.href.includes("/report");
-      // this.isRemoveModPage = window.location.href.includes("/remove");
-      // this.isEditModPage = window.location.href.includes("/edit");
-      // if(this.isReviewModPage) {
-      //   this.shareDataService.review_post_id_arr$.subscribe(res => this.post_id_arr = res);
-      //   this.shareDataService.review_detail_posts$.subscribe(res => this.detail_post_arr = res);
-      //   this.shareDataService.review_search_option$.subscribe(res => this.sort_option = res);
-      //   this.shareDataService.cur_review_view_post_id$.subscribe(res => this.cur_view_post_id = res);
-      //   this.getCommunityPostNotAllow(this.community_id);
-      // }
-    // }
   }
 
   @HostListener('document:click', ['$event'])
