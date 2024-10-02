@@ -39,6 +39,8 @@ export class CommunityInfoComponent {
   public joinText: string = this.isJoinCommunity ? 'Joined' : 'Join';
   subscribed_communities: Communities[] = [];
 
+  public isCommunityExist: boolean = false;
+
   ngOnInit() {
     this.darkmodeSerive.useDarkMode();
     this.isCommunityPage = window.location.href.includes("/r/");
@@ -51,6 +53,7 @@ export class CommunityInfoComponent {
   }
 
   ngOnChanges() {
+    this.isCommunityExist = this.community_info.id != 0;
     const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
     if(this.community_info.uid !== 0) {
       this.isOwner = uid == this.community_info.uid;

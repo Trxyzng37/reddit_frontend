@@ -1,4 +1,4 @@
-<div class="info_block">
+<div class="info_block" *ngIf="isCommunityExist">
     <div id="join_block">
         <b id="txt_community_name">r/{{community_info.name}}</b>
         <button id="btn_join" *ngIf="!isCommunityPage && !isControlPostPage && !isCreatePostPage" (click)="joinCommunity($event)" [ngStyle]="{'background-color': isJoinCommunity ? 'var(--primary_background_color)' : 'var(--join)', 'border': isJoinCommunity ? '1px solid var(--secondary_color)' : 'none'}"><p id="txt_joined" *ngIf="isJoinCommunity">Joined</p><p id="txt_join" *ngIf="!isJoinCommunity">Join</p></button>
@@ -12,7 +12,7 @@
     </div>
 </div>
 
-<div class="info_block" style="border-top: 1px solid var(--light_border)">
+<div class="info_block" style="border-top: 1px solid var(--light_border)" *ngIf="isCommunityExist">
     <b>Moderator</b>
     <div id="owner_block">
         <img id="avatar" src="{{userInfo.avatar}}">
@@ -20,11 +20,11 @@
     </div>
 </div>
 
-<div class="btn_block" *ngIf="isOwner && !isCreatePostPage && !isPostPage" (click)="editCommunity()">
+<div class="btn_block" *ngIf="isOwner && !isCreatePostPage && !isPostPage && isCommunityExist" (click)="editCommunity()">
     <button class="btn">Community management</button>
 </div>
 
-<div id="btn_control" class="btn_block" *ngIf="!isCreatePostPage && !isPostPage && isOwner" (click)="controlPosts()">
+<div id="btn_control" class="btn_block" *ngIf="!isCreatePostPage && !isPostPage && isOwner && isCommunityExist" (click)="controlPosts()">
     <button class="btn" style="margin-bottom: 10px;">Control posts</button>
 </div>
 
