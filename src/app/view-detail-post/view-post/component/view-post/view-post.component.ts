@@ -234,16 +234,18 @@ import { FirstLast } from 'src/app/shared/services/share_data/first-last';
     }
 
     allowPost(event: Event) {
-      this.allowPostService.setAllowPost(this.post.post_id, 1).subscribe({
-        next: (response: DefaultResponse) => {
-          this.post.allow = 1;
-          this.shareDataService.setChangedPost(new ChangedPost(this.post.post_id, 1, 0, this.dateTimeService.getCurrentDateTime().toISOString(), ""));
-          // this.shareDataService.setModDetailPost(this.post);
-        },
-        error: (e: HttpErrorResponse) => {
-          console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
-        }
-      })
+      if(this.post.deleted_by == 2) {
+        this.allowPostService.setAllowPost(this.post.post_id, 1).subscribe({
+          next: (response: DefaultResponse) => {
+            this.post.allow = 1;
+            this.shareDataService.setChangedPost(new ChangedPost(this.post.post_id, 1, 0, this.dateTimeService.getCurrentDateTime().toISOString(), ""));
+            // this.shareDataService.setModDetailPost(this.post);
+          },
+          error: (e: HttpErrorResponse) => {
+            console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
+          }
+        })
+      }
     }
 
     notAllowPost(event: Event) {
@@ -251,6 +253,7 @@ import { FirstLast } from 'src/app/shared/services/share_data/first-last';
       this.deletePostService.deletePost(this.post.post_id, uid, 2).subscribe({
         next: (response: DeletePostResponse) => {
           this.post.deleted = 1;
+          this.post.deleted_by = 2;
           this.shareDataService.setChangedPost(new ChangedPost(this.post.post_id, this.post.allow, 1, "", this.dateTimeService.getCurrentDateTime().toISOString()));
           // this.shareDataService.setModDetailPost(this.post);
         },
