@@ -77,9 +77,11 @@ export class ViewDetailPostComponent {
           this.open = false;
           this.commentResults = [];
           if(res.post_id == 0) {
+            this.isPostExist = false;
             this.post = new DetailPost();
           }
           else {
+            this.isPostExist = true;
             this.post = res;
             this.getInfo(res);
             this.isDeleted = this.post.deleted == 1 ? true : false;
