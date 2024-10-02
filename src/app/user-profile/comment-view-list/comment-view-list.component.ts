@@ -99,6 +99,7 @@ export class CommentViewListComponent {
 
   getCommentsByUid(sort_type: string) {
     this.isDataLoad = true;
+    this.wait = false;
     if(this.comments.length == 0) {
       this.getCommentService.getCommentsByUser(this.userInfo.uid, sort_type).subscribe({
         next: (response: CommentInfo[]) => {
