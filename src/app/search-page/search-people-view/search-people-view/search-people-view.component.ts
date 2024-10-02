@@ -38,6 +38,6 @@ export class SearchPeopleViewComponent {
   }
 
   navigateToUserProfile(username: string) {
-    window.location.href = "/user/" + username;
+    window.location.href = "/user/" + username + "/posts";
   }
 }
