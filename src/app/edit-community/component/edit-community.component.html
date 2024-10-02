@@ -1,4 +1,4 @@
-<div id="container">
+<div id="container" *ngIf="wait">
     <div id="form" *ngIf="isOwner">
         <button id="btn_back">
             <i class="pi pi-arrow-left" title="back" (click)="goBack()"></i>
@@ -48,9 +48,9 @@
         </div>
         <button id="btn_delete" (click)="deleteCommunity()">Delete community</button>
     </div>
-    <div *ngIf="!isOwner">
-        <h2>Permission denied</h2>
+    <div class="empty_block" *ngIf="!isOwner">
+        <p>Permission denied</p>
     </div>
 </div>
 
-<loading [txt_load]="'Edit community info. Please wait'" *ngIf="isLoad"></loading>>
+<loading [txt_load]="'Edit community info. Please wait'" *ngIf="isLoad"></loading>
