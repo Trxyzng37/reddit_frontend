@@ -39,6 +39,8 @@ export class UserProfileComponent {
 
   public profile_option: string = "";
 
+  public isUserExist: boolean = false;
+
   ngOnInit() {
     this.darkmodeSerive.useDarkMode();
     this.checkRefreshTokenService.runCheckRefreshTokenWithoutNotification();
@@ -46,8 +48,14 @@ export class UserProfileComponent {
     const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
     this.searchUserProfileService.getUserProfileByName("/get-user-info-by-username", username).subscribe({
       next: (response: UserProfile) => {
-        this.userInfo = response;
-        this.isOwner = uid == this.userInfo.uid;
+        if(response.uid == 0) {
+          this.isUserExist = false;
+        }
+        else {
+          this.isUserExist = true;
+          this.userInfo = response;
+          this.isOwner = uid == this.userInfo.uid;
+        }
       }
     })
     this.shareDataService.profile_option$.subscribe(res => {

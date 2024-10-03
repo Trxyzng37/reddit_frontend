@@ -27,6 +27,8 @@ export class UserInfoComponent {
   public isUser: boolean = false;
   public shownDate: string = "";
 
+  public isUserExist: boolean = false;
+
   ngOnInit() {
     const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
     const found = window.location.href.match('/setting/([A-Za-z0-9]+)')
@@ -40,14 +42,20 @@ export class UserInfoComponent {
     }
     this.searchUserProfileService.getUserProfileByName("/get-user-info-by-username", username).subscribe({
       next: (response: UserProfile) => {
-        this.userInfo = response;
-        this.isUser = uid === this.userInfo.uid;
-        this.shownDate = this.dateTimeService.getStringRepresentDateTime(this.userInfo.created_at);
-        this.communityService.getCommunityModerateByUid(this.userInfo.uid).subscribe({
-          next: (response: Communities[]) => {
-            this.communities = response;
-          }
-        })
+        if(response.uid == 0) {
+          this.isUserExist = false;
+        }
+        else {
+          this.isUserExist = true;
+          this.userInfo = response;
+          this.isUser = uid === this.userInfo.uid;
+          this.shownDate = this.dateTimeService.getStringRepresentDateTime(this.userInfo.created_at);
+          this.communityService.getCommunityModerateByUid(this.userInfo.uid).subscribe({
+            next: (response: Communities[]) => {
+              this.communities = response;
+            }
+          })
+        }
       }
     })
   }
