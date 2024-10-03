@@ -35,6 +35,8 @@ import { ModeratePostComponent } from './control-post/moderate-post/moderate-pos
 
 const routes: Routes = [
   {path: '', redirectTo: 'popular', pathMatch: 'full'},
+  {path: 'user/:username', redirectTo: 'user/:username/posts', pathMatch: 'full'},
+  {path: 'mod/:community_id', redirectTo: 'mod/:community_id/review', pathMatch: 'full'},
   { path: 'goole-authentication-callback', title: 'Google-call-back', component: SigninComponent},
   { path: 'signin', component: SigninComponent, title: 'Sign in', canActivate: mapToCanActivate([SignInGuard])},
   { path: 'signup', title: 'Sign up', component: SignupComponent, canActivate: mapToCanActivate([SignUpGuard])},
