@@ -6,12 +6,17 @@
         </div>
         <div id="button_container">
             <p id="community_name" title="r/{{community.name}}">r/{{community.name}}</p>
-            <div id="button_block">
-                <button class="btn" id="btn_create_post" (click)="createPost()"><i class="pi pi-plus" style="color: var(--icon);"></i><p class="txt_btn">Create post</p></button>
-                <button class="btn txt_btn" id="btn_join" [ngStyle]="{'background-color': isJoinCommunity ? 'var(--neutral)' : 'var(--join)', 'border': isJoinCommunity ? '1px solid var(--secondary_color)' : 'none'}" (click)="joinCommunity()"><p id="txt_joined" *ngIf="isJoinCommunity">Joined</p><p id="txt_join" *ngIf="!isJoinCommunity">Join</p></button>
-            </div>
         </div>
         <img id="img_avatar" src="{{community.avatar}}">
+        <div id="btn_control_block">
+            <button class="btn" id="btn_create_post" title="Create a post" (click)="createPost()"><i class="pi pi-plus" style="color: var(--icon);"></i><p class="txt_btn">Create post</p></button>
+            <button class="btn txt_btn" id="btn_join" title="Join this community" [ngStyle]="{'background-color': isJoinCommunity ? 'var(--neutral)' : 'var(--join)', 'border': isJoinCommunity ? '1px solid var(--secondary_color)' : 'none'}" (click)="joinCommunity()"><p id="txt_joined" *ngIf="isJoinCommunity">Joined</p><p id="txt_join" *ngIf="!isJoinCommunity">Join</p></button>
+            <button class="btn" id="btn_moderate" *ngIf="isOwner" title="Go to mod page" (click)="controlPosts()">Mod tools</button>
+            <button id="btn_community_management" title="Open community options" *ngIf="isOwner" (click)="openCommunityMenu()"><i class="pi pi-ellipsis-h" style="font-size: 18px; color: var(--icon);"></i></button>
+            <div id="menu" *ngIf="isMenuOpen">
+                <button title="Community setting" (click)="editCommunity()"><i class="pi pi-cog" style="margin-right: 10px; font-size: 20px; color: var(--icon);"></i>Settings</button>
+            </div>
+        </div>
     </div>
 </div>
 

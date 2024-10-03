@@ -50,11 +50,15 @@ export class PostMainComponent {
 
   public isCommunityExist: boolean = true;
 
+  public screen_size: number = 0;
+  public isMenuOpen: boolean = false;
+
   ngOnInit() {
     //run this when navigate
     this.route.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
+      this.isMenuOpen = false;
       this.isCommunityPage = this.route.url.includes("/r/");
       let regex = this.isCommunityPage ? '/r/([0-9]+)' : '/edit-community/([0-9]+)';
       const a = window.location.href.match(regex);
@@ -216,10 +220,6 @@ export class PostMainComponent {
     })
   }
 
-  editCommunity() {
-    window.location.href = "/edit-community/"+this.community_id;
-  }
-
   createPost() {
     this.checkRefreshTokenService.checkRefreshToken().subscribe({
       next: (response: any) => {
@@ -242,5 +242,17 @@ export class PostMainComponent {
         })
       }
     })
+  }
+
+  editCommunity() {
+    window.location.href = "/edit-community/"+this.community_id;
+  }
+
+  controlPosts() {
+    window.location.href = "/mod/"+this.community.id+"/review";
+  }
+
+  openCommunityMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
   }
 }
