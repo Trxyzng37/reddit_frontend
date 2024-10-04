@@ -65,7 +65,7 @@ export class SearchPostViewComponent {
 
   navigateToCommunity(event: Event) {
     event.stopPropagation();
-    this.router.navigate(["/r/" + this.post.community_id]);
+    this.router.navigate(["/r/" + this.post.community_name]);
   }
 
   stopPropagation(event: Event) {

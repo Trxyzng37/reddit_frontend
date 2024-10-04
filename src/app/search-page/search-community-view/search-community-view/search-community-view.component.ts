@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { GetPostResponse } from 'src/app/post-link-list/pojo/get-post-response';
 import { Communities } from 'src/app/shared/pojo/pojo/communities';
 import { CommunityService } from 'src/app/shared/services/search-communites/community.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PresentationService } from 'src/app/shared/services/presentation/presentation.service';
 
 @Component({
@@ -16,7 +16,8 @@ export class SearchCommunityViewComponent {
   public constructor(
     private communityService: CommunityService,
     private activeRoute: ActivatedRoute,
-    public presentationService: PresentationService
+    public presentationService: PresentationService,
+    private router: Router
   ) {}
 
   public communities: Communities[] = [];
@@ -40,8 +41,8 @@ export class SearchCommunityViewComponent {
   ngOnChanges() {
   }
 
-  navigateToCommunity(event: Event, community_id: number) {
+  navigateToCommunity(event: Event, community_id: string) {
     event.stopPropagation();
-    window.location.href = "/r/" + community_id;
+    this.router.navigate(["/r/" + community_id]);
   }
 }
