@@ -24,7 +24,8 @@ export class CommunityService {
     private storageService: StorageService
   ) { }
 
-  private endpoint: string = "/find-community"
+  private endpoint: string = "/find-community";
+  private findByNameEndpoint: string = "/find-community-by-name";
 
   public searchCommunities(name: string): Observable<Communities[]> {
     const parameter: string ="name=" + name; 
@@ -36,6 +37,13 @@ export class CommunityService {
   public getCommunityInfoById(id: string): Observable<Communities> {
     const parameter: string ="id=" + id; 
     const endpointWithParameter: string = "/get-community-info" + "?" + parameter;
+    const header: HttpHeaders = new HttpHeaders();
+    return this.getService.get(endpointWithParameter, header, true);
+  }
+
+  public getCommunityInfoByName(name: string): Observable<Communities> {
+    const parameter: string ="name=" + name; 
+    const endpointWithParameter: string = this.findByNameEndpoint + "?" + parameter;
     const header: HttpHeaders = new HttpHeaders();
     return this.getService.get(endpointWithParameter, header, true);
   }
