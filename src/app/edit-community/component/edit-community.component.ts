@@ -45,14 +45,14 @@ export class EditCommunityComponent {
 
   ngOnInit() {
     const uid = this.storageService.getItem("uid") === "" ? 0 :  Number.parseInt(this.storageService.getItem("uid"));
-    let found = window.location.href.match('community/([[0-9]+)');
+    let found = window.location.href.match('/edit-community/([a-zA-Z0-9]+)');
     if(found != null) {
-      this.community_id = Number.parseInt(found[1]);
       this.wait = false;
-      this.communityService.getCommunityInfoById(this.community_id.toString()).subscribe({
+      this.communityService.getCommunityInfoByName(found[1]).subscribe({
         next: (response: Communities) => {
           this.wait = true;
           this.communityInfo = response;
+          this.community_id = response.id;
           this.description = response.description;
           this.avatar_url = response.avatar;
           this.banner_url = response.banner;
