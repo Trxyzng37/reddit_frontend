@@ -10,7 +10,7 @@
             <span class="pi btn_icon" [ngClass]="moderation_status ? 'pi-chevron-down':'pi-chevron-up'"></span>
         </button>
         <div [ngStyle]="{'display': moderation_status ? 'none':'block'}">
-            <a *ngFor="let moderation_community of moderationCommunities" (click)="navigateToCommunity(moderation_community.id)"><img id="img_community_icon" src="{{moderation_community.avatar}}" alt=""/><pre>r/{{moderation_community.name}}</pre></a>
+            <a *ngFor="let moderation_community of moderationCommunities" (click)="navigateToCommunity(moderation_community.name)"><img id="img_community_icon" src="{{moderation_community.avatar}}" alt=""/><pre>r/{{moderation_community.name}}</pre></a>
         </div>
     </nav>
     <nav *ngIf="recentVisitCommunities.length > 0">
@@ -19,7 +19,7 @@
             <span class="pi btn_icon" [ngClass]="recent_status === 'up' ? 'pi-chevron-down':'pi-chevron-up'"></span>
         </button>
         <div [ngStyle]="{'display': recent_status === 'up' ? 'none':'block'}">
-            <a *ngFor="let recent_community of recentVisitCommunities" (click)="navigateToCommunity(recent_community.id)"><img id="img_community_icon" src="{{recent_community.avatar}}" alt=""/><pre>r/{{recent_community.name}}</pre></a>
+            <a *ngFor="let recent_community of recentVisitCommunities" (click)="navigateToCommunity(recent_community.name)"><img id="img_community_icon" src="{{recent_community.avatar}}" alt=""/><pre>r/{{recent_community.name}}</pre></a>
         </div>
     </nav>
     <nav *ngIf="isUser"> 
@@ -31,7 +31,7 @@
             <button type="button" [ngStyle]="{'margin-bottom': favoriteCommunities.length > 0 ? '0' : '10px'}" (click)="showCreateCommunityForm()"><i class="pi pi-plus"></i><pre>Create a community</pre></button>
         </nav>
         <div [ngStyle]="{'display': favorite_status === 'up' ? 'none':'block'}">
-            <a *ngFor="let favorite_community of favoriteCommunities" (click)="navigateToCommunity(favorite_community.id)"><img id="img_community_icon" src="{{favorite_community.avatar}}" alt=""/><pre>r/{{favorite_community.name}}</pre></a>
+            <a *ngFor="let favorite_community of favoriteCommunities" (click)="navigateToCommunity(favorite_community.name)"><img id="img_community_icon" src="{{favorite_community.avatar}}" alt=""/><pre>r/{{favorite_community.name}}</pre></a>
         </div>
     </nav>
     <!-- <p id="trademark">Reddit 2024</p> -->
