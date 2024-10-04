@@ -128,10 +128,25 @@ export class NavigationBarComponent {
     this.shareDataService.setHomePostIdArr([]);
   }
 
-  navigateToCommunity(cid: number) {
-    this.shareDataService.setCommunityPostIdArr([]);
-    this.shareDataService.setCommunityDetailPosts([]);
-    this.shareDataService.setCommunityCurViewPostId(0);
-    this.route.navigate([`r/${cid}`]);
+  navigateToCommunity(name: string) {
+    let regex = '/r/([a-zA-Z0-9]+)';
+    const a = window.location.href.match(regex);
+    if(a != null) {
+      if(a[1] == name) {
+        // alert("same community")
+      }
+      else {
+        this.shareDataService.setCommunityPostIdArr([]);
+        this.shareDataService.setCommunityDetailPosts([]);
+        this.shareDataService.setCommunityCurViewPostId(0);
+        this.route.navigate([`r/${name}`]);
+      }
+    }
+    else {
+      this.shareDataService.setCommunityPostIdArr([]);
+      this.shareDataService.setCommunityDetailPosts([]);
+      this.shareDataService.setCommunityCurViewPostId(0);
+      this.route.navigate([`r/${name}`]);
+    }
   }
 }
