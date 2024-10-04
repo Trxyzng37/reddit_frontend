@@ -30,11 +30,11 @@
         <div id="scope_block">
             <b style="font-size: 20px;">Select your community scope</b>
             <div class="radio_block">
-                <input id="public" type="radio" name="scope" value="0" (click)="selectScope(0)">
+                <input id="public" type="radio" name="scope" value="0" [checked]="scope == 0" (click)="selectScope(0)">
                 <label for="public"><p> <b>Public</b> (Everyone can post)</p></label>
             </div>
             <div class="radio_block">
-                <input id="protect" type="radio" name="scope" value="1" (click)="selectScope(1)">
+                <input id="protect" type="radio" name="scope" value="1" [checked]="scope == 1" (click)="selectScope(1)">
                 <label for="protect"><p> <b>Protected</b> (Moderator need to accept post before it can be view)</p></label>
             </div>
         </div>
