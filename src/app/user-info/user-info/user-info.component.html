@@ -38,7 +38,7 @@
     
     <div id="moderator_block" *ngIf="communities.length != 0">
         <b style="padding:10px 0;">Moderator of these communities</b>
-        <a class="community_block" href="r/{{community.id}}" *ngFor="let community of communities">
+        <a class="community_block" href="r/{{community.name}}" *ngFor="let community of communities">
             <div class="community_info">
                 <img src="{{community.avatar}}">
                 <pre style="color: var(--secondary_color) !important;"> r/{{community.name}}</pre>

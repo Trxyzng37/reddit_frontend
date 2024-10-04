@@ -199,19 +199,20 @@ export class PostLinkListComponent {
       this.getHomePost(uid, this.sort_option);
     }
     if(this.isCommunityPage) {
-      let regex = '/r/([0-9]+)';
+      let regex = '/r/([a-zA-Z0-9]+)';
       const a = window.location.href.match(regex);
       if(a!=null) {
-        this.community_id = Number.parseInt(a[1]);
         this.shareDataService.community_post_id_arr$.subscribe(res => this.post_id_arr = res);
         this.shareDataService.community_detail_posts$.subscribe(res => this.detail_post_arr = res);
         this.shareDataService.community_search_option$.subscribe(res => this.sort_option = res);
         this.shareDataService.cur_community_view_post_id$.subscribe(res => this.cur_view_post_id = res);
-        this.getCommunityPost(uid, this.sort_option);
+        // this.getCommunityPost(uid, this.sort_option);
         if(uid != 0) {
-          this.communityService.getCommunityInfoById(this.community_id.toString()).subscribe({
+          this.communityService.getCommunityInfoByName(a[1]).subscribe({
             next: (res: Communities) => {
               if(res.id != 0) {
+                this.community_id = res.id;
+                this.getCommunityPost(uid, this.sort_option);
                 this.recentVisitService.setRecentVisit("/set-recent-visit-community", uid, this.community_id).subscribe({
                   next: (response: DefaultResponse) => {}
                 })
@@ -220,9 +221,11 @@ export class PostLinkListComponent {
           })
         }
         else {
-          this.communityService.getCommunityInfoById(this.community_id.toString()).subscribe({
+          this.communityService.getCommunityInfoByName(a[1]).subscribe({
             next: (res: Communities) => {
               if(res.id != 0) {
+                this.community_id = res.id;
+                this.getCommunityPost(uid, this.sort_option);
                 let recent_communities_array: number[] = this.storageService.getItem("recent_communities") == "" ? [] : JSON.parse("[" + this.storageService.getItem("recent_communities") + "]");
                 recent_communities_array = recent_communities_array.filter(
                   (id) => {return id != this.community_id;}

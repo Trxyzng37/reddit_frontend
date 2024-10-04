@@ -60,16 +60,17 @@ export class PostMainComponent {
     ).subscribe(() => {
       this.isMenuOpen = false;
       this.isCommunityPage = this.route.url.includes("/r/");
-      let regex = this.isCommunityPage ? '/r/([0-9]+)' : '/edit-community/([0-9]+)';
+      let regex = this.isCommunityPage ? '/r/([a-zA-Z0-9]+)' : '/edit-community/([a-zA-Z0-9]+)';
       const a = window.location.href.match(regex);
       if(a != null) {
-        this.community_id = Number.parseInt(a[1]);
-        this.communityService.getCommunityInfoById(a[1]).subscribe({
+        this.communityService.getCommunityInfoByName(a[1]).subscribe({
           next: (response: Communities) => {
-            if(response.id == 0) 
+            if(response.id == 0) {
               this.isCommunityExist = false;
+            }
             else {
               this.isCommunityExist = true;
+              this.community_id = response.id;
             //set title using community name
             this.activeRoute.paramMap.subscribe(params => {
               this.titleService.setTitle(response.name);
@@ -109,17 +110,17 @@ export class PostMainComponent {
     this.isUserPage = window.location.href.includes("/user/");
     this.isEditCommunityPage = window.location.href.includes("/edit-community/");
     if(this.isCommunityPage || this.isEditCommunityPage ) {
-      let regex = this.isCommunityPage ? '/r/([0-9]+)' : '/edit-community/([0-9]+)';
+      let regex = this.isCommunityPage ? '/r/([a-zA-Z0-9]+)' : '/edit-community/([a-zA-Z0-9]+)';
       const a = window.location.href.match(regex);
       if(a != null) {
-        this.community_id = Number.parseInt(a[1]);
-        this.communityService.getCommunityInfoById(a[1]).subscribe({
+        this.communityService.getCommunityInfoByName(a[1]).subscribe({
           next: (response: Communities) => {
             if(response.id == 0) {
               this.isCommunityExist = false;
             }
             else {
               this.isCommunityExist = true;
+              this.community_id = response.id;
               this.activeRoute.paramMap.subscribe(params => {
                 this.titleService.setTitle(response.name);
               });
@@ -132,12 +133,12 @@ export class PostMainComponent {
                 })
               }
             }
-          }
-        })
-        this.communityService.checkJoinCommunityStatus(uid, this.community_id).subscribe({
-          next: (response: JoinCommunityResponse) => {
-            this.isJoinCommunity = response.join_community == 0 ? false : true;
-            this.joinText = this.isJoinCommunity ? 'Joined' : 'Join';
+            this.communityService.checkJoinCommunityStatus(uid, this.community_id).subscribe({
+              next: (response: JoinCommunityResponse) => {
+                this.isJoinCommunity = response.join_community == 0 ? false : true;
+                this.joinText = this.isJoinCommunity ? 'Joined' : 'Join';
+              }
+            })
           }
         })
       }
@@ -245,7 +246,7 @@ export class PostMainComponent {
   }
 
   editCommunity() {
-    window.location.href = "/edit-community/"+this.community_id;
+    window.location.href = "/edit-community/"+this.community.name;
   }
 
   controlPosts() {

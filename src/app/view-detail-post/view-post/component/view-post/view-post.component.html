@@ -4,11 +4,11 @@
     <nav id="community_bar">
         <div id="community_block">
             <back-button *ngIf="!isModPage"></back-button>
-            <a id="community_link" href="r/{{post.community_id}}" [ngStyle]="{'margin-left': isModPage ? '0' : '10px'}">
+            <a id="community_link" href="r/{{post.community_name}}" [ngStyle]="{'margin-left': isModPage ? '0' : '10px'}">
                 <img id="community_icon" src="{{post.community_icon}}" alt="community_icon"/>
             </a>
             <div id="link_date_block"> 
-                <a id="community_name" style="font-weight: bold;" href="r/{{post.community_id}}">r/{{post.community_name}}  </a>
+                <a id="community_name" style="font-weight: bold;" href="r/{{post.community_name}}">r/{{post.community_name}}  </a>
                 <i style="font-weight: bold;">·</i>
                 <span style="font-size: 13px; color: var(--txt);"> {{shownDate}}</span>
             </div>

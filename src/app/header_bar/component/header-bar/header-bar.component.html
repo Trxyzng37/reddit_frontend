@@ -11,7 +11,7 @@
         <input id="search_box" class="search_box" type="text" placeholder="Search" #input (input)="onChange(input.value)" [ngClass]="{'box_search': isSearch}"/>
         <div id="search_result_list">
             <p class="communities_id" [ngStyle]="{'display': communities_result.length > 0 ? 'block':'none'}"><b>Communities</b></p>
-            <a class="search_result_link" href="/r/{{i.id}}" *ngFor="let i of communities_result">
+            <a class="search_result_link" href="/r/{{i.name}}" *ngFor="let i of communities_result">
                 <img class="seach_result_icon" src={{i.avatar}}/>
                 <div>
                     <p class="community_name">r/{{i.name}}</p>
@@ -19,7 +19,7 @@
                 </div>
             </a>
             <p class="communities_id" [ngStyle]="{'display': user_profile_result.length > 0 ? 'block':'none'}"><b>People</b></p>
-            <a class="search_result_link" href="r/{{i.id}}" *ngFor="let i of user_profile_result">
+            <a class="search_result_link" href="user/{{i.username}}" *ngFor="let i of user_profile_result">
                 <img class="seach_result_icon" src={{i.avatar}}/>
                 <div>
                     <p class="community_name">r/{{i.username}}</p>
