@@ -10,6 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { PresentationService } from 'src/app/shared/services/presentation/presentation.service';
 import { DarkModeService } from 'src/app/shared/services/dark-mode/dark-mode.service';
 import { ShareDataService } from 'src/app/shared/services/share_data/share-data.service';
+import { SearchUserProfileService } from 'src/app/shared/services/search-user-profile/search-user-profile.service';
 
 @Component({
   selector: 'community-info',
@@ -19,7 +20,7 @@ import { ShareDataService } from 'src/app/shared/services/share_data/share-data.
 export class CommunityInfoComponent {
 
   constructor (
-    private userInfoService: UserInfoService,
+    private userInfoService: SearchUserProfileService,
     private communityService: CommunityService,
     private storageService: StorageService,
     public presentationService: PresentationService,
@@ -34,6 +35,7 @@ export class CommunityInfoComponent {
   public isCommunityPage: boolean = false;
   public isControlPostPage: boolean = false;
   public isCreatePostPage: boolean = false;
+  public isEditCommunityPage: boolean = false;
   public isPostPage: boolean = false;
   public isOwner: boolean = false;
   public joinText: string = this.isJoinCommunity ? 'Joined' : 'Join';
@@ -47,6 +49,7 @@ export class CommunityInfoComponent {
     this.isControlPostPage = window.location.href.includes("/control-posts/");
     this.isCreatePostPage = window.location.href.includes("/create-post");
     this.isPostPage = window.location.href.includes("/post/");
+    this.isEditCommunityPage = window.location.href.includes("/edit-community/");
     this.shareDataService.subscribed_communities$.subscribe(res => {
       this.subscribed_communities = res;
     })
@@ -57,7 +60,7 @@ export class CommunityInfoComponent {
     const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
     if(this.community_info.uid !== 0) {
       this.isOwner = uid == this.community_info.uid;
-      this.userInfoService.getUserInfo(this.community_info.uid).subscribe({
+      this.userInfoService.getUserProfileByUid(this.community_info.uid).subscribe({
         next: (response: UserProfile) => {
           this.userInfo = response;
         }
