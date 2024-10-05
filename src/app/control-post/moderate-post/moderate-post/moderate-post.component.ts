@@ -44,10 +44,10 @@ export class ModeratePostComponent {
       this.selected_detail_post = res;
       // alert(this.selected_detail_post.post_id)
     })
-    const regex = /mod\/(\d+)\/[^\/]+/;
+    const regex = /mod\/([a-zA-Z0-9]+)\/[^\/]+/;
     const match = window.location.href.match(regex);
     if(match) {
-      this.communityService.getCommunityInfoById(match[1]).subscribe({
+      this.communityService.getCommunityInfoByName(match[1]).subscribe({
         next: (response: Communities) => {
           this.communityInfo = response;
         }
@@ -70,74 +70,57 @@ export class ModeratePostComponent {
   }
 
   selectSearchOption(option: string) {
-    const regex = /mod\/(\d+)\/[^\/]+/;
+    const regex = /mod\/([a-zA-Z0-9]+)\/[^\/]+/;
     const match = window.location.href.match(regex);
-    let community_id: number = 0;
+    let community_name: string = "";
     if(match) {
-      community_id = Number.parseInt(match[1]);
+      community_name = match[1];
     }
     this.shareDataService.setModDetailPost(new DetailPost());
     this.searchOption = option;
     if(this.searchOption == "review") {
-      this.route.navigate([`/mod/${community_id}/review`]);
-      // window.location.href = `/mod/${community_id}/review`;
+      this.route.navigate([`/mod/${community_name}/review`]);
+      // window.location.href = `/mod/${community_name}/review`;
     }
     if(this.searchOption == "approved") {
-      this.route.navigate([`/mod/${community_id}/approved`]);
-      // window.location.href = `/mod/${community_id}/approved`;
+      this.route.navigate([`/mod/${community_name}/approved`]);
+      // window.location.href = `/mod/${community_name}/approved`;
     }
     if(this.searchOption == "removed") {
-      this.route.navigate([`/mod/${community_id}/removed`]);
-      // window.location.href = `/mod/${community_id}/removed`;
+      this.route.navigate([`/mod/${community_name}/removed`]);
+      // window.location.href = `/mod/${community_name}/removed`;
     }
     if(this.searchOption == "editted") {
       // this.shareDataService.setModOption("edit");
-      this.route.navigate(['mod/'+community_id+'/editted']);
-      // window.location.href = `/mod/${community_id}/edit`;
+      this.route.navigate(['mod/'+community_name+'/editted']);
+      // window.location.href = `/mod/${community_name}/edit`;
     }
   }
 
   checkRoute() {
-    const regex = /mod\/\d+\/([a-zA-Z]+)/;
+    const regex = /mod\/[a-zA-Z0-9]+\/([a-zA-Z]+)/;
     const match = window.location.href.match(regex);
     if(match) {
       const option = match[1];
       this.searchOption = option;
     }
-    // if(window.location.href.includes(community_id+"/review")) {
-    //   this.searchOption = "review";
-    //   this.shareDataService.setModOption('review');
-    // }
-    // if(window.location.href.includes(community_id+"/approved")) {
-    //   this.searchOption = "approved";
-    //   this.shareDataService.setModOption('approved');
-    // }
-    // if(window.location.href.includes(community_id+"/removed")) {
-    //   this.searchOption = "removed";
-    //   this.shareDataService.setModOption('removed');
-    // }
-    // if(window.location.href.includes(community_id+"/edit")) {
-    //   this.searchOption = "edit";
-    //   this.shareDataService.setModOption('edit');
-    // }
   }
 
   openDropDown() {
     this.isDropDown = !this.isDropDown;
   }
 
-  selectCommunity(id: number) {
-    const regex = /mod\/(\d+)\/([^\/]+)/;
+  selectCommunity(name: string) {
+    const regex = /mod\/([a-zA-Z0-9]+)\/([^\/]+)/;
     const match = window.location.href.match(regex);
     if(match) {
-      // this.shareDataService.setModCommunityId(id);
       for(let c of this.moderated_communities) {
-        if(c.id == id)
+        if(c.name == name)
           this.communityInfo = c;
       }
       this.isDropDown = false;
       // this.route.navigate(['/mod/'+id+"/"+match[2]]);
-      window.location.href = '/mod/'+id+"/"+match[2];
+      window.location.href = '/mod/'+name+"/"+match[2];
     }
   }
 }

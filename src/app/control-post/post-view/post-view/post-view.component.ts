@@ -50,6 +50,7 @@ export class ModPostViewComponent {
   public cur_view_post_id = 0;
 
   public community_id: number = 0;
+  public community_name: string = "";
   public img: string[] = [];
 
   public isDetailPostShow: boolean = false;
@@ -97,22 +98,23 @@ export class ModPostViewComponent {
         }
       }
     })
-    const regex = /mod\/(\d+)\/[^\/]+/;
+    const regex = /mod\/([a-zA-Z0-9]+)\/[^\/]+/;
     const match = window.location.href.match(regex);
     if (match) {
-      this.community_id = Number.parseInt(match[1]);
-      this.getInfo(this.community_id);
+      // this.community_id = Number.parseInt(match[1]);
+      this.community_name = match[1];
+      this.getInfo(this.community_name);
     }
   }
 
-  getInfo(community_id: number) {
+  getInfo(community_name: string) {
     this.isReviewModPage = window.location.href.includes("/review");
     this.isApprovedModPage = window.location.href.includes("/approved");
     this.isRemoveModPage = window.location.href.includes("/removed");
     this.isEditModPage = window.location.href.includes("/editted");
     this.isDataLoad = true;
-    const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
-    this.communityService.getCommunityInfoById(community_id.toString()).subscribe({
+    // const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
+    this.communityService.getCommunityInfoByName(community_name).subscribe({
       next: (communityInfo: Communities) => {
         this.refreshTokenService.checkRefreshToken().subscribe({
           next: (uid: number) => {
@@ -121,15 +123,16 @@ export class ModPostViewComponent {
                 title: "Authentication fail",
                 icon: "error",
                 showConfirmButton: true,
-                confirmButtonText: "Go to home page"
+                confirmButtonText: "Go to sign-in page"
               }).then((result) => {
                 if (result.isConfirmed) {
-                  window.location.href = "/home";
+                  window.location.href = "/signin";
                 }
               })
             }
             //code here excute if is community owner
             else {
+              this.community_id = communityInfo.id;
               if (this.isReviewModPage) {
                 this.getPostsService.getPostInCommunityNotAllow("/get-control-posts", this.community_id).subscribe({
                   next: (response: number[]) => {
@@ -193,10 +196,10 @@ export class ModPostViewComponent {
               title: "Authentication fail",
               icon: "error",
               showConfirmButton: true,
-              confirmButtonText: "Go to home page"
+              confirmButtonText: "Go to sign-in page"
             }).then((result) => {
               if (result.isConfirmed) {
-                window.location.href = "/home";
+                window.location.href = "/signin";
               }
             })
           }
