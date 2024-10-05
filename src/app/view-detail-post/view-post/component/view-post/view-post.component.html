@@ -1,7 +1,7 @@
 
 <div id="post_block">
     <!-- *ngIf="((post.allow == 1) && (post.deleted == 0)) || isAuthor || post.communityOwner == 1"   -->
-    <nav id="community_bar">
+    <nav id="community_bar" *ngIf="!isLoadData">
         <div id="community_block">
             <back-button *ngIf="!isModPage"></back-button>
             <a id="community_link" href="r/{{post.community_name}}" [ngStyle]="{'margin-left': isModPage ? '0' : '10px'}">
@@ -35,7 +35,12 @@
         <app-video-view *ngIf="post.type=='video'" [content]="post.content"></app-video-view>
     </nav>
 
-    <nav id="footer">
+    <div class="load_data_block" *ngIf="isLoadData">
+        <img class="img_load_data" src="../../../../assets/icon/logo.png">
+        <div class="data_loader"></div>
+    </div>
+
+    <nav id="footer" *ngIf="!isLoadData">
         <div id="block_vote" class="block_vote" [ngClass]="{'upvote': post.voteType === 'upvote', 'downvote': post.voteType === 'downvote', 'normal': post.voteType === 'none'}" [ngStyle]="{'opacity': post.deleted ? '1' : '1'}">
             <button id="btn_upvote" type="button" (click)="votePost($event, 'upvote')" [ngClass]="{'upvote': post.voteType === 'upvote', 'downvote': post.voteType === 'downvote', 'normal': (post.voteType === 'none') || (post.voteType == null)}" [disabled]="post.deleted"><img [attr.src]="post.voteType === 'upvote' ? upvote_fill : voteImgService.upvote" /></button>
             <p style="color: var(--icon);">{{presentationService.transformNumber(post.vote)}}</p>

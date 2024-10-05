@@ -75,6 +75,8 @@ import { FirstLast } from 'src/app/shared/services/share_data/first-last';
 
     public firstLast: FirstLast = new FirstLast(0,0);
 
+    public isLoadData: boolean = false;
+
     public  upvote = "../../../../../assets/icon/upvote.png"
     public  upvote_fill = "../../../../../assets/icon/upvote-fill.png"
     public  downvote = "../../../../../assets/icon/downvote.png"
@@ -92,12 +94,18 @@ import { FirstLast } from 'src/app/shared/services/share_data/first-last';
               this.post = new DetailPost();
             }
             else {
+              this.post = new DetailPost();              
+              this.isLoadData = true;
               const uid: number = this.storageService.getItem("uid") == "" ? 0 :  Number.parseInt(this.storageService.getItem("uid"));
               this.getPostService.getDetailPostByUidAndPostId(uid, res.post_id).subscribe({
                 next: (response: DetailPost) =>{
+                  this.isLoadData = false;
                   this.post = response;
                   this.setPostInfo(res);
                   this.timer();
+                },
+                error: (e: any) => {
+                  this.isLoadData = false;
                 }
               })
             }
@@ -114,15 +122,20 @@ import { FirstLast } from 'src/app/shared/services/share_data/first-last';
       if(!this.isModPage) {
         this.post_id = this.activeRoute.snapshot.params['post_id'];
         const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
+        this.isLoadData = true;
         this.getPostService.getDetailPostByUidAndPostId(uid, this.post_id).subscribe({
           next: (response: DetailPost) => {
             this.post = response;
+            this.isLoadData = false;
             //set title using post title
             this.activeRoute.paramMap.subscribe(params => {
               this.titleService.setTitle(this.post.title);
             });
             this.setPostInfo(response);
             this.timer();
+          },
+          error: (e: any) => {
+            this.isLoadData = false;
           }
         })
       }
@@ -207,7 +220,7 @@ import { FirstLast } from 'src/app/shared/services/share_data/first-last';
     }
   
     navigateToCommunity() {
-      window.location.href = "/r/" + this.post.community_id;
+      window.location.href = "/r/" + this.post.community_name;
     }
   
     votePost(event: Event, type: string) {
