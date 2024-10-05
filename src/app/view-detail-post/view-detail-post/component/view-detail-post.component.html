@@ -1,7 +1,7 @@
 
 <app-post [commentCount]="commentResults.length" *ngIf="isPostExist"></app-post>
 <!-- && wait && !isDeleted && (isAllow || isAuthor || post.communityOwner == 1) -->
-<button id="btn_comment_editor" *ngIf="!post.deleted" [ngStyle]="{'display': !open && wait ? 'block' : 'none'}" (click)="openEditor()"><i class="pi pi-plus"></i> Create a comment</button>
+<button id="btn_comment_editor" *ngIf="!post.deleted && wait" [ngStyle]="{'display': !open && wait ? 'block' : 'none'}" (click)="openEditor()"><i class="pi pi-plus"></i> Create a comment</button>
 <div id="comment_editor_block" *ngIf="!post.deleted" [ngStyle]="{'display': open && wait ? 'block' : 'none'}">
     <editor [init]="editorSettings" (onSelectionChange)="onContentChanged($event)" style="width: calc(100%);">
     </editor>
