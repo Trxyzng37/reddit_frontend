@@ -170,6 +170,10 @@ export class PostLinkListComponent {
   }
 
   run() {
+    this.wait = false;
+    this.detail_post_arr = [];
+    this.post_id_arr = [];
+    this.cur_view_post_id = 0;
     const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
     this.isCommunityPage = window.location.href.includes("/r/");
     this.isHomePage = window.location.href.includes("/home");

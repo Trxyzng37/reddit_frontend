@@ -58,6 +58,7 @@ export class PostMainComponent {
     this.route.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
+      this.community = new Communities(0,"",0,"","",0,"","",0,0);
       this.isMenuOpen = false;
       this.isCommunityPage = this.route.url.includes("/r/");
       let regex = this.isCommunityPage ? '/r/([a-zA-Z0-9]+)' : '/edit-community/([a-zA-Z0-9]+)';
