@@ -3,22 +3,22 @@
 <div id="post_block" (click)="navigateToPost()">
     <nav id="community_bar">
         <div id="community_block" *ngIf="!isModPage">
-            <a id="community_link" href="/r/{{post.community_id}}" (click)="stopPropagation($event)">
+            <a id="community_link" router="/r/{{post.community_name}}" (click)="stopPropagation($event)">
                 <img id="community_icon" src="{{communityIcon}}" alt="community_icon"/>
             </a>
             <div id="link_date_block"> 
-                <a href="/r/{{post.community_id}}" style="font-weight: 500; font-size: 13px; color: var(--txt) !important;"(click)="stopPropagation($event)" title="{{communityName}}">r/{{communityName}}  </a>
+                <a routerLink="/r/{{post.community_name}}" style="font-weight: 500; font-size: 13px; color: var(--txt) !important;"(click)="stopPropagation($event)" title="{{communityName}}">r/{{communityName}}  </a>
                 <i style="font-weight: bold; color: var(--txt);">·</i>
                 <span style="font-size: 12px; color: var(--txt); font-weight: 300;"> {{shownDate}}</span>
             </div>
-            <p style="color: var(--txt);">{{post.post_id}}</p>
+            <!-- <p style="color: var(--txt);">{{post.post_id}}</p> -->
         </div>
         <div id="community_block" *ngIf="isModPage">
-            <a id="community_link" href="/user/{{post.username}}" (click)="stopPropagation($event)">
+            <a id="community_link" routerLink="/user/{{post.username}}" (click)="stopPropagation($event)">
                 <img id="community_icon" src="{{post.username_icon}}" alt="user avatar"/>
             </a>
             <div id="link_date_block"> 
-                <a href="/user/{{post.username_icon}}" style="font-weight: 500; font-size: 13px; color: var(--txt) !important;"(click)="stopPropagation($event)" title="{{post.username}}">u/{{post.username}}  </a>
+                <a routerLink="/user/{{post.username_icon}}" style="font-weight: 500; font-size: 13px; color: var(--txt) !important;"(click)="stopPropagation($event)" title="{{post.username}}">u/{{post.username}}  </a>
                 <i style="font-weight: bold; color: var(--txt);">·</i>
                 <span style="font-size: 12px; color: var(--txt); font-weight: 300;"> {{shownDate}}</span>
             </div>
