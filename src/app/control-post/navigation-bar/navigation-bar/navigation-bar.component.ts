@@ -28,15 +28,15 @@ export class ModNavigationBarComponent {
   ) {}
 
   public moderationCommunities: Communities[] = [];
-  public selected_community_id: number = 0;
+  public selected_community_name: string = "";
 
   ngOnInit() {
     this.darkmodeSerive.useDarkMode();
-    const regex = /mod\/(\d+)\/([^\/]+)/;
+    const regex = /mod\/([a-zA-Z0-9]+)\/([^\/]+)/;
     const match = window.location.href.match(regex);
     if(match) {
-      this.selected_community_id = Number.parseInt(match[1]);
-      // this.shareDataService.setModCommunityId(this.selected_community_id);
+      // this.selected_community_id = Number.parseInt(match[1]);
+      this.selected_community_name = match[1];
     }
     this.checkRefreshTokenService.checkRefreshToken().subscribe({
       next: (res: number) => {
@@ -47,14 +47,11 @@ export class ModNavigationBarComponent {
         })
       }
     })
-    // this.shareDataService.mod_community_id$.subscribe(res => {
-    //   this.selected_community_id = res;
-    // })
   }
 
   //same with moderate page
   goToCommunityModPage(community_id: number, community_name: string) {
-    this.selected_community_id = community_id;
+    this.selected_community_name = community_name;
     const regex = /mod\/([a-zA-Z0-9]+)\/([^\/]+)/;
     const match = window.location.href.match(regex);
     if(match) {
@@ -65,6 +62,6 @@ export class ModNavigationBarComponent {
   }
 
   goBackToCommunity() {
-    window.location.href = "/r/" + this.selected_community_id;
+    window.location.href = "/r/" + this.selected_community_name;
   }
 }
