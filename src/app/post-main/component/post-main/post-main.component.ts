@@ -251,7 +251,7 @@ export class PostMainComponent {
   }
 
   controlPosts() {
-    window.location.href = "/mod/"+this.community.id+"/review";
+    window.location.href = "/mod/"+this.community.name+"/review";
   }
 
   openCommunityMenu() {
