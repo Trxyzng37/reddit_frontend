@@ -53,14 +53,14 @@ export class ModNavigationBarComponent {
   }
 
   //same with moderate page
-  goToCommunityModPage(community_id: number) {
+  goToCommunityModPage(community_id: number, community_name: string) {
     this.selected_community_id = community_id;
-    const regex = /mod\/(\d+)\/([^\/]+)/;
+    const regex = /mod\/([a-zA-Z0-9]+)\/([^\/]+)/;
     const match = window.location.href.match(regex);
     if(match) {
       // this.shareDataService.setModCommunityId(community_id);
       // this.route.navigate(['/mod/'+this.selected_community_id+"/"+match[2]]);
-      window.location.href = '/mod/'+this.selected_community_id+"/"+match[2];
+      window.location.href = '/mod/'+community_name+"/"+match[2];
     }
   }
 

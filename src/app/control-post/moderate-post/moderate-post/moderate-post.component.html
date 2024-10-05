@@ -8,7 +8,7 @@
             <div id="community_info_block">
                 <button id="btn_selected_community" [ngStyle]="{'background-color': isDropDown ? 'var(--btn_selected)' : 'var(--primary_background_color)'}" (click)="openDropDown()"><img src="{{communityInfo.avatar}}"><i class="pi pi-angle-down"></i></button>
                 <div id="communities_dropdown" [ngStyle]="{'display': isDropDown ? 'block' : 'none'}">
-                    <button class="btn_community" (click)="selectCommunity(community.id)" *ngFor="let community of moderated_communities" [ngStyle]="{'background-color': community.id == communityInfo.id ? 'var(--btn_selected)' : 'var(--search)'}"><img src="{{community.avatar}}">{{community.name}}</button>
+                    <button class="btn_community" (click)="selectCommunity(community.name)" *ngFor="let community of moderated_communities" [ngStyle]="{'background-color': community.id == communityInfo.id ? 'var(--btn_selected)' : 'var(--search)'}"><img src="{{community.avatar}}">{{community.name}}</button>
                 </div>
             </div>
         </div>
