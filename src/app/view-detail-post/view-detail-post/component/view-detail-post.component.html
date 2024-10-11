@@ -14,7 +14,7 @@
     </div>
 </div>
 
-<p class="empty_block" style="color: var(--icon); margin-top: 20px" *ngIf="commentResults.length === 0 && wait">
+<p class="empty_block" style="color: var(--icon); margin-top: 20px" *ngIf="commentResults.length === 0 && commentWait">
     No comment found for this post
 </p>
 
@@ -33,6 +33,11 @@
 </div>
 
 <div class="load_data_block" *ngIf="isDataLoad">
+    <img class="img_load_data" src="../../../../assets/icon/logo.png">
+    <div class="data_loader"></div>
+</div>
+
+<div class="load_data_block" *ngIf="isCommentLoad">
     <img class="img_load_data" src="../../../../assets/icon/logo.png">
     <div class="data_loader"></div>
 </div>

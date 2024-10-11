@@ -64,6 +64,8 @@ export class ViewDetailPostComponent {
   public selected_mod_post: number = 0;
 
   public isPostExist: boolean = false;
+  public isCommentLoad: boolean = false;
+  public commentWait: boolean = false;
 
   ngOnInit() {
     this.darkmodeSerive.useDarkMode();
@@ -134,11 +136,12 @@ export class ViewDetailPostComponent {
         this.storageService.setItem("recent_posts", recent_post_array.toString());
       }
     }
-    this.isDataLoad = true;
+    this.isCommentLoad = true;
     this.getCommentService.getComments(post.post_id).subscribe({
       next: (response: CommentInfo[]) => {
+        this.isCommentLoad = false;
+        this.commentWait = true;
         this.commentResults = response;
-        this.isDataLoad = false;
         this.wait = true;
         const comment_id = this.route.snapshot.params['comment_id'];
         if(comment_id != 0) {
@@ -152,6 +155,8 @@ export class ViewDetailPostComponent {
         }
       },
       error: (e: HttpErrorResponse) => {
+        this.isCommentLoad = false;
+        this.commentWait = true;
         console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
       }
     })
