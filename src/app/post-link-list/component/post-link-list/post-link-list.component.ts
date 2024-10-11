@@ -40,7 +40,8 @@ export class PostLinkListComponent {
     private checkRefreshToken: CheckRefreshTokenService,
     private shareDataService: ShareDataService,
     private communityService: CommunityService,
-    private router: Router
+    private router: Router,
+    private titleService: Title
   ) {}
 
   // @Input() searchOption: string = "posts";
@@ -50,7 +51,7 @@ export class PostLinkListComponent {
   public isCommunityPage: boolean = false;
   public isHomePage: boolean = false;
   public isPopularPage: boolean = false;
-  public isControlPage: boolean = false;
+  // public isControlPage: boolean = false;
   public isUserPage: boolean = false;
   public isUserPostPage: boolean = false;
   public isSavedPostPage: boolean = false;
@@ -178,13 +179,16 @@ export class PostLinkListComponent {
     this.isCommunityPage = window.location.href.includes("/r/");
     this.isHomePage = window.location.href.includes("/home");
     this.isPopularPage = window.location.href.includes("/popular");
-    this.isControlPage = window.location.href.includes("/control-posts/");
+    // this.isControlPage = window.location.href.includes("/control-posts/");
     this.isUserPage = window.location.href.includes("/user/");
     this.isModPage = window.location.href.includes("/mod/");
     if(this.isHomePage) {
       this.timeout = setTimeout(()=>{
         this.isHomeRefresh = true;
       }, this.refresh_timeout);
+      this.activeRoute.paramMap.subscribe(params => {
+        this.titleService.setTitle("Reddit");
+      });
       this.shareDataService.home_post_id_arr$.subscribe(response => {
         this.post_id_arr = response;
       })
@@ -246,6 +250,9 @@ export class PostLinkListComponent {
       this.timeout = setTimeout(()=>{
         this.isHomeRefresh = true;
       }, this.refresh_timeout);
+      this.activeRoute.paramMap.subscribe(params => {
+        this.titleService.setTitle("r/popular");
+      });
       this.shareDataService.popular_post_id_arr$.subscribe(response => {
         this.post_id_arr = response;
       })
@@ -263,19 +270,19 @@ export class PostLinkListComponent {
       this.setSortText(this.sort_option);
       this.getPopularPost(uid, this.sort_option);
     }
-    if(this.isControlPage) {
-      this.community_id = this.activeRoute.snapshot.params["community_id"];
-      this.communityService.getCommunityInfoById(this.community_id.toString()).subscribe({
-        next: (response: Communities) => {
-          const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
-          this.isCommunityOwner = response.uid == uid;
-          if(this.isCommunityOwner)
-            this.getCommunityPostNotAllow(this.community_id);
-          else
-            window.location.href = "error";
-        }
-      })
-    }
+    // if(this.isControlPage) {
+    //   this.community_id = this.activeRoute.snapshot.params["community_id"];
+    //   this.communityService.getCommunityInfoById(this.community_id.toString()).subscribe({
+    //     next: (response: Communities) => {
+    //       const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
+    //       this.isCommunityOwner = response.uid == uid;
+    //       if(this.isCommunityOwner)
+    //         this.getCommunityPostNotAllow(this.community_id);
+    //       else
+    //         window.location.href = "error";
+    //     }
+    //   })
+    // }
     if(this.isUserPage) {
       const username = this.activeRoute.parent?.snapshot.params['username'];
       this.isUserPostPage = window.location.href.includes("/user/"+username+"/posts");
