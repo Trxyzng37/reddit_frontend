@@ -12,6 +12,7 @@ import { CheckRefreshTokenService } from 'src/app/shared/services/check-refresh-
 import { RemoveRefreshTokenService } from 'src/app/shared/services/remove-refresh-token/remove-refresh-token.service';
 import { Title } from '@angular/platform-browser';
 import { filter } from 'rxjs';
+import { DetailPost } from 'src/app/post-link-list/pojo/detail-post';
 
 @Component({
   selector: 'app-post-main',
@@ -34,7 +35,7 @@ export class PostMainComponent {
   public isCommunityPage: boolean = false;
   public isViewPostPage: boolean = false;
   public isJoinCommunity: boolean = false;
-  public isControlPage: boolean = false;
+  // public isControlPage: boolean = false;
   public isEditCommunityPage: boolean = false;
   public isUserSettingPage: boolean = false;
   public isUserPage: boolean = false;
@@ -43,7 +44,7 @@ export class PostMainComponent {
   public isEditPostPage: boolean = window.location.href.includes("/edit-post/");
 
   public community_id: number = 0;
-  public community: Communities = new Communities(0, "", 0, "", "", 0, "", "", 0, 0);
+  public community: Communities = new Communities(0, "", 0, "", "", 0, "", "../../../../assets/banner/default_banner.jpg", 0, 0);
   public banner_url: string = "../../../assets/banner/lol.png";
   public avatar_url: string = "../../../assets/icon/tft.jpg";
   public joinText: string = this.isJoinCommunity ? 'Joined' : 'Join';
@@ -98,7 +99,6 @@ export class PostMainComponent {
       this.isCommunityPage = window.location.href.includes("/r/");
       this.isUserSettingPage = window.location.href.includes("/setting/");
       this.isViewPostPage = window.location.href.includes("/post/");
-      this.isControlPage = window.location.href.includes("/control-posts/");
       this.isUserPage = window.location.href.includes("/user/");
       this.isEditCommunityPage = window.location.href.includes("/edit-community/");
     }, 50);
@@ -107,7 +107,6 @@ export class PostMainComponent {
     this.isCommunityPage = window.location.href.includes("/r/");
     this.isUserSettingPage = window.location.href.includes("/setting/");
     this.isViewPostPage = window.location.href.includes("/post/");
-    this.isControlPage = window.location.href.includes("/control-posts/");
     this.isUserPage = window.location.href.includes("/user/");
     this.isEditCommunityPage = window.location.href.includes("/edit-community/");
     if(this.isCommunityPage || this.isEditCommunityPage ) {
@@ -148,8 +147,8 @@ export class PostMainComponent {
       let regex = '/post/([0-9]+)';
       const a = window.location.href.match(regex);
       if(a != null) {
-        this.getPostService.getPostByPostId(Number.parseInt(a[1])).subscribe({
-          next: (response: GetPostResponse) => {
+        this.getPostService.getDetailPostByUidAndPostId(0, Number.parseInt(a[1])).subscribe({
+          next: (response: DetailPost) => {
             this.community_id = response.community_id;
             this.communityService.getCommunityInfoById(response.community_id.toString()).subscribe({
               next: (response: Communities) => {
@@ -161,36 +160,12 @@ export class PostMainComponent {
         })
       }
     }
-    if(this.isControlPage) {
-      let regex = '/control-posts/([0-9]+)';
-      const a = window.location.href.match(regex);
-      if(a != null) {
-        this.community_id = Number.parseInt(a[1]);
-        this.communityService.getCommunityInfoById(a[1].toString()).subscribe({
-          next: (response: Communities) => {
-            this.community = response;
-            this.isOwner = uid == this.community.uid;
-            if(this.community.deleted == 1)
-              Swal.fire("The community\nr/"+this.community.name+"\nhas been deleted","","error").then((result)=> {
-                if(result.isConfirmed) 
-                  window.history.back();
-              })
-          }
-        })
-        this.communityService.checkJoinCommunityStatus(uid, this.community_id).subscribe({
-          next: (response: JoinCommunityResponse) => {
-            this.isJoinCommunity = response.join_community == 0 ? false : true;
-            this.joinText = this.isJoinCommunity ? 'Joined' : 'Join';
-          }
-        })
-      }
-    }
     if(this.isEditPostPage) {
       let regex = '/edit-post/([0-9]+)';
       const a = window.location.href.match(regex);
       if(a != null) {
-        this.getPostService.getPostByPostId(Number.parseInt(a[1])).subscribe({
-          next: (response: GetPostResponse) => {
+        this.getPostService.getDetailPostByUidAndPostId(0, Number.parseInt(a[1])).subscribe({
+          next: (response: DetailPost) => {
             this.community_id = response.community_id;
             this.communityService.getCommunityInfoById(response.community_id.toString()).subscribe({
               next: (response: Communities) => {

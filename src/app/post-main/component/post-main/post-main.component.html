@@ -1,13 +1,13 @@
-<div id="h_container" *ngIf="(isCommunityPage && isCommunityExist) || isControlPage">
+<div id="h_container" *ngIf="(isCommunityPage && isCommunityExist)">
     <div id="header_container">
         <div id="banner_container">
-            <img id="img_banner" src="{{community.banner}}" *ngIf="community.banner != null">
-            <img id="img_banner" src="../../../../assets/banner/default_banner.jpg" *ngIf="community.banner == null">
+            <img id="img_banner" src="{{community.banner}}" title="community banner" *ngIf="community.banner != null">
+            <!-- <img id="img_banner" src="../../../../assets/banner/default_banner.jpg" title="community banner" *ngIf="community.banner == null"> -->
         </div>
         <div id="button_container">
             <p id="community_name" title="r/{{community.name}}">r/{{community.name}}</p>
         </div>
-        <img id="img_avatar" src="{{community.avatar}}">
+        <img id="img_avatar" src="{{community.avatar}}" title="community avatar">
         <div id="btn_control_block">
             <button class="btn" id="btn_create_post" title="Create a post" (click)="createPost()"><i class="pi pi-plus" style="color: var(--icon);"></i><p class="txt_btn">Create post</p></button>
             <button class="btn txt_btn" id="btn_join" title="Join this community" [ngStyle]="{'background-color': isJoinCommunity ? 'var(--neutral)' : 'var(--join)', 'border': isJoinCommunity ? '1px solid var(--secondary_color)' : 'none'}" (click)="joinCommunity()"><p id="txt_joined" *ngIf="isJoinCommunity">Joined</p><p id="txt_join" *ngIf="!isJoinCommunity">Join</p></button>
@@ -20,19 +20,15 @@
     </div>
 </div>
 
-<div id="control_block" *ngIf="isControlPage">
-    <p id="txt_control_posts">Select which post you want to allow in your community</p>
-</div>
-
 <div id="outlet" *ngIf="(isCommunityPage && isCommunityExist) || !isCommunityPage">
     <router-outlet>
     </router-outlet>
 </div>
 
-<div id="recent_post_info_block" *ngIf="!isCommunityPage && !isViewPostPage && !isControlPage && !isUserPage && !isEditCommunityPage && !isUserSettingPage && !isEditPostPage">
+<div id="recent_post_info_block" *ngIf="!isCommunityPage && !isViewPostPage && !isUserPage && !isEditCommunityPage && !isUserSettingPage && !isEditPostPage">
     <app-recent-visited-post></app-recent-visited-post>
 </div>
-<div id="community_info_block" *ngIf="isCommunityPage || isViewPostPage || isControlPage || isEditCommunityPage || isEditPostPage" >
+<div id="community_info_block" *ngIf="isCommunityPage || isViewPostPage || isEditCommunityPage || isEditPostPage" >
     <community-info [community_info]="community"></community-info>
 </div>
 

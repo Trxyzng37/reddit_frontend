@@ -80,6 +80,8 @@
 #img_banner {
     width: 100%;
     height: 100%;
+    background-color: var(--primary_background_color);
+    border: 1px solid var(--border);
 }
 
 #button_container {
@@ -158,11 +160,11 @@
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    border: 2px solid var(--border);
+    border: 1px solid var(--border);
     position: absolute;
     top: calc(85px);
     left: calc(2vw);
-    background-color: rgba($color: #000000, $alpha: 0.6);
+    background-color: var(--primary_background_color);
 }
 
 #btn_moderate {
