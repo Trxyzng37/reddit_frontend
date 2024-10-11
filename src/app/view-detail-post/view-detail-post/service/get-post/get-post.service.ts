@@ -14,14 +14,7 @@ export class GetPostService {
     private getService: GetService
   ) {}
 
-  private endpoint: string = "/get-post";
   private detailPostEndpoint:string = "/get-detail-post";
-
-  public getPostByPostId(post_id: number): Observable<GetPostResponse> {
-    const fullUrl = this.endpoint + "?pid=" + post_id;
-    const header: HttpHeaders = new HttpHeaders();
-    return this.getService.get(fullUrl, header, true);
-  }
 
   public getDetailPostByUidAndPostId(uid: number, post_id: number): Observable<DetailPost> {
     const fullUrl = this.detailPostEndpoint + "?uid=" + uid + "&" + "pid=" + post_id;
