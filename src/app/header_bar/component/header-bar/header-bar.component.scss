@@ -196,6 +196,11 @@ a {
     background-color: var(--primary_background_color);
 }
 
+#place_holder {
+    width: 200px;
+    height: 40px;
+}
+
 #signin_signup_block {
     display: flex;
     flex-direction: row;

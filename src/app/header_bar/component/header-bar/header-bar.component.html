@@ -30,12 +30,14 @@
         </div>
     </div>
 
+    <div id="place_holder" *ngIf="!wait"></div>
+
     <div id="signin_signup_block" *ngIf="!isSignIn && wait" [ngStyle]="{'display': isSignIn === true ? 'none':'flex'}">
         <a href="/signin" title="login">login</a>
         <a href="/signup" title="register">register</a>
     </div>
 
-    <div id="logged_in_block" *ngIf="isSignIn" [ngStyle]="{'display': isSignIn === true ? 'flex':'none'}">
+    <div id="logged_in_block" *ngIf="isSignIn && wait" [ngStyle]="{'display': isSignIn === true ? 'flex':'none'}">
         <button id="btn_create_post" type="button" (click)="createPost()" title="Create a new post"><i class="pi pi-plus" style="color: var(--secondary_color) !important;"></i>Create</button>
         <button id="btn_profile" type="button" [ngStyle]="{'box-shadow': isProfileMenuOpen ? 'var(--box_shadow)' : 'none'}" [ngStyle]="{'background-color': isProfileMenuOpen ? 'var(--neutral)' : 'var(--primary_background_color)'}"><img id="user_logo" src="{{userInfo.avatar}}" title="open profile menu" (click)="openProfileMenu($event)"/></button>
         <div id="menu" [ngStyle]="{'display': isProfileMenuOpen === true ? 'block':'none'}">
