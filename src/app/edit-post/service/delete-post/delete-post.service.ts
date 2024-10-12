@@ -33,18 +33,18 @@ export class DeletePostService {
     return this.postService.post(this.deleteEndpoint, header, body, true);
   }
 
-  sendDeleteToServer(post: DetailPost, deleted_by: number, deleteEvent: any|null) {
-    const uid: number = this.storageService.getItem("uid") == "" ? 0 :  Number.parseInt(this.storageService.getItem("uid"));
-    this.deletePost(post.post_id, uid, deleted_by).subscribe({
-      next: (response: DeletePostResponse) => {
-        post.deleted = 1;
-        if(deleteEvent != null)
-          deleteEvent.emit(post.post_id);
-        this.shareDataService.setDeleteOfDetailPosts(post.post_id, 1);
-      },
-      error: (e: HttpErrorResponse) => {
-        console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
-      }
-    })
-  }
+  // sendDeleteToServer(post: DetailPost, deleted_by: number, deleteEvent: any|null) {
+  //   const uid: number = this.storageService.getItem("uid") == "" ? 0 :  Number.parseInt(this.storageService.getItem("uid"));
+  //   this.deletePost(post.post_id, uid, deleted_by).subscribe({
+  //     next: (response: DeletePostResponse) => {
+  //       post.deleted = 1;
+  //       if(deleteEvent != null)
+  //         deleteEvent.emit(post.post_id);
+  //       this.shareDataService.setDeleteOfDetailPosts(post.post_id, 1);
+  //     },
+  //     error: (e: HttpErrorResponse) => {
+  //       console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
+  //     }
+  //   })
+  // }
 }

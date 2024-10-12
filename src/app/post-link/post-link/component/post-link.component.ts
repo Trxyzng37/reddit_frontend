@@ -322,22 +322,22 @@ export class PostLinkComponent {
     this.allowPostService.sendAllowToServer(this.post, 1, this.allowPostEvent);
   }
 
-  deletePost(event: Event) {
-    event.stopPropagation();
-    Swal.fire({
-      titleText: "Delete this post ?",
-      text: "Change can not be undo",
-      icon: 'warning',
-      confirmButtonText: 'Delete',
-      cancelButtonText: 'Cancel',
-      showCancelButton: true,
-      showConfirmButton: true
-    }).then((result) => {
-      if(result.isConfirmed) {
-        this.deletePostService.sendDeleteToServer(this.post, 2, this.allowPostEvent);
-      }
-    })
-  }
+  // deletePost(event: Event) {
+  //   event.stopPropagation();
+  //   Swal.fire({
+  //     titleText: "Delete this post ?",
+  //     text: "Change can not be undo",
+  //     icon: 'warning',
+  //     confirmButtonText: 'Delete',
+  //     cancelButtonText: 'Cancel',
+  //     showCancelButton: true,
+  //     showConfirmButton: true
+  //   }).then((result) => {
+  //     if(result.isConfirmed) {
+  //       this.deletePostService.sendDeleteToServer(this.post, 2, this.allowPostEvent);
+  //     }
+  //   })
+  // }
 
   savePost(event: Event) {
     event.stopPropagation();
