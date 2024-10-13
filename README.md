@@ -11,7 +11,7 @@ This repository is the front-end part of the project. The back-end part can be f
 - The website use [Angular](https://angular.dev) for the front-end, and [Spring](https://spring.io) for back-end.
 - [PostgreSQl](https://www.postgresql.org) is used to store data about users, posts, and communities.
 - [MongoDB](https://www.mongodb.com) is used to store data about comments.
-- [Cloudary](https://cloudinary.com) is used to store images and videos use in posts and communities.
+- [Cloudary](https://cloudinary.com) is used to store images and videos.
 
 ## 3. Functions
 
@@ -28,18 +28,18 @@ The website has the following functions:
 
 *Post*: post is a piece of content that is submitted to the website. A post can be text, image, video or link. post can be created and submitted to a community by any user.
 
-## 4. Build and run the application locally
-
-This project use Angular. Install angular cli on your computer using command:
-`npm install -g @angular/cli`
+## 4. Run the application locally
 
 Clone the repository:
-`git clone https://github.com/Trxyzng37/angular.git`
+`https://github.com/Trxyzng37/reddit_frontend.git`
 
-Switch to master branch:
-`git checkout master`
+#### 4.1. Using npm
+This require **Node.js** and **npm**.
 
-Download requirements:
+Install angular cli on your computer using command:
+`npm install -g @angular/cli`
+
+Open terminal in the project folder and download requirements:
 `npm install`
 
 Run the application:
@@ -50,4 +50,15 @@ The above command will run the application locally at address: [http://127.0.0.1
 Build the application:
 `ng build --configuration=development`
 
-The output will be in the **output** folder.
+The output will be in the **dist** folder.
+
+#### 4.2. Using Docker
+Open terminal in the project folder and run the command:
+`docker build -t reddit/frontend .`
+
+This will create an Docker image name **reddit/backend** using the existing Dockerfile.
+
+Run the Docker image:
+`docker run -t -p 4200:4200 reddit/frontend`
+
+The above command will run the application locally at address: [http://127.0.0.1:4200](http://127.0.0.1:4200)
