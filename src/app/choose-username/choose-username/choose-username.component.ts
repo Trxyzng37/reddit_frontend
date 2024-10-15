@@ -26,18 +26,18 @@ export class ChooseUsernameComponent {
 
   checkUserName(event: any) {
     this.username = event.target.value;
-    this.isUsernameAllow = /^[A-Za-z0-9]{3,16}$/.test(this.username);
-    if(this.isUsernameAllow) {
-      this.checkUsernameService.isUsernameExist(this.username).subscribe({
-        next: (response: UsernameExistResponse) => {
-            this.isUsernameTaken = response.usernameExist;
-        },
-        error: (e: HttpErrorResponse) => {
-          console.log(e);
-          this.isUsernameTaken = true;
-        }
-      })
-    }
+    this.isUsernameAllow = /^[A-Za-z0-9]{2,16}$/.test(this.username);
+    // if(this.isUsernameAllow) {
+    //   this.checkUsernameService.isUsernameExist(this.username).subscribe({
+    //     next: (response: UsernameExistResponse) => {
+    //         this.isUsernameTaken = response.usernameExist;
+    //     },
+    //     error: (e: HttpErrorResponse) => {
+    //       console.log(e);
+    //       this.isUsernameTaken = true;
+    //     }
+    //   })
+    // }
   }
 
   selectUsername() {
@@ -64,6 +64,12 @@ export class ChooseUsernameComponent {
                 if(result.isConfirmed) {
                   window.location.href = "/signin";
                 }
+              })
+            }
+            if(response.error_code == 1) {
+              Swal.fire({
+                title: "Username already exsit. Please choose another username",
+                icon: 'warning'
               })
             }
           },
