@@ -31,14 +31,21 @@ export class SigninComponent implements OnInit {
 
   private serverUrl: string = this.serverUrlService.getUrl();
   public signInForm: any = new FormGroup({
-    username: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(16), Validators.pattern("^[0-9a-zA-Z]{2,16}$")]),
+    username: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(255), Validators.pattern("^[0-9a-zA-Z@.-]{2,255}$")]),
     password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(20), Validators.pattern("^[0-9a-zA-Z ~`!@#$%^&*()_+={[}]|\\:;\"'<,>.?/-]{8,20}$")])
   })
+
+  public username_status: string = 'INVALID';
 
   public isLoad: boolean = false;
 
   //when component first init
   ngOnInit(): void {
+    this.signInForm.get('username').valueChanges.subscribe( () => {
+      this.username_status = this.signInForm.get('username').status;
+      // console.log("username: ", this.username_status);
+    });
+
     const cookie: string = getCookie("GoogleSignIn") as string || "";
     const uid: number = getCookie("uid") == "0" ? 0 : Number.parseInt(getCookie("uid") as string || '0');
     if (cookie === "")  
@@ -73,7 +80,7 @@ export class SigninComponent implements OnInit {
   SignInFormSubmit() {
     if (this.signInForm.status == "VALID") {
       this.isLoad = true;
-      const username: string = this.signInForm.value.username;
+      const username: string = this.signInForm.value.username.toLowerCase();
       const password: string = this.signInForm.value.password;
       const observable: Observable<UsernamePasswordSignInResponse> = this.usernamePasswordService.signinByUsernamePassword(username, password);
       observable.subscribe({

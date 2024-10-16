@@ -2,14 +2,14 @@
 <img id="main_logo" src="assets/icon/logo.png" alt="logo"/>
 <b><h2 style="color: black !important;">Sign in to Reddit</h2></b>
 <form [formGroup]="signInForm" (ngSubmit)="SignInFormSubmit()">
-    <label id="lbl_username" for="username" style="color: black !important;">Username</label>
-    <input id="username" name="username" type="text" formControlName="username" required style="color: black !important;">
+    <label id="lbl_username" for="username" style="color: black !important;">Username or email</label>
+    <input id="username" name="username" type="text" maxlength="255" formControlName="username" required style="color: black !important;">
     <div id="forgot_pass">
         <label for="password" style="color: black !important;">Password</label>
         <a routerLink="/forgot-password">Forgot password?</a>
     </div>
-    <input id="password" name="password" type="password" formControlName="password" required style="color: black !important;">
-    <button type="submit" id="btnSignIn" [disabled]="signInForm.status == 'INVALID'" style="color: black !important;">Login</button>
+    <input id="password" name="password" type="password" maxlength="20" formControlName="password" required style="color: black !important;">
+    <button type="submit" id="btnSignIn" [disabled]="signInForm.status == 'INVALID'" [ngStyle]="{'background-color': signInForm.status == 'INVALID' ? '#f28d68':'var(--main_color)'}" style="color: black !important;">Login</button>
 </form>
 
 <p style="font-size: 20px !important;" style="color: black !important;">Or</p>
