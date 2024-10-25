@@ -120,7 +120,8 @@ a, a:visited {
   display: block;
   margin: 10px auto;
   max-width: 100%;
-  max-height: 100%;
+  max-height: 80vh;
+  object-fit: contain;
 }
 
 .figure {
@@ -137,6 +138,7 @@ a, a:visited {
   text-align: center;
   font-size: small;
   margin-top: 3px;
+  color: var(--icon);
 }
 
 .pre_code {
@@ -220,8 +222,9 @@ input:focus {
   background-color: var(--bg_hover);
   text-align: center;
   font-size: 30px !important;
-  padding: 25vh 10px;
+  padding: 15vh 10px;
   margin-top: 40px;
+  border-radius: 15px;
 }
 
 .empty_block p {
