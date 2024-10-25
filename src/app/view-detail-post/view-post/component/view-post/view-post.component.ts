@@ -149,19 +149,19 @@ export class PostComponent {
       this.communityService.checkJoinCommunityStatus(uid, post.community_id).subscribe({
         next: (response: JoinCommunityResponse) => {
           post.join = response.join_community;
-          this.replacePost(post);
+          // this.replacePost(post);
         }
       })
       this.savePostService.getSavedPostStatusByUid(uid, post.post_id).subscribe({
         next: (response: SavedPostResponse) => {
           post.save = response.saved;
-          this.replacePost(post);
+          // this.replacePost(post);
         }
       })
       this.checkVotePostService.checkVotePost(post.post_id, uid).subscribe({
         next: (response: CheckVotePostResponse) => {
           post.voteType = response.vote_type;
-          this.replacePost(post);
+          // this.replacePost(post);
         }
       })
     }
@@ -169,7 +169,7 @@ export class PostComponent {
       post.join = null;
       post.save = null;
       post.voteType = null;
-      this.replacePost(post);
+      // this.replacePost(post);
     }
     post.content = post.content.replace(/<img/g, '<img class="img" ');
     post.content = post.content.replace(/<figure/g, '<figure class="figure" ');
@@ -181,19 +181,20 @@ export class PostComponent {
     post.content = post.content.replace(/<a/g, '<a class="a" ');
     post.content = post.content.replace(/<p/g, '<p class="post_view" ');
     post.content = post.content.replace(/<blockquote/g, '<blockquote class="blockquote" ');
+    this.post = post;
   }
 
-  replacePost(p: DetailPost) {
-    const post_arr: DetailPost[] = this.storageService.getItem("posts") == "" ? [] : JSON.parse(this.storageService.getItem("posts"));
-    for (let post of post_arr) {
-      if (p.post_id == post.post_id) {
-        post.join = p.join;
-        post.save = p.save;
-        post.voteType = p.voteType;
-      }
-    }
-    this.storageService.setItem("posts", JSON.stringify(post_arr));
-  }
+  // replacePost(p: DetailPost) {
+  //   const post_arr: DetailPost[] = this.storageService.getItem("posts") == "" ? [] : JSON.parse(this.storageService.getItem("posts"));
+  //   for (let post of post_arr) {
+  //     if (p.post_id == post.post_id) {
+  //       post.join = p.join;
+  //       post.save = p.save;
+  //       post.voteType = p.voteType;
+  //     }
+  //   }
+  //   this.storageService.setItem("posts", JSON.stringify(post_arr));
+  // }
 
   timer() {
     setTimeout(() => {
