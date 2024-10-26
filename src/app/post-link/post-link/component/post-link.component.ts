@@ -317,10 +317,10 @@ export class PostLinkComponent {
     this.sendJoinCommunityFromPostToServer(this.post, this.post.join == 1 ? 0 : 1);
   }
 
-  allowPost(event: Event) {
-    event.stopPropagation();
-    this.allowPostService.sendAllowToServer(this.post, 1, this.allowPostEvent);
-  }
+  // allowPost(event: Event) {
+  //   event.stopPropagation();
+  //   this.allowPostService.sendAllowToServer(this.post, 1, this.allowPostEvent);
+  // }
 
   // deletePost(event: Event) {
   //   event.stopPropagation();
