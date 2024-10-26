@@ -254,6 +254,8 @@ export class PostComponent {
         this.deletePostService.deletePost(this.post.post_id, uid, 1).subscribe({
           next: (response: DeletePostResponse) => {
             this.post.deleted = 1;
+            this.post.deleted_by = 2;
+            this.post.allow = 0;
             this.shareDataService.setDeleteOfDetailPosts(this.post.post_id, 1);
             window.location.reload();
           },
@@ -271,6 +273,8 @@ export class PostComponent {
       this.allowPostService.setAllowPost(this.post.post_id, 1).subscribe({
         next: (response: DefaultResponse) => {
           this.post.allow = 1;
+          this.post.deleted = 0;
+          this.post.deleted_by = 0;
           this.shareDataService.setChangedPost(new ChangedPost(this.post.post_id, 1, 0, this.dateTimeService.getCurrentDateTime().toISOString(), ""));
           // this.shareDataService.setModDetailPost(this.post);
         },

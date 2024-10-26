@@ -18,11 +18,11 @@
             <button class="btn_option" type="button" title="Previous post" *ngIf="isModPage" [disabled]="firstLast.first == 1" (click)="goToPreviousPost($event)"><i class="pi pi-angle-left" style="font-size: 20px;" ></i></button>
             <button class="btn_option" type="button" title="Next post" style="margin-right: 10px;" *ngIf="isModPage" [disabled]="firstLast.last == 1" (click)="goToNextPost($event)"><i class="pi pi-angle-right" style="font-size: 20px;" ></i></button>
             <button class="btn_option" type="button" title="Close" *ngIf="isModPage" (click)="CloseViewPost($event)"><i class="pi pi-times"></i></button>
-            <button class="btn_option" type="button" title="Options" *ngIf="!isModPage" (click)="openOptionMenu($event)" [ngStyle]="{'background-color':isOptionMenuOpen?'var(--bg_hover)':''}"><i class="pi pi-ellipsis-h"></i></button>
+            <button class="btn_option" type="button" title="Options" *ngIf="!isModPage && post.deleted == 0" (click)="openOptionMenu($event)" [ngStyle]="{'background-color':isOptionMenuOpen?'var(--bg_hover)':''}"><i class="pi pi-ellipsis-h"></i></button>
         </div>
         <div id="dropdown_option_block" [ngStyle]="{'display': isOptionMenuOpen ? 'block':'none'}">
             <button id="btn_edit" *ngIf="isAuthor" (click)="editPost($event)"><i class="pi pi-pencil"></i><p>Edit</p></button>
-            <button *ngIf="isAuthor || (post.communityOwner == 1)" (click)="deletePost()"><i class="pi pi-trash"></i><p>Delete</p></button>
+            <button *ngIf="isAuthor" (click)="deletePost()"><i class="pi pi-trash"></i><p>Delete</p></button>
             <button id="btn_save" (click)="savePost($event)"><i class="pi" [ngClass]="post.save ? 'pi-bookmark-fill':'pi-bookmark'"></i><p *ngIf="post.save == 0 || post.save == null">Save</p><p *ngIf="post.save == 1">Unsave</p></button>
         </div>
     </nav>
@@ -51,7 +51,7 @@
             <p id="comment_count" style="font-variant: var(--txt);">{{presentationService.transformNumber(commentCount)}}</p>
         </button> 
         <div id="moderate_block">
-            <button class="btn" id="btn_allow" type="button" [ngStyle]="{'margin-right': post.deleted == 1 ? '0' : '10px'}" *ngIf="post.communityOwner == 1 && ((post.deleted == 1 && post.deleted_by == 2) || post.allow == 0)" title="Approve this post" (click)="allowPost($event)"><i class="pi pi-check"></i></button>
+            <button class="btn" id="btn_allow" type="button" [ngStyle]="{'margin-right': post.deleted == 1 ? '0' : '10px'}" *ngIf="post.communityOwner == 1 && ((post.deleted == 1 && post.deleted_by == 2) || (post.allow == 0 && post.deleted == 0))" title="Approve this post" (click)="allowPost($event)"><i class="pi pi-check"></i></button>
             <button class="btn" id="btn_delete" type="button" *ngIf="post.communityOwner == 1 && (post.deleted == 0)" (click)="notAllowPost($event)" title="Remove this post"><i class="pi pi-times"></i></button>
         </div>
     </nav>
