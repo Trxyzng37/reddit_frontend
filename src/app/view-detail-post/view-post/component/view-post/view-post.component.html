@@ -51,7 +51,7 @@
             <p id="comment_count" style="font-variant: var(--txt);">{{presentationService.transformNumber(commentCount)}}</p>
         </button> 
         <div id="moderate_block">
-            <button class="btn" id="btn_allow" type="button" [ngStyle]="{'margin-right': post.deleted == 1 ? '0' : '10px'}" *ngIf="post.communityOwner == 1 && ((post.deleted == 1 || post.allow == 0) && post.deleted_by == 2)" title="Approve this post" (click)="allowPost($event)"><i class="pi pi-check"></i></button>
+            <button class="btn" id="btn_allow" type="button" [ngStyle]="{'margin-right': post.deleted == 1 ? '0' : '10px'}" *ngIf="post.communityOwner == 1 && ((post.deleted == 1 && post.deleted_by == 2) || post.allow == 0)" title="Approve this post" (click)="allowPost($event)"><i class="pi pi-check"></i></button>
             <button class="btn" id="btn_delete" type="button" *ngIf="post.communityOwner == 1 && (post.deleted == 0)" (click)="notAllowPost($event)" title="Remove this post"><i class="pi pi-times"></i></button>
         </div>
     </nav>
