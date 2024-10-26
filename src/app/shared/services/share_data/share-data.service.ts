@@ -140,6 +140,8 @@ export class ShareDataService {
     for(let post of detail_posts) {
       if(post.post_id == post_id) {
         post.allow = allow;
+        post.deleted = 0;
+        post.deleted_by = 0;
       }
     }
     this.setDetailPosts(detail_posts)
@@ -150,6 +152,8 @@ export class ShareDataService {
     for(let post of detail_posts) {
       if(post.post_id == post_id) {
         post.deleted = deleted;
+        post.allow = 0;
+        post.deleted_by = 2;
       }
     }
     this.setDetailPosts(detail_posts)
