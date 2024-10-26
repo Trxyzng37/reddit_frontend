@@ -17,10 +17,10 @@
                     <p class="txt_header" *ngIf="post.vote == 0">0 vote</p>
                     <p class="txt_header" *ngIf="post.vote == -1">-1 downvote</p>
                     <p class="txt_header" *ngIf="post.vote < -1">{{presentationService.transformNumber(post.vote)}} downvotes</p>
-                    <p class="txt_type" *ngIf="post.type == 'editor'">TEXT</p>
+                    <!-- <p class="txt_type" *ngIf="post.type == 'editor'">TEXT</p>
                     <p class="txt_type" *ngIf="post.type == 'img'">IMAGE</p>
                     <p class="txt_type" *ngIf="post.type == 'video'">VIDEO</p>
-                    <p class="txt_type" *ngIf="post.type == 'link'">LINK</p>
+                    <p class="txt_type" *ngIf="post.type == 'link'">LINK</p> -->
                 </div>
                 <p style="font-size: 14px; color: var(--icon); font-weight: 550;">{{post.title}}</p>
             </div>
