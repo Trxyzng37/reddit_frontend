@@ -1,9 +1,9 @@
 
-<app-post *ngIf="isAllow || isDeleted || isAuthor || post.communityOwner == 1" [commentCount]="commentResults.length"></app-post>
+<app-post *ngIf="(isAllow || isAuthor || post.communityOwner == 1)" [commentCount]="commentResults.length"></app-post>
 <!-- && wait && !isDeleted && (isAllow || isAuthor || post.communityOwner == 1) -->
 
-<button id="btn_comment_editor" *ngIf="(isAllow || isDeleted || isAuthor || post.communityOwner == 1) && !post.deleted && wait" [ngStyle]="{'display': !open && wait ? 'block' : 'none'}" (click)="openEditor()"><i class="pi pi-plus"></i> Create a comment</button>
-<div id="comment_editor_block" *ngIf="(isAllow || isDeleted || isAuthor || post.communityOwner == 1) && !post.deleted" [ngStyle]="{'display': open && wait ? 'block' : 'none'}">
+<button id="btn_comment_editor" *ngIf="(isAllow || isAuthor || post.communityOwner == 1) && !post.deleted && wait" [ngStyle]="{'display': !open && wait ? 'block' : 'none'}" (click)="openEditor()"><i class="pi pi-plus"></i> Create a comment</button>
+<div id="comment_editor_block" *ngIf="(isAllow || isAuthor || post.communityOwner == 1) && !post.deleted" [ngStyle]="{'display': open && wait ? 'block' : 'none'}">
     <editor [init]="editorSettings" (onSelectionChange)="onContentChanged($event)" style="width: calc(100%);">
     </editor>
     <div id="btn_comment">
@@ -15,7 +15,7 @@
     </div>
 </div>
 
-<div class="comment_container" *ngIf="isAllow || isDeleted || isAuthor || post.communityOwner == 1">
+<div class="comment_container" *ngIf="(isAllow || isAuthor || post.communityOwner == 1)">
     <div id="c{{comment._id}}" class="comment_element" *ngFor="let comment of commentResults; let i=index">
         <app-comment id="{{comment._id}}" class="comment" [commentData]="comment" [isPostDeleted]="post.deleted"
             [isCommunityOwner]="post.communityOwner == 1" (commentModified)="reloadComment($event)"
@@ -24,13 +24,17 @@
     </div>
 </div>
 
-<div class="empty_block" *ngIf="!(isAllow || isDeleted || isAuthor || post.communityOwner == 1)">
+<div class="empty_block" *ngIf="!((isAllow || isAuthor || post.communityOwner == 1 || isDeleted))">
     <p style="color: var(--icon);">This post is waiting to be approve by moderator</p>
     <!-- <button type="button" style="color: var(--icon); background-color: var(--search);" title="Go back" onclick="window.history.back()">Go back</button> -->
 </div>
 
-<p class="empty_block" style="color: var(--icon); margin-top: 20px" *ngIf="(isAllow || isDeleted || isAuthor || post.communityOwner == 1) && commentResults.length === 0 && commentWait">
+<p class="empty_block" style="color: var(--icon); margin-top: 20px" *ngIf="((isAllow || isAuthor || post.communityOwner == 1)) && commentResults.length === 0 && commentWait">
     No comment found for this post
+</p>
+
+<p class="empty_block" style="color: var(--icon); margin-top: 20px" *ngIf="isDeleted && !(isAuthor || post.communityOwner == 1)">
+    This post is deleted
 </p>
 
 <div class="load_data_block" *ngIf="isDataLoad">
