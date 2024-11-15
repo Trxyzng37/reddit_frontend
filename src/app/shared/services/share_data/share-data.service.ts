@@ -5,6 +5,7 @@ import { Communities } from '../../pojo/pojo/communities';
 import { CommentInfo } from 'src/app/view-detail-post/view-detail-post/pojo/comment';
 import { ChangedPost } from './changed-post';
 import { FirstLast } from './first-last';
+import { EditorObj } from './editor';
 
 @Injectable({
   providedIn: 'root'
@@ -363,5 +364,11 @@ export class ShareDataService {
   first_last$ = this.first_last.asObservable();
   setFirstLast(first_last: FirstLast) {
     this.first_last.next(first_last);
+  }
+
+  private editor = new BehaviorSubject<EditorObj>(new EditorObj("0","0"));
+  editor$ = this.editor.asObservable();
+  setEditor(editor: EditorObj) {
+    this.editor.next(editor);
   }
 }

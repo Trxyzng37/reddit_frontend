@@ -10,6 +10,8 @@ import { EditPostService } from '../../service/edit-post/edit-editor-post.servic
 import { EditPostResponse } from '../../pojo/edit-post-response';
 import { StorageService } from 'src/app/shared/storage/storage.service';
 import { DetailPost } from 'src/app/post-link-list/pojo/detail-post';
+import { EditorSettingService } from 'src/app/shared/services/editor-setting/editor-setting.service';
+import { ClearFormatService } from 'src/app/shared/services/clear-format/clear-format.service';
 
 @Component({
   selector: 'app-edit-editor-post',
@@ -24,8 +26,10 @@ export class EditEditorPostComponent {
     private dateTimeService: DateTimeService,
     private editPostService: EditPostService,
     private storageService: StorageService,
-    private route: Router
-  ) {}
+    private route: Router,
+    public editorSettingService: EditorSettingService,
+    private formatService: ClearFormatService
+  ) { }
 
   public post_id: number = 0;
   public shownDate: string = "";
@@ -38,6 +42,9 @@ export class EditEditorPostComponent {
   public allowSubmit: boolean = false;
   public isLoad: boolean = false;
 
+  public prev_content: string = "";
+  public editor_id: string = "";
+
   ngOnInit() {
     this.shownDate = this.dateTimeService.getTimeByCompareCreatedAtAndCurrentDate(this.postData.created_at);
     this.post_id = this.activeRoute.snapshot.params['post_id'];
@@ -48,8 +55,8 @@ export class EditEditorPostComponent {
         const title = (<HTMLInputElement>document.getElementById("input_post_title"));
         title.value = this.postData.title;
         title.value = title.value.replace(/\r?\n|\r/g, "");
-        title.style.height = 'auto';
-        title.style.height = title.scrollHeight < 30 ? '30px' : `${title.scrollHeight}px`;
+        // title.style.height = 'auto';
+        title.style.height = `${title.scrollHeight}px`;
         this.edit_title = this.postData.title;
         this.edit_content = this.postData.content;
         this.characterCount = this.postData.title.length;
@@ -66,8 +73,8 @@ export class EditEditorPostComponent {
 
   AllowSubmit() {
     this.allowSubmit = (this.original_title !== this.edit_title || this.original_content !== this.edit_content) &&
-                       this.edit_title.length !== 0
-                       ? false : true;
+      this.edit_title.length !== 0
+      ? false : true;
   }
 
   inputTitle(event: any) {
@@ -84,76 +91,19 @@ export class EditEditorPostComponent {
     this.AllowSubmit();
   }
 
-  public editorSettings = {
-    base_url: '/tinymce',
-    suffix: '.min',
-    plugins: 'link lists codesample image autoresize', 
-    toolbar: "bold italic underline strikethrough subscript superscript removeformat numlist bullist link blockquote codesample image",
-    toolbar_mode: 'wrap',
-    placeholder: '(Optional)',
-    automatic_uploads: true,
-    file_picker_types: 'image',
-    images_file_types: 'jpg,svg,webp,png,jpeg',
-    images_reuse_filename: true,
-    image_dimensions: false,
-    image_caption: true,
-    image_description: false,
-    statusbar: true,
-    elementpath: false,
-    branding: false,
-    resize: true,
-    width: '100%',
-    menubar: false, 
-    draggable_modal: false,
-    object_resizing: false,
-    inline_boundaries: false,
-    contenteditable: false,
-    paste_data_images: false,
-    paste_block_drop: false,
-    color_default_foreground: '#E03E2D',
-    color_default_background: '#000000',
-    color_map_background: [
-      '000000', 'Black'
-    ],
-    textcolor_map: ['#E03E2D', 'Red'],
-    custom_colors: false,
-    content_css: 'tinymce-5',
-    content_style: 
-      'html body { overflow-y: auto !important; }' +
-      'p { margin: 0; } ' + 
-      'img { display: block; margin: 0 auto; out-line: 0; max-width: 100%; max-height: 100%}' +
-      'body {line-height: normal}' +
-      'pre[class*=language-] {font-family: Consolas}',
-    file_picker_callback: (cb: any, value:any, meta:any) => {
-      const input = document.createElement('input');
-      input.setAttribute('type', 'file');
-      input.setAttribute('accept', 'image/*');
-      input.addEventListener('change', (e:any) => {
-        const file = e.target.files[0];
-        const reader = new FileReader();
-        reader.addEventListener('load', () => {
-          const id = file.name;
-          const blobCache =  tinymce.activeEditor!.editorUpload.blobCache;
-          const base64 = (<string>reader.result).split(',')[1];
-          const blobInfo = blobCache.create(id, file, base64);
-          blobCache.add(blobInfo);
-          cb(blobInfo.blobUri(), { title: file.name });
-        });
-        reader.readAsDataURL(file);
-      })
-      input.click();
-    },
-  }
-
-  count=0;
+  count = 0;
   setContent(event: any) {
-    if(this.count == 0) {
+    if (this.count == 0) {
       this.count++;
       tinymce.activeEditor?.setContent(this.postData.content);
       this.AllowSubmit();
     }
     this.count++;
     this.edit_content = event.editor.getContent({ format: 'html' });
+    if(this.formatService.hasInlineStyle(this.edit_content)) {
+      this.edit_content = this.formatService.removeInlineStyle(this.edit_content);
+      tinymce.activeEditor!.setContent(this.edit_content);
+    }
     this.AllowSubmit();
   }
 
@@ -170,21 +120,22 @@ export class EditEditorPostComponent {
       if (result.isConfirmed) {
         this.isLoad = true;
         const uid: number = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
+        this.edit_content = this.formatService.formatForCreatePost(this.edit_content);
+        this.edit_content = this.formatService.removeInlineStyle(this.edit_content);
         this.editPostService.editPost("/edit-editor-post", "editor", this.post_id, uid, this.edit_title, this.edit_content).subscribe({
-        next: (response: EditPostResponse) => {
-          if (result.isConfirmed) {
+          next: (response: EditPostResponse) => {
+            if (result.isConfirmed) {
+              this.isLoad = false;
+              Swal.fire('Edit post successfully', '', 'success').then((result) => {
+                  this.route.navigate(["/post/" + this.post_id]);
+              });
+            }
+          },
+          error: (e: HttpErrorResponse) => {
             this.isLoad = false;
-            Swal.fire('Edit post successfully', '', 'success').then((result)=>{
-              if(result.isConfirmed)
-                this.route.navigate(["/post/"+this.post_id]);
-            });
-          } 
-        },
-        error: (e: HttpErrorResponse) => {
-          this.isLoad = false;
-          Swal.fire('Fail to edit post. Please try again', '', 'error')
-        }
-      })
+            Swal.fire('Fail to edit post. Please try again', '', 'error')
+          }
+        })
       }
     })
   }
@@ -200,8 +151,8 @@ export class EditEditorPostComponent {
       focusCancel: false,
       focusConfirm: false,
     }).then((result) => {
-      if (result.isConfirmed) 
-        this.route.navigate(["/post/"+this.post_id]);
+      if (result.isConfirmed)
+        this.route.navigate(["/post/" + this.post_id]);
     })
   }
 }

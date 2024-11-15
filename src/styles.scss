@@ -22,7 +22,7 @@
     --scrollbar_track: #ffffff;
     --scrollbar_thumb: #c6c6c6;
     --join: #674500;
-    --allow: #5959f9;
+    --allow: #1870F4;
     --delete: #fb3030;
     --upvote:	#D93900;
     --downvote:	#6A5CFF;
@@ -116,46 +116,51 @@ a, a:visited {
   }
 
 //view css
+.div {
+  color: var(--icon);
+}
+
 .img {
   display: block;
-  margin: 10px auto;
-  max-width: 100%;
-  max-height: 80vh;
-  object-fit: contain;
+  width: 100%;
+  height: auto
 }
 
 .figure {
-  margin: 10px 0;
-}
-
-.figure > .img {
-  margin: 0 auto;
-  max-width: 100%;
-  max-height: 100%;
+  margin: 16px 0;
+  margin-top: 0;
 }
 
 .figcaption {
   text-align: center;
-  font-size: small;
+  font-size: 12px;
   margin-top: 3px;
   color: var(--icon);
 }
 
 .pre_code {
-  padding: 1rem 1rem;
-  border: 3px solid #b4d7ff;
-  background-color: #f5f2f0;
-  font-family: 'Consolas';
-  width: 100%;
-  margin: 3px 0;
-}
-
-.code {
-  font-family: 'Consolas';
+  font-family: Consolas; 
+  background-color: var(--bg_hover) !important; 
+  color: var(--txt) !important; 
+  outline: none; 
+  padding: 10px 10px; 
+  font-size: 13px; 
+  width: 100%; 
+  box-sizing: border-box; 
+  word-break: break-word; 
+  white-space: initial; 
+  border: 1px solid var(--border); 
+  border-radius: 5px;
+  margin-bottom: 16px;
 }
 
 .ol, .ul {
   padding-left: 25px;
+  margin-bottom: 16px;
+}
+
+.li {
+  color: var(--txt);
 }
 
 .p {
@@ -173,6 +178,7 @@ a, a:visited {
 .comment_content {
   font-size: 14px;
   color: var(--icon) !important;
+  margin-bottom: 16px;
 }
 
 .a {
@@ -194,21 +200,37 @@ a, a:visited {
 }
 
 .blockquote {
-  border-left: 5px solid #b1afaf;
+  border-left: 4px solid var(--border);
   padding: 5px 10px;
-  margin-left: 5px;
-  margin-bottom: 16px;
+  margin-left: 10px;
+  margin: 0 0 16px 16px;
+  padding-right: 0px;
 }
 
 .blockquote p {
   display: inline;
 }
 
+.blockquote p, .pre_code p {
+  margin-bottom: 0 !important;
+}
+
 .img_comment {
   display: block;
-  margin: 10px 0;
-  max-width: 200px;
-  max-height: 200px;
+  // margin: 10px 0;
+  max-width: 400px;
+  max-height: 300px;
+}
+
+.figcaption_comment {
+  text-align: left;
+  margin-top: 3px;
+}
+
+.p_comment {
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--icon) !important;
 }
 
 input:focus {
@@ -286,4 +308,13 @@ input:focus {
 }
 @keyframes l2 {
     100% {box-shadow: 0 0 0 12px #ff8154}
+}
+
+.btn_editor {
+  // background-color: var(--allow);
+}
+
+.btn_editor:hover {
+  background-color: var(--border) !important;
+  cursor: pointer;
 }

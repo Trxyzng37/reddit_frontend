@@ -5,7 +5,7 @@
 <div id="container">
     <div id="editor">
         <editor 
-        [init]="editorSettings"
+        [init]="editorSettingService.setEditorSettings('post', this.editor_id, this.prev_content)"
         (onSelectionChange)="setContent($event)"
         >  
         </editor>

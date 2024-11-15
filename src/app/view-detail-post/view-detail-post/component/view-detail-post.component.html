@@ -4,7 +4,7 @@
 
 <button id="btn_comment_editor" *ngIf="(isAllow || isAuthor || post.communityOwner == 1) && !post.deleted && wait" [ngStyle]="{'display': !open && wait ? 'block' : 'none'}" (click)="openEditor()"><i class="pi pi-plus"></i> Create a comment</button>
 <div id="comment_editor_block" *ngIf="(isAllow || isAuthor || post.communityOwner == 1) && !post.deleted" [ngStyle]="{'display': open && wait ? 'block' : 'none'}">
-    <editor [init]="editorSettings" (onSelectionChange)="onContentChanged($event)" style="width: calc(100%);">
+    <editor [init]="editorSettingService.setEditorSettings('comment', 'detail', this.prev_content)" (onSelectionChange)="onContentChanged($event)" style="width: calc(100%);">
     </editor>
     <div id="btn_comment">
         <!-- <button id="btn_hide_comment_editor" (click)="openEditor()">Close</button> -->
@@ -17,8 +17,12 @@
 
 <div class="comment_container" *ngIf="(isAllow || isAuthor || post.communityOwner == 1)">
     <div id="c{{comment._id}}" class="comment_element" *ngFor="let comment of commentResults; let i=index">
-        <app-comment id="{{comment._id}}" class="comment" [commentData]="comment" [isPostDeleted]="post.deleted"
-            [isCommunityOwner]="post.communityOwner == 1" (commentModified)="reloadComment($event)"
+        <app-comment id="{{comment._id}}" class="comment" 
+            [commentData]="comment" 
+            [isPostDeleted]="post.deleted"
+            [isCommunityOwner]="post.communityOwner == 1" 
+            [index]="i"
+            (commentModified)="reloadComment($event)"
             [ngStyle]="{'margin-left': comment.level*30+'px', 'width': width[i], 'display': 'block', 'margin-top': comment.level == 0 ? '30px' : 0}">
         </app-comment>
     </div>
@@ -50,3 +54,5 @@
 <div class="empty_block" *ngIf="!isPostExist && wait">
     <p>This post does not exist</p>
 </div>
+
+<loading [txt_load]="'Creating comment. Please wait'" *ngIf="isCreateComment"></loading>

@@ -12,6 +12,8 @@ import tinymce from 'tinymce';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { DarkModeService } from 'src/app/shared/services/dark-mode/dark-mode.service';
+import { EditorSettingService } from 'src/app/shared/services/editor-setting/editor-setting.service';
+import { ClearFormatService } from 'src/app/shared/services/clear-format/clear-format.service';
 
 @Component({
   selector: 'app-test',
@@ -19,14 +21,16 @@ import { DarkModeService } from 'src/app/shared/services/dark-mode/dark-mode.ser
   styleUrl: './create-post.component.scss'
 })
 export class CreatePostComponent {
-  constructor (
+  constructor(
     private searchCommunitiesService: CommunityService,
     private sendPostService: SendPostService,
     private storageService: StorageService,
     private dateTimeService: DateTimeService,
     private communityService: CommunityService,
     private route: Router,
-    private darkmodeService: DarkModeService
+    private darkmodeService: DarkModeService,
+    public editorSettingService: EditorSettingService,
+    private formatService: ClearFormatService
   ) {
   }
 
@@ -60,10 +64,13 @@ export class CreatePostComponent {
   public videoAllowed: boolean = true;
   public linkAllowed: boolean = true;
 
+  public prev_content = "";
+  public editor_id: string = "";
+
   ngOnInit() {
     this.darkmodeService.useDarkMode();
     const found = window.location.href.match('cid=([0-9]+)');
-    if(found != null) {
+    if (found != null) {
       this.communityService.getCommunityInfoById(found[1]).subscribe({
         next: (response: Communities) => {
           this.community_id = response.id;
@@ -81,16 +88,16 @@ export class CreatePostComponent {
     console.log(this.community.length === 0 && this.title.length === 0)
     this.editorAllowed = this.community.length != 0 && this.title.length != 0 ? false : true;
     this.imgAllowed = this.community !== "" && this.title !== "" && this.imgArr.length > 0 ? false : true;
-    this.linkAllowed = this.community !== "" && this.title !== "" && this.linkContent !=="" ? false : true;
+    this.linkAllowed = this.community !== "" && this.title !== "" && this.linkContent !== "" ? false : true;
     this.videoAllowed = this.community !== "" && this.title !== "" && this.videoContent !== "" ? false : true;
   }
 
   onDrop(event: any) {
-    event.preventDefault();   
+    event.preventDefault();
     event.stopPropagation();
     const dt = event.dataTransfer;
-    const files:File[] = dt.files;
-    for(let i=0; i< files.length; i++) {
+    const files: File[] = dt.files;
+    for (let i = 0; i < files.length; i++) {
       this.onImageUpload(files[i]);
     }
     const post_img_block: any = document.getElementById("post_img_block");
@@ -98,20 +105,20 @@ export class CreatePostComponent {
     this.AllowSubmit();
   }
 
-    onDragEnter(event: Event) {
-      console.log("drag")
-      event.preventDefault();
-      event.stopPropagation();
-      const post_img_block: any = document.getElementById("post_img_block");
-      post_img_block.style.border = "2px dashed black";
-    }
+  onDragEnter(event: Event) {
+    console.log("drag")
+    event.preventDefault();
+    event.stopPropagation();
+    const post_img_block: any = document.getElementById("post_img_block");
+    post_img_block.style.border = "2px dashed black";
+  }
 
-    onDragLeave(event: Event) {
-      event.preventDefault();
-      event.stopPropagation()
-      const parent: any = document.getElementById("post_img_block");
-      parent.style.border = "none";
-    }
+  onDragLeave(event: Event) {
+    event.preventDefault();
+    event.stopPropagation()
+    const parent: any = document.getElementById("post_img_block");
+    parent.style.border = "none";
+  }
 
   upLoadImg(event: any) {
     const files: FileList = event.target.files;
@@ -159,8 +166,8 @@ export class CreatePostComponent {
       this.selected_id = id;
     }
     else {
-      this.img = this.imgArr[id-1];
-      this.selected_id = id-1;
+      this.img = this.imgArr[id - 1];
+      this.selected_id = id - 1;
     }
     this.AllowSubmit();
   }
@@ -176,8 +183,8 @@ export class CreatePostComponent {
     reader.readAsDataURL(file[0]);
     reader.addEventListener("loadend", () => {
       const data = reader.result as string;
-      if(data.length > 6700000) {
-        Swal.fire("Maximum video size is 5MB",'','warning');
+      if (data.length > 6700000) {
+        Swal.fire("Maximum video size is 5MB", '', 'warning');
         this.AllowSubmit();
       }
       else {
@@ -220,10 +227,10 @@ export class CreatePostComponent {
   public searchTimeout: any;
   public isSearch: boolean = false;
   searchCommunities(value: string) {
-    if(value.replace(" ","") != "") {
+    if (value.replace(" ", "") != "") {
       this.community = value;
       console.log("community: " + value);
-      if(this.searchTimeout != undefined)
+      if (this.searchTimeout != undefined)
         clearTimeout(this.searchTimeout);
       this.searchTimeout = setTimeout(() => {
         this.searchCommunitiesService.searchCommunities(value).subscribe({
@@ -246,7 +253,7 @@ export class CreatePostComponent {
 
   openSearchCommunity() {
     this.isShowSearchCommunity = !this.isShowSearchCommunity;
-    if(this.isShowSearchCommunity) {
+    if (this.isShowSearchCommunity) {
       document.getElementById("input_search_community")?.focus();
     }
   }
@@ -301,81 +308,20 @@ export class CreatePostComponent {
   isValidHttpUrl(url: string) {
     try {
       const obj = new URL(url);
-      this.linkAllowed = obj.protocol === "http:" || obj.protocol === "https:" ? false: true;
+      this.linkAllowed = obj.protocol === "http:" || obj.protocol === "https:" ? false : true;
       console.log(obj.protocol)
-    } 
+    }
     catch (_) {
-      this.linkAllowed = true;  
+      this.linkAllowed = true;
     }
   }
 
-  //editor settings
-  public editorSettings = {
-    base_url: '/tinymce',
-    suffix: '.min',
-    plugins: 'link lists codesample image', 
-    toolbar: "bold italic underline strikethrough subscript superscript removeformat numlist bullist alignleft aligncenter alignright alignjustify link blockquote codesample image",
-    toolbar_mode: 'wrap',
-    placeholder: '(Optional)',
-    automatic_uploads: true,
-    file_picker_types: 'image',
-    images_file_types: 'jpg,svg,webp,png,jpeg',
-    images_reuse_filename: true,
-    image_dimensions: false,
-    image_caption: true,
-    // image_title: false,
-    image_description: false,
-    statusbar: true,
-    elementpath: false,
-    branding: false,
-    resize: true,
-    width: '100%',
-    height: '40vh', 
-    menubar: false, 
-    draggable_modal: false,
-    object_resizing: false,
-    inline_boundaries: false,
-    contenteditable: false,
-    paste_data_images: false,
-    paste_block_drop: false,
-    color_default_foreground: '#E03E2D',
-    color_default_background: '#000000',
-    color_map_background: [
-      '000000', 'Black'
-    ],
-    textcolor_map: ['#E03E2D', 'Red'],
-    custom_colors: false,
-    content_css: 'tinymce-5',
-    content_style: 
-      'html body { overflow: auto; }' +
-      'p { margin: 0; } ' + 
-      'img { display: block; margin: 0 auto; out-line: 0; max-width: 100%; max-height: 100%}' +
-      'body {line-height: normal}' +
-      'pre[class*=language-] {font-family: Consolas}',
-    file_picker_callback: (cb: any, value:any, meta:any) => {
-      const input = document.createElement('input');
-      input.setAttribute('type', 'file');
-      input.setAttribute('accept', 'image/*');
-      input.addEventListener('change', (e:any) => {
-        const file = e.target.files[0];
-        const reader = new FileReader();
-        reader.addEventListener('load', () => {
-          const id = file.name;
-          const blobCache =  tinymce.activeEditor!.editorUpload.blobCache;
-          const base64 = (<string>reader.result).split(',')[1];
-          const blobInfo = blobCache.create(id, file, base64);
-          blobCache.add(blobInfo);
-          cb(blobInfo.blobUri(), { title: file.name });
-        });
-        reader.readAsDataURL(file);
-      })
-      input.click();
-    },
-  }
-
-  onContentChanged = (event: any) =>{
+  onContentChanged = (event: any) => {
     this.editorContent = event.editor.getContent({ format: 'html' });
-    // console.log(this.editorContent)
+    if(this.formatService.hasInlineStyle(this.editorContent)) {
+      this.editorContent = this.formatService.removeInlineStyle(this.editorContent);
+      tinymce.activeEditor!.setContent(this.editorContent);
+    }
   }
 
   createPost(type: string, content: string) {
@@ -383,13 +329,14 @@ export class CreatePostComponent {
     const created_at: Date = this.dateTimeService.getCurrentDateTime();
     console.log("Post type: " + type);
     this.isLoad = true;
+    content = this.formatService.formatForCreatePost(content);
+    content = this.formatService.removeInlineStyle(content);
     this.sendPostService.createPost(type, this.community_id, title, content, created_at, this.allow).subscribe({
       next: (response: CreatePostResponse) => {
-        if(response.CREATED === true) {
+        if (response.CREATED === true) {
           this.isLoad = false;
           Swal.fire('Create post successfully', '', 'success').then((result) => {
-            if (result.isConfirmed)
-              this.route.navigate(["/post/"+response.POST_ID]);
+            this.route.navigate(["/post/" + response.POST_ID]);
           })
         }
         else {
@@ -413,11 +360,10 @@ export class CreatePostComponent {
     this.isLoad = true;
     this.sendPostService.createPost(type, this.community_id, title, contentStr, created_at, this.allow).subscribe({
       next: (response: CreatePostResponse) => {
-        if(response.CREATED === true) {
+        if (response.CREATED === true) {
           this.isLoad = false;
           Swal.fire('Create post successfully', '', 'success').then((result) => {
-            if (result.isConfirmed)
-              this.route.navigate(["/post/"+response.POST_ID]);
+            this.route.navigate(["/post/" + response.POST_ID]);
           })
         }
         else {
@@ -440,11 +386,10 @@ export class CreatePostComponent {
     this.isLoad = true;
     this.sendPostService.createPost(type, this.community_id, title, content, created_at, this.allow).subscribe({
       next: (response: CreatePostResponse) => {
-        if(response.CREATED === true) {
-          this.isLoad= false;
+        if (response.CREATED === true) {
+          this.isLoad = false;
           Swal.fire('Create post successfully', '', 'success').then((result) => {
-            if (result.isConfirmed)
-              this.route.navigate(["/post/"+response.POST_ID]);
+            this.route.navigate(["/post/" + response.POST_ID]);
           })
         }
         else {
@@ -467,11 +412,10 @@ export class CreatePostComponent {
     this.isLoad = true;
     this.sendPostService.createPost(type, this.community_id, title, content, created_at, this.allow).subscribe({
       next: (response: CreatePostResponse) => {
-        if(response.CREATED === true) {
-          this.isLoad= false;
+        if (response.CREATED === true) {
+          this.isLoad = false;
           Swal.fire('Create post successfully', '', 'success').then((result) => {
-            if (result.isConfirmed)
-              this.route.navigate(["/post/"+response.POST_ID]);
+            this.route.navigate(["/post/" + response.POST_ID]);
           })
         }
         else {

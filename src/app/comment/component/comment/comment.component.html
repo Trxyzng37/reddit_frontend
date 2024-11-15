@@ -1,8 +1,8 @@
 
 <div class="comment_block" [style.margin-left]="margin" [ngStyle]="{'margin-top': commentData.level === 0 ? '10px' : '0'}">
     <div id="header" (click)="showComment($event)">
-        <img *ngIf="isShown" [attr.src]="commentData.user_icon" (click)="goToUserPage($event)" />
-        <i class="pi pi-plus-circle" id="img_close_comment" *ngIf="!isShown"></i>
+        <img *ngIf="isCommentShow" [attr.src]="commentData.user_icon" (click)="goToUserPage($event)" />
+        <i class="pi pi-plus-circle" id="img_close_comment" *ngIf="!isCommentShow"></i>
         <div id="info_block">
             <a id="txt_username" style="color: var(--icon); font-size: 14px;" routerLink="/user/{{commentData.username}}/posts">{{commentData.username}}</a>
             <pre> • </pre>
@@ -10,20 +10,20 @@
         </div>
     </div>
     
-    <div id="comment_content" *ngIf="isShown" [innerHTML]=sanitizer.bypassSecurityTrustHtml(previousContent)>
+    <div class="comment_content" id="data{{commentData._id}}" [ngStyle]="{'display': isCommentShow ? 'block' : 'none'}">
     </div>
 
-    <div id="footer" *ngIf="isShown && !isUserPage">
+    <div id="footer" *ngIf="isCommentShow && !isUserPage">
         <div id="block_vote" class="block_vote" [ngClass]="{'upvote': voteType === 'upvote', 'downvote': voteType === 'downvote', 'normal': voteType === 'none'}">
             <button id="btn_upvote" type="button" (click)="voteComment($event, 'upvote')" [ngClass]="{'upvote': voteType === 'upvote', 'downvote': voteType === 'downvote', 'normal': voteType === 'none'}" [disabled]="isDeleted || isPostDeleted"><img [attr.src]="voteType === 'upvote' ? upvote_fill : voteImgService.upvote" /></button>
             <p style="color: var(--icon);">{{presentationService.transformNumber(commentData.vote)}}</p>
             <button id="btn_downvote" type="button" (click)="voteComment($event, 'downvote')" [ngClass]="{'upvote': voteType === 'upvote', 'downvote': voteType === 'downvote', 'normal': voteType === 'none'}" [disabled]="isDeleted || isPostDeleted"><img [attr.src]="voteType === 'downvote' ? downvote_fill : voteImgService.downvote" /></button>
         </div>
-        <button class="footer_btn" type="button" (click)="reply()" *ngIf="isReplyAllowed && !isDeleted && !isPostDeleted">
+        <button class="footer_btn" type="button" (click)="createReplyEditor()" *ngIf="isReplyAllowed && !isDeleted && !isPostDeleted">
             <i class="pi pi-comment"></i>
             <pre>Reply</pre>
         </button>
-        <button class="footer_btn" id="btn_edit" type="button" (click)="showEditComment()" *ngIf="isEditAllowed && !isDeleted && !isPostDeleted">
+        <button class="footer_btn" id="btn_edit" type="button" (click)="createEditEditor()" *ngIf="isEditAllowed && !isDeleted && !isPostDeleted">
             <i class="pi pi-pencil"> </i>
             <pre>Edit</pre>
         </button>
@@ -33,21 +33,23 @@
         </button>
     </div>
 
-    <div id="comment_editor_block" [ngStyle]="{'display': isEditorShow && isShown ? 'block':'none'}">
-        <editor
-            [init]="editorSettings"
+    <!-- <div class="comment_editor_block" [ngStyle]="{'display': isEditorShow && isCommentShow ? 'block':'none'}"> -->
+    <div class="comment_editor_block" *ngIf="isCommentShow">
+        <editor *ngIf="isEditorShow && isCommentShow"
+            [init]="editorSettingService.setEditorSettings('comment', commentData._id.toString(), prev_content)"
             (onSelectionChange)="onContentChanged($event)"
             (onChange)="onContentChanged($event)"
             style="width: calc(100%);"
         >
         </editor>
-        <div id="btn_comment_block">
+        <div id="btn_comment_block" *ngIf="isEditorShow && isCommentShow">
             <button id="btn_cancel_comment" type="button" (click)="cancelComment()">Cancel</button>
-            <button id="btn_submit_comment" type="button" (click)="createComment()" *ngIf="isReplyAllowed">Comment</button>
+            <button id="btn_submit_comment" type="button" (click)="replyComment()" *ngIf="isReplyAllowed">Comment</button>
             <button id="btn_edit_comment" type="button" (click)="sendEditComment()" *ngIf="isEditAllowed">Edit</button>
         </div>
     </div>
 </div>
 
-<!-- <loading [txt_load]="'Creating comment. Please wait'" *ngIf="isSendComment"></loading> -->
-
+<loading [txt_load]="'Creating comment. Please wait'" *ngIf="isSendComment"></loading>
+<loading [txt_load]="'Editting comment. Please wait'" *ngIf="isEditComment"></loading>
+<loading [txt_load]="'Deleting comment. Please wait'" *ngIf="isDeleteComment"></loading>

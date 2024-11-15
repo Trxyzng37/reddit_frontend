@@ -203,25 +203,32 @@ hr {
 #input_post_title {
     width: 100%;
     height: 30px;
+    position: relative;
+    left: 1px;
     text-align: left;
     padding-top: 5px;
-    padding-right: 55px;
+    padding-right: 10px;
     padding-bottom: 8px;
     padding-left: 10px;
-    border: 1px solid var(--icon);
-    // border-radius: 5px;
+    border: 1px solid var(--border);
+    border-radius: 5px;
     box-sizing: border-box;
     overflow: hidden;
     resize: none;
     margin-bottom: 10px;
 }
 
+#input_post_title:focus {
+    border: 1px solid var(--icon);
+    border-left: 1px solid var(--icon);
+}
+
 #character_count {
     position: relative;
-    bottom: 34px;
-    right: 7px;
+    bottom: 5px;
+    right: 10px;
     align-self: flex-end;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 400;
     color: var(--icon) !important;
 }
@@ -230,7 +237,7 @@ hr {
     width: 100%;
     height: auto;
     position: relative;
-    bottom: 15px;
+    bottom: 0px;
     align-self: center;
     box-sizing: border-box;
 }

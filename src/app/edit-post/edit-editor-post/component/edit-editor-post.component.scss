@@ -16,6 +16,7 @@
     justify-content: flex-start;
     align-items: center;
     position: relative;
+    margin-top: 30px;
 }
 
 #editor {
@@ -62,11 +63,11 @@
     height: 30px;
     text-align: left;
     padding-top: 5px;
-    padding-right: 55px;
+    padding-right: 10px;
     padding-bottom: 8px;
     padding-left: 10px;
-    border: 1px solid var(--secondary_color);
-    // border-radius: 5px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
     box-sizing: border-box;
     overflow: hidden;
     resize: none;
@@ -74,8 +75,8 @@
 
 #character_count {
     position: relative;
-    bottom: 22px;
-    right: 5px;
+    bottom: -5px;
+    right: 10px;
     align-self: flex-end;
     font-size: 11px;
     font-weight: 400;

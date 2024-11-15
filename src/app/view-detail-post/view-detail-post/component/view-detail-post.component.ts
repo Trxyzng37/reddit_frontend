@@ -1,6 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { GetPostResponse } from 'src/app/post-link-list/pojo/get-post-response';
 import { ActivatedRoute } from '@angular/router';
 import { GetPostService } from '../service/get-post/get-post.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -13,13 +11,15 @@ import { CreateCommentResponse } from '../pojo/create-comment-response';
 import { StorageService } from 'src/app/shared/storage/storage.service';
 import Swal from 'sweetalert2';
 import { RecentVisitService } from 'src/app/shared/services/recent-visit/recent-visit.service';
-import { DefaultResponse } from 'src/app/shared/pojo/default-response';
 import { CommunityService } from 'src/app/shared/services/search-communites/community.service';
-import { Communities } from 'src/app/shared/pojo/pojo/communities';
 import { DarkModeService } from 'src/app/shared/services/dark-mode/dark-mode.service';
 import { CheckRefreshTokenService } from 'src/app/shared/services/check-refresh-token/check-refresh-token.service';
 import { DetailPost } from 'src/app/post-link-list/pojo/detail-post';
 import { ShareDataService } from 'src/app/shared/services/share_data/share-data.service';
+import { EditorSettingService } from 'src/app/shared/services/editor-setting/editor-setting.service';
+import { EditorObj } from 'src/app/shared/services/share_data/editor';
+import { ClearFormatService } from 'src/app/shared/services/clear-format/clear-format.service';
+import { CommentCallback } from '../pojo/comment-callback';
 
 @Component({
   selector: 'app-view-detail-post',
@@ -40,7 +40,9 @@ export class ViewDetailPostComponent {
     private darkmodeSerive: DarkModeService,
     private checkRefreshTokenService: CheckRefreshTokenService,
     private activeRoute: ActivatedRoute,
-    private shareDataService: ShareDataService
+    private shareDataService: ShareDataService,
+    public editorSettingService: EditorSettingService,
+    private formatService: ClearFormatService
   ) {}
 
   public post: DetailPost = new DetailPost();
@@ -67,9 +69,22 @@ export class ViewDetailPostComponent {
   public isCommentLoad: boolean = false;
   public commentWait: boolean = false;
 
+  public prev_content = "";
+
+  public editor_arr: EditorObj[] = [];
+  public isCreateComment: boolean = false;
+
   ngOnInit() {
+    this.shareDataService.editor$.subscribe((e) => {
+      // console.log("editor id: "+e.editor_id);
+      this.editor_arr.push(e);
+      // console.log("editor length: "+this.editor_arr.length)
+      // this.editor_arr.forEach(e => {
+      //   console.log("comment_id: "+e.comment_id);
+      //   console.log("editor_id: "+e.editor_id);
+      // })
+    })
     this.darkmodeSerive.useDarkMode();
-    this.updateEditorStyle();
     this.checkRefreshTokenService.runCheckRefreshTokenWithoutNotification();
     this.isModPage = window.location.href.includes("/mod/");
     if(this.isModPage) {
@@ -167,99 +182,12 @@ export class ViewDetailPostComponent {
     this.open = !this.open;
   }
 
-  updateEditorStyle(): void {
-    this.mode = this.storageService.getItem("mode") == "1" ? 1 : 0;
-    this.editorSettings = {
-      base_url: '/tinymce',
-      suffix: '.min',
-      plugins: 'link lists codesample image autoresize', 
-      toolbar: "bold italic underline strikethrough subscript superscript removeformat numlist bullist link blockquote codesample image",
-      toolbar_mode: 'wrap',
-      placeholder: 'Enter your comment',
-      automatic_uploads: true,
-      file_picker_types: 'image',
-      images_file_types: 'jpg,svg,webp,png,jpeg',
-      images_reuse_filename: true,
-      image_dimensions: false,
-      image_description: false,
-      statusbar: true,
-      menubar: false, 
-      elementpath: false,
-      branding: false,
-      resize: true,
-      width: '100%',
-      min_height: 130,
-      height: 130, 
-      draggable_modal: false,
-      object_resizing: false,
-      inline_boundaries: false,
-      contenteditable: false,
-      paste_data_images: false,
-      paste_block_drop: false,
-      license_key: 'gpl',
-      color_default_foreground: '#E03E2D',
-      color_default_background: '#000000',
-      color_map_background: [
-        '000000', 'Black'
-      ],
-      textcolor_map: ['#E03E2D', 'Red'],
-      custom_colors: false,
-      content_css: 'tinymce-5',
-      content_style: 
-        'html body { overflow: auto !important; }' +
-        'p { margin: 0; } ' + 
-        'img { display: block; out-line: 0; max-width: 200px; max-height: 200px}' +
-        'body {line-height: normal' +
-        'pre[class*=language-] {font-family: Consolas}',
-        setup: (editor: any) => {
-          editor.on('init', () => {
-            const backgroundColor = 'var(--neutral)';
-            const textColor = 'var(--secondary_color)';
-            // editor.getBody().style.backgroundColor = '#efefef';
-            const container = editor.getContainer();
-            let tox_tiny = container.parentElement.childNodes;
-            let  tox_tinymce = tox_tiny[2];
-            tox_tinymce.style.border = "1px solid var(--secondary_color)";
-            container.querySelector('.tox-editor-header').style.backgroundColor = backgroundColor;
-            container.querySelector('.tox-editor-container').style.backgroundColor = backgroundColor;
-            container.querySelector('.tox-toolbar').style.backgroundColor = backgroundColor;
-            container.querySelector('.tox-toolbar').style.color = textColor;
-            container.querySelector('.tox-statusbar').style.backgroundColor = backgroundColor;
-            container.querySelector('.tox-statusbar').style.height = '50px';
-            let resize_icon = container.querySelector('.tox-statusbar').querySelector('.tox-statusbar__resize-handle').querySelector('svg');
-            resize_icon.style.fill = 'var(--secondary_color)';
-          });
-        },
-      file_picker_callback: (cb: any, value:any, meta:any) => {
-        if(this.img_count == 0) {
-          const input = document.createElement('input');
-          input.setAttribute('type', 'file');
-          input.setAttribute('accept', 'image/*');
-          input.addEventListener('change', (e:any) => {
-            const file = e.target.files[0];
-            const reader = new FileReader();
-            reader.addEventListener('load', () => {
-              const id = file.name;
-              const blobCache =  tinymce.activeEditor!.editorUpload.blobCache;
-              const base64 = (<string>reader.result).split(',')[1];
-              const blobInfo = blobCache.create(id, file, base64);
-              blobCache.add(blobInfo);
-              cb(blobInfo.blobUri(), { title: file.name });
-            });
-            reader.readAsDataURL(file);
-          })
-          this.img_count++;
-          input.click();
-        }
-        else {
-          Swal.fire("Only 1 image is allow in a comment",'','warning')
-        }
-      }
-    }
-  }
-
   onContentChanged = (event: any) =>{
     this.content = event.editor.getContent({ format: 'html' });
+    if(this.formatService.hasInlineStyle(this.content)) {
+      this.content = this.formatService.removeInlineStyle(this.content);
+      tinymce.EditorManager.get(this.editor_arr[1].editor_id)!.setContent(this.content);
+    }
   }
 
   cancelComment() {
@@ -299,17 +227,27 @@ export class ViewDetailPostComponent {
       })
     }
     else {
-      // const post_id = this.route.snapshot.params['post_id'];
+      this.content = this.formatService.formatForCreatePost(this.content);
+      this.content = this.formatService.removeInlineStyle(this.content);
+      this.isCreateComment = true;
       this.createCommentService.createComment(this.post.post_id, 0, this.content, 0).subscribe({
         next: (response: CreateCommentResponse) => {
           tinymce.activeEditor?.setContent("");
-          this.reloadComment(event);
+          this.getCommentService.getCommentInfoById(response.comment_id, this.post.post_id).subscribe({
+            next: (res: CommentInfo) => {
+              this.open = false;
+              this.isCreateComment = false;
+              this.reloadComment(new CommentCallback(response.comment_id, "create_comment"));
+              this.commentResults.push(res);
+            }
+          })
         },
         error: (e: HttpErrorResponse) => {
+          this.isCreateComment = false;
           console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
           Swal.fire({
             titleText: "Error create comment. Please try again",
-            icon: "success",
+            icon: "error",
             heightAuto: true,
             showConfirmButton: true,
             focusCancel: false,
@@ -320,16 +258,82 @@ export class ViewDetailPostComponent {
     }
   }
 
-  reloadComment(event: Event) {
-    const post_id = this.post.post_id;
-    this.getCommentService.getComments(post_id).subscribe({
-      next: (response: CommentInfo[]) => {
-        this.commentResults = response;
-      },
-      error: (e: HttpErrorResponse) => {
-        console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);
+  reloadComment(event: CommentCallback) {
+     if(event.type == "create_comment") {
+      const index = this.editor_arr.findIndex(obj => obj.comment_id === event.comment_id.toString());
+      if (index !== -1) {
+        const [CommentInfo] = this.editor_arr.splice(index, 1); // Remove the CommentInfo from its position
+        this.editor_arr.push(CommentInfo);                      // Add it to the end of the array
       }
-     })
+     }
+     if(event.type == "reply_comment") {
+        this.getCommentService.getCommentInfoById(event.comment_id, this.post.post_id).subscribe({
+          next: (response: CommentInfo) => {
+            const index = this.findLastIndexWithParentId(response.parent_id);
+            this.commentResults.splice(index+1, 0, response);
+            this.found_index = -1;
+          }
+        })
+     }
+     if(event.type == "delete_comment") {
+      this.removeCommentInfo(event.comment_id);
+     }
+     if(event.type == "delete_community_owner") {
+      this.removeCommentInfo(event.comment_id);
+     }
   }
 
+  private found_index: number = -1;
+  findLastIndexWithParentId(parent_id: number): number {
+    let count = 0;
+    for(let i=0; i<this.commentResults.length; i++) {
+      if(this.commentResults[i].parent_id == parent_id) {
+        count++;
+        this.found_index = i;
+      }
+    }
+    console.info(`found ${count} objects with parent_id ${parent_id}`);
+    if(count != 0) {
+      const new_parent_id: number = this.commentResults[this.found_index]._id;
+      this.findLastIndexWithParentId(new_parent_id);
+    }
+    if(count == 0) {
+      for(let i=0; i<this.commentResults.length; i++) {
+        if(this.commentResults[i]._id == parent_id) {
+          this.found_index = i;
+        }
+      }
+      console.info(`found object that have id equal parent_id ${parent_id} at index ${this.found_index}`);
+    }
+    console.info("return found_index: "+this.found_index);
+    return this.found_index;
+  }
+
+  removeCommentInfo(id: number) {
+    let index = -1;
+    let count = 0;
+    //get index of the comment in array
+    for(let i=0; i<this.commentResults.length; i++) {
+      if(this.commentResults[i]._id == id) {
+        index = i;
+        break;
+      }
+    }
+    //check if comment has any children
+    for(let i=0; i<this.commentResults.length; i++) {
+      if(this.commentResults[i].parent_id == id) {
+        count++;
+        break;
+      }
+    }
+    if(count == 0) {
+      this.commentResults.splice(index, 1);
+    }
+    else {
+      console.info("delete comment that have children")
+      this.commentResults[index].content = '<em style="font-weight: 300;">Comment deleted</em>';
+      this.commentResults[index].deleted = true;
+    }
+  }
 }
+

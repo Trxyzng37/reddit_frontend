@@ -30,6 +30,7 @@ import { DetailPost } from 'src/app/post-link-list/pojo/detail-post';
 import { ShareDataService } from 'src/app/shared/services/share_data/share-data.service';
 import { ChangedPost } from 'src/app/shared/services/share_data/changed-post';
 import { FirstLast } from 'src/app/shared/services/share_data/first-last';
+import { ClearFormatService } from 'src/app/shared/services/clear-format/clear-format.service';
 
 @Component({
   selector: 'app-post',
@@ -55,7 +56,8 @@ export class PostComponent {
     private getPostService: GetPostService,
     private getCommentService: GetCommentsService,
     private titleService: Title,
-    private shareDataService: ShareDataService
+    private shareDataService: ShareDataService,
+    private formatService: ClearFormatService
   ) { }
 
   @Input() commentCount: number = 0;
@@ -174,27 +176,18 @@ export class PostComponent {
     post.content = post.content.replace(/<img/g, '<img class="img" ');
     post.content = post.content.replace(/<figure/g, '<figure class="figure" ');
     post.content = post.content.replace(/<figcaption/g, '<figcaption class="figcaption" ');
-    post.content = post.content.replace(/<pre/g, '<pre class="pre_code" ');
-    post.content = post.content.replace(/<code/g, '<code class="code" ');
     post.content = post.content.replace(/<ol/g, '<ol class="ol" ');
     post.content = post.content.replace(/<ul/g, '<ul class="ul" ');
+    post.content = post.content.replace(/<li/g, '<li class="li" ');
     post.content = post.content.replace(/<a/g, '<a class="a" ');
-    post.content = post.content.replace(/<p/g, '<p class="post_view" ');
+    post.content = post.content.replace(/<p>/g, '<p class="post_view">');
+    post.content = post.content.replace(/<pre/g, '<pre class="pre_code" ');
     post.content = post.content.replace(/<blockquote/g, '<blockquote class="blockquote" ');
+    post.content = post.content.replace(/<div/g, '<div class="div" ');
+    post.content = this.formatService.formatForViewPost(post.content);
+    post.content = this.formatService.removeInlineStyle(post.content);
     this.post = post;
   }
-
-  // replacePost(p: DetailPost) {
-  //   const post_arr: DetailPost[] = this.storageService.getItem("posts") == "" ? [] : JSON.parse(this.storageService.getItem("posts"));
-  //   for (let post of post_arr) {
-  //     if (p.post_id == post.post_id) {
-  //       post.join = p.join;
-  //       post.save = p.save;
-  //       post.voteType = p.voteType;
-  //     }
-  //   }
-  //   this.storageService.setItem("posts", JSON.stringify(post_arr));
-  // }
 
   timer() {
     setTimeout(() => {
@@ -206,6 +199,17 @@ export class PostComponent {
       }
     }, 100);
   }
+
+  // removeLastEmptyPTag(htmlString: string): string {
+  //   const parser = new DOMParser();
+  //   const doc = parser.parseFromString(htmlString, 'text/html');
+  //   const pTags = Array.from(doc.querySelectorAll('p')).reverse();
+  //   for (const pTag of pTags) {
+  //     if (pTag.textContent?.trim()) break;
+  //     pTag.parentNode?.removeChild(pTag);
+  //   }
+  //   return doc.body.innerHTML;
+  // }
 
   preventClick(event: Event) {
     event.stopPropagation();

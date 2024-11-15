@@ -41,7 +41,7 @@
     <div id="post_content_block">
         <div id="post_post_block" [ngStyle]="{'display': isPostOpen ? 'block':'none'}">
             <editor 
-                [init]="editorSettings"
+                [init]="editorSettingService.setEditorSettings('post', this.editor_id, this.prev_content)"
                 (onSelectionChange)="onContentChanged($event)"
             >  
             </editor>
