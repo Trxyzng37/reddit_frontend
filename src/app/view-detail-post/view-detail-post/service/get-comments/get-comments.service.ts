@@ -14,6 +14,7 @@ export class GetCommentsService {
   ) { }
   private endpoint: string = "/get-comments";
   private getCommentsByUserEndPoint: string = "/get-comments-by-uid";
+  private getCommentInfoByIdEndPoint: string = "/get-comment-info-by-id";
   private countCommentsEndpoint: string = "/count-comments";
 
   getComments(post_id: number): Observable<CommentInfo[]> {
@@ -24,6 +25,12 @@ export class GetCommentsService {
 
   getCommentsByUser(uid: number, sort: string): Observable<CommentInfo[]> {
     const fullUrl: string = this.getCommentsByUserEndPoint + "?uid=" + uid + "&" + "sort=" + sort;
+    let header: HttpHeaders = new HttpHeaders();
+    return this.getService.get(fullUrl, header, true);
+  }
+
+  getCommentInfoById(cid: number, pid: number): Observable<CommentInfo> {
+    const fullUrl: string = this.getCommentInfoByIdEndPoint + "?cid=" + cid + "&" + "pid=" + pid;
     let header: HttpHeaders = new HttpHeaders();
     return this.getService.get(fullUrl, header, true);
   }

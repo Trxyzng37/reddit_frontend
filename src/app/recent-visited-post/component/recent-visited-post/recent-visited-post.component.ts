@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RecentVisitService } from 'src/app/shared/services/recent-visit/recent-visit.service';
-import { GetPostResponse } from 'src/app/post-link-list/pojo/get-post-response';
 import { StorageService } from 'src/app/shared/storage/storage.service';
 import { PresentationService } from 'src/app/shared/services/presentation/presentation.service';
 import { GetPostService } from 'src/app/view-detail-post/view-detail-post/service/get-post/get-post.service';
 import { DetailPost } from 'src/app/post-link-list/pojo/detail-post';
 import { GetCommentsService } from 'src/app/view-detail-post/view-detail-post/service/get-comments/get-comments.service';
+import { CommentCount } from 'src/app/view-detail-post/view-detail-post/service/get-comments/pojo/comment-count';
 
 @Component({
   selector: 'app-recent-visited-post',
@@ -20,12 +19,12 @@ export class RecentVisitedPostComponent {
     private storageService: StorageService,
     public presentationService: PresentationService,
     private getPostService: GetPostService,
-    private commentService: GetCommentsService
+    private commentService: GetCommentsService,
   ) {}
 
   public posts: DetailPost[] = [];
   public img: string[] = [];
-  public comment_count: number = 0;
+  public comment_count: CommentCount[] = [];
 
   ngOnInit() {
     const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
@@ -55,10 +54,10 @@ export class RecentVisitedPostComponent {
             //count comment
             this.commentService.countComments(post_id).subscribe({
               next: (response: number) => {
-                this.comment_count = response;
+                this.comment_count.push(new CommentCount(post_id, response));
               },
               error: (err: any) => {
-                this.comment_count = 0;
+                this.comment_count.push(new CommentCount(post_id, 0));
               }
             })
           }
@@ -87,9 +86,21 @@ export class RecentVisitedPostComponent {
               else 
                 this.img.push("");
             }
+            this.commentService.countComments(this.posts[i].post_id).subscribe({
+              next: (response: number) => {
+                this.comment_count.push(new CommentCount(this.posts[i].post_id, response));
+              },
+              error: (err: any) => {
+                this.comment_count.push(new CommentCount(this.posts[i].post_id, 0));
+              }
+            })
           }
         }
       })
     }
+  }
+
+  getCommentCountByPostId(postId: number): CommentCount {
+    return this.comment_count.find(comment => comment.post_id === postId) != undefined ? this.comment_count.find(comment => comment.post_id === postId)! : new CommentCount(postId, 0);
   }
 }

@@ -22,9 +22,9 @@
             <p class="txt_vote" *ngIf="post.vote == -1">{{presentationService.transformNumber(post.vote)}} downvote</p>
             <p class="txt_vote" *ngIf="post.vote < -1">{{presentationService.transformNumber(post.vote)}} downvotes</p>
             <pre> · </pre>
-            <p class="txt_vote" *ngIf="comment_count == 0">0 comment</p>
-            <p class="txt_vote" *ngIf="comment_count == 1">{{presentationService.transformNumber(comment_count)}} comment</p>
-            <p class="txt_vote" *ngIf="comment_count > 1">{{presentationService.transformNumber(comment_count)}} comments</p>
+            <p class="txt_vote" *ngIf="getCommentCountByPostId(post.post_id).comment_count == 0">0 comment</p>
+            <p class="txt_vote" *ngIf="getCommentCountByPostId(post.post_id).comment_count == 1">1 comment</p>
+            <p class="txt_vote" *ngIf="getCommentCountByPostId(post.post_id).comment_count > 1">{{getCommentCountByPostId(post.post_id).comment_count}} comments</p>
         </div>
     </div>
 </div>
