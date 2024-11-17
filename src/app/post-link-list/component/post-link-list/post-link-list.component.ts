@@ -546,7 +546,7 @@ export class PostLinkListComponent {
         next: (response: any) => {
           this.post_id_arr = response;
           if(response.length == 0) {
-            this.getPopularPost(0, sort_type);
+            this.getPopularPost(uid, sort_type);
           }
           else {
             this.wait = this.post_id_arr.length == 0;
