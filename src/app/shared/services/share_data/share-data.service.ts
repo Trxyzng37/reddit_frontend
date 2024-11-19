@@ -6,6 +6,7 @@ import { CommentInfo } from 'src/app/view-detail-post/view-detail-post/pojo/comm
 import { ChangedPost } from './changed-post';
 import { FirstLast } from './first-last';
 import { EditorObj } from './editor';
+import { CommentCount } from 'src/app/view-detail-post/view-detail-post/service/get-comments/pojo/comment-count';
 
 @Injectable({
   providedIn: 'root'
@@ -331,15 +332,7 @@ export class ShareDataService {
   mod_option$ = this.mod_option.asObservable();
   setModOption(mod_option: string) {
     this.mod_option.next(mod_option);
-  }
-
-
-  //mod page view detail post_id
-  // private mod_post_id = new BehaviorSubject<number>(0);
-  // mod_post_id$ = this.mod_post_id.asObservable();
-  // setModPostId(mod_post_id: number) {
-  //   this.mod_post_id.next(mod_post_id);
-  // }  
+  }  
 
   private mod_detail_post = new BehaviorSubject<DetailPost>(new DetailPost());
   mod_detail_post$ = this.mod_detail_post.asObservable();
@@ -371,4 +364,23 @@ export class ShareDataService {
   setEditor(editor: EditorObj) {
     this.editor.next(editor);
   }
+
+  //recent post
+  private recent_post = new BehaviorSubject<DetailPost[]>([]);
+  recent_post$ = this.recent_post.asObservable();
+  setRecentPost(recent_post: DetailPost[]) {
+    this.recent_post.next(recent_post);
+  }
+
+  private img = new BehaviorSubject<string[]>([]);
+  img$ = this.img.asObservable();
+  setImg(img: string[]) {
+    this.img.next(img);
+  }
+
+  // private comment_count = new BehaviorSubject<CommentCount[]>([]);
+  // comment_count$ = this.comment_count.asObservable();
+  // setCommentCount(comment_count: CommentCount[]) {
+  //   this.comment_count.next(comment_count);
+  // }
 }

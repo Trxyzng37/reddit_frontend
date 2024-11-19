@@ -6,6 +6,7 @@ import { GetPostService } from 'src/app/view-detail-post/view-detail-post/servic
 import { DetailPost } from 'src/app/post-link-list/pojo/detail-post';
 import { GetCommentsService } from 'src/app/view-detail-post/view-detail-post/service/get-comments/get-comments.service';
 import { CommentCount } from 'src/app/view-detail-post/view-detail-post/service/get-comments/pojo/comment-count';
+import { ShareDataService } from 'src/app/shared/services/share_data/share-data.service';
 
 @Component({
   selector: 'app-recent-visited-post',
@@ -20,6 +21,7 @@ export class RecentVisitedPostComponent {
     public presentationService: PresentationService,
     private getPostService: GetPostService,
     private commentService: GetCommentsService,
+    private shareDataService: ShareDataService
   ) {}
 
   public posts: DetailPost[] = [];
@@ -27,6 +29,15 @@ export class RecentVisitedPostComponent {
   public comment_count: CommentCount[] = [];
 
   ngOnInit() {
+    this.shareDataService.recent_post$.subscribe((e) => {
+      this.posts = e;
+    })
+    this.shareDataService.img$.subscribe((e) => {
+      this.img = e;
+    })
+    this.shareDataService.comment_count$.subscribe((e) => {
+      this.comment_count = e;
+    })
     const uid = this.storageService.getItem("uid") == "" ? 0 : Number.parseInt(this.storageService.getItem("uid"));
     if(uid == 0) {
       const recent_posts: number[] = this.storageService.getItem("recent_posts") == "" ? [] : JSON.parse("[" + this.storageService.getItem("recent_posts") + "]");
@@ -65,38 +76,42 @@ export class RecentVisitedPostComponent {
       }
     }
     else {
-      this.recentVisitPostService.getRecentVisitPost(uid).subscribe({
-        next: (response: DetailPost[]) => {
-          this.posts = response;
-          for(let i in this.posts) {
-            const post = this.posts[i];
-            if(post.type == "link") {
-              this.img.push(JSON.parse(post.content).image);
-            }
-            if(post.type == "img") {
-              this.img.push(JSON.parse(post.content)[0].data);
-            }
-            if(post.type == "video") {
-              this.img.push("../../../../assets/banner/video_icon.png");
-            }
-            if(post.type == "editor") {
-              const found = post.content.match('src="([^"]*)"')
-              if(found)
-                this.img.push(found[1]);
-              else 
-                this.img.push("");
-            }
-            this.commentService.countComments(this.posts[i].post_id).subscribe({
-              next: (response: number) => {
-                this.comment_count.push(new CommentCount(this.posts[i].post_id, response));
-              },
-              error: (err: any) => {
-                this.comment_count.push(new CommentCount(this.posts[i].post_id, 0));
+      if(this.posts.length == 0) {
+        this.recentVisitPostService.getRecentVisitPost(uid).subscribe({
+          next: (response: DetailPost[]) => {
+            this.posts = response;
+            for(let i in this.posts) {
+              const post = this.posts[i];
+              if(post.type == "link") {
+                this.img.push(JSON.parse(post.content).image);
               }
-            })
+              if(post.type == "img") {
+                this.img.push(JSON.parse(post.content)[0].data);
+              }
+              if(post.type == "video") {
+                this.img.push("../../../../assets/banner/video_icon.png");
+              }
+              if(post.type == "editor") {
+                const found = post.content.match('src="([^"]*)"')
+                if(found)
+                  this.img.push(found[1]);
+                else 
+                  this.img.push("");
+              }
+              this.commentService.countComments(this.posts[i].post_id).subscribe({
+                next: (response: number) => {
+                  this.comment_count.push(new CommentCount(this.posts[i].post_id, response));
+                },
+                error: (err: any) => {
+                  this.comment_count.push(new CommentCount(this.posts[i].post_id, 0));
+                }
+              })
+            }
+            this.shareDataService.setRecentPost(this.posts);
+            this.shareDataService.setImg(this.img);
           }
-        }
-      })
+        })
+      }
     }
   }
 
