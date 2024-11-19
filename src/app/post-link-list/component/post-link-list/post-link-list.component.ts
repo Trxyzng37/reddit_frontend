@@ -418,6 +418,14 @@ export class PostLinkListComponent {
     );
   }
 
+  isPostIdExistInArr(post_arr: DetailPost[], post_id: number): boolean {
+    for(let post of post_arr) {
+      if(post.post_id == post_id)
+        return true;
+    }
+    return false;
+  }
+
   getPostsByCheckViewPort(detail_post_arr: DetailPost[], post_id_arr: number[], uid: number, start: number, detect_modifier: number, get_post_amount: number) {
     if(detail_post_arr.length == post_id_arr.length) {
       console.log("full");
@@ -436,7 +444,9 @@ export class PostLinkListComponent {
               next: (response: DetailPost[]) => {
                 this.isDataLoad = false;
                 for(let p of response) {
-                  detail_post_arr.push(p);
+                  const exist = this.isPostIdExistInArr(detail_post_arr, p.post_id);
+                  if(!exist)
+                    detail_post_arr.push(p);
                 }
                 // if(!this.isUserPage && !this.isHomePage && !this.isPopularPage && !this.isCommunityPage)
                 //   this.shareDataService.setDetailPosts(detail_post_arr);
@@ -481,7 +491,9 @@ export class PostLinkListComponent {
           this.isDataLoad = false;
           this.wait = true;
           for(let post of response) {
-            detail_post_arr.push(post);
+            const exist = this.isPostIdExistInArr(detail_post_arr, post.post_id);
+            if(!exist)
+              detail_post_arr.push(post);
           }
           if(this.isHomePage) {
             this.shareDataService.setHomeDetailPosts(detail_post_arr);
