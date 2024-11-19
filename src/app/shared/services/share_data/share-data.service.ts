@@ -378,9 +378,9 @@ export class ShareDataService {
     this.img.next(img);
   }
 
-  // private comment_count = new BehaviorSubject<CommentCount[]>([]);
-  // comment_count$ = this.comment_count.asObservable();
-  // setCommentCount(comment_count: CommentCount[]) {
-  //   this.comment_count.next(comment_count);
-  // }
+  private comment_count = new BehaviorSubject<CommentCount[]>([]);
+  comment_count$ = this.comment_count.asObservable();
+  setCommentCount(comment_count: CommentCount[]) {
+    this.comment_count.next(comment_count);
+  }
 }
