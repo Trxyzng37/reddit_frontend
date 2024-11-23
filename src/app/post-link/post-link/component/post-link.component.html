@@ -36,7 +36,7 @@
 
     <nav id="main_content">
         <p id="txt_title" [ngStyle]="{'display': type=='link'?'none':'block'}">{{title}}</p>
-        <app-editor-view *ngIf="type=='editor'" [content]="content"></app-editor-view>
+        <app-editor-view *ngIf="type=='editor'" [content]="content" [post_id]="post_id"></app-editor-view>
         <app-image-view *ngIf="type=='img'" [content]="content"></app-image-view>
         <app-link-view *ngIf="type=='link'" [title]="title" [content]="content"></app-link-view>
         <app-video-view *ngIf="type=='video'" [content]="content"></app-video-view>

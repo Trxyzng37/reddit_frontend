@@ -1,5 +1,4 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ClearFormatService } from 'src/app/shared/services/clear-format/clear-format.service';
 @Component({
@@ -15,6 +14,7 @@ export class EditorViewComponent {
   ) {}
 
   @Input() content: string = "";
+  @Input() post_id: number = 0;
 
   ngOnInit() {
     this.content = this.content.replace(/<img/g, '<img class="img" ');
@@ -37,5 +37,17 @@ export class EditorViewComponent {
       container!.style.height = "auto";
       container!.removeAttribute("id");
     }
+    this.timer();
+  }
+
+  timer() {
+    setTimeout(() => {
+      const e = document.getElementById(`post_${this.post_id}`) == null ? null : document.getElementById(`post_${this.post_id}`);
+      if (e == null)
+        this.timer();
+      else {
+        e.innerHTML = this.content;
+      }
+    }, 100);
   }
 }
