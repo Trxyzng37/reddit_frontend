@@ -44,9 +44,9 @@
 
     <nav id="footer" *ngIf="!isModPage">
         <div id="block_vote" class="block_vote" [ngClass]="{'upvote': post.voteType === 'upvote', 'downvote': post.voteType === 'downvote', 'normal': post.voteType === 'none' || (post.voteType == null)}">
-            <button id="btn_upvote" style="color: var(--icon);" type="button" (click)="votePost($event, 'upvote')" [ngClass]="{'upvote': post.voteType === 'upvote', 'downvote': post.voteType === 'downvote', 'normal': post.voteType === 'none' || (post.voteType == null)}"><img [attr.src]="post.voteType === 'upvote' ? upvote_fill : voteImgService.upvote" /></button>
+            <button id="btn_upvote" style="color: var(--icon);" type="button" (click)="votePost($event, 'upvote')" [ngClass]="{'upvote': post.voteType === 'upvote', 'downvote': post.voteType === 'downvote', 'normal': post.voteType === 'none' || (post.voteType == null)}"><img [attr.src]="post.voteType === 'upvote' ? upvote_fill : upVoteImg" /></button>
             <p id="vote_count" [ngStyle]="{'color': post.voteType == 'none' || post.voteType == null ? 'var(--icon)' : '#ffffff'}">{{presentationService.transformNumber(vote)}}</p>
-            <button id="btn_downvote" style="color: var(--icon);" type="button" (click)="votePost($event, 'downvote')" [ngClass]="{'upvote': post.voteType === 'upvote', 'downvote': post.voteType === 'downvote', 'normal': post.voteType === 'none' || (post.voteType == null)}"><img [attr.src]="post.voteType === 'downvote' ? downvote_fill : voteImgService.downvote" /></button>
+            <button id="btn_downvote" style="color: var(--icon);" type="button" (click)="votePost($event, 'downvote')" [ngClass]="{'upvote': post.voteType === 'upvote', 'downvote': post.voteType === 'downvote', 'normal': post.voteType === 'none' || (post.voteType == null)}"><img [attr.src]="post.voteType === 'downvote' ? downvote_fill : downVoteImg" /></button>
         </div>
         <button id="btn_comment" type="button" (click)="navigateToPost()">
             <i class="pi pi-comment" style="margin-left: 5px;"></i>

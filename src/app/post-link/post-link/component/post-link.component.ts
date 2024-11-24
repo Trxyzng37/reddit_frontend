@@ -94,10 +94,17 @@ export class PostLinkComponent {
   public savedText: string = this.saved ? 'Unsave' : "Save";
   public subscribed_communities: Communities[] = [];
 
-  public  upvote = "../../../../../assets/icon/upvote.png";
+  public  upvote = "../../../../../assets/icon/upvote_dark.png";
   public  upvote_fill = "../../../../../assets/icon/upvote-fill.png";
-  public  downvote = "../../../../../assets/icon/downvote.png";
+  public  downvote = "../../../../../assets/icon/downvote_dark.png";
   public  downvote_fill = "../../../../../assets/icon/downvote-fill.png";
+
+  public upvote_light = "../../../../assets/icon/upvote-light.svg";
+  public upvote_dark = "../../../../assets/icon/upvote-dark.svg";
+  public downvote_light = "../../../../assets/icon/downvote-light.svg";
+  public downvote_dark = "../../../../assets/icon/downvote-dark.svg";
+  public upVoteImg: string = this.upvote_dark;
+  public downVoteImg: string = this.downvote_dark;
 
   ngOnInit() {
     this.shareDataService.subscribed_communities$.subscribe(res => {
@@ -108,8 +115,40 @@ export class PostLinkComponent {
         this.comment_count = response;
       }
     })
-    this.voteImgService.selectDownVoteImg();
-    this.voteImgService.selectUpVoteImg();
+    // this.voteImgService.selectDownVoteImg();
+    // this.voteImgService.selectUpVoteImg();
+    setInterval(()=>{
+      const mode = this.storageService.getItem("mode") == "0" || "" ? 0 : 1;
+      //light mode
+      if(mode == 0) {
+        if(this.post.voteType == "upvote") {
+          this.downVoteImg = this.downvote_light;
+        }
+        else {
+          this.downVoteImg = this.downvote_dark;
+        }
+        if(this.post.voteType == "downvote") {
+          this.upVoteImg = this.upvote_light;
+        }
+        else {
+          this.upVoteImg = this.upvote_dark;
+        }
+      }
+      else {
+        if(this.post.voteType == "upvote") {
+          this.downVoteImg = this.downvote_light;
+        }
+        else {
+          this.downVoteImg = this.downvote_light;
+        }
+        if(this.post.voteType == "downvote") {
+          this.upVoteImg = this.upvote_light;
+        }
+        else {
+          this.upVoteImg = this.upvote_light;
+        }
+      }
+    }, 100);
     this.isHomePage = window.location.href.includes('/home');
     this.isPopularPage = window.location.href.includes('/popular');
     this.isCommunityPage = window.location.href.includes('/r/');
@@ -268,26 +307,10 @@ export class PostLinkComponent {
     }
   }
 
-  // addNewPost(o: GetPostResponse) {
-  //   this.event.emit(o);
-  // }
-
   votePost(event: Event, type: string) {
     event.stopPropagation();
       const voteInfo = this.votePostServie.prepareVote(type, this.post);
       this.votePostServie.sendVotePostToServer(this.post, voteInfo);
-      // if(voteInfo.curVoteType != "none" && voteInfo.curVoteType != null) {
-      //   this.upvote = this.voteImgService.upvote_light;
-      //   this.downvote = this.voteImgService.downvote_light;
-      //   this.voteImgService.downvote = this.voteImgService.downvote_light;
-      //   this.voteImgService.upvote = this.voteImgService.upvote_light;
-      // }
-      // else {
-      //   this.upvote = this.voteImgService.upvote_dark;
-      //   this.downvote = this.voteImgService.downvote_dark;
-      //   this.voteImgService.downvote = this.voteImgService.downvote_dark;
-      //   this.voteImgService.upvote = this.voteImgService.upvote_dark;
-      // }
   }
 
   sendJoinCommunityFromPostToServer(post: DetailPost, join: number) {
@@ -316,28 +339,6 @@ export class PostLinkComponent {
     event.stopPropagation();
     this.sendJoinCommunityFromPostToServer(this.post, this.post.join == 1 ? 0 : 1);
   }
-
-  // allowPost(event: Event) {
-  //   event.stopPropagation();
-  //   this.allowPostService.sendAllowToServer(this.post, 1, this.allowPostEvent);
-  // }
-
-  // deletePost(event: Event) {
-  //   event.stopPropagation();
-  //   Swal.fire({
-  //     titleText: "Delete this post ?",
-  //     text: "Change can not be undo",
-  //     icon: 'warning',
-  //     confirmButtonText: 'Delete',
-  //     cancelButtonText: 'Cancel',
-  //     showCancelButton: true,
-  //     showConfirmButton: true
-  //   }).then((result) => {
-  //     if(result.isConfirmed) {
-  //       this.deletePostService.sendDeleteToServer(this.post, 2, this.allowPostEvent);
-  //     }
-  //   })
-  // }
 
   savePost(event: Event) {
     event.stopPropagation();

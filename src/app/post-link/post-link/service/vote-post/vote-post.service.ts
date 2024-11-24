@@ -85,14 +85,6 @@ export class VotePostService {
           post.voteType = voteInfo.curVoteType;
           this.shareDataService.setVoteOfDetailPosts(post.post_id, voteInfo.curVote);
           this.shareDataService.setVoteTypeOfDetailPosts(post.post_id, voteInfo.curVoteType);
-          // if(voteInfo.curVoteType != "none" && voteInfo.curVoteType != null) {
-          //   this.voteImgService.downvote = this.voteImgService.downvote_light;
-          //   this.voteImgService.upvote = this.voteImgService.upvote_light;
-          // }
-          // else {
-          //   this.voteImgService.downvote = this.voteImgService.downvote_dark;
-          //   this.voteImgService.upvote = this.voteImgService.upvote_dark;
-          // }
         },
         error: (e: HttpErrorResponse) => {
           console.log("HttpServletResponse: " + e.error.message + "\n" + "ResponseEntity: " + e.error);

@@ -42,9 +42,9 @@
 
     <nav id="footer" *ngIf="!isLoadData">
         <div id="block_vote" class="block_vote" [ngClass]="{'upvote': post.voteType === 'upvote', 'downvote': post.voteType === 'downvote', 'normal': post.voteType === 'none'}" [ngStyle]="{'opacity': post.deleted ? '1' : '1'}">
-            <button id="btn_upvote" type="button" (click)="votePost($event, 'upvote')" [ngClass]="{'upvote': post.voteType === 'upvote', 'downvote': post.voteType === 'downvote', 'normal': (post.voteType === 'none') || (post.voteType == null)}" [disabled]="post.deleted"><img [attr.src]="post.voteType === 'upvote' ? upvote_fill : voteImgService.upvote" /></button>
-            <p style="color: var(--icon);">{{presentationService.transformNumber(post.vote)}}</p>
-            <button id="btn_downvote" type="button" (click)="votePost($event, 'downvote')" [ngClass]="{'upvote': post.voteType === 'upvote', 'downvote': post.voteType === 'downvote', 'normal': (post.voteType === 'none') || (post.voteType == null)}" [disabled]="post.deleted"><img [attr.src]="post.voteType === 'downvote' ? downvote_fill : voteImgService.downvote" /></button>
+            <button id="btn_upvote" type="button" (click)="votePost($event, 'upvote')" [ngClass]="{'upvote': post.voteType === 'upvote', 'downvote': post.voteType === 'downvote', 'normal': (post.voteType === 'none') || (post.voteType == null)}" [disabled]="post.deleted"><img [attr.src]="post.voteType === 'upvote' ? upvote_fill : upVoteImg" /></button>
+            <p style="color: var(--icon);" [ngStyle]="{'color': post.voteType == 'none' || post.voteType == null ? 'var(--icon)' : '#ffffff'}">{{presentationService.transformNumber(post.vote)}}</p>
+            <button id="btn_downvote" type="button" (click)="votePost($event, 'downvote')" [ngClass]="{'upvote': post.voteType === 'upvote', 'downvote': post.voteType === 'downvote', 'normal': (post.voteType === 'none') || (post.voteType == null)}" [disabled]="post.deleted"><img [attr.src]="post.voteType === 'downvote' ? downvote_fill : downVoteImg" /></button>
         </div>
         <button id="btn_comment" type="button" onclick="document.getElementById('comment').scrollIntoView();" [disabled]="post.deleted">
             <i class="pi pi-comment"></i>

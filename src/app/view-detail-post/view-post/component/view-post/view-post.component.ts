@@ -79,15 +79,55 @@ export class PostComponent {
 
   public isLoadData: boolean = false;
 
-  public upvote = "../../../../../assets/icon/upvote.png"
-  public upvote_fill = "../../../../../assets/icon/upvote-fill.png"
-  public downvote = "../../../../../assets/icon/downvote.png"
-  public downvote_fill = "../../../../../assets/icon/downvote-fill.png"
+  public upvote = "../../../../../assets/icon/upvote.png";
+  public upvote_fill = "../../../../../assets/icon/upvote-fill.png";
+  public downvote = "../../../../../assets/icon/downvote.png";
+  public downvote_fill = "../../../../../assets/icon/downvote-fill.png";
+
+  public upvote_light = "../../../../assets/icon/upvote-light.svg";
+  public upvote_dark = "../../../../assets/icon/upvote-dark.svg";
+  public downvote_light = "../../../../assets/icon/downvote-light.svg";
+  public downvote_dark = "../../../../assets/icon/downvote-dark.svg";
+  public upVoteImg: string = this.upvote_dark;
+  public downVoteImg: string = this.downvote_dark;
 
   ngOnInit() {
     this.darkmodeSerive.useDarkMode();
-    this.voteImgService.selectDownVoteImg();
-    this.voteImgService.selectUpVoteImg();
+    // this.voteImgService.selectDownVoteImg();
+    // this.voteImgService.selectUpVoteImg();
+    //change vote image color
+    setInterval(()=>{
+      const mode = this.storageService.getItem("mode") == "0" || "" ? 0 : 1;
+      //light mode
+      if(mode == 0) {
+        if(this.post.voteType == "upvote") {
+          this.downVoteImg = this.downvote_light;
+        }
+        else {
+          this.downVoteImg = this.downvote_dark;
+        }
+        if(this.post.voteType == "downvote") {
+          this.upVoteImg = this.upvote_light;
+        }
+        else {
+          this.upVoteImg = this.upvote_dark;
+        }
+      }
+      else {
+        if(this.post.voteType == "upvote") {
+          this.downVoteImg = this.downvote_light;
+        }
+        else {
+          this.downVoteImg = this.downvote_light;
+        }
+        if(this.post.voteType == "downvote") {
+          this.upVoteImg = this.upvote_light;
+        }
+        else {
+          this.upVoteImg = this.upvote_light;
+        }
+      }
+    }, 100);
     this.isModPage = window.location.href.includes("/mod/");
     if (this.isModPage) {
       this.shareDataService.mod_detail_post$.subscribe(res => {
